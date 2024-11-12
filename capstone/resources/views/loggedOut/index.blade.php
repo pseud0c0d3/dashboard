@@ -35,7 +35,7 @@
     </nav>
     
     <header class="jumbotron text-center" style="background-image: url('img/bck.png'); background-size: cover; background-position: center;">
-        <div class="container">
+        <div class="container" id="anchor1">
             <h1 class="display-4">Aid of Angels Therapy and Learning Center</h1>
             <p class="lead">Welcome to our website, where we offer comprehensive diagnostic <br>testing and personalized support for children with autism.</p>
             <a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-lg">Get Started</a>
@@ -127,7 +127,7 @@
                         <!-- Schedule Consultation -->
                         <div class="col-md-12 mb-3">
                             <div class="box text-left p-4" style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px;">
-                                <h3>Schedule Consultation</h3>
+                                <h3><a href="#anchor1">Schedule Consultation</a></h3>
                                 <p>At Aid of Angels, we understand that every child is unique and that their needs can change over time. That’s why we work closely with each family to adjust treatment plans as needed!</p>
                                 <a href="#" class="text-primary">Book Now</a>
                             </div>

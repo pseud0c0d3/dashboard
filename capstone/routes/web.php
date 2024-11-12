@@ -9,3 +9,4 @@ Route::get('/', function () {
 Route::get('/loggedOut/seemore', function () {
     return view('loggedOut/seemore');
 })->name('loggedOut/seemore');
+
