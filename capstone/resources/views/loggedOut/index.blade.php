@@ -127,7 +127,7 @@
                         <!-- Schedule Consultation -->
                         <div class="col-md-12 mb-3">
                             <div class="box text-left p-4" style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px;">
-                                <h3><a href="#anchor1">Schedule Consultation</a></h3>
+                                <h3>Schedule Consultation</h3>
                                 <p>At Aid of Angels, we understand that every child is unique and that their needs can change over time. That’s why we work closely with each family to adjust treatment plans as needed!</p>
                                 <a href="#" class="text-primary">Book Now</a>
                             </div>
@@ -168,7 +168,7 @@
                     <p class="contact-text">At Aid of Angels Therapy and Learning Center, we are committed to providing families with the resources and support they need to navigate the journey of autism. 
                         Whether you're looking to schedule a diagnostic test or learn more about our personalized therapy services, we're here to help.</p>
                     <a href="#" class="btn btn-primary" >Learn More</a>
-                    <button class="btn btn-secondary">Schedule a Test</button>
+                    <button class="btn btn-secondary"><a href="#anchor1">Schedule a Test</a></button>
                 </div>
             </div>
             <div class="col-12 col-md-6">
