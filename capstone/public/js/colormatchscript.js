@@ -5,10 +5,8 @@ let flippedTiles = [];
 let matchedTiles = 0;
 let isGameOver = false;
 
-const totalTiles = 16;
+const totalTiles = 12;
 const totalPairs = totalTiles / 2;
-let countdownInterval;
-let countdownElement;
 
 // Helper function to generate random colors
 function generateColors() {
@@ -32,7 +30,7 @@ function createBoard() {
   // Create tiles and append them to the board
   for (let i = 0; i < totalTiles; i++) {
     const tile = document.createElement('div');
-    tile.classList.add('tile');
+    tile.classList.add('tile', 'flipped'); // Start with 'flipped' class to hide colors initially
     tile.dataset.color = colors[i];
 
     const front = document.createElement('div');
@@ -45,23 +43,19 @@ function createBoard() {
     tile.appendChild(back);
     board.appendChild(tile);
 
-    // Disable clicking on tiles before game starts
-    tile.classList.add('disabled');
-    tile.addEventListener('click', handleTileClick); // Add click event listener
+    // Add click event listener to each tile
+    tile.addEventListener('click', handleTileClick);
   }
-
-  // Start the countdown before flipping tiles
-  startCountdown();
 }
 
 // Handle tile click event
 function handleTileClick(e) {
-  if (isGameOver || flippedTiles.length === 2) return; // Prevent clicking when game is over or 2 tiles are already flipped
+  if (isGameOver || flippedTiles.length === 2) return;
 
   const tile = e.target.closest('.tile');
-  if (flippedTiles.includes(tile) || tile.classList.contains('flipped') || tile.classList.contains('disabled')) return;
+  if (flippedTiles.includes(tile) || !tile.classList.contains('flipped')) return;
 
-  tile.classList.add('flipped');
+  tile.classList.remove('flipped'); // Reveal the tile by removing 'flipped' class
   flippedTiles.push(tile);
 
   // Check if two tiles are flipped
@@ -75,71 +69,27 @@ function checkForMatch() {
   const [tile1, tile2] = flippedTiles;
   if (tile1.dataset.color === tile2.dataset.color) {
     matchedTiles += 2;
+    // Remove event listener so matched tiles can't be clicked again
+    tile1.removeEventListener('click', handleTileClick);
+    tile2.removeEventListener('click', handleTileClick);
     flippedTiles = [];
 
-    // If all tiles are matched, game is over
     if (matchedTiles === totalTiles) {
       isGameOver = true;
       alert('You won! Congratulations!');
       startButton.style.display = 'block'; // Show the start button again
     }
   } else {
-    // If not a match, flip tiles back after a delay
     setTimeout(() => {
-      tile1.classList.remove('flipped');
-      tile2.classList.remove('flipped');
+      tile1.classList.add('flipped');  // Hide tiles again by re-adding 'flipped' class
+      tile2.classList.add('flipped');
       flippedTiles = [];
-    }, 1000); // 1-second delay before flipping back
+    }, 1000);
   }
-}
-
-// Countdown logic
-function startCountdown() {
-  let countdown = 3; // Starting countdown number
-  countdownElement = document.createElement('div');
-  countdownElement.id = 'countdown';
-  countdownElement.style.position = 'absolute';
-  countdownElement.style.top = '50%';
-  countdownElement.style.left = '50%';
-  countdownElement.style.transform = 'translate(-50%, -50%)';
-  countdownElement.style.fontSize = '3rem';
-  countdownElement.style.color = 'black';
-  countdownElement.style.zIndex = '9999';
-  document.body.appendChild(countdownElement);
-
-  countdownInterval = setInterval(() => {
-    countdownElement.textContent = countdown;
-    countdown--;
-    if (countdown < 0) {
-      clearInterval(countdownInterval);
-      document.body.removeChild(countdownElement);
-      flipAllTilesTemporarily();
-    }
-  }, 1000); // Update countdown every second
-}
-
-// Function to temporarily flip all tiles, then hide them again
-function flipAllTilesTemporarily() {
-  const tiles = document.querySelectorAll('.tile');
-  tiles.forEach(tile => tile.classList.add('flipped'));
-
-  // After a short delay, flip them back to hide the colors
-  setTimeout(() => {
-    tiles.forEach(tile => tile.classList.remove('flipped'));
-    enableTiles(); // Enable tile clicking after initial flip
-  }, 2000); // Keep the tiles flipped for 2 seconds
-}
-
-// Function to enable tile clicks after countdown
-function enableTiles() {
-  const tiles = document.querySelectorAll('.tile');
-  tiles.forEach(tile => {
-    tile.classList.remove('disabled'); // Remove 'disabled' class to enable clicking
-  });
 }
 
 // Start the game
 startButton.addEventListener('click', () => {
   startButton.style.display = 'none'; // Hide the start button
-  createBoard(); // Call the function to create the board and start the countdown
+  createBoard(); // Call the function to create the board
 });
