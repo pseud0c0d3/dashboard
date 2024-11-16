@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('workspace/colormatch');
+    return view('workspace/game');
 });
 
 Route::get('/loggedOut/seemore', function () {
