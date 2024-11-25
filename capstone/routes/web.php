@@ -13,3 +13,4 @@ Route::get('/loggedOut/seemore', function () {
 Route::get('/loggedOut/seemore', function () {
     return view('loggedOut/seemore');
 })->name('loggedOut/seemore');
+
