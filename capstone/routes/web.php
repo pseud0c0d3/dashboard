@@ -10,3 +10,7 @@ Route::get('/loggedOut/seemore', function () {
     return view('loggedOut/seemore');
 })->name('seemore');
 
+Route::get('/loggedOut/seemore', function () {
+    return view('loggedOut/seemore');
+})->name('loggedOut/seemore');
+
