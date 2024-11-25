@@ -51,7 +51,7 @@
             Our experienced team is here to help every child thrive and reach their full potential.
         </p>
         <div class="text-center">
-            <a href="{{ route('loggedOut/seemore') }}" class="btn btn-primary">See More</a>
+            <a href="{{ route('seemore') }}" class="btn btn-primary">See More</a>
         </div>
     </div>
 
