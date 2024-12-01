@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website Title</title>
+    <title>Aid of Angels</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -245,6 +245,7 @@
 
                         <h5 class="text-left" style="margin-bottom: 20px;">LOG IN</h5>
                         <form>
+                        @csrf
                             <!-- Email Floating Label -->
                             <div class="form-row">
                                 <input type="email" class="form-control form-control-sm" id="loginEmail" placeholder=" " required>
@@ -280,6 +281,15 @@
 
 
 <!-- Register Modal -->
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content" style="height: 90vh;">
@@ -295,30 +305,31 @@
                     </div>
                     <div class="modal-body">
                         <h5 class="text-left">REGISTER</h5>
-                        <form action="" method="POST">
+                        <form action="{{ route('registration.post') }}" method="POST">
+                        @csrf
                             <!-- Full Name Floating Label -->
                             <div class="form-row mb-3">
-                                <input type="text" class="form-control form-control-sm" id="fullName" placeholder=" " required>
+                                <input type="text" class="form-control form-control-sm" id="fullName" name="name" placeholder=" " required>
                                 <label for="fullName">Full Name</label>
                             </div>
                             <!-- Email Floating Label -->
                             <div class="form-row mb-3">
-                                <input type="email" class="form-control form-control-sm" id="registerEmail" placeholder=" " required>
+                                <input type="email" class="form-control form-control-sm" id="registerEmail" name="email" placeholder=" " required>
                                 <label for="registerEmail">Email Address</label>
                             </div>
                             <!-- Username Floating Label -->
                             <div class="form-row mb-3">
-                                <input type="text" class="form-control form-control-sm" id="username" placeholder=" " required>
+                                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder=" " required>
                                 <label for="username">Username</label>
                             </div>
                             <!-- Password Floating Label -->
                             <div class="form-row mb-3">
-                                <input type="password" class="form-control form-control-sm" id="registerPassword" placeholder=" " required>
+                                <input type="password" class="form-control form-control-sm" id="registerPassword" name="password" placeholder=" " required>
                                 <label for="registerPassword">Password</label>
                             </div>
                             <!-- Repeat Password Floating Label -->
                             <div class="form-row mb-3">
-                                <input type="password" class="form-control form-control-sm" id="repeatPassword" placeholder=" " required>
+                                <input type="password" class="form-control form-control-sm" id="repeatPassword" name="password_confirmation"  placeholder=" " required>
                                 <label for="repeatPassword">Repeat Password</label>
                             </div>
                             <!-- Terms Checkbox -->
@@ -328,10 +339,10 @@
                                     I agree to <a href="#">Terms of Use</a>
                                 </label>
                             </div>
+                            <button type="submit" class="btn btn-warning text-black w-100 mb-4" style="font-size: 0.85rem; border-radius: 5px;">SUBMIT</button>
                         </form>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-warning text-black w-100 mb-4" style="font-size: 0.85rem; border-radius: 5px;" onclick="submitForm()">SUBMIT</button>
                         <div class="mt">
                             <span style="font-size: 0.85rem;">Already have an account? </span>
                             <a href="#" id="loginLink" style="color: #0066cc;">Log in here</a>
@@ -368,9 +379,9 @@ document.getElementById('loginLink').addEventListener('click', function(event) {
     $('#registerModal').modal('hide');
 });
 
-function submitForm() {
-    alert('Form submitted!');
-}
+// function submitForm() {
+//     alert('Form submitted!');
+// }
 </script>
 </body>
 </html>

@@ -1,11 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CreateNewUser;
+
+
+
 
 Route::get('/', function () {
 
-    return view('workspace.game');
-});
+    return view('loggedOut.index');
+})->name('index');
+
+Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
+
 Route::get('/loggedOut/seemore', function () {
     return view('seemore');
 })->name('seemore');
