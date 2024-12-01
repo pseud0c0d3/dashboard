@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#maze-container {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    gap: 2px;
+    justify-content: center;
+    margin: 20px auto;
+    position: relative;
+    width: 420px;
+    height: 420px;
+    background: #f4f4f4;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+}
+
+#player {
+    background-color: blue;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#finish {
+    background-color: green;
+    grid-column: 10;
+    grid-row: 10;
+}
+
+.wall {
+    background-color: black;
+    position: relative;
+}
+
+#message {
+    font-size: 20px;
+    color: green;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 10px;
+}

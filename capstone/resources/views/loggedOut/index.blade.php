@@ -6,7 +6,7 @@
     <title>Your Website Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
-</head>   
+</head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -33,7 +33,7 @@
             </ul>
         </div>
     </nav>
-    
+
     <header class="jumbotron text-center" style="background-image: url('img/bck.png'); background-size: cover; background-position: center;">
         <div class="container" id="anchor1">
             <h1 class="display-4">Aid of Angels Therapy and Learning Center</h1>
@@ -43,7 +43,7 @@
     </header>
 
     <!-- About Us Section -->
-    <div class="container my-5 about-us-container"> 
+    <div class="container my-5 about-us-container">
         <h2 class="text-center">About Us</h2>
         <p class="text-center">
             At Aid of Angels Therapy and Learning Center, we are dedicated to providing
@@ -51,12 +51,12 @@
             Our experienced team is here to help every child thrive and reach their full potential.
         </p>
         <div class="text-center">
-            <a href="{{ route('loggedOut/seemore') }}" class="btn btn-primary">See More</a>
+            <a href="{{ route('seemore') }}" class="btn btn-primary">See More</a>
         </div>
     </div>
 
     <!-- Services Section -->
-    <div class="container my-5 services-container"> 
+    <div class="container my-5 services-container">
         <h2 class="text-center">Our Services</h2>
         <div class="row">
             <div class="col-md-4 text-center">
@@ -68,24 +68,24 @@
             </div>
             <div class="col-md-4 text-center">
                 <div class="service-box">
-                    <i class="fas fa-heart fa-3x mb-3" style="color: #ff0000;"></i> 
+                    <i class="fas fa-heart fa-3x mb-3" style="color: #ff0000;"></i>
                     <h5>Personalized Therapy</h5>
                     <p>Our therapy sessions are tailored to suit the individual requirements of each child.</p>
                 </div>
             </div>
             <div class="col-md-4 text-center">
                 <div class="service-box">
-                    <i class="fas fa-users fa-3x mb-3" style="color: #1e90ff;"></i> 
+                    <i class="fas fa-users fa-3x mb-3" style="color: #1e90ff;"></i>
                     <h5>Supportive Community</h5>
                     <p>We foster a nurturing community that supports both children and their families.</p>
                 </div>
             </div>
         </div>
     </div>
-    
+
 
     <!-- Empowering Families Section -->
-    <div class="empowering-families-container"> 
+    <div class="empowering-families-container">
         <div class="row">
             <div class="col-md-6">
                 <img src="img/pic2.png" alt="Empowering Families" class="empowering-families-image">
@@ -93,8 +93,8 @@
             <div class="col-md-6 empowering-families-text">
                 <h2>Empowering Families, Transforming Lives</h2>
                 <p>
-                    At Aid of Angels Therapy and Learning Center, we are dedicated to providing families with the resources and support they need to navigate the journey of autism. 
-                    <br><br>From comprehensive diagnostic testing to personalized therapy and a supportive community, we are committed to ensuring that every child with autism has the opportunity to reach their full potential. 
+                    At Aid of Angels Therapy and Learning Center, we are dedicated to providing families with the resources and support they need to navigate the journey of autism.
+                    <br><br>From comprehensive diagnostic testing to personalized therapy and a supportive community, we are committed to ensuring that every child with autism has the opportunity to reach their full potential.
                     <br><br>Our compassionate team strives to empower families with knowledge and tools for effective support.
                 </p>
             </div>
@@ -123,7 +123,7 @@
                                 <a href="#" class="text-primary">Read More</a>
                             </div>
                         </div>
-                    
+
                         <!-- Schedule Consultation -->
                         <div class="col-md-12 mb-3">
                             <div class="box text-left p-4" style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px;">
@@ -160,12 +160,12 @@
         </div>
     </div>
 
-    <div class="container-fluid contact mt-4"> 
+    <div class="container-fluid contact mt-4">
         <div class="row g-4">
             <div class="col-12 col-md-6">
                 <div class="contact-card p-4">
                     <h2 class="contact-title">Contact Us</h2>
-                    <p class="contact-text">At Aid of Angels Therapy and Learning Center, we are committed to providing families with the resources and support they need to navigate the journey of autism. 
+                    <p class="contact-text">At Aid of Angels Therapy and Learning Center, we are committed to providing families with the resources and support they need to navigate the journey of autism.
                         Whether you're looking to schedule a diagnostic test or learn more about our personalized therapy services, we're here to help.</p>
                     <a href="#" class="btn btn-primary" >Learn More</a>
                     <button class="btn btn-secondary"><a href="#anchor1">Schedule a Test</a></button>
@@ -242,7 +242,7 @@
                         <!-- Logo Section -->
                         <img src="img/icon.png" alt="Logo" class="logo-img" style="max-width: 80%; margin-bottom: 20px;">
 
-                        
+
                         <h5 class="text-left" style="margin-bottom: 20px;">LOG IN</h5>
                         <form>
                             <!-- Email Floating Label -->
@@ -295,7 +295,7 @@
                     </div>
                     <div class="modal-body">
                         <h5 class="text-left">REGISTER</h5>
-                        <form>
+                        <form action="" method="POST">
                             <!-- Full Name Floating Label -->
                             <div class="form-row mb-3">
                                 <input type="text" class="form-control form-control-sm" id="fullName" placeholder=" " required>
@@ -358,14 +358,14 @@ $(window).scroll(function() {
 
 document.getElementById('registerLink').addEventListener('click', function(event) {
     event.preventDefault();
-    $('#loginModal').modal('hide'); 
-    $('#registerModal').modal('show'); 
+    $('#loginModal').modal('hide');
+    $('#registerModal').modal('show');
 });
-    
+
 document.getElementById('loginLink').addEventListener('click', function(event) {
     event.preventDefault();
     $('#loginModal').modal('show');
-    $('#registerModal').modal('hide'); 
+    $('#registerModal').modal('hide');
 });
 
 function submitForm() {
