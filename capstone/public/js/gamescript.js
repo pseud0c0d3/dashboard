@@ -1,6 +1,3 @@
-// script.js
-
-// Array of animal data with sounds and images
 const animals = [
     { name: 'dog', sound: 'dog.wav', image: 'dog.png' },
     { name: 'cat', sound: 'cat.wav', image: 'cat.jpg' },
@@ -8,20 +5,22 @@ const animals = [
     { name: 'sheep', sound: 'sheep.wav', image: 'sheep.jpg' }
 ];
 
-let currentAnimal;
+let currentAnimal = null;
+let audioInstance = null;
 
 function playSound() {
     // Choose a random animal
     currentAnimal = animals[Math.floor(Math.random() * animals.length)];
 
     // Play the sound
-    const audio = new Audio(`/wav/${currentAnimal.sound}`); // Corrected path
-    audio.play();
+    if (!audioInstance) {
+        audioInstance = new Audio();
+    }
+    audioInstance.src = `/wav/${currentAnimal.sound}`;
+    audioInstance.play();
 
-    // Display animal options after the sound is played
-    setTimeout(() => {
-        displayOptions();
-    }, audio.duration * 1000); // Delay the options display until the sound finishes
+    // Display animal options
+    displayOptions();
 }
 
 function displayOptions() {
@@ -41,12 +40,28 @@ function displayOptions() {
 }
 
 function checkAnswer(selectedName) {
-    const result = document.getElementById('result');
-    if (selectedName === currentAnimal.name) {
-        result.textContent = "Correct!";
-    } else {
-        result.textContent = "Try Again!";
-    }
+    const message = selectedName === currentAnimal.name
+        ? "Correct! Well done."
+        : "Incorrect! Try again.";
+
+    // Show alert and reset game after acknowledgment
+    alert(message);
+    resetGame();
 }
 
+function resetGame() {
+    // Stop and reset the audio
+    if (audioInstance) {
+        audioInstance.pause();
+        audioInstance.currentTime = 0; // Reset playback position
+    }
+
+    // Reset game state
+    currentAnimal = null;
+    document.getElementById('options').innerHTML = ''; // Clear options
+    const result = document.getElementById('result');
+    result.textContent = ''; // Clear result text
+}
+
+// Event listener for the play sound button
 document.getElementById('play-sound').addEventListener('click', playSound);

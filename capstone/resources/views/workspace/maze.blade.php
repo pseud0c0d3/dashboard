@@ -17,6 +17,6 @@
     </div>
     <div id="message"></div>
     <button id="reset">Reset</button>
-    <script src="js/scriptmaze.js"></script>
+    <script src="{{ asset('js/scriptmaze.js') }}"></script>
 </body>
 </html>
