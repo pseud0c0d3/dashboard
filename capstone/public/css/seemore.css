@@ -9,53 +9,53 @@ body::-webkit-scrollbar {
   margin-right: 10px;
 }
 
-/* Navbar -------------------------------------------------------------------------------*/
-.navbar {
-  background-color: transparent; 
-  transition: background-color 0.2s ease, height 0.4s ease, padding 0.4s ease; 
-  height: 80px;
-  padding: 20px 0;     
-}
+  /* Navbar -------------------------------------------------------------------------------*/
+  .navbar {
+    background-color: transparent; 
+    transition: background-color 0.2s ease, height 0.4s ease, padding 0.4s ease; 
+    height: 80px;
+    padding: 20px 0;     
+  }
+        
+  .navbar.scrolled {
+    background-color: rgb(36, 36, 36); 
+    height: 50px;
+    padding: 10px 0; 
+  }
       
-.navbar.scrolled {
-  background-color: rgb(36, 36, 36); 
-  height: 50px;
-  padding: 10px 0; 
-}
-    
-.navbar-dark .navbar-nav .nav-link {
-  color: white; 
-  transition: color 0.3s ease; 
-}
-
-.navbar-dark .navbar-nav .nav-link:hover {
-  color: #f0ad4e;
-}
-
-.navbar-nav .nav-item {
-  margin: 0 15px; 
-}
-      
-.navbar.scrolled .nav-link {
-  font-size: 0.9rem;
-}
-      
-.navbar-brand img {
-  height: 80px;
-  transition: height 0.4s ease, width 0.4s ease;
-  margin-left: 20px;
-  margin-top: 10px;
-}
+  .navbar-dark .navbar-nav .nav-link {
+    color: white; 
+    transition: color 0.3s ease; 
+  }
   
-.navbar.scrolled .navbar-brand img {
-  height: 40px; 
-}
-
+  .navbar-dark .navbar-nav .nav-link:hover {
+    color: #f0ad4e;
+  }
+  
+  .navbar-nav .nav-item {
+    margin: 0 15px; 
+  }
+        
+  .navbar.scrolled .nav-link {
+    font-size: 0.9rem;
+  }
+        
+  .navbar-brand img {
+    height: 80px;
+    transition: height 0.4s ease, width 0.4s ease;
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+    
+  .navbar.scrolled .navbar-brand img {
+    height: 40px; 
+  }
+  
 /*-------------------------------------------------------------------------*/
 
 /* Hero Section Background and Container */
 .hero-bg {
-    background-image: url('/img/backmore.jpg'); 
+    background-image: url('backmore.jpg'); 
     background-size: cover;
     background-position: center;
     height: 900px;
@@ -142,10 +142,10 @@ body::-webkit-scrollbar {
 
   .arrow {
     position: absolute;
-    top: 50%;
+    top: 70%;
     transform: translateY(-50%);
     font-size: 36px;
-
+    background-color: transparent;
     border: none;
     cursor: pointer;
     z-index: 1000;
@@ -237,6 +237,8 @@ body::-webkit-scrollbar {
   .small {
     height: 150px;
   }
+
+  
 
 /*-------------------------------------------------------------------------*/
 
@@ -331,4 +333,63 @@ footer {
         margin: 0;
         
     }
+}
+
+/*Mobile Mode--------------------------------------------------------------------------------*/
+@media (min-width: 768px) {
+    
+  .navbar.scrolled {
+      height: 70px; 
+      padding: 5px 10px; 
+  }
+
+  .nav-link {
+      font-size: 1rem; 
+      padding-top: 15px;
+  }
+  
+
+  .navbar-brand img {
+      height: 60px; 
+  }
+
+  .navbar.scrolled .navbar-brand img {
+      height: 50px; 
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar {
+      height: 10px; 
+      padding: 5px 10px; 
+      margin-top: -10px;
+  }
+
+  .navbar.scrolled {
+      height: 80px;
+      padding: 10px 10px 70px;
+  }
+
+  .nav-link {
+      font-size: 0.8rem; 
+      background-color: rgb(36, 36, 36);
+      padding-top: 10px;
+      
+  }
+  .navbar-collapse {
+    background-color: rgb(36, 36, 36); 
+}
+  .navbar.scrolled .nav-link {
+      font-size: 0.8rem; 
+      background-color: rgb(36, 36, 36);
+      padding: 10px;
+  }
+
+  .navbar-brand img {
+      height: 60px; 
+  }
+
+  .navbar.scrolled .navbar-brand img {
+      height: 50px; 
+  }
 }
