@@ -55,7 +55,7 @@ body::-webkit-scrollbar {
 
 /* Hero Section Background and Container */
 .hero-bg {
-    background-image: url('backmore.jpg'); 
+    background-image: url('/img/backmore.jpg'); 
     background-size: cover;
     background-position: center;
     height: 900px;

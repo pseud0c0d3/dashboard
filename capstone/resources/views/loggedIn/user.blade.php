@@ -159,7 +159,7 @@
                 document.getElementById("calendarModal").style.display = "none";
             }
 
-                    // Toggle sidebar visibility
+            // Toggle sidebar visibility
             function toggleSidebar() {
                 const sidebar = document.querySelector('.sidebar');
                 const isHidden = sidebar.style.display === 'none' || sidebar.style.display === '';
