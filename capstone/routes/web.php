@@ -5,7 +5,7 @@ use App\Http\Controllers\CreateNewUser;
 
 
 
-
+//test
 Route::get('/', function () {
 
     return view('workspace.sonar');
