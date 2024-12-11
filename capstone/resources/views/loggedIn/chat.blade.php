@@ -6,8 +6,8 @@
     <title>Dashboard Layout</title>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chat.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -42,7 +42,7 @@
                     </div>
                 </a>
             </div>
-            
+
             <ul class="menu">
                 <li><a href="#" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
                 <li>
@@ -56,7 +56,7 @@
                 </li>
                 <li><a href="sched.html" onclick="toggleDropdown(event, 'calendarDropdown')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             </ul>
-        
+
             <div class="bottom-container">
                 <ul class="menu">
                     <li><a href="#" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
@@ -64,7 +64,7 @@
                 </ul>
             </div>
         </div>
-        
+
         <div class="headers">
             <div class="header">
                 <div class="search-container">
@@ -92,8 +92,8 @@
             </div>
             <div class="main-content">
                 <div class="chat-container">
-                    
-                
+
+
                     <!-- Chat Box -->
                     <div class="chat-box">
                         <h3>Chat with User 1</h3>
@@ -124,9 +124,9 @@
                         </ul>
                     </div>
                 </div>
-                
+
             </div>
-            
+
         </div>
         <!-- Calendar Modal Structure -->
         <div id="calendarModal" class="calendar-modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
@@ -145,30 +145,30 @@
         </div>
     </div>
 <!------------------------------------------------------------------------------------------------------------------------------>
-    
+
 <!------------------------------------------------------------------------------------------------------------------------->
     <script>
         // Show loading overlay for navigation
         function showLoading(url) {
             const loadingOverlay = document.getElementById("loadingOverlay");
-            loadingOverlay.style.display = "flex"; 
+            loadingOverlay.style.display = "flex";
             setTimeout(() => {
-                window.location.href = url; 
-            }, 1000); 
+                window.location.href = url;
+            }, 1000);
         }
-    
+
         function openNotifications() {
             toggleDropdown(event, 'notificationsDropdown');
         }
-    
+
         function toggleSettingsDropdown() {
             toggleDropdown(event, 'settingsDropdown');
         }
-    
+
         function changePassword() {
             alert("Change password functionality goes here.");
         }
-    
+
         function updateProfile() {
             alert("Update profile functionality goes here.");
         }
@@ -193,7 +193,7 @@
             const dropdown = document.getElementById(dropdownId);
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
-    
+
         function logout() {
             alert("Log out functionality goes here.");
         }
@@ -295,7 +295,7 @@
     // Load the default contact's chat history initially
     loadChat(currentContact);
 
-    
+
         // Close dropdowns if clicked outside
         window.onclick = function(event) {
             const dropdowns = document.querySelectorAll('.dropdown');
@@ -304,16 +304,16 @@
                     dropdown.style.display = "none";
                 }
             });
-    
+
             // Close settings dropdown
             const settingsDropdown = document.getElementById('settingsDropdown');
             if (settingsDropdown.style.display === "block") {
                 settingsDropdown.style.display = "none";
             }
         };
-    
-        
-    
+
+
+
         function copyPostLink(postId) {
             const postLink = `${window.location.origin}/post/${postId}`;
             navigator.clipboard.writeText(postLink).then(() => {
@@ -322,7 +322,7 @@
                 console.error("Failed to copy: ", err);
             });
         }
-    
+
 
     </script>
 </body>
