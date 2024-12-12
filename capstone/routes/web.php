@@ -8,7 +8,7 @@ use App\Http\Controllers\CreateNewUser;
 //test
 Route::get('/', function () {
 
-    return view('workspace.sonar');
+    return view('loggedIn.user');
 })->name('index');
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
