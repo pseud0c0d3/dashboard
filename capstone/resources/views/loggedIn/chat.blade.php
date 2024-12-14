@@ -37,7 +37,7 @@
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <img src="logo.png" alt="Angel Logo" class="angel-logo">
+            <img src="img/logo.png" alt="Angel Logo" class="angel-logo">
             <div class="profile-section">
                 <a href="userprofile.html" class="profile-link" onclick="showLoading('userprofile.html')">
                     <img src="modpic.jpg" alt="Profile" class="profile-pic">
@@ -50,7 +50,7 @@
 <<<<<<< HEAD
 
 =======
-            
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
             <ul class="menu">
                 <li><a href="#" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
@@ -68,7 +68,7 @@
 <<<<<<< HEAD
 
 =======
-        
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
             <div class="bottom-container">
                 <ul class="menu">
@@ -80,7 +80,7 @@
 <<<<<<< HEAD
 
 =======
-        
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         <div class="headers">
             <div class="header">
@@ -113,8 +113,8 @@
 
 
 =======
-                    
-                
+
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
                     <!-- Chat Box -->
                     <div class="chat-box">
@@ -151,9 +151,9 @@
             </div>
 
 =======
-                
+
             </div>
-            
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         </div>
         <!-- Calendar Modal Structure -->
@@ -176,7 +176,7 @@
 <<<<<<< HEAD
 
 =======
-    
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
 <!------------------------------------------------------------------------------------------------------------------------->
     <script>
@@ -203,24 +203,24 @@
         }
 
 =======
-            loadingOverlay.style.display = "flex"; 
+            loadingOverlay.style.display = "flex";
             setTimeout(() => {
-                window.location.href = url; 
-            }, 1000); 
+                window.location.href = url;
+            }, 1000);
         }
-    
+
         function openNotifications() {
             toggleDropdown(event, 'notificationsDropdown');
         }
-    
+
         function toggleSettingsDropdown() {
             toggleDropdown(event, 'settingsDropdown');
         }
-    
+
         function changePassword() {
             alert("Change password functionality goes here.");
         }
-    
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         function updateProfile() {
             alert("Update profile functionality goes here.");
@@ -249,7 +249,7 @@
 <<<<<<< HEAD
 
 =======
-    
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         function logout() {
             alert("Log out functionality goes here.");
@@ -355,7 +355,7 @@
 <<<<<<< HEAD
 
 =======
-    
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         // Close dropdowns if clicked outside
         window.onclick = function(event) {
@@ -368,7 +368,7 @@
 <<<<<<< HEAD
 
 =======
-    
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
             // Close settings dropdown
             const settingsDropdown = document.getElementById('settingsDropdown');
@@ -381,9 +381,9 @@
 
 
 =======
-    
-        
-    
+
+
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         function copyPostLink(postId) {
             const postLink = `${window.location.origin}/post/${postId}`;
@@ -396,7 +396,7 @@
 <<<<<<< HEAD
 
 =======
-    
+
 >>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
 
     </script>
