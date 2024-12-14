@@ -1,0 +1,253 @@
+.add-post-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #003b4d;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /*add post section*/
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+  .user-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-top: 10px;
+  }
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  .user-details {
+    display: flex;
+    flex-direction: column;
+  }
+  .user-name {
+    font-weight: bold;
+  }
+  .post-title-input,
+  .post-body-input {
+    width: 100%;
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #f5f5f5;
+  }
+  .post-body-input {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  .post-button {
+    background-color: #1877f2;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .cancel-button {
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  
+  /*post section*/
+  .posts {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    gap: 20px;
+    padding: 10px;
+    height: 575px;
+  }
+  .post {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+  }
+  
+  .posts::-webkit-scrollbar { 
+    display: none;  
+  }
+  
+  .post {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: white;
+    max-width: 100%;
+    position: relative; 
+  }
+  
+  .ellipsis-btn {
+    position: absolute; 
+    top: 10px;
+    right: 10px; 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 18px; 
+    color: #333; 
+  }
+  
+  .ellipsis-menu {
+    position: absolute;
+    top: 10px; 
+    right: 10px;
+    display: inline-block;
+  }
+  
+  
+  .dropdown-content {
+    display: none; 
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content button {
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .dropdown-content button:hover {
+    background-color: #f1f1f1;
+    color: #060f5e;
+  }
+  .user-details {
+    flex-grow: 1;
+  }
+  
+  .username {
+    font-weight: bold;
+  }
+  
+  .user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #060f5e; 
+    margin-right: 10px;
+  }
+  
+  .timestamp {
+    font-size: 0.8em;
+    color: gray;
+  }
+  
+  .post-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  .post-buttons {
+  
+    justify-content: space-around;
+    margin-top: 15px;
+  }
+  
+  .post-title-input {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .post-content {
+    margin-top: 10px;
+  }
+  
+  .post-content-input {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+  }
+  
+  .post-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .post-actions button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #003049;
+    color: #fff;
+    border-radius: 5px;
+    margin-left: 10px; 
+    cursor: pointer;
+  }
+  
+  .action-btn {
+    background-color: #004e64;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 40px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s;
+  }
+  
+  .action-btn:hover {
+    background-color: #003b4d; 
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }

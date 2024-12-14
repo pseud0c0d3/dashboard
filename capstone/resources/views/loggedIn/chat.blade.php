@@ -6,13 +6,11 @@
     <title>Dashboard Layout</title>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-<<<<<<< HEAD
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/chat.css">
-=======
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="chat.css">
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -40,7 +38,7 @@
             <img src="img/logo.png" alt="Angel Logo" class="angel-logo">
             <div class="profile-section">
                 <a href="userprofile.html" class="profile-link" onclick="showLoading('userprofile.html')">
-                    <img src="modpic.jpg" alt="Profile" class="profile-pic">
+                    <img src="img/modpic.jpg" alt="Profile" class="profile-pic">
                     <div class="profile-details">
                         <p><strong>Joseph Chan</strong></p>
                         <p>Father</p>
@@ -121,11 +119,11 @@
                         <h3>Chat with User 1</h3>
                         <div class="chat-messages">
                             <div class="message user">
-                                <img src="profile.jpg" alt="User 1">
+                                <img src="img/profile.jpg" alt="User 1">
                                 <div class="message-bubble">Hello! How can I assist you today?</div>
                             </div>
                             <div class="message contact">
-                                <img src="profile.jpg" alt="Doctor">
+                                <img src="img/profile.jpg" alt="Doctor">
                                 <div class="message-bubble">I have a question regarding my recent diagnosis.</div>
                             </div>
                             <!-- Add more messages as needed -->
@@ -139,9 +137,9 @@
                     <div class="contacts-list">
                         <h3>Contacts</h3>
                         <ul>
-                            <li><img class="profile-pic" src="profile.jpg" alt="User 1">User 1</li>
-                            <li><img class="profile-pic" src="profile.jpg" alt="User 2">User 2</li>
-                            <li><img class="profile-pic" src="profile.jpg" alt="User 3">User 3</li>
+                            <li><img class="profile-pic" src="img/profile.jpg" alt="User 1">User 1</li>
+                            <li><img class="profile-pic" src="img/profile.jpg" alt="User 2">User 2</li>
+                            <li><img class="profile-pic" src="img/profile.jpg" alt="User 3">User 3</li>
                             <!-- Add more contacts as needed -->
                         </ul>
                     </div>
@@ -287,7 +285,7 @@
 
             // Profile image
             const img = document.createElement('img');
-            img.src = chat.sender === 'contact' ? 'profile.jpg' : `${contact.toLowerCase().replace(' ', '')}.jpg`;
+            img.src = chat.sender === 'contact' ? 'img/profile.jpg' : `${contact.toLowerCase().replace(' ', '')}.jpg`;
             img.alt = contact;
 
             // Message bubble
