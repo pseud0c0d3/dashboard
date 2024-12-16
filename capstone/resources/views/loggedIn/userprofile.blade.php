@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
     <link rel="stylesheet" href="bootstrap.min.css">
 
 </head>
@@ -65,7 +66,6 @@
                 </div>
                 <div class="icons">
                     <i class="bi bi-chat-dots chat-icon" onclick="showLoading('chat.html')"></i>
-                    <i class="bi bi-calendar-fill calendar-icon" onclick="openCalendar()"></i>
                     <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
                     <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
                 </div>
@@ -276,13 +276,6 @@ function closeModal(modalId) {
 
         function updateProfile() {
             alert("Update profile functionality goes here.");
-        }
-
-        function openCalendar() {
-            document.getElementById("calendarModal").style.display = "block";
-        }
-        function closeCalendar() {
-            document.getElementById("calendarModal").style.display = "none";
         }
 
         function toggleSidebar() {
