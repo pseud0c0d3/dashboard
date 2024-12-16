@@ -6,9 +6,10 @@
     <title>Dashboard Layout</title>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js   "></script>
+
     
   
     <style>
@@ -55,11 +56,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="sched.html" onclick="toggleDropdown(event, 'calendarDropdown')"><i class="fas fa-calendar-alt"></i> Calendar ▼</a>
-                    <ul class="dropdown" id="calendarDropdown">
-                        <li><a href="#"><i class="fas fa-calendar-check"></i> Event 1</a></li>
-                        <li><a href="#"><i class="fas fa-calendar-day"></i> Event 2</a></li>
-                    </ul>
+                    <li><a href="javascript:void(0)" onclick="loadCalendar()"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
                 </li>
                 <li><a href="faq.html"><i class="fas fa-question-circle"></i> Help</a></li>
                 <li><a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
@@ -96,45 +93,36 @@
             
             <div class="main-content">
                 <div class="dashboard">
-                    <div class="stats">
-                      <div class="stat-box">
-                        <h3>Total Registered Users</h3>
-                        <p id="total-users">00</p>
-                      </div>
-                      <div class="stat-box">
-                        <h3>Upcoming Appointments</h3>
-                        <p id="upcoming-appointments">00</p>
-                      </div>
-                      <div class="stat-box">
-                        <h3>Daily Interaction in Forums</h3>
-                        <p id="daily-interaction">00</p>
-                      </div>
-                    </div>
-                
-                    <!-- Main Content Area -->
                     <div class="main">
                       <p>Main content goes here...</p>
                     </div>
-                
-                    <!-- Appointments Receipt Section -->
-                    <div class="appointments">
-                      <h3>Appointments Receipt</h3>
-                      <ul id="appointment-list">
-                        <li>Joseph Chan | 09/30/2024 | <span class="status accepted">Accepted</span></li>
-                        <li>Example User | 10/02/2024 | <span class="status accepted">Accepted</span></li>
-                        <li>Example User | 12/19/2024 | <span class="status reschedule">Reschedule</span></li>
-                        <li>Example User | 02/03/2025 | <span class="status cancel">Cancel</span></li>
-                      </ul>
-                      <button id="view-all-btn">View All Appointments</button>
-                    </div>
-                  </div>
+                    <!-- Calendar Section -->
+                    <div id='calendar'></div>
+                </div>
                 
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    // //calendar
+    document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar')
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay' },
+
+        views: {
+            dayGridMonth: { // name of view
+            titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' }
+            // other view-specific options here
+            }
+        }
+
+    })
+    calendar.render()
+    })
+
+    document.addEventListener('DOMContentLoaded', function() {
       // Initialize stats (mock data)
       const totalUsers = 50;
       const upcomingAppointments = 5;
@@ -183,15 +171,6 @@
 
         //Modal
         
-
-        //Calendar
-        function openCalendar() {
-            document.getElementById("calendarModal").style.display = "block";
-        }
-
-        function closeCalendar() {
-            document.getElementById("calendarModal").style.display = "none";
-        }
 
         function toggleDropdown(event, dropdownId) {
             event.stopPropagation();

@@ -6,6 +6,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\faqController;
+use App\Http\Controllers\AdminController;
 
 
 
@@ -13,7 +14,7 @@ use App\Http\Controllers\faqController;
 //test
 Route::get('/', function () {
 
-    return view('admin.admin');
+    return view('admin.dashboard');
 })->name('index');
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
