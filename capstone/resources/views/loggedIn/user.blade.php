@@ -7,8 +7,8 @@
         <link rel="icon" type="image/x-icon" href="img/logo.png">
         <script src="https://unpkg.com/@popperjs/core@2"></script>
         <script src="https://unpkg.com/tippy.js@6"></script>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/user.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/user.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -25,10 +25,10 @@
         <div class="container">
             <!-- Sidebar -->
             <div class="sidebar">
-                <img src="img/logo.png" alt="Angel Logo" class="angel-logo">
+                <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
                 <div class="profile-section">
                     <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
-                        <img src="img/modpic.jpg" alt="Profile" class="profile-pic">
+                        <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
                         <div class="profile-details">
                             <p><strong>Joseph Chan</strong></p>
                             <p>Father</p>
@@ -37,9 +37,9 @@
                 </div>
 
                 <ul class="menu">
-                    <li><a href="#" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
                     <li>
-                        <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
+                        <a href="" onclick="toggleDropdown(event, 'activitiesDropdown')">
                             <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
                         </a>
                         <ul class="dropdown" id="activitiesDropdown">

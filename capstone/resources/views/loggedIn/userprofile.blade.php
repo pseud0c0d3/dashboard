@@ -7,8 +7,8 @@
     <link rel="icon" type="image/x-icon" href="logo.png">
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/userprofile.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/userprofile.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -16,19 +16,19 @@
 
 </head>
 <body>
-    <!-- Loading Overlay -->
+    {{-- <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
-        <img src="img/angel.png" alt="Loading..." id="loadingImage">
-    </div>
+        <img src="/img/angel.png" alt="Loading..." id="loadingImage">
+    </div> --}}
 
     <!-- Main content and other structure -->
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <img src="img/logo.png" alt="Angel Logo" class="angel-logo">
+            <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
             <div class="profile-section">
-                <a href="#" class="profile-link" onclick="showLoading('userprofile.html')">
-                    <img src="img/modpic.jpg" alt="Profile" class="profile-pic">
+                <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
+                    <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
                     <div class="profile-details">
                         <p><strong>Joseph Chan</strong></p>
                         <p>Father</p>
@@ -37,14 +37,14 @@
             </div>
 
             <ul class="menu">
-                <li><a href="#" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
                 <li>
                     <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                         <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
                     </a>
                     <ul class="dropdown" id="activitiesDropdown">
-                        <li><a href="#" onclick="showLoading('activity1.html')">Activity 1</a></li>
-                        <li><a href="#" onclick="showLoading('activity2.html')">Activity 2</a></li>
+                        <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Activity 1</a></li>
+                        <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                     </ul>
                 </li>
                 <li><a href="#" onclick="showLoading('sched.html')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
@@ -89,7 +89,7 @@
                     <div class="profile-card">
                         <div class="profile-header-section position-relative">
                             <!-- Profile Image -->
-                            <img src="modpic.jpg" alt="Profile picture" class="profile-image rounded-circle" id="profile-image"      onclick="triggerFileInput()">
+                            <img src="/img/modpic.jpg" alt="Profile picture" class="profile-image rounded-circle" id="profile-image"      onclick="triggerFileInput()">
 
                             <!-- Hidden File Input for Image Upload -->
                             <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="previewImage(event)">
