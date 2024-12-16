@@ -9,7 +9,7 @@ use App\Http\Controllers\ActivityController;
 //test
 Route::get('/', function () {
 
-    return view('loggedIn.user');
+    return view('loggedIn.calendar');
 })->name('index');
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');

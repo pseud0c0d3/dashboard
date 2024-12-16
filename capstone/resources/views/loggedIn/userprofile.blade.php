@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
     <link rel="stylesheet" href="bootstrap.min.css">
 
 </head>
@@ -65,7 +66,6 @@
                 </div>
                 <div class="icons">
                     <i class="bi bi-chat-dots chat-icon" onclick="showLoading('chat.html')"></i>
-                    <i class="bi bi-calendar-fill calendar-icon" onclick="openCalendar()"></i>
                     <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
                     <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
                 </div>
@@ -229,18 +229,7 @@
             
             </div>
         </div>
-        <!-- Calendar Modal Structure -->
-        <div id="calendarModal" class="calendar-modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
-            <div class="calendar-modal-content bg-white rounded-lg shadow-lg w-11/12 md:w-1/3 p-6">
-                <span class="close-calendar cursor-pointer text-gray-500 hover:text-gray-800" onclick="closeCalendar()">&times;</span>
-                <h3 class="font-semibold mb-2">Scheduled Events:</h3>
-                <ul id="scheduledEventsList" class="list-disc pl-5">
-                    <li>Meeting with John - Oct 12, 2024</li>
-                    <li>Doctor's Appointment - Oct 14, 2024</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+
     
 <!------------------------------------------------------------------------------------------------------------------------------>
  <script>
@@ -276,13 +265,6 @@ function closeModal(modalId) {
     
         function updateProfile() {
             alert("Update profile functionality goes here.");
-        }
-
-        function openCalendar() {
-            document.getElementById("calendarModal").style.display = "block";
-        }
-        function closeCalendar() {
-            document.getElementById("calendarModal").style.display = "none";
         }
 
         function toggleSidebar() {

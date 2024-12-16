@@ -16,10 +16,10 @@
 
     </head>
     <body>
-        <!-- Loading Overlay -->
+        {{-- <!-- Loading Overlay -->
         <div class="loading-overlay" id="loadingOverlay">
             <img src="img/angel.png" alt="Loading..." id="loadingImage">
-        </div>
+        </div> --}}
 
         <!-- Main content and other structure -->
         <div class="container">
@@ -65,7 +65,6 @@
                     </div>
                     <div class="icons">
                         <i class="bi bi-chat-dots chat-icon" onclick="showLoading('chat.html')"></i>
-                        <i class="bi bi-calendar-fill calendar-icon" onclick="openCalendar()"></i>
                         <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
                         <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
                     </div>
@@ -88,19 +87,6 @@
                 </div>
             </div>
         </div>
-            <!-- Calendar Modal Structure -->
-            <div id="calendarModal" class="calendar-modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
-                <div class="calendar-modal-content bg-white rounded-lg shadow-lg w-11/12 md:w-1/3 p-6">
-                    <span class="close-calendar cursor-pointer text-gray-500 hover:text-gray-800" onclick="closeCalendar()">&times;</span>
-                    <h3 class="font-semibold mb-2">Scheduled Events:</h3>
-                    <ul id="scheduledEventsList" class="list-disc pl-5">
-                        <li>Meeting with John - Oct 12, 2024</li>
-                        <li>Doctor's Appointment - Oct 14, 2024</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="bi bi-plus-circle add-post-icon" onclick="openModal()"></div>
     <!------------------------------------------------------------------------------------------------------------------------------>
         <!-- Modal for Adding Post -->
         <div id="addNewPost" class="modal">
@@ -150,13 +136,6 @@
 
             function changePassword() {
                 alert("Change password functionality goes here.");
-            }
-
-            function openCalendar() {
-                document.getElementById("calendarModal").style.display = "block";
-            }
-            function closeCalendar() {
-                document.getElementById("calendarModal").style.display = "none";
             }
 
             // Toggle sidebar visibility
