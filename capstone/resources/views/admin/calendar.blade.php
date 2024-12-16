@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="css/user.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    {{-- calendar --}}
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 </head>
@@ -83,7 +84,7 @@
                 </ul>
             </div>
             <div class="main-content">
-                <div class="posts" id="postsContainer"></div>
+                <div id='calendar'></div>
             </div>
         </div>
     </div>
@@ -249,6 +250,15 @@
                 console.error("Failed to copy: ", err);
             });
         }
+
+        // calendar
+        document.addEventListener('DOMContentLoaded', function() {
+        const calendarEl = document.getElementById('calendar')
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        })
+        calendar.render()
+      })
 
 
     </script>

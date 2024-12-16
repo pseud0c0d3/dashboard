@@ -13,7 +13,7 @@ use App\Http\Controllers\faqController;
 //test
 Route::get('/', function () {
 
-    return view('loggedIn.calendar');
+    return view('admin.admin');
 })->name('index');
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
