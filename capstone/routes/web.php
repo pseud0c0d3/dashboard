@@ -5,6 +5,7 @@ use App\Http\Controllers\CreateNewUser;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\faqController;
 
 
 
@@ -35,5 +36,8 @@ Route::get('/workspace/sonar', [ActivityController::class, 'sonar'])->name('work
 
 //userprofile routes
 Route::get('/loggedIn/userprofile', [UserController::class, 'userprofile'])->name('loggedIn.userprofile');
+
+//userprofile routes
+Route::get('/loggedIn/faq', [faqController::class, 'faq'])->name('loggedIn.faq');
 
 

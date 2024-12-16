@@ -23,7 +23,7 @@
         <div class="sidebar">
             <img src="logo.png" alt="Angel Logo" class="angel-logo">
             <div class="profile-section">
-                <a href="#" class="profile-link" onclick="showLoading('userprofile.html')">
+                <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
                     <img src="modpic.jpg" alt="Profile" class="profile-pic">
                     <div class="profile-details">
                         <p><strong>Joseph Chan</strong></p>
@@ -33,14 +33,14 @@
             </div>
 
             <ul class="menu">
-                <li><a href="#" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
                 <li>
                     <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                         <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
                     </a>
                     <ul class="dropdown" id="activitiesDropdown">
-                        <li><a href="#" onclick="showLoading('activity1.html')">Activity 1</a></li>
-                        <li><a href="#" onclick="showLoading('activity2.html')">Activity 2</a></li>
+                        <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Activity 1</a></li>
+                            <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                     </ul>
                 </li>
                 <li><a href="#" onclick="showLoading('sched.html')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
@@ -48,7 +48,7 @@
 
             <div class="bottom-container">
                 <ul class="menu">
-                    <li><a href="#" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
+                    <li><a href="{{ route('loggedIn.faq') }}" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
                     <li><a href="#" onclick="showLoading('logout.html')"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
                 </ul>
             </div>
@@ -68,7 +68,7 @@
                 <!-- Settings Dropdown -->
                 <div class="settings-dropdown" id="settingsDropdown">
                     <a href="#" onclick="changePassword()">Change Password</a>
-                    
+
                 </div>
             </div>
             <!-- Notification Dropdown -->
@@ -81,7 +81,7 @@
             </div>
             <div class="main-content">
                 <div class="posts" id="postsContainer"></div>
-                    
+
             </div>
 
         </div>
@@ -212,13 +212,13 @@ function loadComments(postId) {
 
 
 
-        
+
         function toggleContactList() {
             const modal = document.getElementById("contactListModal");
             modal.style.display = modal.style.display === "block" ? "none" : "block";
         }
 
-       
+
         function openChat(contact) {
             const profiles = {
                 'Dr. Lebron': 'https://via.placeholder.com/40',
@@ -238,16 +238,16 @@ function loadComments(postId) {
             localStorage.setItem("chatOpen", "true");
         }
 
-       
+
         function closeChat() {
             document.getElementById("chatWindow").style.display = "none";
             document.getElementById("chatIcon").style.display = "flex";
 
-         
+
             localStorage.setItem("chatOpen", "false");
         }
 
-       
+
         function sendMessage() {
             const messageInput = document.getElementById("messageInput");
             const messageText = messageInput.value.trim();
@@ -263,17 +263,17 @@ function loadComments(postId) {
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-       
+
         function goBackToContacts() {
             document.getElementById("chatWindow").style.display = "none";
             document.getElementById("contactListModal").style.display = "block";
             document.getElementById("chatIcon").style.display = "flex";
 
-            
+
             localStorage.setItem("chatOpen", "false");
         }
 
-       
+
         document.getElementById("messageInput").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 sendMessage();
@@ -294,10 +294,10 @@ function loadComments(postId) {
        // Show loading overlay for navigation
        function showLoading(url) {
             const loadingOverlay = document.getElementById("loadingOverlay");
-            loadingOverlay.style.display = "flex"; 
+            loadingOverlay.style.display = "flex";
             setTimeout(() => {
-                window.location.href = url; 
-            }, 2000); 
+                window.location.href = url;
+            }, 2000);
         }
 
         function openNotifications() {
@@ -336,7 +336,7 @@ function loadComments(postId) {
         }
 
 
-    
+
 
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
@@ -372,7 +372,7 @@ function addNewPost() {
         const postId = postIdCounter; // Unique ID for the post
 
         const post = document.createElement("div");
-        post.className = "post"; 
+        post.className = "post";
         post.id = `post-${postId}`; // Set the ID for the post element
         post.innerHTML = `
             <div class="user-info">
@@ -453,6 +453,6 @@ function reportPost() {
     alert("This post has been reported.");
 }
 
-    </script>   
+    </script>
 </body>
 </html>

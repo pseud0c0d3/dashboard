@@ -35,7 +35,7 @@
         <div class="sidebar">
             <img src="img/logo.png" alt="Angel Logo" class="angel-logo">
             <div class="profile-section">
-                <a href="userprofile.html" class="profile-link" onclick="showLoading('userprofile.html')">
+                <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
                     <img src="img/modpic.jpg" alt="Profile" class="profile-pic">
                     <div class="profile-details">
                         <p><strong>Joseph Chan</strong></p>
@@ -43,29 +43,19 @@
                     </div>
                 </a>
             </div>
-<<<<<<< HEAD
-
-=======
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
             <ul class="menu">
-                <li><a href="#" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
                 <li>
                     <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                         <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
                     </a>
                     <ul class="dropdown" id="activitiesDropdown">
-                        <li><a href="#" onclick="showLoading('activity1.html')">Activity 1</a></li>
-                        <li><a href="#" onclick="showLoading('activity2.html')">Activity 2</a></li>
+                        <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Activity 1</a></li>
+                            <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                     </ul>
                 </li>
                 <li><a href="sched.html" onclick="toggleDropdown(event, 'calendarDropdown')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             </ul>
-<<<<<<< HEAD
-
-=======
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
             <div class="bottom-container">
                 <ul class="menu">
                     <li><a href="#" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
@@ -73,11 +63,6 @@
                 </ul>
             </div>
         </div>
-<<<<<<< HEAD
-
-=======
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         <div class="headers">
             <div class="header">
                 <div class="search-container">

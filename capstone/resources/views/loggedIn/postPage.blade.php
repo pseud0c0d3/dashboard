@@ -24,7 +24,7 @@
         <div class="sidebar">
             <img src="logo.png" alt="Angel Logo" class="angel-logo">
             <div class="profile-section">
-                <a href="#" class="profile-link" onclick="showLoading('userprofile.html')">
+                <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
                     <img src="modpic.jpg" alt="Profile" class="profile-pic">
                     <div class="profile-details">
                         <p><strong>Joseph Chan</strong></p>
@@ -34,7 +34,7 @@
             </div>
 
             <ul class="menu">
-                <li><a href="#" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
                 <li>
                     <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                         <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
@@ -69,7 +69,7 @@
                 <!-- Settings Dropdown -->
                 <div class="settings-dropdown" id="settingsDropdown">
                     <a href="#" onclick="changePassword()">Change Password</a>
-                    
+
                 </div>
             </div>
             <!-- Notification Dropdown -->
@@ -87,13 +87,13 @@
                         <p class="timestamp">Posted on: 2024-11-11</p>
                     </div>
                     <p class="post-content">This is the main post content.</p>
-            
+
                     <!-- Main post comment section -->
                     <div class="comment-form">
                         <textarea id="mainPostComment" placeholder="Write your comment on this post..."></textarea>
                         <button onclick="submitMainPostComment()">Post Comment</button>
                     </div>
-            
+
                     <div class="comments-section">
                         <h3>Comments</h3>
                         <ul id="commentsList">
@@ -101,21 +101,21 @@
                             <li id="comment-1">
                                 <strong>James</strong> <span>2024-11-11</span>
                                 <p>This is a comment from a user.</p>
-                                
+
                                 <!-- Like button -->
                                 <button class="like-btn" onclick="likeComment(1)">
                                     Like (<span id="like-count-1">0</span>)
                                 </button>
-            
+
                                 <!-- Button to open reply form -->
                                 <button class="reply-btn" onclick="toggleReplyForm(1)">Reply</button>
-            
+
                                 <!-- Reply Form -->
                                 <div class="reply-form" id="reply-form-1">
                                     <textarea placeholder="Write your reply..." id="reply-text-1" oninput="checkMention(1)"></textarea>
                                     <button onclick="submitReply(1)">Submit Reply</button>
                                 </div>
-            
+
                                 <!-- Replies to this comment -->
                                 <ul class="replies-list" id="replies-list-1">
                                     <li>
@@ -146,24 +146,24 @@
         // Show loading overlay for navigation
         function showLoading(url) {
             const loadingOverlay = document.getElementById("loadingOverlay");
-            loadingOverlay.style.display = "flex"; 
+            loadingOverlay.style.display = "flex";
             setTimeout(() => {
-                window.location.href = url; 
-            }, 2000); 
+                window.location.href = url;
+            }, 2000);
         }
-    
+
         function openNotifications() {
             toggleDropdown(event, 'notificationsDropdown');
         }
-    
+
         function toggleSettingsDropdown() {
             toggleDropdown(event, 'settingsDropdown');
         }
-    
+
         function changePassword() {
             alert("Change password functionality goes here.");
         }
-    
+
         function updateProfile() {
             alert("Update profile functionality goes here.");
         }
@@ -188,7 +188,7 @@
             const dropdown = document.getElementById(dropdownId);
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
-    
+
         function logout() {
             alert("Log out functionality goes here.");
         }
@@ -197,26 +197,26 @@
         function openModal() {
             document.getElementById("addNewPost").style.display = "block";
         }
-    
+
         function closeModal() {
             document.getElementById("addNewPost").style.display = "none";
         }
-    
+
         // Function to navigate to the post page
         function goToPostPage(postId) {
             window.location.href = `post.html?postId=${postId}`;
         }
-        
+
         // Show loading overlay for navigation
         function showLoading(url) {
             const loadingOverlay = document.getElementById("loadingOverlay");
-            loadingOverlay.style.display = "flex"; 
+            loadingOverlay.style.display = "flex";
             setTimeout(() => {
-                window.location.href = url; 
-            }, 2000); 
+                window.location.href = url;
+            }, 2000);
         }
 
-    
+
         // Close dropdowns if clicked outside
         window.onclick = function(event) {
             const dropdowns = document.querySelectorAll('.dropdown');
@@ -225,7 +225,7 @@
                     dropdown.style.display = "none";
                 }
             });
-    
+
             // Close settings dropdown
             const settingsDropdown = document.getElementById('settingsDropdown');
             if (settingsDropdown.style.display === "block") {
@@ -237,7 +237,7 @@
                 notificationsDropdown.style.display = "none";
             }
         };
-    
+
         function copyPostLink(postId) {
             const postLink = `${window.location.origin}/post/${postId}`;
             navigator.clipboard.writeText(postLink).then(() => {
@@ -252,7 +252,7 @@ function submitMainPostComment() {
     const mainCommentText = document.getElementById("mainPostComment").value;
     if (mainCommentText.trim() !== "") {
         const commentsList = document.getElementById("commentsList");
-        
+
         // Create a new main post comment element
         const newComment = document.createElement('li');
         newComment.innerHTML = `
@@ -265,7 +265,7 @@ function submitMainPostComment() {
             </div>
             <ul class="replies-list" id="replies-list-${commentsList.children.length + 1}"></ul>
         `;
-        
+
         commentsList.appendChild(newComment);
         document.getElementById("mainPostComment").value = '';  // Clear the comment textarea
     } else {
@@ -286,14 +286,14 @@ function submitReply(commentId) {
     const replyText = document.getElementById(`reply-text-${commentId}`).value;
     if (replyText.trim() !== "") {
         const repliesList = document.getElementById(`replies-list-${commentId}`);
-        
+
         // Create a new reply element
         const newReply = document.createElement('li');
         newReply.innerHTML = `
             <strong>YourUsername</strong> <span>${new Date().toLocaleDateString()}</span>
             <p>${replyText}</p>
         `;
-        
+
         repliesList.appendChild(newReply);
         document.getElementById(`reply-text-${commentId}`).value = '';  // Clear the reply textarea
         toggleReplyForm(commentId);  // Hide the reply form after submission
@@ -315,7 +315,7 @@ function likeComment(commentId) {
 // Function to submit a comment on the main post
 function submitMainPostComment() {
     const commentText = document.getElementById("mainPostComment").value;
-    
+
     if (commentText) {
         const commentList = document.getElementById("commentsList");
 
@@ -324,12 +324,12 @@ function submitMainPostComment() {
         newComment.innerHTML = `
             <strong>NewUser</strong> <span>2024-11-11</span>
             <p>${commentText}</p>
-            
+
             <!-- Like button -->
             <button class="like-btn" onclick="likeComment(${commentList.children.length + 1})">
                 Like (<span id="like-count-${commentList.children.length + 1}">0</span>)
             </button>
-            
+
             <!-- Button to open reply form -->
             <button class="reply-btn" onclick="toggleReplyForm(${commentList.children.length + 1})">Reply</button>
 
@@ -343,7 +343,7 @@ function submitMainPostComment() {
             <ul class="replies-list" id="replies-list-${commentList.children.length + 1}">
             </ul>
         `;
-        
+
         commentList.appendChild(newComment);
         document.getElementById("mainPostComment").value = '';  // Clear comment box
     }
