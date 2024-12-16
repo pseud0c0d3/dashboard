@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\faqController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MessageController;
 
 
 
@@ -40,5 +41,8 @@ Route::get('/loggedIn/userprofile', [UserController::class, 'userprofile'])->nam
 
 //userprofile routes
 Route::get('/loggedIn/faq', [faqController::class, 'faq'])->name('loggedIn.faq');
+
+//chat routes
+Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn.chat');
 
 
