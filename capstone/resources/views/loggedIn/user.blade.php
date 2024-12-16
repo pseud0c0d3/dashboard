@@ -16,10 +16,10 @@
 
     </head>
     <body>
-        <!-- Loading Overlay -->
+        {{-- <!-- Loading Overlay -->
         <div class="loading-overlay" id="loadingOverlay">
             <img src="img/angel.png" alt="Loading..." id="loadingImage">
-        </div>
+        </div> --}}
 
         <!-- Main content and other structure -->
         <div class="container">
@@ -27,8 +27,8 @@
             <div class="sidebar">
                 <img src="img/logo.png" alt="Angel Logo" class="angel-logo">
                 <div class="profile-section">
-                    <a href="#" class="profile-link" onclick="showLoading('userprofile.html')">
-                        <img src="modpic.jpg" alt="Profile" class="profile-pic">
+                    <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
+                        <img src="img/modpic.jpg" alt="Profile" class="profile-pic">
                         <div class="profile-details">
                             <p><strong>Joseph Chan</strong></p>
                             <p>Father</p>
