@@ -105,13 +105,8 @@
             </div>
             <div class="main-content">
                 <div class="chat-container">
-<<<<<<< HEAD
 
 
-=======
-
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
                     <!-- Chat Box -->
                     <div class="chat-box">
                         <h3>Chat with User 1</h3>
@@ -142,15 +137,9 @@
                         </ul>
                     </div>
                 </div>
-<<<<<<< HEAD
 
             </div>
 
-=======
-
-            </div>
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         </div>
         <!-- Calendar Modal Structure -->
         <div id="calendarModal" class="calendar-modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
@@ -169,17 +158,11 @@
         </div>
     </div>
 <!------------------------------------------------------------------------------------------------------------------------------>
-<<<<<<< HEAD
-
-=======
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
 <!------------------------------------------------------------------------------------------------------------------------->
     <script>
         // Show loading overlay for navigation
         function showLoading(url) {
             const loadingOverlay = document.getElementById("loadingOverlay");
-<<<<<<< HEAD
             loadingOverlay.style.display = "flex";
             setTimeout(() => {
                 window.location.href = url;
@@ -198,26 +181,6 @@
             alert("Change password functionality goes here.");
         }
 
-=======
-            loadingOverlay.style.display = "flex";
-            setTimeout(() => {
-                window.location.href = url;
-            }, 1000);
-        }
-
-        function openNotifications() {
-            toggleDropdown(event, 'notificationsDropdown');
-        }
-
-        function toggleSettingsDropdown() {
-            toggleDropdown(event, 'settingsDropdown');
-        }
-
-        function changePassword() {
-            alert("Change password functionality goes here.");
-        }
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         function updateProfile() {
             alert("Update profile functionality goes here.");
         }
@@ -242,11 +205,6 @@
             const dropdown = document.getElementById(dropdownId);
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
-<<<<<<< HEAD
-
-=======
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         function logout() {
             alert("Log out functionality goes here.");
         }
@@ -348,11 +306,6 @@
     // Load the default contact's chat history initially
     loadChat(currentContact);
 
-<<<<<<< HEAD
-
-=======
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         // Close dropdowns if clicked outside
         window.onclick = function(event) {
             const dropdowns = document.querySelectorAll('.dropdown');
@@ -361,26 +314,15 @@
                     dropdown.style.display = "none";
                 }
             });
-<<<<<<< HEAD
-
-=======
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
             // Close settings dropdown
             const settingsDropdown = document.getElementById('settingsDropdown');
             if (settingsDropdown.style.display === "block") {
                 settingsDropdown.style.display = "none";
             }
         };
-<<<<<<< HEAD
 
 
 
-=======
-
-
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
         function copyPostLink(postId) {
             const postLink = `${window.location.origin}/post/${postId}`;
             navigator.clipboard.writeText(postLink).then(() => {
@@ -389,11 +331,6 @@
                 console.error("Failed to copy: ", err);
             });
         }
-<<<<<<< HEAD
-
-=======
-
->>>>>>> f54d4731fcd1ed9246a0fd9738332e60b93faa4f
 
     </script>
 </body>

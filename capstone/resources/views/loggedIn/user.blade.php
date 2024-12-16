@@ -35,7 +35,7 @@
                         </div>
                     </a>
                 </div>
-                                                                                                                                                                                                                                                                                                                                                            
+
                 <ul class="menu">
                     <li><a href="#" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
                     <li>
@@ -43,8 +43,8 @@
                             <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
                         </a>
                         <ul class="dropdown" id="activitiesDropdown">
-                            <li><a href="#" onclick="showLoading('activity1.html')">Activity 1</a></li>
-                            <li><a href="#" onclick="showLoading('activity2.html')">Activity 2</a></li>
+                            <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Activity 1</a></li>
+                            <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                         </ul>
                     </li>
                     <li><a href="#" onclick="showLoading('sched.html')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
@@ -72,7 +72,7 @@
                     <!-- Settings Dropdown -->
                     <div class="settings-dropdown" id="settingsDropdown">
                         <a href="#" onclick="changePassword()">Change Password</a>
-                        
+
                     </div>
                 </div>
                 <!-- Notification Dropdown -->
@@ -134,20 +134,20 @@
             // Show loading overlay for navigation
             function showLoading(url) {
                 const loadingOverlay = document.getElementById("loadingOverlay");
-                loadingOverlay.style.display = "flex"; 
+                loadingOverlay.style.display = "flex";
                 setTimeout(() => {
-                    window.location.href = url; 
-                }, 2000); 
+                    window.location.href = url;
+                }, 2000);
             }
-        
+
             function openNotifications() {
                 toggleDropdown(event, 'notificationsDropdown');
             }
-        
+
             function toggleSettingsDropdown() {
                 toggleDropdown(event, 'settingsDropdown');
             }
-        
+
             function changePassword() {
                 alert("Change password functionality goes here.");
             }
@@ -177,7 +177,7 @@
             function openModal() {
                 document.getElementById("addNewPost").style.display = "block";
             }
-        
+
             function closeModal() {
                 document.getElementById("addNewPost").style.display = "none";
             }
@@ -188,13 +188,13 @@
                 const title = document.getElementById("postTitle").value;
                 const content = document.getElementById("postContent").value;
                 const timestamp = new Date().toLocaleDateString();
-        
+
                 if (title && content) {
-                    postIdCounter++; 
+                    postIdCounter++;
                     const postId = postIdCounter;
-        
+
                     const post = document.createElement("div");
-                    post.className = "post"; 
+                    post.className = "post";
                     post.id = `post-${postId}`;
                     post.innerHTML = `
                         <div class="user-info">
@@ -218,19 +218,19 @@
                             <button class="action-btn" onclick="copyPostLink('${postId}')">Share</button>
                         </div>
                     `;
-        
+
                     const postsContainer = document.querySelector(".posts");
                     postsContainer.appendChild(post);
-        
+
                     document.getElementById("postTitle").value = "";
                     document.getElementById("postContent").value = "";
-    
+
                     closeModal();
                 } else {
                     alert("Please fill in both fields.");
                 }
             }
-        
+
             // Function to navigate to the post page
             function goToPostPage(postId) {
                 window.location.href = `postPage.html?postId=${postId}`;
@@ -244,7 +244,7 @@
                         dropdown.style.display = "none";
                     }
                 });
-        
+
                 // Close settings dropdown
                 const settingsDropdown = document.getElementById('settingsDropdown');
                 if (settingsDropdown.style.display === "block") {
@@ -256,8 +256,8 @@
                     notificationsDropdown.style.display = "none";
                 }
             };
-        
-        
+
+
             function copyPostLink(postId) {
                 const postLink = `${window.location.origin}/post/${postId}`;
                 navigator.clipboard.writeText(postLink).then(() => {
@@ -266,7 +266,7 @@
                     console.error("Failed to copy: ", err);
                 });
             }
-        
+
 
         </script>
     </body>

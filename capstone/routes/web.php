@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CreateNewUser;
+use App\Http\Controllers\ActivityController;
 
 
 
@@ -20,4 +21,9 @@ Route::get('/loggedOut/seemore', function () {
 Route::get('/loggedOut/seemore', function () {
     return view('loggedOut/seemore');
 })->name('seemore');
+
+
+//activities route
+Route::get('/workspace/colormatch', [ActivityController::class, 'colormatch'])->name('workspace.colormatch');
+Route::get('/workspace/sonar', [ActivityController::class, 'sonar'])->name('workspace.sonar');
 
