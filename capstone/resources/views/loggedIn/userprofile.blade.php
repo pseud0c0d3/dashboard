@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    
+
     <link rel="stylesheet" href="bootstrap.min.css">
 
 </head>
@@ -65,7 +65,7 @@
                     <input type="text" placeholder="Search...">
                 </div>
                 <div class="icons">
-                    <i class="bi bi-chat-dots chat-icon" onclick="showLoading('chat.html')"></i>
+                    <i class="bi bi-chat-dots chat-icon" onclick="showLoading('{{ route('loggedIn.chat') }}')"></i>
                     <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
                     <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
                 </div>

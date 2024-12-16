@@ -14,7 +14,7 @@ use App\Http\Controllers\MessageController;
 //test
 Route::get('/', function () {
 
-    return view('admin.admin');
+    return view('loggedIn.userprofile');
 })->name('index');
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function user()
+    public function chat()
     {
         return view('loggedIn.chat');
     }

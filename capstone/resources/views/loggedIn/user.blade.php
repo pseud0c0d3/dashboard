@@ -64,7 +64,7 @@
                         <input type="text" placeholder="Search...">
                     </div>
                     <div class="icons">
-                        <i class="bi bi-chat-dots chat-icon" onclick="showLoading('chat.html')"></i>
+                        <i class="bi bi-chat-dots chat-icon" onclick="showLoading('{{ route('loggedIn.chat') }}')"></i>
                         <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
                         <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
                     </div>
