@@ -1,4 +1,5 @@
 const startButton = document.getElementById('startButton');
+const exitButton = document.getElementById('exitButton');
 const board = document.getElementById('board');
 let colors = [];
 let flippedTiles = [];
@@ -92,4 +93,17 @@ function checkForMatch() {
 startButton.addEventListener('click', () => {
   startButton.style.display = 'none'; // Hide the start button
   createBoard(); // Call the function to create the board
+});
+
+function exitGame() {
+  // This function will reload the page (simulating exit)
+  window.location.reload();
+}
+function quitGame() {
+  window.location.reload(); // Reload the page (simulating exit)
+}
+
+exitButton.addEventListener('click', () => {
+  
+  exitGame(); // Call the function to create the board
 });

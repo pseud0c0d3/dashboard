@@ -10,6 +10,7 @@
   <div class="game-container">
     <div id="board" class="board"></div>
     <button id="startButton" class="start-button"> Start Game</button>
+    <button id="exitButton" class="start-button"> Exit</button>
   </div>
 
   <script src="{{ asset('js/colormatchscript.js') }}"></script>
