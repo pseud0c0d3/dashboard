@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\faqController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\CalendarController;
 
 
 
@@ -15,7 +16,7 @@ use App\Http\Controllers\MessageController;
 //test
 Route::get('/', function () {
 
-    return view('admin.dashboard');
+    return view('loggedIn.calendar');
 })->name('index');
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
@@ -44,5 +45,8 @@ Route::get('/loggedIn/faq', [faqController::class, 'faq'])->name('loggedIn.faq')
 
 //chat routes
 Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn.chat');
+
+//calendar routes
+Route::get('/loggedIn/calendar', [CalendarController::class, 'calendar'])->name('loggedIn.calendar');
 
 

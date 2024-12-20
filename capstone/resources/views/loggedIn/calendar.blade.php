@@ -3,53 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AID OF ANGELS</title>
-    <link rel="icon" type="image/x-icon" href="img/logo.png">
+    <title>AID OF ANGLES</title>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/user.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/chat.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js   "></script>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
+    <style>
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
-    {{-- <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <img src="img/angel.png" alt="Loading..." id="loadingImage">
-    </div> --}}
-
-    <!-- Main content and other structure -->
+    <div class="loading-overlay" id="loadingOverlay">Loading...</div>
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <img src="img/logo.png" alt="Angel Logo" class="angel-logo">
+            <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
             <div class="profile-section">
-                <a href="#" class="profile-link" onclick="showLoading('userprofile.html')">
-                    <img src="modpic.jpg" alt="Profile" class="profile-pic">
+                <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
+                    <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
                     <div class="profile-details">
                         <p><strong>Joseph Chan</strong></p>
                         <p>Father</p>
                     </div>
                 </a>
             </div>
-
             <ul class="menu">
-                <li><a href="#" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('loggedIn.user')"><i class="fas fa-home"></i> Home</a></li>
                 <li>
                     <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                         <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
                     </a>
                     <ul class="dropdown" id="activitiesDropdown">
                         <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Activity 1</a></li>
-                        <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
+                            <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                     </ul>
                 </li>
-                <li><a href="#" onclick="showLoading('sched.html')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-            </ul>
-
+                <li><a href="{{ route('loggedIn.calendar') }}" onclick="showLoading('loggedIn.calendar')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>            </ul>
             <div class="bottom-container">
                 <ul class="menu">
                     <li><a href="#" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
@@ -57,21 +63,21 @@
                 </ul>
             </div>
         </div>
-
         <div class="headers">
             <div class="header">
                 <div class="search-container">
                     <input type="text" placeholder="Search...">
                 </div>
                 <div class="icons">
-                    <i class="bi bi-chat-dots chat-icon" onclick="showLoading('{{ route('loggedIn.chat') }}')"></i>
+                    <i class="bi bi-calendar-fill calendar-icon" onclick="openCalendar()"></i>
                     <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
                     <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
                 </div>
                 <!-- Settings Dropdown -->
                 <div class="settings-dropdown" id="settingsDropdown">
                     <a href="#" onclick="changePassword()">Change Password</a>
-
+                    <a href="#" onclick="updateProfile()">Update Profile</a>
+                    <a href="#" onclick="logout()">Log Out</a>
                 </div>
             </div>
             <!-- Notification Dropdown -->
@@ -83,51 +89,56 @@
                 </ul>
             </div>
             <div class="main-content">
-                <div class="posts" id="postsContainer"></div>
-            </div>
-        </div>
-    </div>
+                <div class="dashboard">
+                    <div class="main">
 
-
-
-
-<!------------------------------------------------------------------------------------------------------------------------------>
-    <!-- Modal for Adding Post -->
-    <div id="addNewPost" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>Create Post</h4>
-                <span class="close" onclick="closeModal()">&times;</span>
-            </div>
-            <div class="modal-body">
-                <!-- User Profile Section -->
-                <div class="user-profile">
-                    <img src="profile.jpg" class="profile-pic">
-                    <div class="user-details">
-                        <span class="user-name">Joseph Chan</span>
                     </div>
+                    <!-- Calendar Section -->
+                    <div id='calendar'></div>
                 </div>
-                <!-- Post Content Section -->
-                <div class="post-content">
-                    <input type="text" id="postTitle" class="post-title-input" placeholder="Title of your Post" required>
-                    <textarea id="postContent" class="post-body-input" placeholder="Add more details to your post..." required></textarea>
-                </div>
+
             </div>
-            <div class="modal-footer">
-                <button class="post-button" onclick="addNewPost()">Post</button>
-                <button class="cancel-button" onclick="closeModal()">Cancel</button>
+        <!-- Calendar Modal Structure -->
+        <div id="calendarModal" class="calendar-modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+            <div class="calendar-modal-content bg-white rounded-lg shadow-lg w-11/12 md:w-1/3 p-6">
+                <span class="close-calendar cursor-pointer text-gray-500 hover:text-gray-800" onclick="closeCalendar()">&times;</span>
+                <h2 class="text-lg font-bold mb-4">Calendar</h2>
+                <div id="calendar" class="mb-4">
+                    <p>This is where your calendar will be displayed.</p>
+                </div>
+                <h3 class="font-semibold mb-2">Scheduled Events:</h3>
+                <ul id="scheduledEventsList" class="list-disc pl-5">
+                    <li>Meeting with John - Oct 12, 2024</li>
+                    <li>Doctor's Appointment - Oct 14, 2024</li>
+                </ul>
             </div>
         </div>
     </div>
+<!------------------------------------------------------------------------------------------------------------------------------>
 <!------------------------------------------------------------------------------------------------------------------------->
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar')
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay' },
+
+        views: {
+            dayGridMonth: { // name of view
+            titleFormat: { year: 'numeric', month: 'long' }
+            // other view-specific options here
+            }
+        }
+
+    })
+    calendar.render()
+    })
         // Show loading overlay for navigation
         function showLoading(url) {
             const loadingOverlay = document.getElementById("loadingOverlay");
             loadingOverlay.style.display = "flex";
             setTimeout(() => {
                 window.location.href = url;
-            }, 2000);
+            }, 1000);
         }
 
         function openNotifications() {
@@ -142,7 +153,18 @@
             alert("Change password functionality goes here.");
         }
 
-        // Toggle sidebar visibility
+        function updateProfile() {
+            alert("Update profile functionality goes here.");
+        }
+
+        function openCalendar() {
+            document.getElementById("calendarModal").style.display = "block";
+        }
+        function closeCalendar() {
+            document.getElementById("calendarModal").style.display = "none";
+        }
+
+                // Toggle sidebar visibility
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
             const isHidden = sidebar.style.display === 'none' || sidebar.style.display === '';
@@ -155,69 +177,106 @@
             const dropdown = document.getElementById(dropdownId);
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
+        function logout() {
+            alert("Log out functionality goes here.");
+        }
 //<------------------------------------------------------------------------------------------------------------------------->
-        // Modal handling for adding new posts
-        function openModal() {
-            document.getElementById("addNewPost").style.display = "block";
-        }
 
-        function closeModal() {
-            document.getElementById("addNewPost").style.display = "none";
-        }
+    // Dummy data to simulate chat histories for each contact
+    const chats = {
+        'User 1': [
+            { sender: 'contact', message: "Hello! How can I assist you today?" },
+            { sender: 'user', message: "I have a question regarding the recent diagnosis." }
+        ],
+        'User 2': [
+            { sender: 'contact', message: "Hi! How are you doing?" },
+            { sender: 'user', message: "I'm doing well, thank you!" }
+        ],
+        'User 3': [
+            { sender: 'contact', message: "Good morning!" },
+            { sender: 'user', message: "Good morning! Can you help me?" }
+        ]
+    };
 
-        let postIdCounter = 0;
-        // Add a new post
-        function addNewPost() {
-            const title = document.getElementById("postTitle").value;
-            const content = document.getElementById("postContent").value;
-            const timestamp = new Date().toLocaleDateString();
+    let currentContact = 'User 1'; // Default contact to display chat
 
-            if (title && content) {
-                postIdCounter++;
-                const postId = postIdCounter;
+    // Function to load chat messages for a specific contact
+    function loadChat(contact) {
+        const chatMessages = document.querySelector('.chat-messages');
+        chatMessages.innerHTML = ''; // Clear existing messages
+        currentContact = contact;
 
-                const post = document.createElement("div");
-                post.className = "post";
-                post.id = `post-${postId}`;
-                post.innerHTML = `
-                    <div class="user-info">
-                        <div class="user-avatar"></div>
-                        <div class="user-details">
-                            <p class="username">exampleUser</p>
-                            <p class="timestamp">${timestamp}</p>
-                        </div>
-                        <div class="ellipsis-container">
-                            <button class="ellipsis-btn" onclick="toggleMenu(this)">...</button>
-                            <div class="dropdown-content">
-                                <button onclick="reportPost()">Report Post</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-title">${title}</div>
-                    <div class="post-content">${content}</div>
-                    <div class="post-buttons">
-                        <button class="action-btn">Like</button>
-                        <button class="action-btn" onclick="goToPostPage('${postId}')">Comment</button>
-                        <button class="action-btn" onclick="copyPostLink('${postId}')">Share</button>
-                    </div>
-                `;
+        // Load chat history for selected contact
+        chats[contact].forEach(chat => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', chat.sender);
 
-                const postsContainer = document.querySelector(".posts");
-                postsContainer.appendChild(post);
+            // Profile image
+            const img = document.createElement('img');
+            img.src = chat.sender === 'contact' ? '/img/profile.jpg' : `${contact.toLowerCase().replace(' ', '')}.jpg`;
+            img.alt = contact;
 
-                document.getElementById("postTitle").value = "";
-                document.getElementById("postContent").value = "";
+            // Message bubble
+            const messageBubble = document.createElement('div');
+            messageBubble.classList.add('message-bubble');
+            messageBubble.innerText = chat.message;
 
-                closeModal();
-            } else {
-                alert("Please fill in both fields.");
-            }
-        }
+            messageElement.appendChild(img);
+            messageElement.appendChild(messageBubble);
+            chatMessages.appendChild(messageElement);
+        });
+    }
 
-        // Function to navigate to the post page
-        function goToPostPage(postId) {
-            window.location.href = `postPage.html?postId=${postId}`;
-        }
+    // Load chat when a contact is clicked
+    document.querySelectorAll('.contacts-list li').forEach(contactEl => {
+        contactEl.addEventListener('click', () => {
+            const contactName = contactEl.innerText;
+            document.querySelector('.chat-box h3').innerText = `Chat with ${contactName}`;
+            loadChat(contactName);
+        });
+    });
+
+    // Function to send a new message
+    document.querySelector('.chat-input button').addEventListener('click', sendMessage);
+    document.querySelector('.chat-input input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') sendMessage();
+    });
+
+    function sendMessage() {
+        const inputField = document.querySelector('.chat-input input');
+        const messageText = inputField.value.trim();
+        if (!messageText) return; // Don't send empty messages
+
+        // Display the new message in the chat box
+        const chatMessages = document.querySelector('.chat-messages');
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', 'user');
+
+        // Profile image for the user
+        const img = document.createElement('img');
+        img.src = `${currentContact.toLowerCase().replace(' ', '')}.jpg`;
+        img.alt = currentContact;
+
+        // Message bubble for the user message
+        const messageBubble = document.createElement('div');
+        messageBubble.classList.add('message-bubble');
+        messageBubble.innerText = messageText;
+
+        messageElement.appendChild(img);
+        messageElement.appendChild(messageBubble);
+        chatMessages.appendChild(messageElement);
+
+        // Add to chat history (simulating database update)
+        if (!chats[currentContact]) chats[currentContact] = [];
+        chats[currentContact].push({ sender: 'user', message: messageText });
+
+        // Clear input field and scroll to bottom
+        inputField.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Load the default contact's chat history initially
+    loadChat(currentContact);
 
         // Close dropdowns if clicked outside
         window.onclick = function(event) {
@@ -227,18 +286,13 @@
                     dropdown.style.display = "none";
                 }
             });
-
             // Close settings dropdown
             const settingsDropdown = document.getElementById('settingsDropdown');
             if (settingsDropdown.style.display === "block") {
                 settingsDropdown.style.display = "none";
             }
-            // Close settings dropdown
-            const notificationsDropdown = document.getElementById('notificationsDropdown');
-            if (notificationsDropdown.style.display === "block") {
-                notificationsDropdown.style.display = "none";
-            }
         };
+
 
 
         function copyPostLink(postId) {
@@ -250,6 +304,25 @@
             });
         }
 
+    //calendar section
+    // //calendar
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize stats (mock data)
+      const totalUsers = 50;
+      const upcomingAppointments = 5;
+      const dailyInteraction = 10;
+
+      document.getElementById('total-users').textContent = totalUsers;
+      document.getElementById('upcoming-appointments').textContent = upcomingAppointments;
+      document.getElementById('daily-interaction').textContent = dailyInteraction;
+
+      // View all appointments button functionality
+      document.getElementById('view-all-btn').addEventListener('click', function() {
+        alert('View All Appointments clicked!');
+      });
+    });
 
     </script>
 </body>

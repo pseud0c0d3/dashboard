@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Layout</title>
+    <title>Aid of Angels</title>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
 
@@ -54,7 +54,7 @@
                             <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                     </ul>
                 </li>
-                <li><a href="sched.html" onclick="toggleDropdown(event, 'calendarDropdown')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="{{ route('loggedIn.calendar') }}" onclick="showLoading('loggedIn.calendar')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             </ul>
             <div class="bottom-container">
                 <ul class="menu">
