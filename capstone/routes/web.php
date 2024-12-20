@@ -16,7 +16,7 @@ use App\Http\Controllers\CalendarController;
 //test
 Route::get('/', function () {
 
-    return view('loggedIn.user');
+    return view('admin.dashboard');
 })->name('index');
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
@@ -47,6 +47,6 @@ Route::get('/loggedIn/faq', [faqController::class, 'faq'])->name('loggedIn.faq')
 Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn.chat');
 
 //calendar routes
-Route::get('/loggedIn/calendar', [CalendarController::class, 'calendar'])->name('loggedIn.calendar');
+Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
 
 

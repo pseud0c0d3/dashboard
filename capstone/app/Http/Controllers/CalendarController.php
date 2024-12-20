@@ -8,6 +8,6 @@ class CalendarController extends Controller
 {
     public function calendar()
     {
-        return view('loggedIn.calendar');
+        return view('admin.calendar_admin');
     }
 }
