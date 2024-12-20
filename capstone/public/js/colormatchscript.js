@@ -1,5 +1,6 @@
 const startButton = document.getElementById('startButton');
 const exitButton = document.getElementById('exitButton');
+const quitButton = document.getElementById('quitButton');
 const board = document.getElementById('board');
 let colors = [];
 let flippedTiles = [];
@@ -91,8 +92,12 @@ function checkForMatch() {
 
 // Start the game
 startButton.addEventListener('click', () => {
-  startButton.style.display = 'none'; // Hide the start button
-  createBoard(); // Call the function to create the board
+    const homepage = document.getElementById('homepage');
+    const gameContainer = document.getElementById('gameContainer');
+
+    homepage.classList.add('hidden'); // Hide the homepage
+    gameContainer.classList.remove('hidden'); // Show the game container
+    createBoard(); // Initialize the game board
 });
 
 function exitGame() {
@@ -100,10 +105,14 @@ function exitGame() {
   window.location.reload();
 }
 function quitGame() {
-  window.location.reload(); // Reload the page (simulating exit)
-}
+    window.location.href = "{{ route('loggedIn.user') }}"; // Correctly rendered URL
+  }
 
 exitButton.addEventListener('click', () => {
-  
+
   exitGame(); // Call the function to create the board
+});
+quitButton.addEventListener('click', () => {
+
+    quitGame(); // Call the function to create the board
 });
