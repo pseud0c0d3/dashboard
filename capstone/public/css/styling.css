@@ -8,11 +8,11 @@ body {
     margin: 0;
     background-color: #f0f0f0;
   }
-  
+
   .game-container {
     text-align: center;
   }
-  
+
   .board {
     display: grid;
     grid-template-columns: repeat(4, 100px);
@@ -20,7 +20,7 @@ body {
     gap: 10px;
     margin-bottom: 20px;
   }
-  
+
   .tile {
     width: 100px;
     height: 100px;
@@ -34,34 +34,58 @@ body {
     transition: transform 0.5s;
     position: relative; /* Ensures correct stacking context */
   }
-  
-  
+
+
   .tile.flipped {
     transform: rotateY(180deg);
   }
-  
+
   .tile .front, .tile .back {
     width: 100%;
     height: 100%;
     position: absolute;
     backface-visibility: hidden; /* Hide the back face when flipped */
   }
-  
+
   .tile .back {
     background-color: transparent;
     border-radius: 5px;
   }
-  
+
   .tile .front {
     background-color: #ddd; /* Front face color (hidden when flipped) */
   }
-  
+
   .tile .back {
     background-color: transparent; /* Color will come from JS */
     border-radius: 5px;
   }
-  
+
   /* When tiles are clicked, they are enabled (no .disabled class) */
   .tile.disabled {
     pointer-events: none; /* Prevent clicking */
+  }
+
+  .hidden {
+    display: none;
+  }
+  .centered {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .button {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+  }
+  .start-button {
+    background-color: #28a745;
+    color: white;
+  }
+  .quit-button {
+    background-color: #dc3545;
+    color: white;
   }

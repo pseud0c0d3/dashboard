@@ -1,5 +1,6 @@
 const startButton = document.getElementById('startButton');
 const board = document.getElementById('board');
+const quitButton = document.getElementById('quitButton');
 let colors = [];
 let flippedTiles = [];
 let matchedTiles = 0;
@@ -92,4 +93,11 @@ function checkForMatch() {
 startButton.addEventListener('click', () => {
   startButton.style.display = 'none'; // Hide the start button
   createBoard(); // Call the function to create the board
+});
+
+// Quit the game
+quitButton.addEventListener('click', () => {
+  board.innerHTML = ''; // Clear the board
+  startButton.style.display = 'block'; // Show the start button again
+  isGameOver = true; // Stop any further game interactions
 });

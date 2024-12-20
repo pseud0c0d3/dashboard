@@ -16,7 +16,7 @@ use App\Http\Controllers\CalendarController;
 //test
 Route::get('/', function () {
 
-    return view('loggedIn.calendar');
+    return view('loggedIn.user');
 })->name('index');
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');

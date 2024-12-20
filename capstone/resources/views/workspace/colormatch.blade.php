@@ -7,9 +7,19 @@
   <link rel="stylesheet" href="/css/styling.css">
 </head>
 <body>
-  <div class="game-container">
+  <!-- Homepage Section -->
+  <div id="homepage" class="homepage centered">
+    <h1>Welcome to the Color Matching Game</h1>
+    <p>Match the colors to win! Click "Start Game" to begin.</p>
+    <button id="startGameButton" class="button start-button">Start Game</button>
+  </div>
+
+  <!-- Game Section -->
+  <div id="gameContainer" class="game-container hidden">
     <div id="board" class="board"></div>
-    <button id="startButton" class="start-button"> Start Game</button>
+    <div class="centered">
+      <button id="quitButton" class="button quit-button">Quit</button>
+    </div>
   </div>
 
   <script src="{{ asset('js/colormatchscript.js') }}"></script>

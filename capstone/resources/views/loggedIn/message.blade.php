@@ -33,7 +33,7 @@
             </div>
 
             <ul class="menu">
-                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Forum</a></li>
                 <li>
                     <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                         <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
