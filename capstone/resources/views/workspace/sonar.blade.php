@@ -59,7 +59,25 @@
             background-color: rgba(128, 128, 128, 0.9);
             pointer-events: none;
             z-index: 1;
-            display: none; /* Start with fog hidden */
+            display: none;
+        }
+        .home-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+        .home-container button {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #007BFF;
+            color: white;
+            margin-top: 10px;
         }
         .buttons {
             display: flex;
@@ -69,12 +87,19 @@
     </style>
 </head>
 <body>
+    <div class="home-container" id="homeContainer">
+        <h1>Welcome to Echo Quest!</h1>
+        <button onclick="startGame()">Start Game</button>
+        <button onclick="quitGame()">Quit Game</button>
+    </div>
+
     <div class="difficulty-overlay" id="difficultyOverlay">
         <div>Select Difficulty:</div>
         <button onclick="setDifficulty(1)">Easy</button>
         <button onclick="setDifficulty(2)">Medium</button>
         <button onclick="setDifficulty(3)">Hard</button>
     </div>
+
     <div class="message" id="winMessage">
         <div>You Escaped!</div>
         <div class="buttons">
@@ -82,15 +107,19 @@
             <button onclick="exitGame()">Exit</button>
         </div>
     </div>
+
     <div class="message" id="lossMessage">
-        <div>You Hit and Obstacle :<</div>
+        <div>You Hit an Obstacle!</div>
         <div class="buttons">
             <button onclick="resetGame()">Play Again</button>
             <button onclick="exitGame()">Exit</button>
         </div>
     </div>
+
     <div class="fog" id="fog"></div>
+
     <canvas id="gameCanvas"></canvas>
+
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -299,7 +328,17 @@
             if (e.key === 'ArrowRight') movement.right = false;
         });
 
-        // Initial state shows difficulty overlay
+        // Start Game
+        function startGame() {
+            document.getElementById('homeContainer').style.display = 'none';
+            document.getElementById('difficultyOverlay').style.display = 'flex'; // Show difficulty selection
+        }
+
+        // Quit Game
+        function quitGame() {
+            window.location.reload(); // Reload the page (simulating exit)
+        }
+
     </script>
 </body>
 </html>
