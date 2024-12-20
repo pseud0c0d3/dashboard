@@ -54,7 +54,7 @@
                             <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ route('loggedIn.calendar') }}" onclick="showLoading('loggedIn.calendar')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             </ul>
             <div class="bottom-container">
                 <ul class="menu">

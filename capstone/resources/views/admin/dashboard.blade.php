@@ -55,7 +55,7 @@
                             <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ route('loggedIn.calendar') }}" onclick="showLoading('loggedIn.calendar')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>            </ul>
+                <li><a href="{{ route('admin.calendar_admin') }}" onclick="showLoading('admin.calendar_admin')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>            </ul>
             <div class="bottom-container">
                 <ul class="menu">
                     <li><a href="#" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
@@ -93,8 +93,7 @@
                     <div class="main">
 
                     </div>
-                    <!-- Calendar Section -->
-                    <div id='calendar'></div>
+                    
                 </div>
 
             </div>
