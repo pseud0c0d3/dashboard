@@ -32,6 +32,8 @@ Route::get('/loggedOut/seemore', function () {
 
 //user routes
 Route::get('/loggedIn/user', [HomeController::class,'user'])->name('loggedIn.user');
+Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
+
 
 //activities route
 Route::get('/workspace/colormatch', [ActivityController::class, 'colormatch'])->name('workspace.colormatch');

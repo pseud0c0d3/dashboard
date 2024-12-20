@@ -105,8 +105,8 @@ function exitGame() {
   window.location.reload();
 }
 function quitGame() {
-    window.location.href = "{{ route('loggedIn.user') }}"; // Correctly rendered URL
-  }
+    window.location.href = "{{ url('/') }}"; // Redirect to the base URL
+}
 
 exitButton.addEventListener('click', () => {
 

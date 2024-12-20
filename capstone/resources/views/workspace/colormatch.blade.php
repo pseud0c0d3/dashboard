@@ -13,9 +13,7 @@
             <h1>Welcome to the Color Matching Game</h1>
             <p>Match the colors to win! Click "Start Game" to begin.</p>
             <button id="startButton" class="button start-button">Start Game</button>
-            <div class="centered">
-                <button id="quitButton" class="button quit-button" data-redirect-url="{{ route('loggedIn.user') }}">Quit</button>
-
+            <button id="quitButton" class="button quit-button">Quit</button>
             </div>
 
       </div>
