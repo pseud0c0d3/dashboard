@@ -244,16 +244,16 @@
 
 
                         <h5 class="text-left" style="margin-bottom: 20px;">LOG IN</h5>
-                        <form>
+                        <form method="POST" action="{{ route('login') }}">
                         @csrf
                             <!-- Email Floating Label -->
                             <div class="form-row">
-                                <input type="email" class="form-control form-control-sm" id="loginEmail" placeholder=" " required>
+                                <input type="email" class="form-control form-control-sm" id="loginEmail" name="email" placeholder=" " required>
                                 <label for="loginEmail">Email</label>
                             </div>
                             <!-- Password Floating Label -->
                             <div class="form-row mt-3">
-                                <input type="password" class="form-control form-control-sm" id="loginPassword" placeholder=" " required>
+                                <input type="password" class="form-control form-control-sm" id="loginPassword" name="password" placeholder=" " required>
                                 <label for="loginPassword">Password</label>
                             </div>
                             <!-- Remember Me Checkbox -->
@@ -264,10 +264,9 @@
                                 </label>
                                 <a href="#" style="color: #0066cc; float: right;">Forgot your password?</a>
                             </div>
-                        </form>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-warning text-black w-100 mb-4" style="font-size: 0.85rem; border-radius: 5px;" onclick="submitForm()">SUBMIT</button>
+                        <button type="submit" class="btn btn-warning text-black w-100 mb-4" style="font-size: 0.85rem; border-radius: 5px;">SUBMIT</button>
                         <div class="mt">
                             <span style="font-size: 0.85rem;">Don't have an account? </span>
                             <a href="#" id="registerLink" style="color: #0066cc;">Register here</a>
@@ -278,6 +277,7 @@
         </div>
     </div>
 </div>
+</form>
 
 
 <!-- Register Modal -->
