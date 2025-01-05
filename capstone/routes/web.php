@@ -16,10 +16,10 @@ use App\Http\Controllers\LogInController;
 
 
 //test
-Route::get('/', function () {
+// Route::get('/', function () {
 
-    return view('loggedOut.index');
-})->name('index');
+//     return view('loggedOut.index');
+// })->name('index');
 // ->middleware(Adminmiddleware::class);
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
@@ -59,4 +59,7 @@ Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn
 //calendar routes
 Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
 
+Route::get('/', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::resource('posts', PostController::class)->except(['index', 'show']);
 
