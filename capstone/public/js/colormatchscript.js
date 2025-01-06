@@ -2,6 +2,7 @@ const startButton = document.getElementById('startButton');
 const exitButton = document.getElementById('exitButton');
 const quitButton = document.getElementById('quitButton');
 const board = document.getElementById('board');
+
 let colors = [];
 let flippedTiles = [];
 let matchedTiles = 0;
@@ -94,6 +95,8 @@ function checkForMatch() {
 startButton.addEventListener('click', () => {
     const homepage = document.getElementById('homepage');
     const gameContainer = document.getElementById('gameContainer');
+    
+    
 
     homepage.classList.add('hidden'); // Hide the homepage
     gameContainer.classList.remove('hidden'); // Show the game container
@@ -116,3 +119,8 @@ quitButton.addEventListener('click', () => {
 
     quitGame(); // Call the function to create the board
 });
+
+var loader = document.getElementById("preloader");
+window.addEventListener("load", function(){
+  loader.style.display = "none";
+})
