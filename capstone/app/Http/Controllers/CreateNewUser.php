@@ -29,8 +29,9 @@ class CreateNewUser extends Controller
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'roles' => 'user', //dito palitan kung user or admin
-            
+
         ]);
+
 
         // // Optional: Login the user
         // auth()->login($user);

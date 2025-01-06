@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +11,14 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PostFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = Post::class;
+
+    public function definition()
     {
         return [
-            //
+            'title' => $this->faker->sentence(), // Generates a random title
+            'body' => $this->faker->paragraphs(3, true), // Generates a random body
+            'image' => $this->faker->imageUrl(640, 480, 'posts', true), // Generates a random image URL
         ];
     }
 }
