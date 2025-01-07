@@ -1,0 +1,125 @@
+
+
+
+
+
+.chat-container {
+    display: flex;
+    height: 567px;
+    font-family: Arial, sans-serif;
+}
+
+.contacts-list {
+    width: 30%;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+    
+}
+
+.contacts-list h3 {
+    margin-top: 0;
+}
+
+.contacts-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contacts-list li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+}
+
+.contacts-list li:hover {
+    background-color: #e9e9e9;
+}
+
+.chat-box {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.chat-box h3 {
+    margin: 0;
+    padding: 10px;
+    background-color: #315f85;
+    text-align: center;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #b9b8b8;
+    border-radius: 5px;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.message.user {
+    flex-direction: row; /* User messages aligned to the left */
+}
+
+.message.contact {
+    flex-direction: row-reverse; /* Contact messages aligned to the right */
+    text-align: right;
+}
+
+.message img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+.message-bubble {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.message.user .message-bubble {
+    background-color: #007bff;
+    color: #fff;
+    border-top-left-radius: 0;
+}
+
+.message.contact .message-bubble {
+    background-color: #e0e0e0;
+    color: #333;
+    border-top-right-radius: 0;
+}
+
+.chat-input {
+    display: flex;
+    margin-top: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+.chat-input button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-left: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border-radius: 0 4px 4px 0;
+}

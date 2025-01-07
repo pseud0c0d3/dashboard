@@ -1,5 +1,8 @@
 const startButton = document.getElementById('startButton');
+const exitButton = document.getElementById('exitButton');
+const quitButton = document.getElementById('quitButton');
 const board = document.getElementById('board');
+
 let colors = [];
 let flippedTiles = [];
 let matchedTiles = 0;
@@ -90,6 +93,34 @@ function checkForMatch() {
 
 // Start the game
 startButton.addEventListener('click', () => {
-  startButton.style.display = 'none'; // Hide the start button
-  createBoard(); // Call the function to create the board
+    const homepage = document.getElementById('homepage');
+    const gameContainer = document.getElementById('gameContainer');
+    
+    
+
+    homepage.classList.add('hidden'); // Hide the homepage
+    gameContainer.classList.remove('hidden'); // Show the game container
+    createBoard(); // Initialize the game board
 });
+
+function exitGame() {
+  // This function will reload the page (simulating exit)
+  window.location.reload();
+}
+function quitGame() {
+    window.location.href = "{{ url('/') }}"; // Redirect to the base URL
+}
+
+exitButton.addEventListener('click', () => {
+
+  exitGame(); // Call the function to create the board
+});
+quitButton.addEventListener('click', () => {
+
+    quitGame(); // Call the function to create the board
+});
+
+var loader = document.getElementById("preloader");
+window.addEventListener("load", function(){
+  loader.style.display = "none";
+})

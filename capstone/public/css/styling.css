@@ -7,12 +7,42 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
-  }
-  
+}
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(6px); /* Adjust the blur level */
+  z-index: -1; /* Ensure the image stays in the background */
+}
+
+    /* Center the loader container */
+    .loader-container {
+      display: none; /* Initially hidden */
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      z-index: 9999;
+    }
+
+        /* Loader styles */
+        .loader-container img {
+          width: 100px;
+          height: 100px;
+        }
+
   .game-container {
     text-align: center;
   }
-  
+
   .board {
     display: grid;
     grid-template-columns: repeat(4, 100px);
@@ -21,6 +51,10 @@ body {
     margin-bottom: 20px;
   }
   
+  .hidden {
+    display: none;
+}
+
   .tile {
     width: 100px;
     height: 100px;
@@ -34,34 +68,68 @@ body {
     transition: transform 0.5s;
     position: relative; /* Ensures correct stacking context */
   }
-  
-  
+
+
   .tile.flipped {
     transform: rotateY(180deg);
   }
-  
+
   .tile .front, .tile .back {
     width: 100%;
     height: 100%;
     position: absolute;
     backface-visibility: hidden; /* Hide the back face when flipped */
   }
-  
+
   .tile .back {
     background-color: transparent;
     border-radius: 5px;
   }
-  
+
   .tile .front {
     background-color: #ddd; /* Front face color (hidden when flipped) */
   }
-  
+
   .tile .back {
     background-color: transparent; /* Color will come from JS */
     border-radius: 5px;
   }
-  
+
   /* When tiles are clicked, they are enabled (no .disabled class) */
   .tile.disabled {
     pointer-events: none; /* Prevent clicking */
+  }
+
+  .hidden {
+    display: none;
+  }
+  .centered {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .button {
+    padding: 15px 30px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    border: solid black 1px;
+    
+  }
+  .start-button {
+    background-color: #28a745;
+    color: white;
+  }
+  .quit-button {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  #preloader{
+    background: transparent url(/img/loadermatch.gif) no-repeat center center;
+    background-size: 15%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
   }
