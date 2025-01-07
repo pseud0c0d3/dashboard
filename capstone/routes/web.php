@@ -11,16 +11,20 @@ use App\Http\Middleware\Adminmiddleware;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\LogInController;
-
+use App\Http\Controllers\PostController;
 
 
 
 //test
-// Route::get('/', function () {
+Route::get('/', function () {
 
-//     return view('loggedOut.index');
-// })->name('index');
+     return view('loggedIn.user');
+ })->name('index');
 // ->middleware(Adminmiddleware::class);
+// Route::get('/', [PostController::class, 'index'])->name('posts.index');
+
+
+
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
 
@@ -59,7 +63,10 @@ Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn
 //calendar routes
 Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
 
-Route::get('/', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::resource('posts', PostController::class)->except(['index', 'show']);
 
+// Avoid reusing 'posts/{post}' for the index route
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+// Use resource routes for remaining CRUD actions, excluding index and show
+Route::resource('posts', PostController::class)->except(['index', 'show']);

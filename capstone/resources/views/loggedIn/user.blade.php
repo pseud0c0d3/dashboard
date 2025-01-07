@@ -37,7 +37,7 @@
                 </div>
 
                 <ul class="menu">
-                    <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Forum</a></li>
+                    <li><a href="{{ route('loggedIn.user') }}" ><i class="fas fa-home"></i> Forum</a></li>
                     <li>
                         <a href="" onclick="toggleDropdown(event, 'activitiesDropdown')">
                             <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
@@ -47,7 +47,7 @@
                             <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                         </ul>
                     </li>
-                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a></li>                </ul>
+                    <li><a href="{{ route('admin.calendar_admin') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>                </ul>
 
                 <div class="bottom-container">
                     <ul class="menu">
@@ -84,7 +84,12 @@
                     </ul>
                 </div>
                 <div class="main-content">
-                    <div class="posts" id="postsContainer"></div>
+
+                            <a class="navbar-brand" href="{{ route('posts.index') }}">Forum</a>
+
+                    <main class="py-4">
+                        @yield('content')
+                    </main>
                 </div>
             </div>
         </div>
