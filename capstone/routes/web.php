@@ -44,7 +44,7 @@ Route::post('/', [LogInController::class, 'logout'])->name('logout');
 
 //user routes
 Route::get('/loggedIn/user', [HomeController::class,'user'])->name('loggedIn.user');
-Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
+// Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
 
 
 //activities route
@@ -70,3 +70,6 @@ Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 // Use resource routes for remaining CRUD actions, excluding index and show
 Route::resource('posts', PostController::class)->except(['index', 'show']);
+
+Route::get('/forum', [PostController::class, 'index'])->name('posts.index');
+

@@ -350,7 +350,7 @@
     margin-top: 10px; /* Matches the height of the fixed header */
     margin-left: 250px; /* Matches the width of the sidebar */
     padding: 20px; /* Optional: Add padding for better spacing */
-    overflow-y: auto;
+
     height: calc(100vh - 70px);
 }
 

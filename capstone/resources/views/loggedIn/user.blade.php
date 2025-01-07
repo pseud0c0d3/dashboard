@@ -85,10 +85,10 @@
                 </div>
                 <div class="main-content">
 
-                            <a class="navbar-brand" href="{{ route('posts.index') }}">Forum</a>
+                            {{-- <a class="navbar-brand" href="{{ route('posts.index') }}">Forum</a> --}}
 
                     <main class="py-4">
-                        @yield('content')
+                        @include('posts.index')
                     </main>
                 </div>
             </div>

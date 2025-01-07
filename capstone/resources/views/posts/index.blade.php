@@ -3,24 +3,49 @@
 @section('content')
 <div class="container">
     <h1 class="mb-4">Posts</h1>
-    <div class="row">
+    <!-- Scrollable container -->
+    <div class="scrollable-posts" style="max-height: 70vh; overflow-y: auto; padding-right: 15px;">
         @foreach($posts as $post)
-            <div class="col-md-4 mb-3">
-                <div class="card">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <!-- User Info Section -->
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ asset('storage/default-profile.jpg') }}"
+                             class="rounded-circle"
+                             alt="User Profile"
+                             width="50" height="50">
+                        <div class="ms-3">
+                            <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
+                            <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+                        </div>
+                    </div>
+
+                    <!-- Post Content Section -->
+                    <p class="mb-3">{{ $post->body }}</p>
+
                     @if($post->image)
-                        <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top" alt="{{ $post->title }}">
+                        <div class="mb-3">
+                            <img src="{{ asset('storage/' . $post->image) }}"
+                                 class="img-fluid rounded"
+                                 alt="{{ $post->title }}">
+                        </div>
                     @endif
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $post->title }}</h5>
-                        <p class="card-text">{{ Str::limit($post->body, 100) }}</p>
-                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+
+                    <!-- Like and Comment Actions -->
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-light">
+                            <i class="bi bi-hand-thumbs-up"></i> Like
+                        </button>
+                        <button class="btn btn-light">
+                            <i class="bi bi-chat-left-text"></i> Comment
+                        </button>
+                        <button class="btn btn-light">
+                            <i class="bi bi-share"></i> Share
+                        </button>
                     </div>
                 </div>
             </div>
         @endforeach
-    </div>
-    <div class="mt-4">
-        {{ $posts->links() }}
     </div>
 </div>
 @endsection
