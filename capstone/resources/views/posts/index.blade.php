@@ -31,19 +31,25 @@
                             </div>
                         @endif
 
-                        <!-- Like and Comment Actions -->
-                        <div class="d-flex justify-content-between">
-                            <button class="btn btn-light">
-                                <i class="bi bi-hand-thumbs-up"></i> Like
-                            </button>
-                            <button class="btn btn-light">
-                                <i class="bi bi-chat-left-text"></i> Comment
-                            </button>
-                            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
-                        </div>
+                    <!-- Like and Comment Actions -->
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-light">
+                            <i class="bi bi-hand-thumbs-up"></i> Like
+                        </button>
+                        <button class="btn btn-light">
+                            <i class="bi bi-chat-left-text"></i> Comment
+                        </button>
+                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
-    @endsection
+
+</div>
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+@endsection

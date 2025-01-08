@@ -1,53 +1,164 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="main-content">
+        <style>
+        .modal-content {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #a8dadc, #f1faee);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+          }
+
+          .modal.show .modal-content {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          .modal-header {
+            background-color: #457b9d;
+            color: white;
+            padding: 16px;
+            text-align: center;
+          }
+
+          .modal-header h5 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: bold;
+          }
+
+          .modal-body {
+            background-color: #f1faee;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+          }
+
+          .modal-body img {
+            width: 60px;
+            height: 60px;
+          }
+
+          .modal-body input[type="text"],
+          .modal-body textarea {
+            border: 2px solid #457b9d;
+            border-radius: 15px;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #ffffff;
+          }
+
+          .modal-footer {
+            background-color: #e9f5f5;
+            padding: 16px;
+          }
+
+          .modal-footer button {
+            border-radius: 15px;
+            transition: transform 0.2s ease;
+          }
+
+          .btn-primary {
+            background-color: #457b9d;
+            border-color: #457b9d;
+            font-size: 16px;
+          }
+
+          .btn-primary:hover {
+            background-color: #1d3557;
+            border-color: #1d3557;
+            transform: scale(1.05);
+          }
+
+          .btn-secondary {
+            font-size: 16px;
+            transition: transform 0.2s ease;
+          }
+
+          .btn-secondary:hover {
+            transform: scale(1.05);
+          }
+
+          .modal-body small {
+            font-size: 14px;
+            color: #1d3557;
+          }
+
+            .modal-dialog {
+                margin: auto;
+                top: 0;
+                transform: translate(0, 0);
+            }.modal-backdrop {
+                background-color: rgba(0, 0, 0, 0.5) !important;
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            pointer-events: none;
+            }
+
+          /* Fade In Animation */
+          @keyframes fadeIn {
+            0% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+
+        </style>
+
+                <div class="main-content">
 
     {{-- <a class="navbar-brand" href="{{ route('posts.index') }}">Forum</a> --}}
 
-    <main class="py-4">
-        @include('posts.index')
-    </main>
-</div>
-
-<!-- Modal for Adding Post -->
-<div id="addNewPost" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4>Create Post</h4>
-            <span class="close" onclick="closeModal()">&times;</span>
-        </div>
-        <div class="modal-body">
-            <!-- User Profile Section -->
-            <div class="user-profile">
-                <img src="profile.jpg" class="profile-pic">
-                <div class="user-details">
-                    <span class="user-name">Joseph Chan</span>
+                    <main class="py-4">
+                        @include('posts.index')
+                    </main>
                 </div>
             </div>
-            <!-- Post Content Section -->
-            <div class="post-content">
-                <input type="text" id="postTitle" class="post-title-input" placeholder="Title of your Post" required>
-                <textarea id="postContent" class="post-body-input" placeholder="Add more details to your post..." required></textarea>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="post-button" onclick="addNewPost()">Post</button>
-            <button class="cancel-button" onclick="closeModal()">Cancel</button>
-        </div>
-    </div>
-</div>
-<!-- End Modal -->
+            <div class="bi bi-plus-circle add-post-icon" href="#" data-bs-toggle="modal" data-bs-target="#PostModal"></div>
 
-<script>
-// Show loading overlay for navigation
-function showLoading(url) {
-    const loadingOverlay = document.getElementById("loadingOverlay");
-    loadingOverlay.style.display = "flex";
-    setTimeout(() => {
-        window.location.href = url;
-    }, 2000);
-}
+            <!-- Modal -->
+            <div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="PostModalLabel">Create a Post!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body">
+                                <!-- Title Input -->
+                                <input type="text" name="title" class="form-control mb-3" placeholder="Give your post a title!" required>
+
+                                <!-- Body Input -->
+                                <textarea name="body" class="form-control mb-3" placeholder="What do you want to share today?" rows="4" required></textarea>
+
+                                <!-- Image Input (optional) -->
+                                <input type="file" name="image" class="form-control mb-3" accept="image/webp, image/png, image/jpg">
+                            </div>
+                            <div class="modal-footer d-flex justify-content-between">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+    <!------------------------------------------------------------------------------------------------------------------------->
+        <script>
+            // Show loading overlay for navigation
+            function showLoading(url) {
+                const loadingOverlay = document.getElementById("loadingOverlay");
+                loadingOverlay.style.display = "flex";
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 2000);
+            }
 
 function openNotifications() {
     toggleDropdown(event, 'notificationsDropdown');
@@ -68,75 +179,16 @@ function toggleSidebar() {
     sidebar.style.display = isHidden ? 'flex' : 'none';
 }
 
-// Toggle dropdown menus
-function toggleDropdown(event, dropdownId) {
-    event.stopPropagation();
-    const dropdown = document.getElementById(dropdownId);
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-}
+                    // Toggle dropdown menus
+            function toggleDropdown(event, dropdownId) {
+                event.stopPropagation();
+                const dropdown = document.getElementById(dropdownId);
+                dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+            }
+    //<------------------------------------------------------------------------------------------------------------------------->
+            // Modal handling for adding new posts
 
-// Modal handling for adding new posts
-function openModal() {
-    document.getElementById("addNewPost").style.display = "block";
-}
-
-function closeModal() {
-    document.getElementById("addNewPost").style.display = "none";
-}
-
-let postIdCounter = 0;
-// Add a new post
-function addNewPost() {
-    const title = document.getElementById("postTitle").value;
-    const content = document.getElementById("postContent").value;
-    const timestamp = new Date().toLocaleDateString();
-
-    if (title && content) {
-        postIdCounter++;
-        const postId = postIdCounter;
-
-        const post = document.createElement("div");
-        post.className = "post";
-        post.id = `post-${postId}`;
-        post.innerHTML = `
-        <div class="user-info">
-            <div class="user-avatar"></div>
-            <div class="user-details">
-                <p class="username">exampleUser</p>
-                <p class="timestamp">${timestamp}</p>
-            </div>
-            <div class="ellipsis-container">
-                <button class="ellipsis-btn" onclick="toggleMenu(this)">...</button>
-                <div class="dropdown-content">
-                    <button onclick="reportPost()">Report Post</button>
-                </div>
-            </div>
-        </div>
-        <div class="post-title">${title}</div>
-        <div class="post-content">${content}</div>
-        <div class="post-buttons">
-            <button class="action-btn">Like</button>
-            <button class="action-btn" onclick="goToPostPage('${postId}')">Comment</button>
-            <button class="action-btn" onclick="copyPostLink('${postId}')">Share</button>
-        </div>
-        `;
-
-        const postsContainer = document.querySelector(".posts");
-        postsContainer.appendChild(post);
-
-        document.getElementById("postTitle").value = "";
-        document.getElementById("postContent").value = "";
-
-        closeModal();
-    } else {
-        alert("Please fill in both fields.");
-    }
-}
-
-// Function to navigate to the post page
-function goToPostPage(postId) {
-    window.location.href = `postPage.html?postId=${postId}`;
-}
+            let postIdCounter = 0;
 
 // Close dropdowns if clicked outside
 window.onclick = function(event) {
@@ -160,13 +212,16 @@ window.onclick = function(event) {
     }
 };
 
-function copyPostLink(postId) {
-    const postLink = `${window.location.origin}/post/${postId}`;
-    navigator.clipboard.writeText(postLink).then(() => {
-        alert("Post link copied to clipboard!");
-    }).catch(err => {
-        console.error("Failed to copy: ", err);
-    });
-}
-</script>
-@endsection
+            function copyPostLink(postId) {
+                const postLink = `${window.location.origin}/post/${postId}`;
+                navigator.clipboard.writeText(postLink).then(() => {
+                    alert("Post link copied to clipboard!");
+                }).catch(err => {
+                    console.error("Failed to copy: ", err);
+                });
+            }
+
+    document.getElementById('currentDate').textContent = new Date().toLocaleString();
+  </script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            @endsection

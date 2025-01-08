@@ -12,4 +12,6 @@ class HomeController extends Controller
     $posts = Post::latest()->paginate(6);
     return view('loggedIn.user', ['posts' => $posts]);
 }
+
+
 }
