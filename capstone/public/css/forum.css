@@ -5,6 +5,7 @@
     scrollbar-width: none; /* Hide scrollbar for Firefox */
     -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
     padding-right: 10px; /* Optional: Add padding if content feels too close */
+    margin-top: 20px; /* Ensure there's some space at the top */
 }
 
 /* Hide scrollbar for Chrome, Safari, and newer Edge */
@@ -17,11 +18,16 @@
     border: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
     border-radius: 10px; /* Rounded corners */
+    margin-bottom: 15px; /* Add space between posts */
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .scrollable-posts {
         max-height: 300px; /* Adjust height for smaller screens */
+    }
+
+    .main-content {
+        margin-left: 0; /* For mobile devices, remove left margin */
     }
 }
