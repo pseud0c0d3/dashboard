@@ -15,18 +15,16 @@ use App\Http\Controllers\PostController;
 
 
 
+
 //test
 Route::get('/', function () {
 
-     return view('loggedIn.chat');
+     return view('workspace.colormatch');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
-// Route::get('/', [PostController::class, 'index'])->name('posts.index');
-
-
-
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
+
 
 Route::get('/loggedOut/seemore', function () {
     return view('seemore');
@@ -35,6 +33,7 @@ Route::get('/loggedOut/seemore', function () {
 Route::get('/loggedOut/seemore', function () {
     return view('loggedOut/seemore');
 })->name('seemore');
+
 
 // Log in
 Route::post('/loggedIn/user', [LogInController::class, 'login'])->name('login');
@@ -64,6 +63,7 @@ Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn
 //calendar routes
 Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
 
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 // Avoid reusing 'posts/{post}' for the index route
