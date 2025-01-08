@@ -39,9 +39,7 @@
                         <button class="btn btn-light">
                             <i class="bi bi-chat-left-text"></i> Comment
                         </button>
-                        <button class="btn btn-light">
-                            <i class="bi bi-share"></i> Share
-                        </button>
+                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
                     </div>
                 </div>
             </div>
