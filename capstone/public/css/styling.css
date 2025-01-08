@@ -50,8 +50,8 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(4, 100px);
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-top: 100px;
   }
   
   .hidden {
@@ -61,7 +61,8 @@ body {
   .tile {
     width: 100px;
     height: 100px;
-    background-color: #ddd;
+    background-color: #ffffff;
+    border: 2px solid #000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,23 +71,28 @@ body {
     transform-style: preserve-3d;
     transition: transform 0.5s;
     position: relative; /* Ensures correct stacking context */
+    
   }
 
 
   .tile.flipped {
     transform: rotateY(180deg);
+    
   }
 
   .tile .front, .tile .back {
     width: 100%;
     height: 100%;
+    border-radius: 7px;
+    
     position: absolute;
     backface-visibility: hidden; /* Hide the back face when flipped */
   }
 
   .tile .back {
     background-color: transparent;
-    border-radius: 5px;
+    
+    
   }
 
   .tile .front {
@@ -95,7 +101,7 @@ body {
 
   .tile .back {
     background-color: transparent; /* Color will come from JS */
-    border-radius: 5px;
+    
   }
 
   /* When tiles are clicked, they are enabled (no .disabled class) */
@@ -130,13 +136,19 @@ body {
   .button:active {
     transform: scale(1.05); /* Slightly shrink when clicked for a press effect */
   }
+
   .start-button {
     background-color: #28a745;
+    color: white;
+  }
+  .exit-button {
+    background-color: #dc3545;
     color: white;
   }
   .quit-button {
     background-color: #dc3545;
     color: white;
+    
   }
 
   #preloader{
@@ -157,9 +169,14 @@ body {
 
   }
   h1 {
+    color: #ffffff;
     font-size: 2.5rem;
     font-weight: 600;
     text-align: center;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for header */
+    text-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5); /* Shadow for header */
+    background-color: #323781;
+    padding: 10px 30px;
+    border: 2px dotted #000;
+
   }

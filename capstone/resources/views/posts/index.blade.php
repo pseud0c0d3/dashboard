@@ -1,24 +1,23 @@
     @extends('layouts.master')
 
-    @section('content')
-    <div class="container">
-        <h1 class="mb-4">Posts</h1>
-        <!-- Scrollable container -->
-        <div class="scrollable-posts" style="max-height: 70vh; overflow-y: auto; padding-right: 15px;">
-            @foreach($posts as $post)
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <!-- User Info Section -->
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="{{ asset('storage/default-profile.jpg') }}"
-                                class="rounded-circle"
-                                alt="User Profile"
-                                width="50" height="50">
-                            <div class="ms-3">
-                                <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
-                                <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
-                            </div>
+@section('content')
+<div class="container">
+    <!-- Scrollable container -->
+    <div class="scrollable-posts" style="max-height: 70vh; overflow-y: auto; padding-right: 15px;">
+        @foreach($posts as $post)
+            <div class="card mb-4">
+                <div class="card-body">
+                    <!-- User Info Section -->
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ asset('storage/default-profile.jpg') }}"
+                             class="rounded-circle"
+                             alt="User Profile"
+                             width="50" height="50">
+                        <div class="ms-3">
+                            <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
+                            <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
                         </div>
+                    </div>
 
                         <!-- Post Content Section -->
                         <p class="mb-3">{{ $post->body }}</p>
