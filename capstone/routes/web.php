@@ -11,6 +11,7 @@ use App\Http\Middleware\Adminmiddleware;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\LogInController;
+use App\Http\Controllers\PostController;
 
 
 
@@ -18,7 +19,7 @@ use App\Http\Controllers\LogInController;
 //test
 Route::get('/', function () {
 
-     return view('loggedOut.index');
+     return view('workspace.colormatch');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 
@@ -62,7 +63,7 @@ Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn
 //calendar routes
 Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
 
-Route::get('/', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 // Avoid reusing 'posts/{post}' for the index route

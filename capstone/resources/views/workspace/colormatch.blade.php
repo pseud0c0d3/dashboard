@@ -30,15 +30,13 @@
     <div class="button-container">
       <button id="startButton" class="button start-button">Start Game</button>
     </div>
-    <button id="quitButton" class="button quit-button">Quit</button>
+    <button id="quitButton" class="button exit-button">Exit</button>
   </div>
 
   <!-- Game Section -->
   <div id="gameContainer" class="game-container hidden">
     <div id="board" class="board"></div>
-    <div class="centered">
-      <button id="exitButton" class="button quit-button">Quit</button>
-    </div>
+    <button id="exitButton" class="button quit-button">Quit</button>
   </div>
 
   <script src="{{ asset('/js/colormatchscript.js') }}"></script>
