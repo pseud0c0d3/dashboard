@@ -18,7 +18,7 @@ use App\Http\Controllers\PostController;
 //test
 Route::get('/', function () {
 
-     return view('loggedOut.index');
+     return view('loggedIn.chat');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 // Route::get('/', [PostController::class, 'index'])->name('posts.index');

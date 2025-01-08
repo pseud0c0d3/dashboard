@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">Posts</h1>
     <!-- Scrollable container -->
     <div class="scrollable-posts" style="max-height: 70vh; overflow-y: auto; padding-right: 15px;">
         @foreach($posts as $post)
