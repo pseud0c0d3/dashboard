@@ -13,8 +13,114 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <style>
+        .modal-content {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #a8dadc, #f1faee);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+          }
 
+          .modal.show .modal-content {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          .modal-header {
+            background-color: #457b9d;
+            color: white;
+            padding: 16px;
+            text-align: center;
+          }
+
+          .modal-header h5 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: bold;
+          }
+
+          .modal-body {
+            background-color: #f1faee;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+          }
+
+          .modal-body img {
+            width: 60px;
+            height: 60px;
+          }
+
+          .modal-body input[type="text"],
+          .modal-body textarea {
+            border: 2px solid #457b9d;
+            border-radius: 15px;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #ffffff;
+          }
+
+          .modal-footer {
+            background-color: #e9f5f5;
+            padding: 16px;
+          }
+
+          .modal-footer button {
+            border-radius: 15px;
+            transition: transform 0.2s ease;
+          }
+
+          .btn-primary {
+            background-color: #457b9d;
+            border-color: #457b9d;
+            font-size: 16px;
+          }
+
+          .btn-primary:hover {
+            background-color: #1d3557;
+            border-color: #1d3557;
+            transform: scale(1.05);
+          }
+
+          .btn-secondary {
+            font-size: 16px;
+            transition: transform 0.2s ease;
+          }
+
+          .btn-secondary:hover {
+            transform: scale(1.05);
+          }
+
+          .modal-body small {
+            font-size: 14px;
+            color: #1d3557;
+          }
+
+            .modal-dialog {
+                margin: auto;
+                top: 0;
+                transform: translate(0, 0);
+            }.modal-backdrop {
+                background-color: rgba(0, 0, 0, 0.5) !important;
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            pointer-events: none;
+            }
+
+          /* Fade In Animation */
+          @keyframes fadeIn {
+            0% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+
+        </style>
     </head>
+
     <body>
         {{-- <!-- Loading Overlay -->
         <div class="loading-overlay" id="loadingOverlay">
@@ -37,7 +143,7 @@
                 </div>
 
                 <ul class="menu">
-                    <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Forum</a></li>
+                    <li><a href="{{ route('loggedIn.user') }}" ><i class="fas fa-home"></i> Forum</a></li>
                     <li>
                         <a href="" onclick="toggleDropdown(event, 'activitiesDropdown')">
                             <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
@@ -47,7 +153,7 @@
                             <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                         </ul>
                     </li>
-                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a></li>                </ul>
+                    <li><a href="{{ route('admin.calendar_admin') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>                </ul>
 
                 <div class="bottom-container">
                     <ul class="menu">
@@ -84,38 +190,46 @@
                     </ul>
                 </div>
                 <div class="main-content">
-                    <div class="posts" id="postsContainer"></div>
+
+                            {{-- <a class="navbar-brand" href="{{ route('posts.index') }}">Forum</a> --}}
+
+                    <main class="py-4">
+                        @include('posts.index')
+                    </main>
                 </div>
             </div>
-        </div>
-    <!------------------------------------------------------------------------------------------------------------------------------>
-        <!-- Modal for Adding Post -->
-        <div id="addNewPost" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Create Post</h4>
-                    <span class="close" onclick="closeModal()">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <!-- User Profile Section -->
-                    <div class="user-profile">
-                        <img src="profile.jpg" class="profile-pic">
-                        <div class="user-details">
-                            <span class="user-name">Joseph Chan</span>
+            <div class="bi bi-plus-circle add-post-icon" href="#" data-bs-toggle="modal" data-bs-target="#PostModal"></div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="PostModalLabel">Create a Post!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body">
+                                <!-- Title Input -->
+                                <input type="text" name="title" class="form-control mb-3" placeholder="Give your post a title!" required>
+
+                                <!-- Body Input -->
+                                <textarea name="body" class="form-control mb-3" placeholder="What do you want to share today?" rows="4" required></textarea>
+
+                                <!-- Image Input (optional) -->
+                                <input type="file" name="image" class="form-control mb-3" accept="image/webp, image/png, image/jpg">
+                            </div>
+                            <div class="modal-footer d-flex justify-content-between">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Post</button>
+                            </div>
+                        </form>
                     </div>
-                    <!-- Post Content Section -->
-                    <div class="post-content">
-                        <input type="text" id="postTitle" class="post-title-input" placeholder="Title of your Post" required>
-                        <textarea id="postContent" class="post-body-input" placeholder="Add more details to your post..." required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="post-button" onclick="addNewPost()">Post</button>
-                    <button class="cancel-button" onclick="closeModal()">Cancel</button>
                 </div>
             </div>
-        </div>
+
+
     <!------------------------------------------------------------------------------------------------------------------------->
         <script>
             // Show loading overlay for navigation
@@ -154,67 +268,8 @@
             }
     //<------------------------------------------------------------------------------------------------------------------------->
             // Modal handling for adding new posts
-            function openModal() {
-                document.getElementById("addNewPost").style.display = "block";
-            }
-
-            function closeModal() {
-                document.getElementById("addNewPost").style.display = "none";
-            }
 
             let postIdCounter = 0;
-            // Add a new post
-            function addNewPost() {
-                const title = document.getElementById("postTitle").value;
-                const content = document.getElementById("postContent").value;
-                const timestamp = new Date().toLocaleDateString();
-
-                if (title && content) {
-                    postIdCounter++;
-                    const postId = postIdCounter;
-
-                    const post = document.createElement("div");
-                    post.className = "post";
-                    post.id = `post-${postId}`;
-                    post.innerHTML = `
-                        <div class="user-info">
-                            <div class="user-avatar"></div>
-                            <div class="user-details">
-                                <p class="username">exampleUser</p>
-                                <p class="timestamp">${timestamp}</p>
-                            </div>
-                            <div class="ellipsis-container">
-                                <button class="ellipsis-btn" onclick="toggleMenu(this)">...</button>
-                                <div class="dropdown-content">
-                                    <button onclick="reportPost()">Report Post</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-title">${title}</div>
-                        <div class="post-content">${content}</div>
-                        <div class="post-buttons">
-                            <button class="action-btn">Like</button>
-                            <button class="action-btn" onclick="goToPostPage('${postId}')">Comment</button>
-                            <button class="action-btn" onclick="copyPostLink('${postId}')">Share</button>
-                        </div>
-                    `;
-
-                    const postsContainer = document.querySelector(".posts");
-                    postsContainer.appendChild(post);
-
-                    document.getElementById("postTitle").value = "";
-                    document.getElementById("postContent").value = "";
-
-                    closeModal();
-                } else {
-                    alert("Please fill in both fields.");
-                }
-            }
-
-            // Function to navigate to the post page
-            function goToPostPage(postId) {
-                window.location.href = `postPage.html?postId=${postId}`;
-            }
 
             // Close dropdowns if clicked outside
             window.onclick = function(event) {
@@ -247,7 +302,9 @@
                 });
             }
 
+    document.getElementById('currentDate').textContent = new Date().toLocaleString();
+  </script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-        </script>
-    </body>
-    </html>
+</body>
+</html>

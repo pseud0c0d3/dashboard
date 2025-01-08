@@ -16,13 +16,14 @@ use App\Http\Controllers\LogInController;
 
 
 //test
-// Route::get('/', function () {
+Route::get('/', function () {
 
-//     return view('loggedOut.index');
-// })->name('index');
+     return view('loggedOut.index');
+ })->name('index');
 // ->middleware(Adminmiddleware::class);
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
+
 
 Route::get('/loggedOut/seemore', function () {
     return view('seemore');
@@ -32,6 +33,7 @@ Route::get('/loggedOut/seemore', function () {
     return view('loggedOut/seemore');
 })->name('seemore');
 
+
 // Log in
 Route::post('/loggedIn/user', [LogInController::class, 'login'])->name('login');
 
@@ -40,7 +42,8 @@ Route::post('/', [LogInController::class, 'logout'])->name('logout');
 
 //user routes
 Route::get('/loggedIn/user', [HomeController::class,'user'])->name('loggedIn.user');
-Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
+
+// Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
 
 
 //activities route
@@ -61,5 +64,12 @@ Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->na
 
 Route::get('/', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+// Avoid reusing 'posts/{post}' for the index route
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+// Use resource routes for remaining CRUD actions, excluding index and show
 Route::resource('posts', PostController::class)->except(['index', 'show']);
+
+Route::get('/forum', [PostController::class, 'index'])->name('posts.index');
 
