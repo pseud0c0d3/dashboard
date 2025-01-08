@@ -18,7 +18,7 @@ use App\Http\Controllers\PostController;
 //test
 Route::get('/', function () {
 
-     return view('loggedIn.user');
+     return view('loggedOut.index');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 // Route::get('/', [PostController::class, 'index'])->name('posts.index');
@@ -44,6 +44,7 @@ Route::post('/', [LogInController::class, 'logout'])->name('logout');
 
 //user routes
 Route::get('/loggedIn/user', [HomeController::class,'user'])->name('loggedIn.user');
+
 // Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
 
 
