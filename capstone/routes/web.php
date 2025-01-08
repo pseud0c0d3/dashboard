@@ -11,6 +11,7 @@ use App\Http\Middleware\Adminmiddleware;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\LogInController;
+use App\Http\Controllers\PostController;
 
 
 
@@ -22,7 +23,14 @@ use App\Http\Controllers\LogInController;
 // })->name('index');
 // ->middleware(Adminmiddleware::class);
 
+// Set the home page to display the colormatch view
+Route::get('/', function () {
+    return view('workspace.colormatch');
+})->name('index');
+
+
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
+
 
 Route::get('/loggedOut/seemore', function () {
     return view('seemore');
@@ -31,6 +39,7 @@ Route::get('/loggedOut/seemore', function () {
 Route::get('/loggedOut/seemore', function () {
     return view('loggedOut/seemore');
 })->name('seemore');
+
 
 // Log in
 Route::post('/loggedIn/user', [LogInController::class, 'login'])->name('login');
@@ -59,7 +68,7 @@ Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn
 //calendar routes
 Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
 
-Route::get('/', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::resource('posts', PostController::class)->except(['index', 'show']);
 
