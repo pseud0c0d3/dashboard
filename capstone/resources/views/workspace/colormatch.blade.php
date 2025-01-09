@@ -34,7 +34,11 @@
 <div id="levelDisplay">Level: 1</div>
     <div id="board" class="board"></div>
     <button id="exitButton" class="button quit-button">Quit</button>
+
   </div>
+
+
+
 
   <script src="{{ asset('/js/colormatchscript.js') }}"></script>
 </body>

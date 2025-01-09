@@ -1,6 +1,6 @@
-/* styles.css */
+
 body {
-  font-family: 'Poppins', Arial, sans-serif; /* Poppins with fallback fonts */
+  font-family: 'Poppins', Arial, sans-serif; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,14 +17,14 @@ body {
   width: 100%;
   height: 100%;
   object-fit:cover;
-  filter: blur(11px); /* Adjust the blur level */
+  filter: blur(11px); 
   opacity: 0.5  ;
-  z-index: -1; /* Ensure the image stays in the background */
+  z-index: -1; 
 }
 
     /* Center the loader container */
     .loader-container {
-      display: none; /* Initially hidden */
+      display: none; 
       justify-content: center;
       align-items: center;
       position: fixed;
@@ -70,7 +70,7 @@ body {
     border-radius: 8px;
     transform-style: preserve-3d;
     transition: transform 0.5s;
-    position: relative; /* Ensures correct stacking context */
+    position: relative; 
     
   }
 
@@ -125,7 +125,7 @@ body {
     border: none;
     font-weight: 600;
     font-size: 1.25rem;
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition for zoom and color */
+    transition: transform 0.3s ease, background-color 0.3s ease; 
 
   }
 
@@ -164,7 +164,7 @@ body {
     font-size: 1.25rem;
     text-align: center;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5); /* Shadow for header */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
 
 
   }
@@ -174,59 +174,120 @@ body {
     font-weight: 600;
     text-align: center;
     margin-bottom: 20px;
-    text-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5); /* Shadow for header */
+    text-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5); 
     background-color: #323781;
     padding: 10px 30px;
     border: 2px dotted #000;
 
   }
 
-  /* Timer Display Styles */
+  
 #timer {
-  font-size: 1.8rem; /* Large font size */
-  font-family: 'Arial', sans-serif; /* Clean and simple font */
-  background-color: #fff3e0; /* Soft orange background */
-  color: #bf360c; /* Dark orange text color */
-  border: 3px solid #bf360c; /* Border matching the text color */
-  border-radius: 10px; /* Slightly rounded corners */
-  padding: 10px 20px; /* Padding for spacing */
+  font-size: 1.8rem; 
+  font-family: 'Arial', sans-serif; 
+  background-color: #fff3e0; 
+  color: #bf360c; 
+  border: 3px solid #bf360c; 
+  border-radius: 10px; 
+  padding: 10px 20px; 
   margin: 10px auto; /* Center alignment */
   text-align: left; /* Align text to the left for the icon */
-  display: flex; /* Use flexbox for icon and text alignment */
-  align-items: center; /* Vertically align icon and text */
-  gap: 10px; /* Add space between icon and text */
-  width: fit-content; /* Adjust width based on content */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  width: fit-content; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 /* Add a clock icon next to the timer */
 #timer::before {
   content: '\23F0'; /* Unicode for clock emoji ⏰ */
-  font-size: 2rem; /* Icon size slightly larger than text */
-  display: inline-block; /* Make it an inline element */
-  color: #bf360c; /* Match the color of the text */
+  font-size: 2rem; 
+  display: inline-block; 
+  color: #bf360c; 
 }
 
 /* Highlight Timer When Time is Running Out */
 #timer.low-time {
   background-color: #ffe0e0; /* Light red background for urgency */
-  color: #d32f2f; /* Red text for emphasis */
-  border-color: #d32f2f; /* Match border with text */
-  transform: scale(1.05); /* Slight scaling effect */
+  color: #d32f2f; 
+  border-color: #d32f2f; 
+  transform: scale(1.05); 
 }
 
 /* Level Display Styles */
 #levelDisplay {
-  font-size: 1rem; /* Large and readable font */
-  font-family: 'Comic Sans MS', sans-serif; /* Friendly and fun font */
-  background-color: #e8f5e9; /* Light green background */
-  color: #2e7d32; /* Dark green text for contrast */
-  border: 3px solid #2e7d32; /* Matching border */
-  border-radius: 15px; /* Soft rounded corners */
-  padding: 5px 5px; /* Generous padding for a clean look */
-  margin: 10px auto; /* Center the element */
-  text-align: center; /* Center align the text */
-  width: fit-content; /* Adjust width based on content */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
-  transition: all 0.3s ease-in-out; /* Smooth transition for effects */
+  font-size: 1rem; 
+  font-family: 'Comic Sans MS', sans-serif;
+  background-color: #e8f5e9;
+  color: #2e7d32; 
+  border: 3px solid #2e7d32; 
+  border-radius: 15px; 
+  padding: 5px 5px; 
+  margin: 10px auto; 
+  text-align: center;
+  width: fit-content; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
+  transition: all 0.3s ease-in-out; 
+}
+
+
+/* Custom popup container */
+.custom-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup content */
+.custom-popup-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Message text */
+.custom-popup-content p {
+  font-size: 1.5rem;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+/* Close button */
+.custom-popup-button {
+  background-color: #00c6a7;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.custom-popup-button:hover {
+  background-color: #00a18b;
+}
+
+/* Animation for popup */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

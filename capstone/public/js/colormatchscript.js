@@ -15,6 +15,7 @@ let timer;
 const levelTiles = [4, 6, 8, 12, 14, 16, 18, 20]; // Number of tiles per level (increasing by 2 tiles per level)
 const levelTimes = [25, 30, 45, 60, 70, 90, 100, 120]; // Increased time limits per level in seconds
 
+
 // Helper function to generate random colors
 function generateColors(totalPairs) {
   const colorArray = [];
@@ -121,35 +122,67 @@ function handleTileClick(e) {
   }
 }
 
-// Check if two flipped tiles match
+// Function to show a custom popup
+function showCustomPopup(message, onClose) {
+  // Create the popup container
+  const popup = document.createElement('div');
+  popup.classList.add('custom-popup');
+
+  // Create the popup content
+  const popupContent = document.createElement('div');
+  popupContent.classList.add('custom-popup-content');
+
+  // Add the message to the popup
+  const popupMessage = document.createElement('p');
+  popupMessage.textContent = message;
+  popupContent.appendChild(popupMessage);
+
+  // Add a close button
+  const closeButton = document.createElement('button');
+  closeButton.textContent = 'OK';
+  closeButton.classList.add('custom-popup-button');
+  popupContent.appendChild(closeButton);
+
+  // Add the popup content to the popup container
+  popup.appendChild(popupContent);
+  document.body.appendChild(popup);
+
+  // Add event listener to close the popup
+  closeButton.addEventListener('click', () => {
+    document.body.removeChild(popup);
+    if (onClose) onClose(); // Execute the callback function if provided
+  });
+}
+
+// Use the custom popup in place of alert
 function checkForMatch() {
   const [tile1, tile2] = flippedTiles;
   if (tile1.dataset.color === tile2.dataset.color) {
     matchedTiles += 2;
-    // Remove event listener so matched tiles can't be clicked again
     tile1.removeEventListener('click', handleTileClick);
     tile2.removeEventListener('click', handleTileClick);
     flippedTiles = [];
 
-    // If all tiles are matched, show the alert for the next level or game completion
     if (matchedTiles === levelTiles[currentLevel - 1]) {
       stopTimer();
-      if (currentLevel === levelTiles.length) { // If last level
+      if (currentLevel === levelTiles.length) {
         setTimeout(() => {
-          alert('You won the game! Congratulations!');
-          startButton.style.display = 'block'; // Show start button again
-        }, 500); // Slight delay for last tile match to show
+          showCustomPopup('You won the game! Congratulations!', () => {
+            startButton.style.display = 'block';
+          });
+        }, 500);
       } else {
         setTimeout(() => {
-          alert(`Level ${currentLevel} complete! Get ready for the next level.`);
-          currentLevel++;
-          createBoard(); // Proceed to the next level
-        }, 500); // Slight delay for last tile match to show
+          showCustomPopup(`Level ${currentLevel} complete! Get ready for the next level.`, () => {
+            currentLevel++;
+            createBoard();
+          });
+        }, 500);
       }
     }
   } else {
     setTimeout(() => {
-      tile1.classList.add('flipped'); // Hide tiles again by re-adding 'flipped' class
+      tile1.classList.add('flipped');
       tile2.classList.add('flipped');
       flippedTiles = [];
     }, 1000);
@@ -162,7 +195,7 @@ startButton.addEventListener('click', () => {
   const gameContainer = document.getElementById('gameContainer');
 
   homepage.classList.add('hidden'); // Hide the homepage
-  gameContainer.classList.remove('hidden'); // Show the game container
+  gameContainer.classList.remove('hidden'); 
   currentLevel = 1; // Reset to level 1
   createBoard(); // Initialize the game board
 });
