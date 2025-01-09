@@ -43,12 +43,14 @@ function startTimer(duration) {
 
     if (timeRemaining <= 0) {
       clearInterval(timer);
-      alert('Time is up! Game over.');
-      startButton.style.display = 'block'; // Show start button again
-      isGameOver = true;
+      showCustomPopup('Time is up! Game over.', () => {
+        startButton.style.display = 'block'; // Show start button again
+        isGameOver = true; // Mark game as over
+      });
     }
   }, 1000);
 }
+
 
 // Function to stop the timer
 function stopTimer() {
