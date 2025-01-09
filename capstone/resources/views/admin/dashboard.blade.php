@@ -90,9 +90,7 @@
             </div>
             <div class="main-content">
                 <div class="dashboard">
-                    <div class="main">
-
-                    </div>
+                
                     
                 </div>
 
