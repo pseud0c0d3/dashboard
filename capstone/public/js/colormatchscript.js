@@ -29,10 +29,10 @@ function generateColors(totalPairs) {
 
 // Function to stop and reset the timer
 function stopAndResetTimer() {
-  clearInterval(timer); // Stop the previous timer if it exists
-  timerStarted = false; // Reset the flag
+  clearInterval(timer); 
+  timerStarted = false; 
   timerDisplay.textContent = 'Time: 0s'; // Reset the timer display
-  timerDisplay.style.color = 'black'; // Reset color
+  timerDisplay.style.color = 'black'; 
 }
 
 // Function to start the timer with adjusted time
@@ -298,8 +298,16 @@ function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
 
   // Restart button event listener
   restartButton.addEventListener('click', () => {
+    // Remove the results popup
     document.body.removeChild(popup);
-    resetTimer(); // Reset the timer when restarting
-    createBoard(); // Restart the game
+
+    // Reset the timer and stop it
+    stopAndResetTimer(); 
+
+    // Reset the current level
+    currentLevel = 1;
+
+    // Reinitialize the game board
+    createBoard(); 
   });
 }
