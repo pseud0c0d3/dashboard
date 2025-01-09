@@ -19,7 +19,7 @@ use Spatie\GoogleCalendar\Event;
 
 //test
 Route::get('/', function () {
-    return view('loggedOut.index');
+    return view('workspace.colormatch');
 
  })->name('index');
 // ->middleware(Adminmiddleware::class);

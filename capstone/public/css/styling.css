@@ -180,3 +180,53 @@ body {
     border: 2px dotted #000;
 
   }
+
+  /* Timer Display Styles */
+#timer {
+  font-size: 1.8rem; /* Large font size */
+  font-family: 'Arial', sans-serif; /* Clean and simple font */
+  background-color: #fff3e0; /* Soft orange background */
+  color: #bf360c; /* Dark orange text color */
+  border: 3px solid #bf360c; /* Border matching the text color */
+  border-radius: 10px; /* Slightly rounded corners */
+  padding: 10px 20px; /* Padding for spacing */
+  margin: 10px auto; /* Center alignment */
+  text-align: left; /* Align text to the left for the icon */
+  display: flex; /* Use flexbox for icon and text alignment */
+  align-items: center; /* Vertically align icon and text */
+  gap: 10px; /* Add space between icon and text */
+  width: fit-content; /* Adjust width based on content */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Add a clock icon next to the timer */
+#timer::before {
+  content: '\23F0'; /* Unicode for clock emoji ⏰ */
+  font-size: 2rem; /* Icon size slightly larger than text */
+  display: inline-block; /* Make it an inline element */
+  color: #bf360c; /* Match the color of the text */
+}
+
+/* Highlight Timer When Time is Running Out */
+#timer.low-time {
+  background-color: #ffe0e0; /* Light red background for urgency */
+  color: #d32f2f; /* Red text for emphasis */
+  border-color: #d32f2f; /* Match border with text */
+  transform: scale(1.05); /* Slight scaling effect */
+}
+
+/* Level Display Styles */
+#levelDisplay {
+  font-size: 1rem; /* Large and readable font */
+  font-family: 'Comic Sans MS', sans-serif; /* Friendly and fun font */
+  background-color: #e8f5e9; /* Light green background */
+  color: #2e7d32; /* Dark green text for contrast */
+  border: 3px solid #2e7d32; /* Matching border */
+  border-radius: 15px; /* Soft rounded corners */
+  padding: 5px 5px; /* Generous padding for a clean look */
+  margin: 10px auto; /* Center the element */
+  text-align: center; /* Center align the text */
+  width: fit-content; /* Adjust width based on content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+  transition: all 0.3s ease-in-out; /* Smooth transition for effects */
+}
