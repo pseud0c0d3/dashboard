@@ -3,14 +3,14 @@ let timer = 10;
 let currentAnimal = null;
 let audioInstance = null;
 let timerInterval;
-let highestScore = loadHighestScore(); // Load highest score from localStorage
+let highestScore = loadHighestScore(); 
 
 // DOM Elements
 const playSoundButton = document.getElementById('start-game');
 const optionsDiv = document.getElementById('options');
 const scoreDisplay = document.getElementById('score');
-const highestScoreDisplayGame = document.getElementById('highest-score-game'); // For the game section
-const highestScoreDisplayHome = document.getElementById('highest-score-home'); // For the home section
+const highestScoreDisplayGame = document.getElementById('highest-score-game'); 
+const highestScoreDisplayHome = document.getElementById('highest-score-home'); 
 const timerDisplay = document.getElementById('timer');
 const modal = document.getElementById('game-over-modal');
 const finalScore = document.getElementById('final-score');
@@ -40,7 +40,7 @@ function saveHighestScore() {
     if (score > highestScore) {
         highestScore = score;
         localStorage.setItem('highestScore', highestScore);  // Save new highest score in localStorage
-        updateHighscoreDisplay();  // Update the display in both sections
+        updateHighscoreDisplay(); 
     }
 }
 
@@ -50,7 +50,7 @@ function updateHighscoreDisplay() {
     highestScoreDisplayHome.textContent = `Highest Score: ${highestScore}`;
 }
 
-// Function to show the result popup
+// Function to show the result modal
 function showResults() {
     finalScore.textContent = `Your Score: ${score}`;
     highestScoreModal.textContent = `Highest Score: ${highestScore}`;
@@ -91,7 +91,7 @@ function startTimer() {
 
         if (timer <= 0) {
             clearInterval(timerInterval);
-            saveHighestScore();  // Check and save highest score when the game ends
+            saveHighestScore();  
             showResults();
         }
     }, 1000);
@@ -118,7 +118,7 @@ function checkAnswer(selectedName) {
         score++;
         scoreDisplay.textContent = `Score: ${score}`;
         setTimeout(() => {
-            playSound();  // Continue the game after a correct answer
+            playSound();  
         }, 1000);
     } else {
         // Incorrect answer, save the highest score and show results
@@ -127,7 +127,6 @@ function checkAnswer(selectedName) {
     }
 }
 
-// Restart the game when the restart button is clicked
 restartButton.addEventListener('click', () => {
     resetGame();
     // Hide the result modal after restarting the game
@@ -148,14 +147,13 @@ quitButton.addEventListener('click', () => {
     modal.style.display = 'none';
     optionsDiv.innerHTML = '';
     
-    // Ensure the start button is visible when returning to the home section
     playSoundButton.style.display = 'block';
     
     // Update the highscore display in home section
-    updateHighscoreDisplay();  // Update the highscore in the home section
+    updateHighscoreDisplay();  
     
     // Reset the position of the button if needed
-    playSoundButton.style.position = 'initial'; // Reset position if needed
+    playSoundButton.style.position = 'initial'; 
 });
 
 // Start the game when the start button is clicked
@@ -163,7 +161,7 @@ playSoundButton.addEventListener('click', () => {
     // Hide home section and show game section
     document.getElementById('home-section').style.display = 'none';
     document.getElementById('game-section').style.display = 'block';
-    playSoundButton.style.display = 'none';  // Hide the start button once the game starts
+    playSoundButton.style.display = 'none'; 
     scoreDisplay.textContent = `Score: ${score}`;
     highestScoreDisplayGame.textContent = `Highest Score: ${highestScore}`;  // Update in the game section
     playSound();  // Start the first sound
