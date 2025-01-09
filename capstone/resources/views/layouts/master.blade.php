@@ -11,13 +11,14 @@
     <link rel="stylesheet" href="/css/userprofile.css">
     <link rel="stylesheet" href="/css/forum.css">
     <link rel="stylesheet" href="/css/faq.css">
+    <link rel="stylesheet" href="/css/chat.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js   "></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-    
+
 </head>
 <body>
     <div class="container">
@@ -44,7 +45,7 @@
                         <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Activity 1</a></li>
                         <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
                     </ul>
-                </li>   
+                </li>
                 <li><a href="{{ route('admin.calendar_admin') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             </ul>
 
@@ -58,11 +59,10 @@
 
         <div class="headers">
             <div class="header">
-                <div class="search-container">
-                    <input type="text" placeholder="Search...">
-                </div>
                 <div class="icons">
-                    <i class="bi bi-chat-dots chat-icon" onclick="showLoading('{{ route('loggedIn.chat') }}')"></i>
+                    <a href="{{ route('loggedIn.chat') }}" onclick="showLoading('{{ route('loggedIn.chat') }}')">
+                        <i class="bi bi-chat-dots chat-icon"></i>
+                    </a>
                     <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
                     <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
                 </div>
@@ -72,12 +72,12 @@
         <main class="py-4">
             <div class="main-content">
                 @yield('content')
-                
+
 
                 <!-- Content from the specific page -->
-                
-                    
-                
+
+
+
             </div>
         </main>
     </div>

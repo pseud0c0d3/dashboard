@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-            <div class="main-content">
+
                 <div class="profile" id="profile-container">
                     <h2 class="profile-header">My Profile</h2>
                     <div class="profile-card">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            
 
             <!-- Edit Profile Modal -->
             <div id="profileModal" class="modal-custom">
