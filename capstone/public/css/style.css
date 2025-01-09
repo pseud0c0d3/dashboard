@@ -4,6 +4,7 @@
     box-sizing: border-box;
   }
   body {
+
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     overflow: hidden;
@@ -11,6 +12,7 @@
   }
   .container {
     display: flex;
+    flex-direction: column;
     height: 100vh;
   }
   /*---------------------------------------------------------------------------------------------------------*/
@@ -22,7 +24,7 @@
     border-radius: 25px;
     border: 1px solid #ddd;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 1000px;
+    margin-left: 650px;
     display: flex;
     align-items: center;
   }
@@ -54,18 +56,22 @@
   .icons{
     align-self: center;
     padding-right: 30px;
+    margin-left: 1000px;
     color: white;
   }
 
   .headers {
-    position: fixed; /* Fixes the header to the top of the viewport */
-    top: 0; /* Ensures the header is aligned with the top of the viewport */
-    left: 0; /* Aligns the header with the left edge of the viewport */
-    width: 100%; /* Makes the header span the full width of the viewport */
-    flex-grow: 1;
-    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 250px; /* Match the width of the sidebar */
+    width: calc(100% - 250px); /* Account for sidebar width */
     background-color: #003049;
-    height: 70px;
+    height: 70px; /* Ensure consistency across all pages */
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: white;
 
 }
 
@@ -176,6 +182,10 @@
   .notifications-dropdown li:last-child {
     border-bottom: none;
   }
+
+
+
+
   /*---------------------------------------------------------------------------------------------------------*/
   /*Side bar*/
   .angel-logo {
@@ -187,15 +197,15 @@
   }
 
   .sidebar {
-    position: fixed;
+    position: fixed; /* Sidebar remains fixed */
     top: 0;
     left: 0;
     height: 100vh;
-    width: 250px;
+    width: 250px; /* Adjust this width to match your sidebar */
     background-color: #003049;
     color: white;
-    overflow-y: auto; /* Allows scrolling inside the sidebar if needed */
-    z-index: 1000; /* Keeps sidebar above other content */
+    overflow-y: auto;
+    z-index: 1000;
 }
 
 
@@ -353,6 +363,7 @@
 
     height: calc(100vh - 70px);
 }
+
 
   /*calendar modal */
   .calendar-modal {
