@@ -1,122 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AID OF ANGELS</title>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/faq.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+@extends('layouts.master')
 
-    <style>
-        /* Loading Overlay Styles */
-    .loading-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: white; /* Transparent white background */
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
-    }
-
-        /* Image styling and floating animation */
-    #loadingImage {
-        width: 300px; /* Adjust as needed */
-        height: 300px; /* Adjust as needed */
-        animation: float 2s ease-in-out infinite; /* Floating animation with ease-in-out */
-    }
-
-
-            /* Keyframes for floating animation */
-    @keyframes float {
-        0% {
-            transform: translateY(0); /* Start at the original position */
-        }
-        50% {
-            transform: translateY(-20px); /* Move up 20px */
-        }
-        100% {
-            transform: translateY(0); /* Return to original position */
-        }
-    }
-    </style>
-</head>
-<body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <img src="/img/angel.png" alt="Loading..." id="loadingImage">
-    </div>
+@section('content')
 
     <!-- Main content and other structure -->
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
-            <div class="profile-section">
-                <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
-                    <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
-                    <div class="profile-details">
-                        <p><strong>Joseph Chan</strong></p>
-                        <p>Father</p>
-                    </div>
-                </a>
-            </div>
-
-            <ul class="menu">
-                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Forum</a></li>
-                <li>
-                    <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
-                        <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
-                    </a>
-                    <ul class="dropdown" id="activitiesDropdown">
-                        <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Activity 1</a></li>
-                            <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
-                    </ul>
-                </li>
-                <li><a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a></li>            </ul>
-
-            <div class="bottom-container">
-                <ul class="menu">
-                    <li><a href="{{ route('loggedIn.faq') }}" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
-                    <li><a href="{{ route('logout') }}" onclick="showLoading('logout.html')"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="headers">
-            <div class="header">
-                <div class="search-container">
-                    <input type="text" placeholder="Search...">
-                </div>
-                <div class="icons">
-                    <i class="bi bi-chat-dots chat-icon" onclick="showLoading('{{ route('loggedIn.chat') }}')"></i>
-                    <i class="bi bi-calendar-fill calendar-icon" onclick="openCalendar()"></i>
-                    <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
-                    <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
-                </div>
-                <!-- Settings Dropdown -->
-                <div class="settings-dropdown" id="settingsDropdown">
-                    <a href="#" onclick="changePassword()">Change Password</a>
-
-                </div>
-            </div>
-            <!-- Notification Dropdown -->
-            <div class="notifications-dropdown" id="notificationsDropdown">
-                <ul>
-                    <li><strong>New Comment:</strong> Someone commented on your post!</li>
-                    <li><strong>New Like:</strong> Your post got a new like!</li>
-                    <li><strong>Reminder:</strong> You have a meeting tomorrow at 10 AM.</li>
-                </ul>
-            </div>
-            <div class="main-content">
+            
+                <main class="py-4">
                 <div class="posts" id="postsContainer">
                     <div class="content-container">
                         <!-- FAQ Section -->
@@ -183,13 +71,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
+            
 
 
-        </div>
+       
         <!-- Calendar Modal Structure -->
 
-    </div>
 
 <!------------------------------------------------------------------------------------------------------------------------------>
  <script>
@@ -278,5 +166,4 @@ faqItems.forEach(item => {
 
 
     </script>
-</body>
-</html>
+@endsection

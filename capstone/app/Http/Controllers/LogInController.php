@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Post;
 use Illuminate\Support\Facades\Hash;
+
 
 class LogInController extends Controller
 {
@@ -22,7 +24,8 @@ class LogInController extends Controller
             $request->session()->regenerate();
 
             // Redirect to the intended page or dashboard
-            return view('loggedIn.user');
+            $posts = Post::latest()->paginate(6);
+            return view('loggedIn.user', ['posts' => $posts]);
         }
 
         // Authentication failed, redirect back with an error

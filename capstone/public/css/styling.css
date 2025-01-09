@@ -1,27 +1,30 @@
-/* styles.css */
+
 body {
-    font-family: Arial, sans-serif;
+  font-family: 'Poppins', Arial, sans-serif; 
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: #00000083;
+    color: #333;
 }
+
 .background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: blur(6px); /* Adjust the blur level */
-  z-index: -1; /* Ensure the image stays in the background */
+  object-fit:cover;
+  filter: blur(11px); 
+  opacity: 0.5  ;
+  z-index: -1; 
 }
 
     /* Center the loader container */
     .loader-container {
-      display: none; /* Initially hidden */
+      display: none; 
       justify-content: center;
       align-items: center;
       position: fixed;
@@ -47,8 +50,8 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(4, 100px);
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-top: 100px;
   }
   
   .hidden {
@@ -58,7 +61,8 @@ body {
   .tile {
     width: 100px;
     height: 100px;
-    background-color: #ddd;
+    background-color: #ffffff;
+    border: 2px solid #000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,24 +70,29 @@ body {
     border-radius: 8px;
     transform-style: preserve-3d;
     transition: transform 0.5s;
-    position: relative; /* Ensures correct stacking context */
+    position: relative; 
+    
   }
 
 
   .tile.flipped {
     transform: rotateY(180deg);
+    
   }
 
   .tile .front, .tile .back {
     width: 100%;
     height: 100%;
+    border-radius: 7px;
+    
     position: absolute;
     backface-visibility: hidden; /* Hide the back face when flipped */
   }
 
   .tile .back {
     background-color: transparent;
-    border-radius: 5px;
+    
+    
   }
 
   .tile .front {
@@ -92,7 +101,7 @@ body {
 
   .tile .back {
     background-color: transparent; /* Color will come from JS */
-    border-radius: 5px;
+    
   }
 
   /* When tiles are clicked, they are enabled (no .disabled class) */
@@ -108,21 +117,38 @@ body {
     margin-top: 50px;
   }
   .button {
-    padding: 15px 30px;
+    padding: 10px 20px;
     margin: 10px;
     cursor: pointer;
     font-size: 16px;
-    border-radius: 5px;
-    border: solid black 1px;
-    
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: transform 0.3s ease, background-color 0.3s ease; 
+
   }
+
+  .button:hover {
+    background-color: #ffa500;
+    transform: scale(1.1); /* Zoom the button slightly */
+  }
+  .button:active {
+    transform: scale(1.05); /* Slightly shrink when clicked for a press effect */
+  }
+
   .start-button {
     background-color: #28a745;
+    color: white;
+  }
+  .exit-button {
+    background-color: #dc3545;
     color: white;
   }
   .quit-button {
     background-color: #dc3545;
     color: white;
+    
   }
 
   #preloader{
@@ -133,3 +159,135 @@ body {
     position: fixed;
     z-index: 100;
   }
+
+  p {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+
+
+  }
+  h1 {
+    color: #ffffff;
+    font-size: 3.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5); 
+    background-color: #323781;
+    padding: 10px 30px;
+    border: 2px dotted #000;
+
+  }
+
+  
+#timer {
+  font-size: 1.8rem; 
+  font-family: 'Arial', sans-serif; 
+  background-color: #fff3e0; 
+  color: #bf360c; 
+  border: 3px solid #bf360c; 
+  border-radius: 10px; 
+  padding: 10px 20px; 
+  margin: 10px auto; /* Center alignment */
+  text-align: left; /* Align text to the left for the icon */
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  width: fit-content; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+/* Add a clock icon next to the timer */
+#timer::before {
+  content: '\23F0'; /* Unicode for clock emoji ⏰ */
+  font-size: 2rem; 
+  display: inline-block; 
+  color: #bf360c; 
+}
+
+/* Highlight Timer When Time is Running Out */
+#timer.low-time {
+  background-color: #ffe0e0; /* Light red background for urgency */
+  color: #d32f2f; 
+  border-color: #d32f2f; 
+  transform: scale(1.05); 
+}
+
+/* Level Display Styles */
+#levelDisplay {
+  font-size: 1rem; 
+  font-family: 'Comic Sans MS', sans-serif;
+  background-color: #e8f5e9;
+  color: #2e7d32; 
+  border: 3px solid #2e7d32; 
+  border-radius: 15px; 
+  padding: 5px 5px; 
+  margin: 10px auto; 
+  text-align: center;
+  width: fit-content; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
+  transition: all 0.3s ease-in-out; 
+}
+
+
+/* Custom popup container */
+.custom-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup content */
+.custom-popup-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Message text */
+.custom-popup-content p {
+  font-size: 1.5rem;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+/* Close button */
+.custom-popup-button {
+  background-color: #00c6a7;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.custom-popup-button:hover {
+  background-color: #00a18b;
+}
+
+/* Animation for popup */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
