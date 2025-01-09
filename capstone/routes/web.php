@@ -19,8 +19,7 @@ use Spatie\GoogleCalendar\Event;
 
 //test
 Route::get('/', function () {
-    return view('workspace.colormatch');
-
+    return view('workspace.game');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 

@@ -1,35 +1,259 @@
-/* style.css */
+/* General styling for the body */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f0f8ff;
-}
-
-.game-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-#options {
+    font-family: 'Arial', sans-serif;
+    background-color: #1427d84f;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+    filter: blur(1px); 
+    opacity: 0.5  ;
+    z-index: -1; 
+  }
+
+/* Container for both sections (home and game) */
+.container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    max-width: 600px;
+}
+
+/* Header styling */
+h1 {
+    font-size: 3.5rem;
+    color: #ff5722;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Paragraph styling */
+p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Ensure the start button is positioned properly in the home section */
+#start-game {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#start-game:hover {
+    background-color: #45a049;
+}
+
+
+/* Timer and score section */
+ #score, #highest-score {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff5722;
+    margin-bottom: 10px;
+}
+#timer {
+    font-size: 1.8rem; 
+    font-family: 'Arial', sans-serif; 
+    background-color: #fff3e0; 
+    color: #bf360c; 
+    border: 3px solid #bf360c; 
+    border-radius: 10px; 
+    padding: 10px 20px; 
+    margin: 10px auto; /* Center alignment */
+    text-align: left; /* Align text to the left for the icon */
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    width: fit-content; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  /* Add a clock icon next to the timer */
+  #timer::before {
+    content: '\23F0'; /* Unicode for clock emoji ⏰ */
+    font-size: 2rem; 
+    display: inline-block; 
+    color: #bf360c; 
+  }
+  
+  /* Highlight Timer When Time is Running Out */
+  #timer.low-time {
+    background-color: #ffe0e0; /* Light red background for urgency */
+    color: #d32f2f; 
+    border-color: #d32f2f; 
+    transform: scale(1.05); 
+  }
+  
+
+#highest-score-home, #highest-score-game{
+    font-size: 1.9rem;
+    color: #e53935;
+}
+
+/* Button styling for improved readability */
+button {
+    padding: 15px 30px; /* Larger button padding */
+    font-size: 18px; /* Larger text */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for buttons */
+button:hover {
+    background-color: #45a049;
+}
+
+/* Container for the images to align them properly */
+#options {
+    display: flex;
+    flex-wrap: wrap; /* Allow images to wrap onto the next line if there's not enough space */
+    justify-content: center; /* Center the images horizontally */
+    gap: 20px; /* Add some space between the images */
     margin-top: 20px;
 }
 
+/* Style for individual images */
 #options img {
-    width: 100px;
-    height: 100px;
+    width: 150px; /* Set image width */
+    height: 150px; /* Set image height */
+    border: 3px solid #4CAF50; /* Green border */
+    border-radius: 10px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
     cursor: pointer;
-    transition: transform 0.2s;
 }
 
+/* Hover effect for images */
 #options img:hover {
+    transform: scale(1.1); /* Slightly enlarge the image when hovered */
+    border-color: #2196F3; /* Change border color when hovered */
+}
+
+/* Custom pop-up styling */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Styles */
+#game-over-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal for better contrast and clarity */
+.modal-content {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border: 3px solid #4CAF50;
+    text-align: center;
+    width: 300px;
+    margin: auto;
+}
+
+.modal-content h2 {
+    font-size: 30px;
+    color: #4CAF50;
+}
+
+.modal-content p {
+    font-size: 20px;
+    color: #333;
+}
+
+.modal-content button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-content button:hover {
+    background-color: #45a049;
+}
+
+/* Home and Game Section */
+#home-section, #game-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+}
+
+#home-section {
+    display: block;
+}
+
+#game-section {
+    display: none;
+}
+
+/* Quit Game Button */
+#quit-game {
+    background-color: #f44336;
+    color: white;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 20px;
+}
+
+#quit-game:hover {
+    background-color: #e53935;
     transform: scale(1.1);
 }
 
-#result {
-    font-size: 1.2em;
-    margin-top: 20px;
+#quit-game:active {
+    transform: scale(1);
 }
