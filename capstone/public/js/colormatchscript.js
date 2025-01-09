@@ -27,14 +27,12 @@ function generateColors(totalPairs) {
   return colorArray.sort(() => Math.random() - 0.5);
 }
 
-// Function to reset the timer
-function resetTimer() {
-  if (timer) {
-    clearInterval(timer); // Stop the previous timer if it exists
-  }
-  timerStarted = false; 
-  timerDisplay.textContent = `Time: 0s`; // Reset the timer display
-  timerDisplay.style.display = 'block';
+// Function to stop and reset the timer
+function stopAndResetTimer() {
+  clearInterval(timer); // Stop the previous timer if it exists
+  timerStarted = false; // Reset the flag
+  timerDisplay.textContent = 'Time: 0s'; // Reset the timer display
+  timerDisplay.style.color = 'black'; // Reset color
 }
 
 // Function to start the timer with adjusted time
@@ -65,9 +63,7 @@ function startTimer(duration) {
   }, 1000);
 }
 
-function stopTimer() {
-  clearInterval(timer);
-}
+
 
 // Function to create the game board
 function createBoard() {
@@ -172,6 +168,7 @@ function showCustomPopup(message, onClose) {
 }
 
 // Use the custom popup in place of alert
+// Modify the part of the code where you go to the next level
 function checkForMatch() {
   const [tile1, tile2] = flippedTiles;
   if (tile1.dataset.color === tile2.dataset.color) {
@@ -181,7 +178,7 @@ function checkForMatch() {
     flippedTiles = [];
 
     if (matchedTiles === levelTiles[currentLevel - 1]) {
-      stopTimer();
+      stopAndResetTimer(); // Stop the timer when level is complete
       if (currentLevel === levelTiles.length) {
         setTimeout(() => {
           showCustomPopup('You won the game! Congratulations!', () => {
@@ -191,8 +188,8 @@ function checkForMatch() {
       } else {
         setTimeout(() => {
           showCustomPopup(`Level ${currentLevel} complete! Get ready for the next level.`, () => {
-            currentLevel++;
-            createBoard();
+            currentLevel++; // Move to the next level
+            createBoard(); // Create the new board for the next level
           });
         }, 500);
       }
@@ -205,18 +202,40 @@ function checkForMatch() {
     }, 1000);
   }
 }
-
 // Start the game
 startButton.addEventListener('click', () => {
   const homepage = document.getElementById('homepage');
   const gameContainer = document.getElementById('gameContainer');
 
   homepage.classList.add('hidden'); // Hide the homepage
-  gameContainer.classList.remove('hidden'); 
+  gameContainer.classList.remove('hidden');
   currentLevel = 1; // Reset to level 1
-  resetTimer(); // Reset the timer when starting
-  createBoard();
+  stopAndResetTimer(); // Ensure the timer is stopped and reset
+  createBoard(); // Initialize the game board
 });
+
+// Handle the tile click event and ensure timer starts when the first tile is clicked
+function handleTileClick(e) {
+  if (isGameOver || flippedTiles.length === 2) return;
+
+  const tile = e.target.closest('.tile');
+  if (flippedTiles.includes(tile) || !tile.classList.contains('flipped')) return;
+
+  tile.classList.remove('flipped'); // Reveal the tile by removing 'flipped' class
+  flippedTiles.push(tile);
+
+  // Start the timer only when the first tile is flipped
+  if (!timerStarted) {
+    const levelTime = levelTimes[currentLevel - 1];
+    startTimer(levelTime); // Start the timer for the level
+    timerStarted = true; // Mark that the timer has started
+  }
+
+  // Check if two tiles are flipped
+  if (flippedTiles.length === 2) {
+    checkForMatch();
+  }
+}
 
 function exitGame() {
   window.location.reload();
