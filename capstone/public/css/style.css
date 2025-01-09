@@ -4,6 +4,7 @@
     box-sizing: border-box;
   }
   body {
+    
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     overflow: hidden;
@@ -11,6 +12,7 @@
   }
   .container {
     display: flex;
+    flex-direction: column;
     height: 100vh;
   }
   /*---------------------------------------------------------------------------------------------------------*/
@@ -179,6 +181,10 @@
   .notifications-dropdown li:last-child {
     border-bottom: none;
   }
+
+ 
+
+
   /*---------------------------------------------------------------------------------------------------------*/
   /*Side bar*/
   .angel-logo {
@@ -356,6 +362,7 @@
 
     height: calc(100vh - 70px);
 }
+  
 
   /*calendar modal */
   .calendar-modal {

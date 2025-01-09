@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CreateNewUser;
 use App\Http\Controllers\ActivityController;
@@ -12,16 +13,19 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\LogInController;
 use App\Http\Controllers\PostController;
-
+use Spatie\GoogleCalendar\Event;
 
 
 
 //test
 Route::get('/', function () {
+    return view('loggedOut.index');
 
-     return view('workspace.colormatch');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
+
+Route::post('/admin/calendar', [CalendarController::class, 'store'])->name('calendar.store');
+
 
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
 
@@ -73,5 +77,12 @@ Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 // Use resource routes for remaining CRUD actions, excluding index and show
 Route::resource('/posts', PostController::class)->except(['index', 'show']);
 
-Route::get('/forum', [PostController::class, 'index'])->name('posts.index');
+// Route::get('/forum', [PostController::class, 'index'])->name('posts.index');
+
+
+
+
+
+    
+
 

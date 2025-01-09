@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-<style>
+{{-- <style>
         .loading-overlay {
             display: none;
             position: fixed;
@@ -14,18 +14,46 @@
             align-items: center;
             font-size: 24px;
         }
-</style>
+</style> --}}
 
-<div class="main-content">
-    <div class="dashboard">
-        <div class="main">
 
+    {{-- <div class="main-content">  --}}
+        <div class="card mb4">
+            <div class="card-body">
+                <h4 class="card-title">New Schedule</h4>
+    
+                <form action="{{ route('calendar.store') }}" method="POST">
+                    @csrf
+    
+                    <label for="name">Appointment For</label>
+                    <br>
+                    <textarea name="name" id="" cols="60" rows="3"></textarea>
+    
+                    <label for="title">Event Title</label>
+                    <br>
+                    <input type="text" name="title" required>
+    
+                    <label for="description">Event Description</label>
+                    <br>
+                    <textarea name="description" id="" cols="60" rows="3" required></textarea>
+    
+                    <label for="meeting_time">Choose a time:</label>
+                    <br>
+                    <input type="date" name="meeting_date" required>
+                    <input type="time" name="meeting_time" required>
+                    
+                    <br>
+                    <br>
+    
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
+            </div>
         </div>
         <!-- Calendar Section -->
-        <div id='calendar'></div>
-    </div>
+        {{-- <div id='calendar'></div> --}}
+    {{-- </div> --}}
 
-</div>
+
     
 <!------------------------------------------------------------------------------------------------------------------------------>
 <!------------------------------------------------------------------------------------------------------------------------->
