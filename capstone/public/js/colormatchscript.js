@@ -11,12 +11,12 @@ let matchedTiles = 0;
 let isGameOver = false;
 let currentLevel = 1;
 let timer;
+let timerStarted = false; // Track if the timer has started
 
-const levelTiles = [4, 6, 8, 12, 14, 16, 18, 20]; // Number of tiles per level (increasing by 2 tiles per level)
-const levelTimes = [25, 30, 45, 60, 70, 90, 100, 120]; // Increased time limits per level in seconds
+const levelTiles = [4, 6, 8, 12, 14, 16, 18, 20]; 
+const levelTimes = [25, 30, 45, 60, 70, 90, 100, 120];
 
-
-// Helper function to generate random colors
+//function to generate random colors
 function generateColors(totalPairs) {
   const colorArray = [];
   const colorList = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF', '#FF8C33', '#33FFF5', '#FF3333', '#8AFF33', '#FF33F5', '#33A1FF'];
@@ -27,32 +27,44 @@ function generateColors(totalPairs) {
   return colorArray.sort(() => Math.random() - 0.5);
 }
 
-// Function to start the timer with adjusted time for autism-friendly gameplay
+// Function to reset the timer
+function resetTimer() {
+  if (timer) {
+    clearInterval(timer); // Stop the previous timer if it exists
+  }
+  timerStarted = false; 
+  timerDisplay.textContent = `Time: 0s`; // Reset the timer display
+  timerDisplay.style.display = 'block';
+}
+
+// Function to start the timer with adjusted time
 function startTimer(duration) {
   let timeRemaining = duration;
-  timerDisplay.textContent = `Time: ${timeRemaining}s`;
-  timerDisplay.style.display = 'block'; // Ensure timer is visible
+  let totalTimePlayed = 0; // Track the total time played
+
+  timerDisplay.textContent = `Time: ${timeRemaining}s`; // Set initial time
+  timerDisplay.style.display = 'block';
 
   timer = setInterval(() => {
     timeRemaining--;
+    totalTimePlayed++;
+
     timerDisplay.textContent = `Time: ${timeRemaining}s`;
 
     if (timeRemaining <= 10) {
-      timerDisplay.style.color = 'red'; // Visual cue to show time is running out
+      timerDisplay.style.color = 'red'; //show time to be red when is running out
     }
 
     if (timeRemaining <= 0) {
       clearInterval(timer);
       showCustomPopup('Time is up! Game over.', () => {
-        startButton.style.display = 'block'; // Show start button again
-        isGameOver = true; // Mark game as over
+        showResults(currentLevel, totalTimePlayed, matchedTiles); // Show results after the popup
       });
+      isGameOver = true; // Mark game as over
     }
   }, 1000);
 }
 
-
-// Function to stop the timer
 function stopTimer() {
   clearInterval(timer);
 }
@@ -100,13 +112,10 @@ function createBoard() {
     tile.addEventListener('click', handleTileClick);
   }
 
-  // Start the timer for the level
-  const levelTime = levelTimes[currentLevel - 1];
-  startTimer(levelTime);
-
   // Update the level display
   levelDisplay.textContent = `Level: ${currentLevel}`;
 }
+
 
 // Handle tile click event
 function handleTileClick(e) {
@@ -117,6 +126,13 @@ function handleTileClick(e) {
 
   tile.classList.remove('flipped'); // Reveal the tile by removing 'flipped' class
   flippedTiles.push(tile);
+
+  // Start the timer only when the first tile is flipped
+  if (!timerStarted) {
+    const levelTime = levelTimes[currentLevel - 1];
+    startTimer(levelTime); // Start the timer for the level
+    timerStarted = true; // Mark that the timer has started
+  }
 
   // Check if two tiles are flipped
   if (flippedTiles.length === 2) {
@@ -134,7 +150,6 @@ function showCustomPopup(message, onClose) {
   const popupContent = document.createElement('div');
   popupContent.classList.add('custom-popup-content');
 
-  // Add the message to the popup
   const popupMessage = document.createElement('p');
   popupMessage.textContent = message;
   popupContent.appendChild(popupMessage);
@@ -152,7 +167,7 @@ function showCustomPopup(message, onClose) {
   // Add event listener to close the popup
   closeButton.addEventListener('click', () => {
     document.body.removeChild(popup);
-    if (onClose) onClose(); // Execute the callback function if provided
+    if (onClose) onClose();
   });
 }
 
@@ -199,16 +214,16 @@ startButton.addEventListener('click', () => {
   homepage.classList.add('hidden'); // Hide the homepage
   gameContainer.classList.remove('hidden'); 
   currentLevel = 1; // Reset to level 1
-  createBoard(); // Initialize the game board
+  resetTimer(); // Reset the timer when starting
+  createBoard();
 });
 
 function exitGame() {
-  // This function will reload the page (simulating exit)
   window.location.reload();
 }
 
 function quitGame() {
-  window.location.href = "{{ url('/') }}"; // Redirect to the base URL
+  window.location.href = "{{ url('/') }}";
 }
 
 exitButton.addEventListener('click', () => {
@@ -223,3 +238,49 @@ var loader = document.getElementById("preloader");
 window.addEventListener("load", function () {
   loader.style.display = "none";
 });
+
+// Restart the game from the results popup
+function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
+  // Create the popup container
+  const popup = document.createElement('div');
+  popup.classList.add('custom-popup');
+
+  // Create the popup content
+  const popupContent = document.createElement('div');
+  popupContent.classList.add('custom-popup-content');
+
+  // Add the results to the popup
+  const resultsTitle = document.createElement('h2');
+  resultsTitle.textContent = "Game Results";
+  popupContent.appendChild(resultsTitle);
+
+  const levelInfo = document.createElement('p');
+  levelInfo.textContent = `Level Reached: ${levelReached}`;
+  popupContent.appendChild(levelInfo);
+
+  const timeInfo = document.createElement('p');
+  timeInfo.textContent = `Total Time Played: ${totalTimePlayed} seconds`;
+  popupContent.appendChild(timeInfo);
+
+  const matchInfo = document.createElement('p');
+  const speed = (matchedTilesCount / totalTimePlayed).toFixed(2);
+  matchInfo.textContent = `Speed of Matching: ${speed} matches per second`;
+  popupContent.appendChild(matchInfo);
+
+  // Add a restart button
+  const restartButton = document.createElement('button');
+  restartButton.textContent = 'Restart Game';
+  restartButton.classList.add('custom-popup-button');
+  popupContent.appendChild(restartButton);
+
+  // Add the popup content to the popup container
+  popup.appendChild(popupContent);
+  document.body.appendChild(popup);
+
+  // Restart button event listener
+  restartButton.addEventListener('click', () => {
+    document.body.removeChild(popup);
+    resetTimer(); // Reset the timer when restarting
+    createBoard(); // Restart the game
+  });
+}
