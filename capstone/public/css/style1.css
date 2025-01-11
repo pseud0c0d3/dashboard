@@ -64,12 +64,11 @@ p {
 }
 
 
-/* Timer and score section */
- #score, #highest-score {
+#score, #highest-score, #timer {
     font-size: 1.5rem;
     font-weight: bold;
     color: #ff5722;
-    margin-bottom: 10px;
+    margin: 10px 0; /* Add spacing between these elements */
 }
 #timer {
     font-size: 1.8rem; 
@@ -106,7 +105,7 @@ p {
   
 
 #highest-score-home, #highest-score-game{
-    font-size: 1.9rem;
+    font-size: 1.5rem;
     color: #e53935;
 }
 
@@ -127,43 +126,55 @@ button:hover {
     background-color: #45a049;
 }
 
-/* Container for the images to align them properly */
+
 #options {
     display: flex;
     flex-wrap: wrap; 
     justify-content: center;
     gap: 20px; /* Add some space between the images */
     margin-top: 20px;
+    flex-grow: 1; /* Allow this section to expand and fill available space */
 }
 
-/* Style for individual images */
 #options img {
-    width: 150px; 
-    height: 150px; 
-    border: 3px solid #4CAF50; 
+    width: 150px;
+    height: 150px;
+    border: 3px solid #4CAF50;
     border-radius: 10px;
     transition: transform 0.3s ease, border-color 0.3s ease;
     cursor: pointer;
 }
 
-/* Hover effect for images */
 #options img:hover {
-    transform: scale(1.1); /* Slightly enlarge the image when hovered */
-    border-color: #2196F3; 
+    transform: scale(1.1);
+    border-color: #2196F3;
 }
-
 /* Custom modal styling */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 110%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     display: none; 
     justify-content: center;
     align-items: center;
     z-index: 1000;
+}
+/* Instruction Modal styles */
+.modal-game {
+    display: none; /* Hide the modal initially */
+    position: fixed; /* Fix it to the screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000; /* Ensure it's on top of other content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 20px; /* Add some space around the content */
 }
 
 /* Modal Styles */
@@ -179,14 +190,15 @@ button:hover {
     align-items: center;
 }
 
-/* Modal*/
+/* Modal content style */
 .modal-content {
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
     border: 3px solid #4CAF50;
     text-align: center;
-    width: 300px;
+    max-width: 500px;
+    width: 90%; /* Responsive design */
     margin: auto;
 }
 
@@ -215,7 +227,7 @@ button:hover {
 }
 
 /* Home and Game Section */
-#home-section, #game-section {
+#home-section {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -226,6 +238,22 @@ button:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 800px;
+}
+
+#game-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px; /* Increased padding for some breathing room */
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    height: auto;  /* Allow the container to adjust based on content */
+    max-height: 600px; /* Set a max height to avoid overflowing */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
 }
 
 #home-section {
@@ -246,7 +274,7 @@ button:hover {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
-    margin-top: 20px;
+   
 }
 
 #quit-game:hover {
@@ -256,4 +284,21 @@ button:hover {
 
 #quit-game:active {
     transform: scale(1);
+}
+
+/* Style for the category images */
+.category-image {
+    object-fit:cover;
+    width: 150px;          /* Set a fixed width */
+    height: 150px;         /* Set a fixed height */
+    margin: 10px;          /* Add space around the images */
+    border-radius: 10px;   /* Rounded corners */
+    cursor: pointer;      /* Change cursor to pointer on hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Add hover effect for category images */
+.category-image:hover {
+    transform: scale(1.1); /* Enlarge the image slightly */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }
