@@ -266,13 +266,14 @@
     });
 
     //make fulcalendar fetch google calendar data
+    
     document.addEventListener('DOMContentLoaded', function() {
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: { 
             center: 'dayGridMonth,timeGridWeek,timeGridDay' 
         },
-        events: '/admin/get-google-calendar-events', //Route to fetch events from backend
+        events: '/admin/get-google-calendar-events', // Fetch events from your controller
     });
     calendar.render();
     });

@@ -78,7 +78,8 @@ Route::resource('/posts', PostController::class)->except(['index', 'show']);
 
 // Route::get('/forum', [PostController::class, 'index'])->name('posts.index');
 
-
+// para mag reflect sa fullcalendar yung ginawa sa gcalendar
+Route::get('/admin/get-google-calendar-events', [CalendarController::class, 'getGoogleCalendarEvents']);
 
 
 

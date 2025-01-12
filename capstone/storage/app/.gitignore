@@ -2,6 +2,6 @@
 !private/
 !public/
 !.gitignore
-# !google-calendar/
-# !service-account-credentials.json
+!google-calendar/
+!service-account-credentials.json
 !storage/app/google-calendar/service-account-credentials.json
