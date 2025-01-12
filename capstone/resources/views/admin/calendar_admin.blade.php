@@ -17,7 +17,7 @@
 </style> --}}
 
 
-    {{-- <div class="main-content">  --}}
+    <div class="main-content"> 
         <div class="card mb4">
             <div class="card-body">
                 <h4 class="card-title">New Schedule</h4>
@@ -50,8 +50,8 @@
             </div>
         </div>
         <!-- Calendar Section -->
-        {{-- <div id='calendar'></div> --}}
-    {{-- </div> --}}
+        <div id='calendar'></div>
+    </div>
 
 
     
@@ -265,5 +265,19 @@
       });
     });
 
+    //make fulcalendar fetch google calendar data
+    document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: { 
+            center: 'dayGridMonth,timeGridWeek,timeGridDay' 
+        },
+        events: '/admin/get-google-calendar-events', //Route to fetch events from backend
+    });
+    calendar.render();
+    });
+
     </script>
+
+    
 @endsection

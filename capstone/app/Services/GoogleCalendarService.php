@@ -12,17 +12,26 @@ class GoogleCalendarService
     protected $service;
     protected $calendarId;
 
+    // public function __construct()
+    // {
+    //     // Initialize Google Client
+    //     $this->client = new Google_Client();
+    //     $this->client->setAuthConfig(env('GOOGLE_APPLICATION_CREDENTIALS'));
+    //     $this->client->addScope(Google_Service_Calendar::CALENDAR);
+
+    //     $this->service = new Google_Service_Calendar($this->client);
+    //     $this->calendarId = env('GOOGLE_CALENDAR_ID');
+    // }
     public function __construct()
     {
         // Initialize Google Client
         $this->client = new Google_Client();
-        $this->client->setAuthConfig(env('GOOGLE_APPLICATION_CREDENTIALS'));
+        $this->client->setAuthConfig(storage_path('app/google-calendar/service-account-credentials.json')); // Use storage_path
         $this->client->addScope(Google_Service_Calendar::CALENDAR);
-
+    
         $this->service = new Google_Service_Calendar($this->client);
         $this->calendarId = env('GOOGLE_CALENDAR_ID');
     }
-
     public function createEvent($title, $startDateTime, $endDateTime, $description = '')
 {
     $event = new Google_Service_Calendar_Event([
