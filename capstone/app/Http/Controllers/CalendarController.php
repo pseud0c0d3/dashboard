@@ -54,4 +54,6 @@ class CalendarController extends Controller
         // Redirect with success message
         return redirect()->route('admin.calendar_admin')->with('success', 'Event added successfully to Google Calendar!');
     }
+
+    
 }

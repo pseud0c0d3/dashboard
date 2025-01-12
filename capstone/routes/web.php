@@ -19,7 +19,7 @@ use Spatie\GoogleCalendar\Event;
 
 //test
 Route::get('/', function () {
-    return view('workspace.colormatch');
+    return view('workspace.game');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 
@@ -78,7 +78,8 @@ Route::resource('/posts', PostController::class)->except(['index', 'show']);
 
 // Route::get('/forum', [PostController::class, 'index'])->name('posts.index');
 
-
+// para mag reflect sa fullcalendar yung ginawa sa gcalendar
+Route::get('/admin/get-google-calendar-events', [CalendarController::class, 'getGoogleCalendarEvents']);
 
 
 
