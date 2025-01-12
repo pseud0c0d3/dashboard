@@ -55,24 +55,5 @@ class CalendarController extends Controller
         return redirect()->route('admin.calendar_admin')->with('success', 'Event added successfully to Google Calendar!');
     }
 
-    // New function to fetch events from Google Calendar and send to frontend (FullCalendar)
-    public function getGoogleCalendarEvents()
-    {
-        // Get events from Google Calendar using the service
-        $events = $this->googleCalendarService->getEvents();
-
-        // Format events to match FullCalendar's expected structure
-        $formattedEvents = [];
-        foreach ($events as $event) {
-            $formattedEvents[] = [
-                'title' => $event['summary'],
-                'start' => $event['start'],
-                'end' => $event['end'],
-                'description' => $event['description'] ?? '',
-            ];
-        }
-
-        // Return the events as a JSON response
-        return response()->json($formattedEvents);
-    }
+    
 }

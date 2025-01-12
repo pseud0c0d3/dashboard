@@ -1,59 +1,20 @@
 @extends('layouts.master')
 @section('content')
-{{-- <style>
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-        }
-</style> --}}
 
 
     <div class="main-content"> 
         <div class="card mb4">
             <div class="card-body">
-                <h4 class="card-title">Google Calendar</h4>
-                <!-- Embed Google Calendar using iframe -->
-                <iframe src="https://calendar.google.com/calendar/embed?src=516f3464e40f5ff34efa39bb945e36b6ad4f2ef00cbc164da549b86cc923a6ad%40group.calendar.google.com&ctz=Asia%2FManila" 
-                style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-
-                {{-- gawing modal buong form para sa add --}}
-                <h4 class="card-title">New Schedule</h4>
-                <form action="{{ route('calendar.store') }}" method="POST">
-                    @csrf
-    
-                    <label for="name">Appointment For</label>
-                    <br>
-                    <textarea name="name" id="" cols="60" rows="3"></textarea>
-    
-                    <label for="title">Event Title</label>
-                    <br>
-                    <input type="text" name="title" required>
-    
-                    <label for="description">Event Description</label>
-                    <br>
-                    <textarea name="description" id="" cols="60" rows="3" required></textarea>
-    
-                    <label for="meeting_time">Choose a time:</label>
-                    <br>
-                    <input type="date" name="meeting_date" required>
-                    <input type="time" name="meeting_time" required>
-                    
-                    <br>
-                    <br>
-    
-                    <input class="btn btn-primary" type="submit" value="Submit">
-                </form>
+                
                
-                            
+                
+                            <h4 class="card-title">Google Calendar</h4>
+                            <!-- Embed Google Calendar using iframe -->
+                            <iframe src="https://calendar.google.com/calendar/embed?src=516f3464e40f5ff34efa39bb945e36b6ad4f2ef00cbc164da549b86cc923a6ad%40group.calendar.google.com&ctz=Asia%2FManila" 
+                            style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+                        
+
+
             </div>
         </div>
     </div>
