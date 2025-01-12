@@ -1,4 +1,3 @@
-/* General styling for the body */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #1427d84f;
@@ -22,7 +21,6 @@ body {
     z-index: -1; 
   }
 
-/* Container for both sections (home and game) */
 .container {
     text-align: center;
     padding: 20px;
@@ -33,7 +31,6 @@ body {
     max-width: 600px;
 }
 
-/* Header styling */
 h1 {
     font-size: 3.5rem;
     color: #ff5722;
@@ -41,13 +38,11 @@ h1 {
     font-weight: bold;
 }
 
-/* Paragraph styling */
 p {
     font-size: 1.2rem;
     color: #666;
 }
 
-/* Ensure the start button is positioned properly in the home section */
 #start-game {
     display: block;
     margin: 20px auto;
@@ -63,13 +58,13 @@ p {
     background-color: #45a049;
 }
 
-
 #score, #highest-score, #timer {
     font-size: 1.5rem;
     font-weight: bold;
     color: #ff5722;
-    margin: 10px 0; /* Add spacing between these elements */
+    margin: 10px 0; 
 }
+
 #timer {
     font-size: 1.8rem; 
     font-family: 'Arial', sans-serif; 
@@ -78,7 +73,7 @@ p {
     border: 3px solid #bf360c; 
     border-radius: 10px; 
     padding: 10px 20px; 
-    margin: 10px auto; /* Center alignment */
+    margin: 10px auto; 
     text-align: left; 
     display: flex; 
     align-items: center; 
@@ -87,7 +82,6 @@ p {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   }
   
-  /* Add a clock icon next to the timer */
   #timer::before {
     content: '\23F0'; /* Unicode for clock emoji ⏰ */
     font-size: 2rem; 
@@ -95,7 +89,6 @@ p {
     color: #bf360c; 
   }
   
-  /* Highlight Timer When Time is Running Out */
   #timer.low-time {
     background-color: #ffe0e0; 
     color: #d32f2f; 
@@ -109,7 +102,6 @@ p {
     color: #e53935;
 }
 
-/* Button styling*/
 button {
     padding: 15px 30px;
     font-size: 18px; 
@@ -121,7 +113,6 @@ button {
     transition: background-color 0.3s ease;
 }
 
-/* Hover effect for buttons */
 button:hover {
     background-color: #45a049;
 }
@@ -131,9 +122,9 @@ button:hover {
     display: flex;
     flex-wrap: wrap; 
     justify-content: center;
-    gap: 20px; /* Add some space between the images */
+    gap: 20px; 
     margin-top: 20px;
-    flex-grow: 1; /* Allow this section to expand and fill available space */
+    flex-grow: 1; 
 }
 
 #options img {
@@ -149,7 +140,6 @@ button:hover {
     transform: scale(1.1);
     border-color: #2196F3;
 }
-/* Custom modal styling */
 .modal {
     position: fixed;
     top: 0;
@@ -162,22 +152,21 @@ button:hover {
     align-items: center;
     z-index: 1000;
 }
-/* Instruction Modal styles */
+
 .modal-game {
-    display: none; /* Hide the modal initially */
-    position: fixed; /* Fix it to the screen */
+    display: none; 
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 1000; /* Ensure it's on top of other content */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    padding: 20px; /* Add some space around the content */
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px; 
 }
 
-/* Modal Styles */
 #game-over-modal {
     position: fixed;
     top: 0;
@@ -190,7 +179,6 @@ button:hover {
     align-items: center;
 }
 
-/* Modal content style */
 .modal-content {
     background-color: #ffffff;
     padding: 30px;
@@ -198,7 +186,7 @@ button:hover {
     border: 3px solid #4CAF50;
     text-align: center;
     max-width: 500px;
-    width: 90%; /* Responsive design */
+    width: 90%; 
     margin: auto;
 }
 
@@ -226,7 +214,6 @@ button:hover {
     background-color: #45a049;
 }
 
-/* Home and Game Section */
 #home-section {
     display: flex;
     justify-content: center;
@@ -245,15 +232,15 @@ button:hover {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px; /* Increased padding for some breathing room */
+    padding: 20px; 
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 800px;
-    height: auto;  /* Allow the container to adjust based on content */
-    max-height: 600px; /* Set a max height to avoid overflowing */
-    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    height: auto;  
+    max-height: 600px; 
+    overflow-y: auto; 
 }
 
 #home-section {
@@ -264,7 +251,7 @@ button:hover {
     display: none;
 }
 
-/* Quit Game Button */
+
 #quit-game {
     background-color: #f44336;
     color: white;
@@ -274,7 +261,6 @@ button:hover {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
-   
 }
 
 #quit-game:hover {
@@ -286,19 +272,17 @@ button:hover {
     transform: scale(1);
 }
 
-/* Style for the category images */
 .category-image {
     object-fit:cover;
-    width: 150px;          /* Set a fixed width */
-    height: 150px;         /* Set a fixed height */
-    margin: 10px;          /* Add space around the images */
-    border-radius: 10px;   /* Rounded corners */
-    cursor: pointer;      /* Change cursor to pointer on hover */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+    width: 150px;          
+    height: 150px;         
+    margin: 10px;          
+    border-radius: 10px;   
+    cursor: pointer;      
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
-/* Add hover effect for category images */
 .category-image:hover {
-    transform: scale(1.1); /* Enlarge the image slightly */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }

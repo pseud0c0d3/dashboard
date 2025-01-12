@@ -19,30 +19,25 @@
 </div>
 
 
-<!-- Instruction Modal for Autism-Friendly Design -->
+<!-- Instruction Modal -->
 <div id="instruction-modal" class="modal-game">
     <div class="modal-content">
         <h2>Let's Play the Animal Sound Game!</h2>
         
         <p>👂🎵 Listen to the sound! Can you guess which category the animal belongs to?</p>
-        
-        <!-- Clear and simple instructions with visual aids -->
         <div>
             <p>🔊</p>
         </div>
         
         <p>Click the category picture (Land, Air, or Sea) that matches the sound you hear.</p>
         
-        <!-- Interactive button with a larger size for ease of use -->
         <button id="start-game-modal" style="font-size: 24px; padding: 20px; background-color: #4CAF50; color: white; border-radius: 10px;">
             Start the Game 🎮
         </button>
     </div>
 </div>
 
-
-
-    <!-- Game Section -->
+    <!-- Game -->
     <div id="game-section" class="container" style="display: none;">
         <div id="timer" style="font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 10px;">Time: 0s</div>
         <h1>Guess the Animal Sound!</h1>

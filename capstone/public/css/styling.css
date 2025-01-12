@@ -55,10 +55,6 @@ body {
     margin-bottom: 50px;
   }
   
-  .hidden {
-    display: none;
-}
-
   .tile {
     width: 100px;
     height: 100px;
@@ -71,14 +67,11 @@ body {
     border-radius: 8px;
     transform-style: preserve-3d;
     transition: transform 0.5s;
-    position: relative; 
-    
+    position: relative;  
   }
-
 
   .tile.flipped {
     transform: rotateY(180deg);
-    
   }
 
   .tile .front, .tile .back {
@@ -87,7 +80,7 @@ body {
     border-radius: 7px;
     
     position: absolute;
-    backface-visibility: hidden; /* Hide the back face when flipped */
+    backface-visibility: hidden; 
   }
 
   .tile .back {
@@ -97,17 +90,16 @@ body {
   }
 
   .tile .front {
-    background-color: #ddd; /* Front face color (hidden when flipped) */
+    background-color: #ddd;
   }
 
   .tile .back {
-    background-color: transparent; /* Color will come from JS */
+    background-color: transparent; 
     
   }
 
-  /* When tiles are clicked, they are enabled (no .disabled class) */
   .tile.disabled {
-    pointer-events: none; /* Prevent clicking */
+    pointer-events: none;
   }
 
   .hidden {
@@ -132,10 +124,10 @@ body {
 
   .button:hover {
     background-color: #ffa500;
-    transform: scale(1.1); /* Zoom the button slightly */
+    transform: scale(1.1); 
   }
   .button:active {
-    transform: scale(1.05); /* Slightly shrink when clicked for a press effect */
+    transform: scale(1.05); 
   }
 
   .start-button {
@@ -191,8 +183,8 @@ body {
   border: 3px solid #bf360c; 
   border-radius: 10px; 
   padding: 10px 20px; 
-  margin: 10px auto; /* Center alignment */
-  text-align: left; /* Align text to the left for the icon */
+  margin: 10px auto; 
+  text-align: left; 
   display: flex; 
   align-items: center; 
   gap: 10px; 
@@ -200,7 +192,6 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-/* Add a clock icon next to the timer */
 #timer::before {
   content: '\23F0'; /* Unicode for clock emoji ⏰ */
   font-size: 2rem; 
@@ -208,15 +199,13 @@ body {
   color: #bf360c; 
 }
 
-/* Highlight Timer When Time is Running Out */
 #timer.low-time {
-  background-color: #ffe0e0; /* Light red background for urgency */
+  background-color: #ffe0e0; 
   color: #d32f2f; 
   border-color: #d32f2f; 
   transform: scale(1.05); 
 }
 
-/* Level Display Styles */
 #levelDisplay {
   font-size: 1rem; 
   font-family: 'Comic Sans MS', sans-serif;
@@ -232,8 +221,6 @@ body {
   transition: all 0.3s ease-in-out; 
 }
 
-
-/* Custom popup container */
 .custom-popup {
   position: fixed;
   top: 0;
@@ -247,7 +234,6 @@ body {
   z-index: 1000;
 }
 
-/* Popup content */
 .custom-popup-content {
   background-color: #ffffff;
   padding: 20px;
@@ -258,14 +244,12 @@ body {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Message text */
 .custom-popup-content p {
   font-size: 1.5rem;
   color: #333333;
   margin-bottom: 20px;
 }
 
-/* Close button */
 .custom-popup-button {
   background-color: #28a745;
   color: #ffffff;
@@ -281,7 +265,6 @@ body {
   background-color: #ffa500;
 }
 
-/* Animation for popup */
 @keyframes fadeIn {
   from {
     opacity: 0;
