@@ -38,11 +38,11 @@ class GoogleCalendarService
         'summary' => $title,
         'start' => [
             'dateTime' => $startDateTime,
-            'timeZone' => 'UTC',
+            'timeZone' => 'Asia/Manila',
         ],
         'end' => [
             'dateTime' => $endDateTime,
-            'timeZone' => 'UTC',
+            'timeZone' => 'Asia/Manila',
         ],
         'description' => $description,  // Add description field
     ]);
