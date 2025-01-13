@@ -3,7 +3,7 @@
 @section('content')
 
 
-                <div class="chat-container">
+                {{-- <div class="chat-container">
 
 
                     <!-- Chat Box -->
@@ -217,7 +217,50 @@
             });
         }
 
+    </script> --}}
+    <script>
+        // Initialize Pusher
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher("{{ env('PUSHER_APP_KEY') }}", {
+            cluster: "{{ env('PUSHER_APP_CLUSTER') }}"
+        });
+
+        var channel = pusher.subscribe('channel');
+        channel.bind('message', function(data) {
+            let messageContainer = document.getElementById("messages");
+            let messageItem = document.createElement("li");
+            messageItem.textContent = `${data.username}: ${data.message}`;
+            messageContainer.appendChild(messageItem);
+        });
+
+        function sendMessage() {
+            let username = document.getElementById("username").value;
+            let message = document.getElementById("message").value;
+
+            fetch("/messages", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                },
+                body: JSON.stringify({username: username, message: message}),
+            }).then(response => response.json());
+        }
     </script>
-</body>
-</html>
+
+
+    <h1>Chat Room</h1>
+
+    <div>
+        <input type="text" id="username" placeholder="Your name" required>
+        <textarea id="message" placeholder="Type a message" required></textarea>
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <ul id="messages">
+        <!-- Messages will appear here -->
+    </ul>
+
+
 @endsection
