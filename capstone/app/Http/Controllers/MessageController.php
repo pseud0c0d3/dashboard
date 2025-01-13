@@ -11,6 +11,11 @@ class MessageController extends Controller
     {
         return view('loggedIn.chat');
     }
+    public function adminchat()
+    {
+        return view('admin.adminchat');
+    }
+
 
     public function message(Request $request)
     {

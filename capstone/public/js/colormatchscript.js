@@ -2,8 +2,8 @@ const startButton = document.getElementById('startButton');
 const exitButton = document.getElementById('exitButton');
 const quitButton = document.getElementById('quitButton');
 const board = document.getElementById('board');
-const timerDisplay = document.getElementById('timer'); 
-const levelDisplay = document.getElementById('levelDisplay'); 
+const timerDisplay = document.getElementById('timer');
+const levelDisplay = document.getElementById('levelDisplay');
 
 let colors = [];
 let flippedTiles = [];
@@ -31,15 +31,18 @@ function generateColors(totalPairs) {
 function stopAndResetTimer() {
   clearInterval(timer);
   timerStarted = false;
-  timerDisplay.textContent = 'Time: 0s'; 
+  timerDisplay.textContent = 'Time: 0s';
   timerDisplay.style.color = 'black';
 }
 
+
+
+// Function to start the timer
 function startTimer(duration) {
   let timeRemaining = duration;
   let totalTimePlayed = 0; // Track the total time played
 
-  timerDisplay.textContent = `Time: ${timeRemaining}s`; 
+  timerDisplay.textContent = `Time: ${timeRemaining}s`;
   timerDisplay.style.display = 'block';
 
   timer = setInterval(() => {
@@ -49,26 +52,28 @@ function startTimer(duration) {
     timerDisplay.textContent = `Time: ${timeRemaining}s`;
 
     if (timeRemaining <= 10) {
-      timerDisplay.style.color = 'red'; //show time to be red when is running out
+      timerDisplay.style.color = 'red'; // Show time in red when it's running out
     }
 
     if (timeRemaining <= 0) {
-      clearInterval(timer);
+      clearInterval(timer); // Stop the timer
+      isGameOver = true; // Mark the game as over
       showCustomPopup('Time is up! Game over.', () => {
         showResults(currentLevel, totalTimePlayed, matchedTiles); // Show results after 
       });
-      isGameOver = true; // Mark game as over
     }
   }, 1000);
 }
 
+
+
 // Function to create the game board
 function createBoard() {
-  const totalTiles = levelTiles[currentLevel - 1]; 
+  const totalTiles = levelTiles[currentLevel - 1];
   const totalPairs = totalTiles / 2;
 
   colors = generateColors(totalPairs);
-  board.innerHTML = ''; 
+  board.innerHTML = '';
   flippedTiles = [];
   matchedTiles = 0;
   isGameOver = false; // Reset game over state
@@ -126,11 +131,11 @@ function checkForMatch() {
         clearInterval(timer); // Stop timer
         showCustomPopup('Congratulations! You matched all tiles.', () => {
           if (currentLevel < levelTiles.length) {
-            currentLevel++;
-            stopAndResetTimer();
+            currentLevel++; // Move to the next level
+            stopAndResetTimer(); // Reset timer for the next level
             createBoard(); // Load the next level
           } else {
-            showResults(currentLevel, 0, matchedTiles);
+            showResults(currentLevel, 0, matchedTiles); // Show final results if it's the last level
           }
         });
       }
@@ -140,13 +145,14 @@ function checkForMatch() {
         // Flip tiles back
         tile1.classList.add('flipped');
         tile2.classList.add('flipped');
-        flippedTiles = []; 
+        flippedTiles = [];
       }, 900); // Add delay before flipping back
     }
   }
 }
 
-// Handle tile click 
+
+// Handle tile click
 function handleTileClick(e) {
   if (isGameOver || flippedTiles.length === 2) return;
 
@@ -169,9 +175,10 @@ function handleTileClick(e) {
   }
 }
 
+// Function to show custom popup messages
 function showCustomPopup(message, onClose) {
   const popup = document.createElement('div');
-  popup.classList.add('custom-popup');
+  popup.classList.add('custom-popup'); // Add a class for styling
 
   const popupContent = document.createElement('div');
   popupContent.classList.add('custom-popup-content');
@@ -179,6 +186,17 @@ function showCustomPopup(message, onClose) {
   const popupMessage = document.createElement('p');
   popupMessage.textContent = message;
   popupContent.appendChild(popupMessage);
+
+  const button = document.createElement('button');
+  button.textContent = 'Close';
+  button.addEventListener('click', () => {
+    document.body.removeChild(popup); // Close the popup when clicked
+    if (onClose) onClose(); // Trigger the onClose callback (like showing results)
+  });
+  popupContent.appendChild(button);
+
+  popup.appendChild(popupContent);
+  document.body.appendChild(popup); // Add the popup to the body
 }
 
 // Start the game
@@ -188,7 +206,7 @@ startButton.addEventListener('click', () => {
 
   // Create the instruction modal
   const instructionModal = document.createElement('div');
-  instructionModal.classList.add('custom-popup'); 
+  instructionModal.classList.add('custom-popup');
 
   const modalContent = document.createElement('div');
   modalContent.classList.add('custom-popup-content');
@@ -222,17 +240,17 @@ startButton.addEventListener('click', () => {
   startGameButton.addEventListener('click', () => {
     // Remove the instruction modal
     document.body.removeChild(instructionModal);
-  
+
     // Proceed to the game section
     const homepage = document.getElementById('homepage');
     const gameContainer = document.getElementById('gameContainer');
-  
+
     homepage.style.display = 'none';  // Hide the homepage
     gameContainer.style.display = 'block';  // Show the game container
-    
+
     currentLevel = 1; // Reset to level 1
     stopAndResetTimer(); // Ensure the timer is stopped and reset
-    createBoard(); 
+    createBoard();
   });
 });
 
@@ -245,12 +263,12 @@ quitButton.addEventListener('click', () => {
   homepage.style.display = 'block';
 
   // Reset game state
-  stopAndResetTimer(); 
-  matchedTiles = 0;   
-  currentLevel = 1;    
-  isGameOver = false;  
-  board.innerHTML = ''; 
-  timerStarted = false; 
+  stopAndResetTimer();
+  matchedTiles = 0;
+  currentLevel = 1;
+  isGameOver = false;
+  board.innerHTML = '';
+  timerStarted = false;
 });
 
 exitButton.addEventListener('click', () => {
@@ -262,9 +280,10 @@ window.addEventListener("load", function () {
   loader.style.display = "none";
 });
 
+// Function to show the results after the game is over
 function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
   const popup = document.createElement('div');
-  popup.classList.add('custom-popup');
+  popup.classList.add('custom-popup'); // Add a class for styling
 
   const popupContent = document.createElement('div');
   popupContent.classList.add('custom-popup-content');
@@ -286,14 +305,14 @@ function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
   matchInfo.textContent = `Speed of Matching: ${speed} matches per second`;
   popupContent.appendChild(matchInfo);
 
-  //restart button
+  // Restart button
   const restartButton = document.createElement('button');
   restartButton.textContent = 'Restart Game';
   restartButton.classList.add('custom-popup-button');
   popupContent.appendChild(restartButton);
 
   popup.appendChild(popupContent);
-  document.body.appendChild(popup);
+  document.body.appendChild(popup); // Ensure it's appended to the body
 
   restartButton.addEventListener('click', () => {
     document.body.removeChild(popup);
@@ -303,6 +322,7 @@ function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
     timerStarted = false;
   });
 }
+
 
 // Exit game
 function exitGame() {
@@ -323,8 +343,8 @@ window.onload = function() {
 
 document.getElementById('closeInstructions').onclick = function() {
   document.getElementById('instructionsModal').style.display = 'none';
-  document.getElementById('homepage').style.display = 'none'; 
-  document.getElementById('gameContainer').style.display = 'block';  
+  document.getElementById('homepage').style.display = 'none';
+  document.getElementById('gameContainer').style.display = 'block';
 };
 
 // Start Game Logic
@@ -335,5 +355,5 @@ document.getElementById('startButton').onclick = function() {
 
 // Exit Button Logic
 document.getElementById('quitButton').onclick = function() {
-  window.close();  
+  window.close();
 };

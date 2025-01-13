@@ -18,6 +18,10 @@ class CalendarController extends Controller
     {
         return view('admin.calendar_admin');
     }
+    public function calendar_user()
+    {
+        return view('loggedIn.calendar_user');
+    }
 
     public function store(Request $request)
     {
@@ -55,5 +59,5 @@ class CalendarController extends Controller
         return redirect()->route('admin.calendar_admin')->with('success', 'Event added successfully to Google Calendar!');
     }
 
-    
+
 }
