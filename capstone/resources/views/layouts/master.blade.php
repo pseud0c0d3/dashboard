@@ -60,7 +60,7 @@
         <div class="headers">
             <div class="header">
                 <div class="icons">
-                    <a href="{{ route('loggedIn.chat') }}" onclick="showLoading('{{ route('loggedIn.chat') }}')">
+                    <a href="{{ route('loggedIn.chat') }}">
                         <i class="bi bi-chat-dots chat-icon"></i>
                     </a>
                     <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>

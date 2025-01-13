@@ -39,7 +39,7 @@
 
     <!-- Game -->
     <div id="game-section" class="container" style="display: none;">
-        <div id="timer" style="font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 10px;">Time: 0s</div>
+        <div id="timer" style="font-size: 20px; font-weight: bold; text-align: center;">Time: 0s</div>
         <h1>Guess the Animal Sound!</h1>
         <div id="options"></div>
         <p id="score">Score: 0</p>
