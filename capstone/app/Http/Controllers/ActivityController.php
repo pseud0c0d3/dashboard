@@ -12,9 +12,9 @@ class ActivityController extends Controller
         return view('workspace.colormatch');
     }
 
-    public function sonar()
+    public function game()
     {
-        return view('workspace.sonar');
+        return view('workspace.game');
     }
 }
 

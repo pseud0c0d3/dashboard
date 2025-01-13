@@ -2,8 +2,8 @@ const startButton = document.getElementById('startButton');
 const exitButton = document.getElementById('exitButton');
 const quitButton = document.getElementById('quitButton');
 const board = document.getElementById('board');
-const timerDisplay = document.getElementById('timer'); 
-const levelDisplay = document.getElementById('levelDisplay'); 
+const timerDisplay = document.getElementById('timer');
+const levelDisplay = document.getElementById('levelDisplay');
 
 let colors = [];
 let flippedTiles = [];
@@ -31,7 +31,7 @@ function generateColors(totalPairs) {
 function stopAndResetTimer() {
   clearInterval(timer);
   timerStarted = false;
-  timerDisplay.textContent = 'Time: 0s'; 
+  timerDisplay.textContent = 'Time: 0s';
   timerDisplay.style.color = 'black';
 }
 
@@ -42,7 +42,7 @@ function startTimer(duration) {
   let timeRemaining = duration;
   let totalTimePlayed = 0; // Track the total time played
 
-  timerDisplay.textContent = `Time: ${timeRemaining}s`; 
+  timerDisplay.textContent = `Time: ${timeRemaining}s`;
   timerDisplay.style.display = 'block';
 
   timer = setInterval(() => {
@@ -59,8 +59,7 @@ function startTimer(duration) {
       clearInterval(timer); // Stop the timer
       isGameOver = true; // Mark the game as over
       showCustomPopup('Time is up! Game over.', () => {
-        // Display the results after the time is up
-        showResults(currentLevel, totalTimePlayed, matchedTiles);
+        showResults(currentLevel, totalTimePlayed, matchedTiles); // Show results after 
       });
     }
   }, 1000);
@@ -70,11 +69,11 @@ function startTimer(duration) {
 
 // Function to create the game board
 function createBoard() {
-  const totalTiles = levelTiles[currentLevel - 1]; 
+  const totalTiles = levelTiles[currentLevel - 1];
   const totalPairs = totalTiles / 2;
 
   colors = generateColors(totalPairs);
-  board.innerHTML = ''; 
+  board.innerHTML = '';
   flippedTiles = [];
   matchedTiles = 0;
   isGameOver = false; // Reset game over state
@@ -146,14 +145,14 @@ function checkForMatch() {
         // Flip tiles back
         tile1.classList.add('flipped');
         tile2.classList.add('flipped');
-        flippedTiles = []; 
+        flippedTiles = [];
       }, 900); // Add delay before flipping back
     }
   }
 }
 
 
-// Handle tile click 
+// Handle tile click
 function handleTileClick(e) {
   if (isGameOver || flippedTiles.length === 2) return;
 
@@ -207,7 +206,7 @@ startButton.addEventListener('click', () => {
 
   // Create the instruction modal
   const instructionModal = document.createElement('div');
-  instructionModal.classList.add('custom-popup'); 
+  instructionModal.classList.add('custom-popup');
 
   const modalContent = document.createElement('div');
   modalContent.classList.add('custom-popup-content');
@@ -241,17 +240,17 @@ startButton.addEventListener('click', () => {
   startGameButton.addEventListener('click', () => {
     // Remove the instruction modal
     document.body.removeChild(instructionModal);
-  
+
     // Proceed to the game section
     const homepage = document.getElementById('homepage');
     const gameContainer = document.getElementById('gameContainer');
-  
+
     homepage.style.display = 'none';  // Hide the homepage
     gameContainer.style.display = 'block';  // Show the game container
-    
+
     currentLevel = 1; // Reset to level 1
     stopAndResetTimer(); // Ensure the timer is stopped and reset
-    createBoard(); 
+    createBoard();
   });
 });
 
@@ -264,12 +263,12 @@ quitButton.addEventListener('click', () => {
   homepage.style.display = 'block';
 
   // Reset game state
-  stopAndResetTimer(); 
-  matchedTiles = 0;   
-  currentLevel = 1;    
-  isGameOver = false;  
-  board.innerHTML = ''; 
-  timerStarted = false; 
+  stopAndResetTimer();
+  matchedTiles = 0;
+  currentLevel = 1;
+  isGameOver = false;
+  board.innerHTML = '';
+  timerStarted = false;
 });
 
 exitButton.addEventListener('click', () => {
@@ -316,10 +315,10 @@ function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
   document.body.appendChild(popup); // Ensure it's appended to the body
 
   restartButton.addEventListener('click', () => {
-    document.body.removeChild(popup); // Remove the popup after restarting
+    document.body.removeChild(popup);
     currentLevel = 1; 
-    createBoard(); // Create the board for a new game
-    stopAndResetTimer(); // Reset the timer
+    createBoard(); 
+    stopAndResetTimer(); 
     timerStarted = false;
   });
 }
@@ -344,8 +343,8 @@ window.onload = function() {
 
 document.getElementById('closeInstructions').onclick = function() {
   document.getElementById('instructionsModal').style.display = 'none';
-  document.getElementById('homepage').style.display = 'none'; 
-  document.getElementById('gameContainer').style.display = 'block';  
+  document.getElementById('homepage').style.display = 'none';
+  document.getElementById('gameContainer').style.display = 'block';
 };
 
 // Start Game Logic
@@ -356,5 +355,5 @@ document.getElementById('startButton').onclick = function() {
 
 // Exit Button Logic
 document.getElementById('quitButton').onclick = function() {
-  window.close();  
+  window.close();
 };

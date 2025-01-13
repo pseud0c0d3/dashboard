@@ -36,7 +36,7 @@
             </div>
 
             <ul class="menu">
-                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Forum</a></li>
+                <li><a href="{{ route('admin.adminforum') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Forum</a></li>
                 <li>
                     <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                         <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
@@ -46,7 +46,7 @@
                         <li><a href="{{ route('workspace.game') }}" onclick="showLoading('workspace.game')">Sound Game</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ route('loggedIn.calendar_user') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="{{ route('admin.calendar_admin') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             </ul>
 
             <div class="bottom-container">
@@ -60,7 +60,7 @@
         <div class="headers">
             <div class="header">
                 <div class="icons">
-                    <a href="{{ route('loggedIn.chat') }}">
+                    <a href="{{ route('loggedIn.adminchat') }}" onclick="showLoading('{{ route('loggedIn.adminchat') }}')">
                         <i class="bi bi-chat-dots chat-icon"></i>
                     </a>
                     <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>

@@ -8,7 +8,7 @@
 </head>
 <body>
     <img src="/img/animal.jpg" alt="Background Image" class="background"></div>
-    
+
 <!-- Home Section -->
 <div id="home-section" class="container">
     <h1>The Animal Sound Game!</h1>
@@ -23,14 +23,14 @@
 <div id="instruction-modal" class="modal-game">
     <div class="modal-content">
         <h2>Let's Play the Animal Sound Game!</h2>
-        
+
         <p>👂🎵 Listen to the sound! Can you guess which category the animal belongs to?</p>
         <div>
             <p>🔊</p>
         </div>
-        
+
         <p>Click the category picture (Land, Air, or Sea) that matches the sound you hear.</p>
-        
+
         <button id="start-game-modal" style="font-size: 24px; padding: 20px; background-color: #4CAF50; color: white; border-radius: 10px;">
             Start the Game 🎮
         </button>
@@ -52,7 +52,7 @@
         <div class="modal-content">
             <h2>Game Over</h2>
             <p id="final-score">Your Score: 0</p>
-            <p id="highest-score-modal">Highest Score: 0</p> 
+            <p id="highest-score-modal">Highest Score: 0</p>
             <button id="restart-game">Restart Game</button>
         </div>
     </div>

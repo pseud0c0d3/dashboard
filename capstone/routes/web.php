@@ -19,7 +19,7 @@ use Spatie\GoogleCalendar\Event;
 
 //test
 Route::get('/', function () {
-    return view('workspace.colormatch');
+    return view('admin.calendar_admin');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 
@@ -44,16 +44,20 @@ Route::post('/loggedIn/user', [LogInController::class, 'login'])->name('login');
 // Log out
 Route::post('/', [LogInController::class, 'logout'])->name('logout');
 
+
 //user routes
 Route::get('/loggedIn/user', [HomeController::class,'user'])->name('loggedIn.user');
+Route::get('/admin/adminforum', [HomeController::class,'adminforum'])->name('admin.adminforum');
+
 
 // Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
 
 
 //activities route
 Route::get('/workspace/colormatch', [ActivityController::class, 'colormatch'])->name('workspace.colormatch');
+Route::get('/workspace/game', [ActivityController::class, 'game'])->name('workspace.game');
+// Route::post('/loggedIn/user', [LogInController::class, 'logoutgame'])->name('logoutgame');
 
-Route::get('/workspace/sonar', [ActivityController::class, 'sonar'])->name('workspace.sonar');
 
 //userprofile routes
 Route::get('/loggedIn/userprofile', [UserController::class, 'userprofile'])->name('loggedIn.userprofile');
@@ -63,9 +67,13 @@ Route::get('/loggedIn/faq', [faqController::class, 'faq'])->name('loggedIn.faq')
 
 //chat routes
 Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn.chat');
+Route::get('/loggedIn/adminchat', [MessageController::class, 'adminchat'])->name('loggedIn.adminchat');
+
 
 //calendar routes
 Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
+Route::get('/loggedIn/calendar_user', [CalendarController::class, 'calendar_user'])->name('loggedIn.calendar_user');
+
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
@@ -83,6 +91,6 @@ Route::get('/admin/get-google-calendar-events', [CalendarController::class, 'get
 
 
 
-    
+
 
 
