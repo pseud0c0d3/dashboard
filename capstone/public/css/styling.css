@@ -221,48 +221,62 @@ body {
   transition: all 0.3s ease-in-out; 
 }
 
+/* The background overlay for the popup */
 .custom-popup {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999; /* Make sure it appears on top */
 }
 
+/* Content inside the popup */
 .custom-popup-content {
-  background-color: #ffffff;
+  background: #fff;
   padding: 20px;
   border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
   text-align: center;
-  max-width: 90%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
 }
 
+/* Title styling */
+.custom-popup-content h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Text styling */
 .custom-popup-content p {
-  font-size: 1.5rem;
-  color: #333333;
-  margin-bottom: 20px;
+  font-size: 18px;
+  color: #555;
+  margin: 10px 0;
 }
 
-.custom-popup-button {
-  background-color: #28a745;
-  color: #ffffff;
+/* Button styles */
+.custom-popup-content button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
 }
 
-.custom-popup-button:hover {
-  background-color: #ffa500;
+/* Hover effect for buttons */
+.custom-popup-content button:hover {
+  background-color: #45a049;
 }
 
 @keyframes fadeIn {

@@ -19,7 +19,7 @@ use Spatie\GoogleCalendar\Event;
 
 //test
 Route::get('/', function () {
-    return view('admin.calendar_admin');
+    return view('workspace.colormatch');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 
