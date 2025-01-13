@@ -16,47 +16,70 @@
         }
 </style> --}}
 
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <div class="main-content"> 
-        <div class="card mb4">
-            <div class="card-body">
-                <h4 class="card-title">Google Calendar</h4>
-                <!-- Embed Google Calendar using iframe -->
-                <iframe src="https://calendar.google.com/calendar/embed?src=516f3464e40f5ff34efa39bb945e36b6ad4f2ef00cbc164da549b86cc923a6ad%40group.calendar.google.com&ctz=Asia%2FManila" 
+
+<div class="main-content"> 
+    <div class="card mb4">
+        <div class="card-body">
+            <h4 class="card-title">Google Calendar</h4>
+            <!-- Embed Google Calendar using iframe -->
+            <iframe src="https://calendar.google.com/calendar/embed?src=516f3464e40f5ff34efa39bb945e36b6ad4f2ef00cbc164da549b86cc923a6ad%40group.calendar.google.com&ctz=Asia%2FManila" 
                 style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            
+            <br><br>
 
-                {{-- gawing modal buong form para sa add --}}
-                <h4 class="card-title">New Schedule</h4>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scheduleModal">
+                Add New Schedule
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scheduleModalLabel">New Schedule</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
                 <form action="{{ route('calendar.store') }}" method="POST">
                     @csrf
-    
-                    <label for="name">Appointment For</label>
-                    <br>
-                    <textarea name="name" id="" cols="60" rows="3"></textarea>
-    
-                    <label for="title">Event Title</label>
-                    <br>
-                    <input type="text" name="title" required>
-    
-                    <label for="description">Event Description</label>
-                    <br>
-                    <textarea name="description" id="" cols="60" rows="3" required></textarea>
-    
-                    <label for="meeting_time">Choose a time:</label>
-                    <br>
-                    <input type="date" name="meeting_date" required>
-                    <input type="time" name="meeting_time" required>
-                    
-                    <br>
-                    <br>
-    
-                    <input class="btn btn-primary" type="submit" value="Submit">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Appointment For</label>
+                        <textarea name="name" id="name" class="form-control" cols="60" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Event Title</label>
+                        <input type="text" name="title" id="title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Event Description</label>
+                        <textarea name="description" id="description" class="form-control" cols="60" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="meeting_date" class="form-label">Choose a Date</label>
+                        <input type="date" name="meeting_date" id="meeting_date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="meeting_time" class="form-label">Choose a Time</label>
+                        <input type="time" name="meeting_time" id="meeting_time" class="form-control" required>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </form>
-               
-                            
             </div>
         </div>
     </div>
+</div>
+
 
 
     
