@@ -1,106 +1,50 @@
 @extends('layouts.admin')
+
 @section('content')
-{{-- <style>
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-        }
-</style> --}}
-
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<div class="main-content">
-    <div class="card mb4">
-        <div class="card-body">
-            <h4 class="card-title">Google Calendar</h4>
-            <!-- Embed Google Calendar using iframe -->
-            <iframe src="https://calendar.google.com/calendar/embed?src=516f3464e40f5ff34efa39bb945e36b6ad4f2ef00cbc164da549b86cc923a6ad%40group.calendar.google.com&ctz=Asia%2FManila"
-                style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+                <div class="chat-container">
 
-            <br><br>
 
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scheduleModal">
-                Add New Schedule
-            </button>
+                    <!-- Chat Box -->
+                    <div class="chat-box">
+                        <h3>Chat with User 1</h3>
+                        <div class="chat-messages">
+                            <div class="message user">
+                                <img src="/img/profile.jpg" alt="User 1">
+                                <div class="message-bubble">Hello! How can I assist you today?</div>
+                            </div>
+                            <div class="message contact">
+                                <img src="/img/profile.jpg" alt="Doctor">
+                                <div class="message-bubble">I have a question regarding my recent diagnosis.</div>
+                            </div>
+                            <!-- Add more messages as needed -->
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" placeholder="Type a message...">
+                            <button>Send</button>
+                        </div>
+                    </div>
+                    <!-- Contacts List -->
+                    <div class="contacts-list">
+                        <h3>Contacts</h3>
+                        <ul>
+                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 1">User 1</li>
+                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 2">User 2</li>
+                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 3">User 3</li>
+                            <!-- Add more contacts as needed -->
+                        </ul>
+                    </div>
+                </div>
+
+
         </div>
+        <!-- Calendar Modal Structure -->
+
     </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="scheduleModalLabel">New Schedule</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('calendar.store') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Appointment For</label>
-                        <textarea name="name" id="name" class="form-control" cols="60" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Event Title</label>
-                        <input type="text" name="title" id="title" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Event Description</label>
-                        <textarea name="description" id="description" class="form-control" cols="60" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="meeting_date" class="form-label">Choose a Date</label>
-                        <input type="date" name="meeting_date" id="meeting_date" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="meeting_time" class="form-label">Choose a Time</label>
-                        <input type="time" name="meeting_time" id="meeting_time" class="form-control" required>
-                    </div>
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
 <!------------------------------------------------------------------------------------------------------------------------------>
 <!------------------------------------------------------------------------------------------------------------------------->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.getElementById('calendar')
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay' },
-
-        views: {
-            dayGridMonth: { // name of view
-            titleFormat: { year: 'numeric', month: 'long' }
-            // other view-specific options here
-            }
-        }
-
-    })
-    calendar.render()
-    })
         // Show loading overlay for navigation
         function showLoading(url) {
             const loadingOverlay = document.getElementById("loadingOverlay");
@@ -273,40 +217,7 @@
             });
         }
 
-    //calendar section
-    // //calendar
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize stats (mock data)
-      const totalUsers = 50;
-      const upcomingAppointments = 5;
-      const dailyInteraction = 10;
-
-      document.getElementById('total-users').textContent = totalUsers;
-      document.getElementById('upcoming-appointments').textContent = upcomingAppointments;
-      document.getElementById('daily-interaction').textContent = dailyInteraction;
-
-      // View all appointments button functionality
-      document.getElementById('view-all-btn').addEventListener('click', function() {
-        alert('View All Appointments clicked!');
-      });
-    });
-
-    //make fulcalendar fetch google calendar data
-
-    document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: {
-            center: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        events: '/admin/get-google-calendar-events', // Fetch events from your controller
-    });
-    calendar.render();
-    });
-
     </script>
-
-
+</body>
+</html>
 @endsection

@@ -18,10 +18,10 @@
     <div class="button-container">
       <button id="startButton" class="button start-button">Start Game</button>
     </div>
-    <button id="exitButton" class="button exit-button">Exit</button>
+    <button  id="exitButton" class="button exit-button">Exit</button>
   </div>
 
-  
+
   <!-- Game -->
   <div id="gameContainer" class="game-container hidden">
     <div id="timer" style="font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 10px;">Time: 0s</div>

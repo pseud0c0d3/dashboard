@@ -13,5 +13,12 @@ class HomeController extends Controller
     return view('loggedIn.user', ['posts' => $posts]);
 }
 
+public function adminforum()
+{
+    $posts = Post::latest()->paginate(6);
+    return view('admin.adminforum', ['posts' => $posts]);
+}
+
 
 }
+
