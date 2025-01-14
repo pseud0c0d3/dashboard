@@ -75,6 +75,8 @@ class PostController extends Controller
             'title' => ['required', 'max:255'],
             'body' => ['required'],
             'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
+            
+
         ]);
 
         $path = $post->image ?? null;

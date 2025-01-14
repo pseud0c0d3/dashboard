@@ -1,12 +1,12 @@
-/* styles.css */
+
 body {
-  font-family: 'Poppins', Arial, sans-serif; /* Poppins with fallback fonts */
+  font-family: 'Poppins', Arial, sans-serif; 
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: #00000083;
     color: #333;
 }
 
@@ -16,15 +16,15 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: blur(10px); /* Adjust the blur level */
-  opacity: 0.7;
-  z-index: -1; /* Ensure the image stays in the background */
+  object-fit:cover;
+  filter: blur(11px); 
+  opacity: 0.5  ;
+  z-index: -1; 
 }
 
     /* Center the loader container */
     .loader-container {
-      display: none; /* Initially hidden */
+      display: none; 
       justify-content: center;
       align-items: center;
       position: fixed;
@@ -50,18 +50,16 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(4, 100px);
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
   
-  .hidden {
-    display: none;
-}
-
   .tile {
     width: 100px;
     height: 100px;
-    background-color: #ddd;
+    background-color: #ffffff;
+    border: 2px solid #000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,9 +67,8 @@ body {
     border-radius: 8px;
     transform-style: preserve-3d;
     transition: transform 0.5s;
-    position: relative; /* Ensures correct stacking context */
+    position: relative;  
   }
-
 
   .tile.flipped {
     transform: rotateY(180deg);
@@ -80,27 +77,29 @@ body {
   .tile .front, .tile .back {
     width: 100%;
     height: 100%;
+    border-radius: 7px;
+    
     position: absolute;
-    backface-visibility: hidden; /* Hide the back face when flipped */
+    backface-visibility: hidden; 
   }
 
   .tile .back {
     background-color: transparent;
-    border-radius: 5px;
+    
+    
   }
 
   .tile .front {
-    background-color: #ddd; /* Front face color (hidden when flipped) */
+    background-color: #ddd;
   }
 
   .tile .back {
-    background-color: transparent; /* Color will come from JS */
-    border-radius: 5px;
+    background-color: transparent; 
+    
   }
 
-  /* When tiles are clicked, they are enabled (no .disabled class) */
   .tile.disabled {
-    pointer-events: none; /* Prevent clicking */
+    pointer-events: none;
   }
 
   .hidden {
@@ -119,24 +118,30 @@ body {
     border: none;
     font-weight: 600;
     font-size: 1.25rem;
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition for zoom and color */
+    transition: transform 0.3s ease, background-color 0.3s ease; 
 
   }
 
   .button:hover {
     background-color: #ffa500;
-    transform: scale(1.1); /* Zoom the button slightly */
+    transform: scale(1.1); 
   }
   .button:active {
-    transform: scale(1.05); /* Slightly shrink when clicked for a press effect */
+    transform: scale(1.05); 
   }
+
   .start-button {
     background-color: #28a745;
+    color: white;
+  }
+  .exit-button {
+    background-color: #dc3545;
     color: white;
   }
   .quit-button {
     background-color: #dc3545;
     color: white;
+    
   }
 
   #preloader{
@@ -152,14 +157,135 @@ body {
     font-size: 1.25rem;
     text-align: center;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5); /* Shadow for header */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
 
 
   }
   h1 {
-    font-size: 2.5rem;
+    color: #ffffff;
+    font-size: 3.5rem;
     font-weight: 600;
     text-align: center;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for header */
+    text-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5); 
+    background-color: #323781;
+    padding: 10px 30px;
+    border: 2px dotted #000;
+
   }
+
+  
+#timer {
+  font-size: 1.8rem; 
+  font-family: 'Arial', sans-serif; 
+  background-color: #fff3e0; 
+  color: #bf360c; 
+  border: 3px solid #bf360c; 
+  border-radius: 10px; 
+  padding: 10px 20px; 
+  margin: 10px auto; 
+  text-align: left; 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  width: fit-content; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+#timer::before {
+  content: '\23F0'; /* Unicode for clock emoji ⏰ */
+  font-size: 2rem; 
+  display: inline-block; 
+  color: #bf360c; 
+}
+
+#timer.low-time {
+  background-color: #ffe0e0; 
+  color: #d32f2f; 
+  border-color: #d32f2f; 
+  transform: scale(1.05); 
+}
+
+#levelDisplay {
+  font-size: 1rem; 
+  font-family: 'Comic Sans MS', sans-serif;
+  background-color: #e8f5e9;
+  color: #2e7d32; 
+  border: 3px solid #2e7d32; 
+  border-radius: 15px; 
+  padding: 5px 5px; 
+  margin: 10px auto; 
+  text-align: center;
+  width: fit-content; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
+  transition: all 0.3s ease-in-out; 
+}
+
+/* The background overlay for the popup */
+.custom-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Make sure it appears on top */
+}
+
+/* Content inside the popup */
+.custom-popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Title styling */
+.custom-popup-content h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Text styling */
+.custom-popup-content p {
+  font-size: 18px;
+  color: #555;
+  margin: 10px 0;
+}
+
+/* Button styles */
+.custom-popup-content button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for buttons */
+.custom-popup-content button:hover {
+  background-color: #45a049;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

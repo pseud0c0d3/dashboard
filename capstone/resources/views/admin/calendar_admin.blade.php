@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AID OF ANGLES</title>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
-
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/chat.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js   "></script>
-
-    <style>
+@extends('layouts.admin')
+@section('content')
+{{-- <style>
         .loading-overlay {
             display: none;
             position: fixed;
@@ -27,78 +14,75 @@
             align-items: center;
             font-size: 24px;
         }
-    </style>
-</head>
-<body>
-    <div class="loading-overlay" id="loadingOverlay">Loading...</div>
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
-            <div class="profile-section">
-                <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
-                    <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
-                    <div class="profile-details">
-                        <p><strong>Joseph Chan</strong></p>
-                        <p>Father</p>
-                    </div>
-                </a>
+</style> --}}
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<div class="main-content">
+    <div class="card mb4">
+        <div class="card-body">
+            <h4 class="card-title">Google Calendar</h4>
+            <!-- Embed Google Calendar using iframe -->
+            <iframe src="https://calendar.google.com/calendar/embed?src=516f3464e40f5ff34efa39bb945e36b6ad4f2ef00cbc164da549b86cc923a6ad%40group.calendar.google.com&ctz=Asia%2FManila"
+                style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+
+            <br><br>
+
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scheduleModal">
+                Add New Schedule
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scheduleModalLabel">New Schedule</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <ul class="menu">
-                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Forum</a></li>
-                <li>
-                    <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
-                        <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
-                    </a>
-                    <ul class="dropdown" id="activitiesDropdown">
-                        <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Activity 1</a></li>
-                            <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ route('admin.calendar_admin') }}" onclick="showLoading('admin.calendar_admin')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>            </ul>
-            <div class="bottom-container">
-                <ul class="menu">
-                    <li><a href="{{ route('loggedIn.faq') }}" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
-                    <li><a href="#" onclick="showLoading('logout.html')"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-                </ul>
+            <div class="modal-body">
+                <form action="{{ route('calendar.store') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Appointment For</label>
+                        <textarea name="name" id="name" class="form-control" cols="60" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Event Title</label>
+                        <input type="text" name="title" id="title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Event Description</label>
+                        <textarea name="description" id="description" class="form-control" cols="60" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="meeting_date" class="form-label">Choose a Date</label>
+                        <input type="date" name="meeting_date" id="meeting_date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="meeting_time" class="form-label">Choose a Time</label>
+                        <input type="time" name="meeting_time" id="meeting_time" class="form-control" required>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="headers">
-            <div class="header">
-                <div class="search-container">
-                    <input type="text" placeholder="Search...">
-                </div>
-                <div class="icons">
-                    <i class="bi bi-calendar-fill calendar-icon" onclick="openCalendar()"></i>
-                    <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
-                    <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
-                </div>
-                <!-- Settings Dropdown -->
-                <div class="settings-dropdown" id="settingsDropdown">
-                    <a href="#" onclick="changePassword()">Change Password</a>
-                    <a href="#" onclick="updateProfile()">Update Profile</a>
-                    <a href="#" onclick="logout()">Log Out</a>
-                </div>
-            </div>
-            <!-- Notification Dropdown -->
-            <div class="notifications-dropdown" id="notificationsDropdown">
-                <ul>
-                    <li><strong>New Comment:</strong> Someone commented on your post!</li>
-                    <li><strong>New Like:</strong> Your post got a new like!</li>
-                    <li><strong>Reminder:</strong> You have a meeting tomorrow at 10 AM.</li>
-                </ul>
-            </div>
-            <div class="main-content">
-                <div class="dashboard">
-                    <div class="main">
+    </div>
+</div>
 
-                    </div>
-                    <!-- Calendar Section -->
-                    <div id='calendar'></div>
-                </div>
 
-            </div>
-    
+
+
 <!------------------------------------------------------------------------------------------------------------------------------>
 <!------------------------------------------------------------------------------------------------------------------------->
     <script>
@@ -309,6 +293,20 @@
       });
     });
 
+    //make fulcalendar fetch google calendar data
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: {
+            center: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: '/admin/get-google-calendar-events', // Fetch events from your controller
+    });
+    calendar.render();
+    });
+
     </script>
-</body>
-</html>
+
+
+@endsection

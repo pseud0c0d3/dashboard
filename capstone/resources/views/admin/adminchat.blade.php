@@ -1,119 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar Admin</title>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
+@extends('layouts.admin')
 
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/chat.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js   "></script>
+@section('content')
 
-    <style>
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-        }
-    </style>
-</head>
-<body>
-    <div class="loading-overlay" id="loadingOverlay">Loading...</div>
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
-            <div class="profile-section">
-                <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
-                    <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
-                    <div class="profile-details">
-                        <p><strong>Joseph Chan</strong></p>
-                        <p>Father</p>
+
+                <div class="chat-container">
+
+
+                    <!-- Chat Box -->
+                    <div class="chat-box">
+                        <h3>Chat with User 1</h3>
+                        <div class="chat-messages">
+                            <div class="message user">
+                                <img src="/img/profile.jpg" alt="User 1">
+                                <div class="message-bubble">Hello! How can I assist you today?</div>
+                            </div>
+                            <div class="message contact">
+                                <img src="/img/profile.jpg" alt="Doctor">
+                                <div class="message-bubble">I have a question regarding my recent diagnosis.</div>
+                            </div>
+                            <!-- Add more messages as needed -->
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" placeholder="Type a message...">
+                            <button>Send</button>
+                        </div>
                     </div>
-                </a>
-            </div>
-            <ul class="menu">
-                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('admin.forum')"><i class="fas fa-home"></i> Forum</a></li>
-                <li>
-                    <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
-                        <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
-                    </a>
-                    <ul class="dropdown" id="activitiesDropdown">
-                        <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Activity 1</a></li>
-                            <li><a href="{{ route('workspace.sonar') }}" onclick="showLoading('workspace.colormatch')">Activity 2</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ route('admin.calendar_admin') }}" onclick="showLoading('admin.calendar_admin')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>            </ul>
-            <div class="bottom-container">
-                <ul class="menu">
-                    <li><a href="#" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
-                    <li><a href="#" onclick="showLoading('logout.html')"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="headers">
-            <div class="header">
-                <div class="search-container">
-                    <input type="text" placeholder="Search...">
-                </div>
-                <div class="icons">
-                    <i class="bi bi-calendar-fill calendar-icon" onclick="openCalendar()"></i>
-                    <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
-                    <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
-                </div>
-                <!-- Settings Dropdown -->
-                <div class="settings-dropdown" id="settingsDropdown">
-                    <a href="#" onclick="changePassword()">Change Password</a>
-                    <a href="#" onclick="updateProfile()">Update Profile</a>
-                    <a href="#" onclick="logout()">Log Out</a>
-                </div>
-            </div>
-            <!-- Notification Dropdown -->
-            <div class="notifications-dropdown" id="notificationsDropdown">
-                <ul>
-                    <li><strong>New Comment:</strong> Someone commented on your post!</li>
-                    <li><strong>New Like:</strong> Your post got a new like!</li>
-                    <li><strong>Reminder:</strong> You have a meeting tomorrow at 10 AM.</li>
-                </ul>
-            </div>
-            <div class="main-content">
-                <div class="dashboard">
-                
-                    
+                    <!-- Contacts List -->
+                    <div class="contacts-list">
+                        <h3>Contacts</h3>
+                        <ul>
+                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 1">User 1</li>
+                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 2">User 2</li>
+                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 3">User 3</li>
+                            <!-- Add more contacts as needed -->
+                        </ul>
+                    </div>
                 </div>
 
-            </div>
-       
+
+        </div>
+        <!-- Calendar Modal Structure -->
+
+    </div>
 <!------------------------------------------------------------------------------------------------------------------------------>
 <!------------------------------------------------------------------------------------------------------------------------->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.getElementById('calendar')
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay' },
-
-        views: {
-            dayGridMonth: { // name of view
-            titleFormat: { year: 'numeric', month: 'long' }
-            // other view-specific options here
-            }
-        }
-
-    })
-    calendar.render()
-    })
         // Show loading overlay for navigation
         function showLoading(url) {
             const loadingOverlay = document.getElementById("loadingOverlay");
@@ -286,26 +217,7 @@
             });
         }
 
-    //calendar section
-    // //calendar
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize stats (mock data)
-      const totalUsers = 50;
-      const upcomingAppointments = 5;
-      const dailyInteraction = 10;
-
-      document.getElementById('total-users').textContent = totalUsers;
-      document.getElementById('upcoming-appointments').textContent = upcomingAppointments;
-      document.getElementById('daily-interaction').textContent = dailyInteraction;
-
-      // View all appointments button functionality
-      document.getElementById('view-all-btn').addEventListener('click', function() {
-        alert('View All Appointments clicked!');
-      });
-    });
-
     </script>
 </body>
 </html>
+@endsection

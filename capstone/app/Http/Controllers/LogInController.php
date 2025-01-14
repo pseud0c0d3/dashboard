@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Illuminate\Support\Facades\Hash;
 
+
 class LogInController extends Controller
 {
     public function login(Request $request)
@@ -22,9 +23,20 @@ class LogInController extends Controller
             // Regenerate the session to prevent session fixation
             $request->session()->regenerate();
 
-            // Redirect to the intended page or dashboard
-            $posts = Post::latest()->paginate(6);
-            return view('loggedIn.user', ['posts' => $posts]);
+            // Check the role of the authenticated user
+            $user = Auth::user();
+            if ($user->roles === 'admin') {
+                // Redirect admin to the admin dashboard
+                return redirect()->route('admin.calendar_admin');
+            } elseif ($user->roles === 'user') {
+                // Load posts for the user dashboard
+                $posts = Post::latest()->paginate(6);
+                return view('loggedIn.user', ['posts' => $posts]);
+            }
+
+            // Default fallback for unknown roles
+            Auth::logout();
+            return redirect('/')->with('error', 'Unauthorized access.');
         }
 
         // Authentication failed, redirect back with an error
@@ -40,5 +52,14 @@ class LogInController extends Controller
     $request->session()->regenerateToken();
 
     return redirect('/');
+}
+public function logoutgame(Request $request)
+{
+    Auth::logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/loggedIn/user');
 }
 }

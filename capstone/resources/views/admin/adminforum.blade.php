@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -8,7 +8,7 @@
     {{-- <a class="navbar-brand" href="{{ route('posts.index') }}">Forum</a> --}}
 
                     <main class="py-4">
-                        
+
                           @include('posts.index')
                       </main>
                 </div>

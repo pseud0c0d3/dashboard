@@ -196,7 +196,41 @@ button:hover, .faq-question:hover, .social-media a:hover {
 .faq-item:hover .faq-answer {
     background-color: #f1f1f1; /* Subtle hover effect for the answer */
 }
+    /* Loading Overlay Styles */
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white; /* Transparent white background */
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+    }
 
+        /* Image styling and floating animation */
+    #loadingImage {
+        width: 300px; /* Adjust as needed */
+        height: 300px; /* Adjust as needed */
+        animation: float 2s ease-in-out infinite; /* Floating animation with ease-in-out */
+    }
+
+
+            /* Keyframes for floating animation */
+    @keyframes float {
+        0% {
+            transform: translateY(0); /* Start at the original position */
+        }
+        50% {
+            transform: translateY(-20px); /* Move up 20px */
+        }
+        100% {
+            transform: translateY(0); /* Return to original position */
+        }
+    }
 
 
 
