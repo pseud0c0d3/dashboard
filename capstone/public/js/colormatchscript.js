@@ -280,10 +280,10 @@ window.addEventListener("load", function () {
   loader.style.display = "none";
 });
 
-// Function to show the results after the game is over
+// Function to show the results
 function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
   const popup = document.createElement('div');
-  popup.classList.add('custom-popup'); // Add a class for styling
+  popup.classList.add('custom-popup'); 
 
   const popupContent = document.createElement('div');
   popupContent.classList.add('custom-popup-content');
@@ -312,7 +312,7 @@ function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
   popupContent.appendChild(restartButton);
 
   popup.appendChild(popupContent);
-  document.body.appendChild(popup); // Ensure it's appended to the body
+  document.body.appendChild(popup); 
 
   restartButton.addEventListener('click', () => {
     document.body.removeChild(popup);
