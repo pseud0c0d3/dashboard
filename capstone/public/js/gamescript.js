@@ -8,7 +8,7 @@ let isGameStarted = false;
 let isSoundPlayed = false;
 
 const playSoundButton = document.getElementById('start-game');
-const playAnimalSoundButton = document.createElement('button'); 
+const playAnimalSoundButton = document.createElement('button');
 const optionsDiv = document.getElementById('options');
 const scoreDisplay = document.getElementById('score');
 const highestScoreDisplayGame = document.getElementById('highest-score-game');
@@ -28,7 +28,7 @@ const animals = [
     { name: 'sheep', sound: 'sheep.wav', category: 'land', categoryImage: 'land.jpg' },
     { name: 'eagle', sound: 'eagle.wav', category: 'air', categoryImage: 'air.jpg' },
     { name: 'whale', sound: 'whale.wav', category: 'sea', categoryImage: 'sea.jpg' },
-    { name: 'fish', sound: 'fish.wav', category: 'sea', categoryImage: 'sea.jpg' }
+    { name: 'sealion', sound: 'sealion.wav', category: 'sea', categoryImage: 'sea.jpg' }
 ];
 
 // Play Sound Button
@@ -58,7 +58,7 @@ function updateHighscoreDisplay() {
 
 
 function startTimer() {
-    clearInterval(timerInterval); 
+    clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         timer--;
         timerDisplay.textContent = `Time Left: ${timer}s`;
@@ -95,8 +95,8 @@ function prepareSound() {
     resetTimer();
 
     playAnimalSoundButton.onclick = () => {
-        isSoundPlayed = false; 
-        disableCategorySelection(); 
+        isSoundPlayed = false;
+        disableCategorySelection();
         audioInstance.play(); // Play the animal sound
 
         audioInstance.onended = () => {
@@ -111,9 +111,9 @@ function prepareSound() {
 
 // Timer Functions
 function resetTimer() {
-    clearInterval(timerInterval); 
+    clearInterval(timerInterval);
     timer = 10; // Reset the timer
-    timerDisplay.textContent = `Time Left: ${timer}s`; 
+    timerDisplay.textContent = `Time Left: ${timer}s`;
 }
 
 // Check Answer Logic
@@ -129,7 +129,7 @@ function checkAnswer(selectedCategory) {
         }, 1000);
     } else {
         saveHighestScore(); // Save the highest score
-        showResults(); 
+        showResults();
     }
 }
 
@@ -161,7 +161,7 @@ function displayOptions() {
         optionsDiv.appendChild(categoryDiv);
     });
 
-    disableCategorySelection(); 
+    disableCategorySelection();
 }
 
 
