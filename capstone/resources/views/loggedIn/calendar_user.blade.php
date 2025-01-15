@@ -2,25 +2,25 @@
 @section('content')
 
 
-    <div class="main-content"> 
+
         <div class="card mb4">
             <div class="card-body">
-                
-               
-                
+
+
+
                             <h4 class="card-title">Google Calendar</h4>
                             <!-- Embed Google Calendar using iframe -->
-                            <iframe src="https://calendar.google.com/calendar/embed?src=516f3464e40f5ff34efa39bb945e36b6ad4f2ef00cbc164da549b86cc923a6ad%40group.calendar.google.com&ctz=Asia%2FManila" 
+                            <iframe src="https://calendar.google.com/calendar/embed?src=516f3464e40f5ff34efa39bb945e36b6ad4f2ef00cbc164da549b86cc923a6ad%40group.calendar.google.com&ctz=Asia%2FManila"
                             style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-                        
+
 
 
             </div>
         </div>
-    </div>
-
-
     
+
+
+
 <!------------------------------------------------------------------------------------------------------------------------------>
 <!------------------------------------------------------------------------------------------------------------------------->
     <script>
@@ -232,12 +232,12 @@
     });
 
     //make fulcalendar fetch google calendar data
-    
+
     document.addEventListener('DOMContentLoaded', function() {
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: { 
-            center: 'dayGridMonth,timeGridWeek,timeGridDay' 
+        headerToolbar: {
+            center: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
         events: '/admin/get-google-calendar-events', // Fetch events from your controller
     });
@@ -246,5 +246,5 @@
 
     </script>
 
-    
+
 @endsection

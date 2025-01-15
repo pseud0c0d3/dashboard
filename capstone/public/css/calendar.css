@@ -1,0 +1,35 @@
+
+body {
+    overflow-y: auto; /* Enable vertical scrolling for the whole body */
+    height: 100%; /* Ensure full height usage */
+    margin: 0; /* Reset body margin */
+  }
+  .calendar-wrapper {
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: flex-start; /* Align content from the top */
+      height: 100vh; /* Full viewport height */
+      /* Add more top padding to lower the calendar */
+      padding: 20px; /* Add spacing */
+      background-color: #f8f9fa; /* Optional: Background color for contrast */
+  }
+
+  .card {
+      width: 100%; /* Full width of its container */
+      max-width: 1100px; /* Set maximum width */
+      border: 1px solid #ddd; /* Optional: Border for design */
+      border-radius: 8px; /* Rounded corners */
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for modern look */
+      margin-top: 20px; /* Optional: Extra margin for spacing */
+  }
+
+  iframe {
+      width: 100%; /* Full width of the card */
+      height: 80vh; /* Adjust height for better visibility */
+      border: none; /* Remove default iframe border */
+  }
+
+  .btn {
+      display: block;
+      margin: 10px auto; /* Center the button */
+  }

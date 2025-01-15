@@ -22,7 +22,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<div class="main-content">
+
     <div class="card mb4">
         <div class="card-body">
             <h4 class="card-title">Google Calendar</h4>
@@ -37,7 +37,7 @@
             </button>
         </div>
     </div>
-</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
