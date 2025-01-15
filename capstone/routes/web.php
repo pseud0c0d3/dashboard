@@ -13,7 +13,11 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\LogInController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeChatController;
+use App\Http\Controllers\EmployeeCalendarController;
+use App\Http\Controllers\EmployeeForumController;
 use App\Http\Controllers\PostController;
+
 use Spatie\GoogleCalendar\Event;
 
 
@@ -51,9 +55,11 @@ Route::get('/loggedIn/user', [HomeController::class,'user'])->name('loggedIn.use
 Route::get('/admin/adminforum', [HomeController::class,'adminforum'])->name('admin.adminforum');
 Route::get('/admin/dashboard', [DashboardController::class,'dashboard'])->name('admin.dashboard');
 
-
-
 // Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
+//employee routes
+Route::get('/employee/EmployeeChat', [EmployeeChatController::class,'EmployeeChat'])->name('employee.EmployeeChat');
+Route::get('/employee/EmployeeCalendar', [EmployeeCalendarController::class,'EmployeeCalendar'])->name('employee.EmployeeCalendar');
+Route::get('/employee/EmployeeForum', [EmployeeForumController::class,'EmployeeForum'])->name('employee.EmployeeForum');
 
 
 //activities route

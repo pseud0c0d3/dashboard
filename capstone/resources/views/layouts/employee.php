@@ -37,10 +37,11 @@
             </div> --}}
 
             <ul class="menu">
-                <li><a href="{{ route('admin.dashboard') }}" onclick="showLoading('dashboard.html')"><i class="fas fa-chart-pie"></i> Report</a></li>
-                <li><a href="{{ route('admin.adminforum') }}" onclick="showLoading('user.html')"><i class="fas fa-comments"></i> Forum</a></li>
-                <li><a href="{{ route('admin.calendar_admin') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="{{ route('employee.EmployeeChat') }}" onclick="showLoading('dashboard.html')"><i class="fas fa-bullhorn"></i> Dashboard</a></li>
+                <li><a href="{{ route('employee.EmployeeForum') }}" onclick="showLoading('user.html')"><i class="fas fa-comments"></i> Forum</a></li>
+                <li><a href="{{ route('employee.EmployeeCalendar') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             </ul>
+
             <div class="bottom-container">
                 <ul class="menu">
                     <li><a href="{{ route('logout') }}" onclick="showLoading('logout.html')"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
@@ -51,8 +52,10 @@
         <div class="headers">
             <div class="header">
                 <div class="icons">
-
-
+                    <a href="{{ route('loggedIn.adminchat') }}">
+                        <i class="bi bi-chat-dots chat-icon"></i>
+                    </a>
+                    <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>
                     <i class="bi bi-gear settings-icon" onclick="toggleSettingsDropdown()"></i>
                 </div>
             </div>
