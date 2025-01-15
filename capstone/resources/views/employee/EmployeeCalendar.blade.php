@@ -26,7 +26,7 @@
     <div class="card mb4">
         <div class="card-body">
             <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#scheduleModal">
-                Add New Schedule
+                Add New Scheduleeresss
             </button>
             <h4 class="card-title">AOA Calendar</h4>
             <!-- Embed Google Calendar using iframe -->
