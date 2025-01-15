@@ -11,15 +11,24 @@ return new class extends Migration
      */
     public function up()
 {
+    Schema::table('admins', function (Blueprint $table) {
+        $table->boolean('status')->default(true); // Active status column
+    });
+
     Schema::table('users', function (Blueprint $table) {
-        $table->string('roles')->default('user')->change();
+        $table->boolean('status')->default(true); // Active status column
     });
 }
 
 public function down()
 {
+    Schema::table('admins', function (Blueprint $table) {
+        $table->dropColumn('status');
+    });
+
     Schema::table('users', function (Blueprint $table) {
-        $table->string('roles')->default(null)->change();
+        $table->dropColumn('status');
     });
 }
+
 };
