@@ -1,11 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-
-
                 <div class="chat-container">
-
-
                     <!-- Chat Box -->
                     <div class="chat-box">
                         <h3>Chat with User 1</h3>

@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js   "></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.js"></script>
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
 
 </head>
@@ -28,7 +26,7 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
-            <div class="profile-section">
+            {{-- <div class="profile-section">
                 <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
                     <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
                     <div class="profile-details">
@@ -36,25 +34,16 @@
                         <p>Father</p>
                     </div>
                 </a>
-            </div>
+            </div> --}}
 
             <ul class="menu">
-                <li><a href="{{ route('loggedIn.user') }}" onclick="showLoading('user.html')"><i class="fas fa-home"></i> Forum</a></li>
-                <li>
-                    <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
-                        <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
-                    </a>
-                    <ul class="dropdown" id="activitiesDropdown">
-                        <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Colormatch Game</a></li>
-                        <li><a href="{{ route('workspace.game') }}" onclick="showLoading('workspace.game')">Sound Game</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ route('loggedIn.calendar_user') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="{{ route('employee.EmployeeChat') }}" onclick="showLoading('dashboard.html')"><i class="fas fa-bullhorn"></i> Dashboard</a></li>
+                <li><a href="{{ route('employee.EmployeeForum') }}" onclick="showLoading('user.html')"><i class="fas fa-comments"></i> Forum</a></li>
+                <li><a href="{{ route('employee.EmployeeCalendar') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             </ul>
 
             <div class="bottom-container">
                 <ul class="menu">
-                    <li><a href="{{ route('loggedIn.faq') }}" onclick="showLoading('faq.html')"><i class="fas fa-question-circle"></i> Help</a></li>
                     <li><a href="{{ route('logout') }}" onclick="showLoading('logout.html')"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
                 </ul>
             </div>
@@ -63,7 +52,7 @@
         <div class="headers">
             <div class="header">
                 <div class="icons">
-                    <a href="{{ route('loggedIn.chat') }}">
+                    <a href="{{ route('loggedIn.adminchat') }}">
                         <i class="bi bi-chat-dots chat-icon"></i>
                     </a>
                     <i class="bi bi-bell notification-icon" onclick="openNotifications()"></i>

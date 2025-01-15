@@ -1,31 +1,46 @@
-@extends('layouts.admin')
+@extends('layouts.employee')
+
 @section('content')
-            <div class="main-content">
-                <div class="dashboard">
-
-
+                <div class="chat-container">
+                    <!-- Chat Box -->
+                    <div class="chat-box">
+                        <h3>Chat with User 1</h3>
+                        <div class="chat-messages">
+                            <div class="message user">
+                                <img src="/img/profile.jpg" alt="User 1">
+                                <div class="message-bubble">Hello! How can I assist you today?</div>
+                            </div>
+                            <div class="message contact">
+                                <img src="/img/profile.jpg" alt="Doctor">
+                                <div class="message-bubble">I have a question regarding my recent diagnosis.</div>
+                            </div>
+                            <!-- Add more messages as needed -->
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" placeholder="Type a message...">
+                            <button>Send</button>
+                        </div>
+                    </div>
+                    <!-- Contacts List -->
+                    <div class="contacts-list">
+                        <h3>Contacts</h3>
+                        <ul>
+                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 1">User 1</li>
+                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 2">User 2</li>
+                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 3">User 3</li>
+                            <!-- Add more contacts as needed -->
+                        </ul>
+                    </div>
                 </div>
 
-            </div>
 
+        </div>
+        <!-- Calendar Modal Structure -->
+
+    </div>
 <!------------------------------------------------------------------------------------------------------------------------------>
 <!------------------------------------------------------------------------------------------------------------------------->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.getElementById('calendar')
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay' },
-
-        views: {
-            dayGridMonth: { // name of view
-            titleFormat: { year: 'numeric', month: 'long' }
-            // other view-specific options here
-            }
-        }
-
-    })
-    calendar.render()
-    })
         // Show loading overlay for navigation
         function showLoading(url) {
             const loadingOverlay = document.getElementById("loadingOverlay");
@@ -197,26 +212,6 @@
                 console.error("Failed to copy: ", err);
             });
         }
-
-    //calendar section
-    // //calendar
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize stats (mock data)
-      const totalUsers = 50;
-      const upcomingAppointments = 5;
-      const dailyInteraction = 10;
-
-      document.getElementById('total-users').textContent = totalUsers;
-      document.getElementById('upcoming-appointments').textContent = upcomingAppointments;
-      document.getElementById('daily-interaction').textContent = dailyInteraction;
-
-      // View all appointments button functionality
-      document.getElementById('view-all-btn').addEventListener('click', function() {
-        alert('View All Appointments clicked!');
-      });
-    });
 
     </script>
 </body>
