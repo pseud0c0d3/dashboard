@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('seen')->default(false);
             $table->timestamps(); // created_at and updated_at
 
-          
+
         });
     }
 
@@ -28,6 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chats');
+        Schema::table('chats', function (Blueprint $table) {
+            //
+        });
     }
 };
