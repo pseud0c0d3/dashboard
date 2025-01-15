@@ -1,20 +1,14 @@
 @extends('layouts.admin')
-
-@section('content')
-
+@section(section: 'content')
 
                 <div class="main-content">
-
-    {{-- <a class="navbar-brand" href="{{ route('posts.index') }}">Forum</a> --}}
-
+{{-- <a class="navbar-brand" href="{{ route('posts.index') }}">Forum</a> --}}
                     <main class="py-4">
 
                           @include('posts.index')
                       </main>
                 </div>
             </div>
-
-
     <!------------------------------------------------------------------------------------------------------------------------->
         <script>
             // Show loading overlay for navigation

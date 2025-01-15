@@ -12,6 +12,7 @@ use App\Http\Middleware\Adminmiddleware;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\LogInController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use Spatie\GoogleCalendar\Event;
 
@@ -19,10 +20,10 @@ use Spatie\GoogleCalendar\Event;
 
 //test
 Route::get('/', function () {
-    return view('admin.calendar_admin');
+    return view('loggedOut.index');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
- 
+
 Route::post('/admin/calendar', [CalendarController::class, 'store'])->name('calendar.store');
 
 
@@ -48,6 +49,8 @@ Route::post('/', [LogInController::class, 'logout'])->name('logout');
 //user routes
 Route::get('/loggedIn/user', [HomeController::class,'user'])->name('loggedIn.user');
 Route::get('/admin/adminforum', [HomeController::class,'adminforum'])->name('admin.adminforum');
+Route::get('/admin/dashboard', [DashboardController::class,'dashboard'])->name('admin.dashboard');
+
 
 
 // Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
@@ -90,7 +93,7 @@ Route::resource('/posts', PostController::class)->except(['index', 'show']);
 Route::get('/admin/get-google-calendar-events', [CalendarController::class, 'getGoogleCalendarEvents']);
 
 //chat
-    
+
 Route::get('chat', [MessageController::class, 'chat']);
 Route::post('messages', [MessageController::class, 'message']);
 
