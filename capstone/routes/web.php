@@ -33,7 +33,7 @@ Route::post('/admin/calendar', [CalendarController::class, 'store'])->name('cale
 // Registration route
 Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
 
-// "See more" page routes (removed duplicate route)
+
 Route::get('/loggedOut/seemore', function () {
     return view('loggedOut.seemore');
 })->name('seemore');
