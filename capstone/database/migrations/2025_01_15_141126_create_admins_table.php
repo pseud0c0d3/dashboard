@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('account_id')->unique(); // Foreign key to accounts table
-            $table->string('employee_id')->unique();
+            $table->id(); // id column
             $table->string('name');
-            $table->string('level'); // e.g., 'supervisor', 'manager'
-            $table->json('permissions'); // JSON for flexible permissions
-            $table->timestamps();
-
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->text('bio')->nullable();
+            $table->string('username')->unique();
+            $table->string('picture')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->timestamps(); // created_at and updated_at
+            $table->boolean('status')->default(true); // active status
         });
     }
 
@@ -29,8 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('admins', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('admins');
     }
 };

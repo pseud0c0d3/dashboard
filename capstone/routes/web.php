@@ -24,7 +24,7 @@ use Spatie\GoogleCalendar\Event;
 
 //test
 Route::get('/', function () {
-    return view('loggedOut.index');
+    return view('tech.index');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 
@@ -98,9 +98,6 @@ Route::resource('/posts', PostController::class)->except(['index', 'show']);
 // para mag reflect sa fullcalendar yung ginawa sa gcalendar
 Route::get('/admin/get-google-calendar-events', [CalendarController::class, 'getGoogleCalendarEvents']);
 
-//chat
 
-Route::get('chat', [MessageController::class, 'chat']);
-Route::post('messages', [MessageController::class, 'message']);
 
 
