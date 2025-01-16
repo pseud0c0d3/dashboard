@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Employee;
 
 
 class LogInController extends Controller
@@ -18,35 +21,40 @@ class LogInController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        // Attempt to authenticate the user
-        if (Auth::attempt($request->only('email', 'password'))) {
-            // Regenerate the session to prevent session fixation
-            $request->session()->regenerate();
+        $credentials = $request->only('email', 'password');
 
-            // Check the role of the authenticated user
-            $user = Auth::user();
-            if ($user->roles === 'admin') {
-                // Redirect admin to the admin dashboard
-                return redirect()->route('admin.calendar_admin');
-            } elseif ($user->roles === 'employee') {
-                // Redirect employee to their dashboard
-                return redirect()->route('employee.EmployeeForum');
-            } elseif ($user->roles === 'user') {
-                // Load posts for the user dashboard
-                $posts = Post::latest()->paginate(6);
-                return view('loggedIn.user', ['posts' => $posts]);
-            }
-
-            // Default fallback for unknown roles
-            Auth::logout();
-            return redirect('/')->with('error', 'Unauthorized access.');
+        // Check in 'admins' table
+        $admin = Admin::where('email', $credentials['email'])->first();
+        if ($admin && Hash::check($credentials['password'], $admin->password)) {
+            Auth::loginUsingId($admin->id); // Log in the admin
+            $request->session()->regenerate(); // Regenerate the session
+            return redirect()->route('admin.calendar_admin'); // Redirect to admin dashboard
         }
 
-        // Authentication failed, redirect back with an error
+        // Check in 'employees' table
+        $employee = Employee::where('email', $credentials['email'])->first();
+        if ($employee && Hash::check($credentials['password'], $employee->password)) {
+            Auth::loginUsingId($employee->id); // Log in the employee
+            $request->session()->regenerate(); // Regenerate the session
+            return redirect()->route('employee.EmployeeForum'); // Redirect to employee dashboard
+        }
+
+        // Check in 'users' table
+        $user = User::where('email', $credentials['email'])->first();
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            Auth::loginUsingId($user->id); // Log in the user
+            $request->session()->regenerate(); // Regenerate the session
+            $posts = Post::latest()->paginate(6); // Load posts for user dashboard
+            return view('loggedIn.user', ['posts' => $posts]); // Redirect to user dashboard
+        }
+
+        // If no matches were found, authentication failed
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
+
+
     public function logout(Request $request)
 {
     Auth::logout();
