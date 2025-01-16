@@ -54,10 +54,10 @@
 
 
   .icons{
-    align-self: center;
     padding-right: 30px;
-    margin-left: 1000px;
-    color: white;
+    margin-left: 450%;
+    color: rgb(0, 0, 0);
+    
   }
 
   .headers {
@@ -65,14 +65,14 @@
     top: 0;
     left: 250px; /* Match the width of the sidebar */
     width: calc(100% - 250px); /* Account for sidebar width */
-    background-color: #003049;
-    height: 70px; /* Ensure consistency across all pages */
+    background-image: linear-gradient(to right,#5fa8f1, white);
+    border: solid #000000 1px;
+    border-left: none;
+    height: 50px; /* Ensure consistency across all pages */
     z-index: 1000;
     display: flex;
     align-items: center;
-    padding: 10px;
-    color: white;
-
+    padding-top: 20px;
 }
 
 
@@ -187,153 +187,157 @@
 
 
   /*---------------------------------------------------------------------------------------------------------*/
-  /*Side bar*/
-  .angel-logo {
-    width: 175px;
-    height: 90px;
-    margin: 15px 0 0 30px;
-    align-self: center;
+  /* General Styles for Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #5fa8f1; /* Soft light background */
+  color: #000000; /* Dark text for high contrast */
+  position: fixed;
+  border: solid #000000 1px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding-top: 20px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 100;
+  box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.1); /* Gentle shadow */
+  font-family: 'Arial', sans-serif; /* Clear and simple font */
+}
 
-  }
+/* Logo Style */
+.angel-logo {
+  width: 65%;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .sidebar {
-    position: fixed; /* Sidebar remains fixed */
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 250px; /* Adjust this width to match your sidebar */
-    background-color: #003049;
-    color: white;
-    overflow-y: auto;
-    z-index: 1000;
+/* Profile Section */
+.profile-section {
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  padding: 15px 20px;
+  margin-left: -6px;
+  border-radius: 25px;
+  border: solid #000000 1px;
+}
+
+.profile-section .profile-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333; /* Dark text */
+}
+
+.profile-section .profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 2px solid #66b3ff; /* Subtle border */
+}
+
+.profile-section .profile-details p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+/* Menu Styles */
+.menu {
+  list-style-type: none;
+  padding-left: 0;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.menu li{
+  margin-bottom: 20px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #000000; /* Softer text color */
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px; /* Rounded corners */
+  transition: all 0.3s ease;
+}
+
+.menu li a:hover, .bottom-container .menu li a:hover {
+  background-color: #023263; /* Soft blue highlight */
+  color: #fff; /* White text on hover */
+
+
+}
+
+.menu li a:focus, .bottom-container .menu li a:hover  {
+  outline: none;
+  background-color: #023263;
+  color: #fff;
+  box-shadow: 0 0 5px 2px rgba(102, 179, 255, 0.7);
+  
+}
+
+.menu li a i {
+  margin-right: 15px;
+}
+
+/* Dropdown Styles */
+.dropdown {
+  display: none;
+  padding-left: 50px;
+  
+}
+.dropdown li:last-child  a {
+  font-size: 18px;
+  color: #1b1515; /* Slightly lighter color for dropdown items */
+  margin-top: -30px;
+}
+.dropdown li a:hover{
+  background-color: #415569;
+  padding: 5;
+}
+
+.dropdown.show {
+  display: block;
+}
+
+/* Bottom Menu */
+.bottom-container {
+  margin-top: auto;
+  margin-bottom: 20px;
+  list-style-type: none;
+  padding-left: 0;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.bottom-container li:last-child a{
+  color: #f44336; /* Red color for log out */
+} 
+
+.bottom-container li:last-child a:hover{ 
+  background-color: #f44336;
+  color: #fff;
 }
 
 
-  .sidebar.active {
-    display: flex; /* Show sidebar when active */
-  }
 
-  .profile-section {
-    display: flex;
-    width: 90%;
-    align-content: center;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 10px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+      width: 100%;
+      position: relative;
   }
-  .profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-    border: 2px solid #fff;
-  }
-  .profile-details {
-    flex-direction: column;
-    justify-content: center;
-  }
-  .profile-details p:first-child {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  .profile-details p:last-child {
-    font-size: 14px;
-    color: #000000;
-  }
-  .profile-link {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  .profile-link:hover .profile-pic {
-    border: 2px solid #1e90ff;
-    transition: border 0.3s ease;
-  }
-  .profile-link:hover .profile-details p {
-    color: #1e90ff;
-    transition: color 0.3s ease;
-  }
+}
 
-  .menu {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    background-color: transparent ;
-    color: #ddd;
-    font-family: Arial, sans-serif;
-    width: 200px;
-  }
-  .menu li {
-    margin-right: 20px;
-  }
-  .menu a {
-    display: flex;
-    align-items: center;
-  }
-  .menu i {
-    margin-right: 8px;
-  }
-  .menu > li > a {
-    display: flex;
-    align-items: center;
-    padding: 20px 15px;
-    text-decoration: none;
-    color: #ddd;
-    font-size: 16px;
-  }
-  .menu > li > a i {
-    margin-right: 10px;
-  }
-  .menu > li > a:hover {
-    background-color: #ffffff;
-    color: #000000;
-    width: 249px;
-  }
-  .menu li:hover .dropdown {
-    display: block;
-  }
-
-  .dropdown {
-    display: none;
-
-    padding-left: 60px;
-  }
-  .dropdown li a {
-    display: block;
-    padding: 8px 15px;
-    text-decoration: none;
-    color: #ccc;
-    font-size: 14px;
-  }
-  .dropdown li a:hover {
-    background-color: #304e74;
-    color: #fff;
-  }
-  .dropdown-arrow {
-    margin-left: 100px;
-  }
-
-  .bottom-container {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color:#003049;
-  }
-  .bottom-container .menu {
-    padding: 0;
-    margin: 0;
-    position: relative;
-  }
-  .bottom-container .menu li a {
-    padding: 10px 15px;
-  }
-  .bottom-container .menu li a i {
-    margin-right: 10px;
-  }
   /*---------------------------------------------------------------------------------------------------------*/
   /* Modal styles */
   .modal {
