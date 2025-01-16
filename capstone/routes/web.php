@@ -24,7 +24,7 @@ use Spatie\GoogleCalendar\Event;
 
 //test
 Route::get('/', function () {
-    return view('admin.calendar_admin');
+    return view('layouts.master');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 
