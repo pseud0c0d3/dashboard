@@ -28,6 +28,9 @@ class LogInController extends Controller
             if ($user->roles === 'admin') {
                 // Redirect admin to the admin dashboard
                 return redirect()->route('admin.calendar_admin');
+            } elseif ($user->roles === 'employee') {
+                // Redirect employee to their dashboard
+                return redirect()->route('employee.EmployeeForum');
             } elseif ($user->roles === 'user') {
                 // Load posts for the user dashboard
                 $posts = Post::latest()->paginate(6);

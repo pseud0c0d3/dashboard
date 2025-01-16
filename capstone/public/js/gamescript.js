@@ -7,8 +7,11 @@ let highestScore = loadHighestScore();
 let isGameStarted = false;
 let isSoundPlayed = false;
 
+let shuffledAnimals = []; // To store the shuffled animals
+let currentIndex = 0;     // To keep track of the current index in the shuffled array
+
 const playSoundButton = document.getElementById('start-game');
-const playAnimalSoundButton = document.createElement('button'); 
+const playAnimalSoundButton = document.createElement('button');
 const optionsDiv = document.getElementById('options');
 const scoreDisplay = document.getElementById('score');
 const highestScoreDisplayGame = document.getElementById('highest-score-game');
@@ -28,7 +31,7 @@ const animals = [
     { name: 'sheep', sound: 'sheep.wav', category: 'land', categoryImage: 'land.jpg' },
     { name: 'eagle', sound: 'eagle.wav', category: 'air', categoryImage: 'air.jpg' },
     { name: 'whale', sound: 'whale.wav', category: 'sea', categoryImage: 'sea.jpg' },
-    { name: 'fish', sound: 'fish.wav', category: 'sea', categoryImage: 'sea.jpg' }
+    { name: 'sealion', sound: 'sealion.wav', category: 'sea', categoryImage: 'sea.jpg' }
 ];
 
 // Play Sound Button
@@ -56,9 +59,8 @@ function updateHighscoreDisplay() {
     highestScoreModal.textContent = `Highest Score: ${highestScore}`;
 }
 
-
 function startTimer() {
-    clearInterval(timerInterval); 
+    clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         timer--;
         timerDisplay.textContent = `Time Left: ${timer}s`;
@@ -81,9 +83,25 @@ function resetGame() {
     clearInterval(timerInterval);
 }
 
+// Shuffle the animals array
+function shuffleAnimals() {
+    shuffledAnimals = [...animals];
+    for (let i = shuffledAnimals.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledAnimals[i], shuffledAnimals[j]] = [shuffledAnimals[j], shuffledAnimals[i]];
+    }
+    currentIndex = 0; // Reset index after shuffling
+}
+
 // Prepare Sound and Reset State
 function prepareSound() {
-    currentAnimal = animals[Math.floor(Math.random() * animals.length)];
+    // Shuffle animals if we reach the end of the shuffled array
+    if (currentIndex >= shuffledAnimals.length) {
+        shuffleAnimals();
+    }
+
+    currentAnimal = shuffledAnimals[currentIndex];
+    currentIndex++; // Move to the next animal
 
     if (!audioInstance) {
         audioInstance = new Audio();
@@ -95,8 +113,8 @@ function prepareSound() {
     resetTimer();
 
     playAnimalSoundButton.onclick = () => {
-        isSoundPlayed = false; 
-        disableCategorySelection(); 
+        isSoundPlayed = false;
+        disableCategorySelection();
         audioInstance.play(); // Play the animal sound
 
         audioInstance.onended = () => {
@@ -111,9 +129,9 @@ function prepareSound() {
 
 // Timer Functions
 function resetTimer() {
-    clearInterval(timerInterval); 
+    clearInterval(timerInterval);
     timer = 10; // Reset the timer
-    timerDisplay.textContent = `Time Left: ${timer}s`; 
+    timerDisplay.textContent = `Time Left: ${timer}s`;
 }
 
 // Check Answer Logic
@@ -129,7 +147,7 @@ function checkAnswer(selectedCategory) {
         }, 1000);
     } else {
         saveHighestScore(); // Save the highest score
-        showResults(); 
+        showResults();
     }
 }
 
@@ -161,10 +179,8 @@ function displayOptions() {
         optionsDiv.appendChild(categoryDiv);
     });
 
-    disableCategorySelection(); 
+    disableCategorySelection();
 }
-
-
 
 function showResults() {
     finalScore.innerHTML = `
@@ -221,4 +237,6 @@ document.getElementById('start-game-modal').addEventListener('click', () => {
     prepareSound();
 });
 
+// Initialize shuffled animals
+shuffleAnimals();
 updateHighscoreDisplay();
