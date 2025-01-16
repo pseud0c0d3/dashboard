@@ -3,38 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Authenticatable
+class Admin extends Model
 {
     use HasFactory;
 
-    // Table name (optional, Laravel uses the pluralized model name by default)
-    protected $table = 'admins';
+     protected $table = 'admins'; // Optional if your table name matches the default convention
 
-    // Fillable attributes for mass assignment
+    // Specify which attributes are mass assignable
     protected $fillable = [
         'name',
         'email',
         'password',
-        'bio',
-        'username',
-        'picture',
-        'phone_number',
-        'status',
+
     ];
 
-    // Hidden attributes (e.g., password and remember_token) for arrays
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    // Cast attributes to specific types
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    // Disable timestamps if not used
-    public $timestamps = false;
 }

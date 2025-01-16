@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('seen')->default(false);
             $table->timestamps(); // created_at and updated_at
 
-
+          
         });
     }
 

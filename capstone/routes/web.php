@@ -24,8 +24,9 @@ use Spatie\GoogleCalendar\Event;
 
 // Test route
 Route::get('/', function () {
-    return view('loggedOut.index');
-})->name('index');
+    return view('layouts.master');
+ })->name('index');
+// ->middleware(Adminmiddleware::class);
 
 // Admin Calendar route
 Route::post('/admin/calendar', [CalendarController::class, 'store'])->name('calendar.store');
@@ -63,8 +64,28 @@ Route::get('/loggedIn/faq', [faqController::class, 'faq'])->name('loggedIn.faq')
 // Chat routes
 Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn.chat');
 Route::get('/loggedIn/adminchat', [MessageController::class, 'adminchat'])->name('loggedIn.adminchat');
-Route::get('chat', [MessageController::class, 'chat']);
-Route::post('messages', [MessageController::class, 'message']);
+
+
+//calendar routes
+Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
+Route::get('/loggedIn/calendar_user', [CalendarController::class, 'calendar_user'])->name('loggedIn.calendar_user');
+
+
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+// Avoid reusing 'posts/{post}' for the index route
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+// Use resource routes for remaining CRUD actions, excluding index and show
+Route::resource('/posts', PostController::class)->except(['index', 'show']);
+
+// Route::get('/forum', [PostController::class, 'index'])->name('posts.index');
+
+// para mag reflect sa fullcalendar yung ginawa sa gcalendar
+Route::get('/admin/get-google-calendar-events', [CalendarController::class, 'getGoogleCalendarEvents']);
+
+
 
 // Calendar routes
 Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
