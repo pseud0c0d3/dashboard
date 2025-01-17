@@ -77,73 +77,80 @@ class AdminController extends Controller
     }
 
     public function chats()
-{
-    // Use the Auth facade to get the currently authenticated admin
-    $LoggedAdminInfo = Auth::guard('web')->user(); // Assuming you're using the default 'web' guard for Admins
-
-    if (!$LoggedAdminInfo) {
-        return redirect()->route('admin.forum')->with('fail', 'You must be logged in to access this section');
-    }
-
-    // Fetch chats where the admin is either the sender or the receiver
-    $chats = Chat::with(['senderProfilee', 'receiverProfilee', 'senderSellerProfile', 'receiverSellerProfile'])
-        ->where('sender_id', $LoggedAdminInfo->id)
-        ->orWhere('receiver_id', $LoggedAdminInfo->id)
-        ->get();
-
-    // Map and organize chats
-    $allChats = $chats->map(function ($chat) use ($LoggedAdminInfo) {
-        if ($chat->sender_id == $LoggedAdminInfo->id) {
-            $chat->user_id = $chat->receiver_id;
-            $chat->profile = $chat->receiverProfilee ?? $chat->receiverSellerProfile;
-        } else {
-            $chat->user_id = $chat->sender_id;
-            $chat->profile = $chat->senderProfilee ?? $chat->senderSellerProfile;
+    {
+        $LoggedAdminInfo = Admin::find(session('LoggedAdminInfo'));
+        if (!$LoggedAdminInfo) {
+            return redirect()->route('loggedOut.index')->with('fail', 'You must be logged in to access the dashboard');
         }
-        return $chat;
-    })->unique('user_id')->values();
-
-    $users = User::all();
-
-    return view('admin.chats', [
-        'LoggedAdminInfo' => $LoggedAdminInfo,
-        'chats' => $allChats,
-    ]);
-}
+    
+        // Fetch chats where the admin is either the sender or the receiver
+        $chats = Chat::with(['senderProfilee', 'receiverProfilee', 'senderSellerProfile', 'receiverSellerProfile'])
+            ->where('sender_id', $LoggedAdminInfo->id)
+            ->orWhere('receiver_id', $LoggedAdminInfo->id)
+            ->get();
+    
+        // Combine both results and remove duplicates
+        $allChats = $chats->map(function($chat) use ($LoggedAdminInfo) {
+            if ($chat->sender_id == $LoggedAdminInfo->id) {
+                if ($chat->receiverProfilee) {
+                    $chat->user_id = $chat->receiver_id;
+                    $chat->profile = $chat->receiverProfilee;
+                } else {
+                    $chat->user_id = $chat->receiver_id;
+                    $chat->profile = $chat->receiverSellerProfile;
+                }
+            } else {
+                if ($chat->senderProfilee) {
+                    $chat->user_id = $chat->sender_id;
+                    $chat->profile = $chat->senderProfilee;
+                } else {
+                    $chat->user_id = $chat->sender_id;
+                    $chat->profile = $chat->senderSellerProfile;
+                }
+            }
+            return $chat;
+        })->unique('user_id')->values();
+    
+        // Pass the logged-in admin's information and chats to the view
+        return view('admin.chats', [
+            'LoggedAdminInfo' => $LoggedAdminInfo,
+            'chats' => $allChats
+        ]);
+    }
 
 public function check(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|min:5|max:12'
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:5|max:12'
+        ]);
 
-    // Find the admin by email
-    $adminInfo = Admin::where('email', $request->email)->first();
+        // Find the admin by email
+        $adminInfo = Admin::where('email', $request->email)->first();
 
-    // Check if the admin exists
-    if (!$adminInfo) {
-        return back()->withInput()->withErrors(['email' => 'Email not found']);
+        // Check if the admin exists
+        if (!$adminInfo) {
+            return back()->withInput()->withErrors(['email' => 'Email not found']);
+        }
+
+        // Check if the admin's account is inactive
+        if ($adminInfo->status === 'inactive') {
+            return back()->withInput()->withErrors(['status' => 'Your account is inactive']);
+        }
+
+        // Check if the password is correct
+        if (!Hash::check($request->password, $adminInfo->password)) {
+            return back()->withInput()->withErrors(['password' => 'Incorrect password']);
+        }
+
+        // Set session variables
+        session([
+            'LoggedAdminInfo' => $adminInfo->id,
+            'LoggedAdminName' => $adminInfo->name,
+        ]);
+
+        // Redirect to the admin dashboard
+        return redirect()->route('admin.dashboard');
     }
-
-    // Check if the admin's account is inactive
-    if ($adminInfo->status === 'inactive') {
-        return back()->withInput()->withErrors(['status' => 'Your account is inactive']);
-    }
-
-    // Check if the password is correct
-    if (!Hash::check($request->password, $adminInfo->password)) {
-        return back()->withInput()->withErrors(['password' => 'Incorrect password']);
-    }
-
-    // Set session variables
-    session([
-        'LoggedAdminInfo' => $adminInfo->id,
-        'LoggedAdminName' => $adminInfo->name,
-    ]);
-
-    // Redirect to the admin dashboard
-    return redirect()->route('admin.calendar');
-}
 
 }

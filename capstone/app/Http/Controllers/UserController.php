@@ -74,22 +74,22 @@ class UserController extends Controller
     }
 
     public function chats()
-{
-    // Use the Auth facade to get the currently authenticated user
-    $LoggedUserInfo = Auth::guard('web')->user(); // Assuming default guard handles both Users and Admins
-
-    if (!$LoggedUserInfo) {
-        return redirect()->route('user.forum')->with('fail', 'You must be logged in to access this section');
+    {
+        $userId = session('LoggedUserInfo');
+        $LoggedUserInfo = User::find($userId);
+    
+        if (!$LoggedUserInfo) {
+            return redirect('user/login')->with('fail', 'You must be logged in to access the dashboard');
+        }
+    
+        // Retrieve all admins
+        $admins = Admin::all();
+    
+        return view('user.chats', [
+            'LoggedUserInfo' => $LoggedUserInfo,
+            'admins' => $admins // Pass only admins to the view
+        ]);
     }
-
-    // Retrieve all admins (as per your logic)
-    $admins = Admin::all();
-
-    return view('user.chats', [
-        'LoggedUserInfo' => $LoggedUserInfo,
-        'admins' => $admins,
-    ]);
-}
 public function check(Request $request)
 {
      $request->validate([
