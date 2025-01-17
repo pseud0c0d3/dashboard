@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\GoogleCalendarService;  // Make sure you import the service
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\View\View;
 
 class AdminController extends Controller
 {
