@@ -8,6 +8,7 @@ use App\Models\Post;
 use Illuminate\View\View;
 use App\Models\Admin;
 use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
@@ -101,6 +102,8 @@ class AdminController extends Controller
         }
         return $chat;
     })->unique('user_id')->values();
+
+    $users = User::all();
 
     return view('admin.chats', [
         'LoggedAdminInfo' => $LoggedAdminInfo,
