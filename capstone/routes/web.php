@@ -14,7 +14,7 @@ use Spatie\GoogleCalendar\Event;
 
 
 // LoggedOut Routes (wag baguhin mag log in ka nalang kapag may ichecheck kang feature)
-Route::get('/', function () {return view('loggedOut.index');})->name('index'); // ->middleware(Adminmiddleware::class);
+Route::get('/', function () {return view('layouts.user-nav');})->name('index'); // ->middleware(Adminmiddleware::class);
 
 Route::get('/loggedOut/seemore', function () {return view('loggedOut.seemore');})->name('seemore');
 
