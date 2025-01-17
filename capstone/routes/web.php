@@ -17,14 +17,13 @@ use App\Http\Controllers\EmployeeChatController;
 use App\Http\Controllers\EmployeeCalendarController;
 use App\Http\Controllers\EmployeeForumController;
 use App\Http\Controllers\PostController;
-
 use Spatie\GoogleCalendar\Event;
 
 
 
 // Test route
 Route::get('/', function () {
-    return view('layouts.master');
+    return view('loggedOut.index');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 
