@@ -13,18 +13,16 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\LogInController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EmployeeChatController;
-use App\Http\Controllers\EmployeeCalendarController;
-use App\Http\Controllers\EmployeeForumController;
 use App\Http\Controllers\PostController;
 
+use App\Http\Controllers\EmployeeController;
 use Spatie\GoogleCalendar\Event;
 
 
 
 // Test route
 Route::get('/', function () {
-    return view('layouts.master');
+    return view('admin.adminchat');
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 
@@ -49,9 +47,9 @@ Route::get('/admin/adminforum', [HomeController::class, 'adminforum'])->name('ad
 Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
 // Employee routes
-Route::get('/employee/EmployeeChat', [EmployeeChatController::class, 'EmployeeChat'])->name('employee.EmployeeChat');
-Route::get('/employee/EmployeeCalendar', [EmployeeCalendarController::class, 'EmployeeCalendar'])->name('employee.EmployeeCalendar');
-Route::get('/employee/EmployeeForum', [EmployeeForumController::class, 'EmployeeForum'])->name('employee.EmployeeForum');
+Route::get('/employee/EmployeeChat', [EmployeeController::class, 'EmployeeChat'])->name('employee.EmployeeChat');
+Route::get('/employee/EmployeeCalendar', [EmployeeController::class, 'EmployeeCalendar'])->name('employee.EmployeeCalendar');
+Route::get('/employee/EmployeeForum', [EmployeeController::class, 'EmployeeForum'])->name('employee.EmployeeForum');
 
 // Activities routes
 Route::get('/workspace/colormatch', [ActivityController::class, 'colormatch'])->name('workspace.colormatch');
