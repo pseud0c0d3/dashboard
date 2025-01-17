@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,12 +23,12 @@ class Chat extends Model
 
     public function receiverProfilee()
     {
-        return $this->belongsTo(Admin::class, 'receiver_id', 'id')->select(['id', 'name',]);
+        return $this->belongsTo(Admin::class, 'receiver_id', 'id')->select(['id', 'name', 'picture', 'bio']);
     }
 
     public function senderProfilee()
     {
-        return $this->belongsTo(Admin::class, 'sender_id', 'id')->select(['id', 'name',]);
+        return $this->belongsTo(Admin::class, 'sender_id', 'id')->select(['id', 'name', 'picture', 'bio']);
     }
      
     public function receiverSellerProfile()
@@ -40,4 +41,4 @@ class Chat extends Model
         return $this->belongsTo(User::class, 'sender_id', 'id')->select(['id', 'name', 'picture', 'bio']);
     }
 
-} 
+}

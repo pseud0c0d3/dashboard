@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/forum.css">
     <link rel="stylesheet" href="/css/faq.css">
     <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="/css/adminchat.css">
     <link rel="stylesheet" href="/css/calendar.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -37,10 +38,11 @@
             </div> --}}
 
             <ul class="menu">
-                <li><a href="{{ route('admin.dashboard') }}" ><i class="fas fa-chart-pie"></i> Profile</a></li>
+                <li><a href="{{ route('admin.dashboard') }}" > Profile</a></li>
                 <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-chart-pie"></i> Report</a></li>
                 <li><a href="{{ route('admin.forum') }}"><i class="fas fa-comments"></i> Forum</a></li>
                 <li><a href="{{ route('admin.calendar') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="{{ route('admin.chats') }}"> Chats</a></li>
             </ul>
             <div class="bottom-container">
                 <ul class="menu">

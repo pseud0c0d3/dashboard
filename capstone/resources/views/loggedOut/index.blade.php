@@ -38,7 +38,7 @@
         <div class="container" id="anchor1">
             <h1 class="display-4">Aid of Angels Therapy and Learning Center</h1>
             <p class="lead">Welcome to our website, where we offer comprehensive diagnostic <br>testing and personalized support for children with autism.</p>
-            <a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-lg">Get Started</a>
+            <a href="{{ route('user.register') }}" class="btn btn-primary btn-lg">Get Started</a>
         </div>
     </header>
 
@@ -176,7 +176,7 @@
                     <h2 class="contact-title-connect" >Stay Connected</h2>
                     <p class="contact-text-connect">Join our community for the latest updates and resources on autism.</p>
                     <div class="d-flex justify-content-center">
-                        <button class="btn join-button w-50" data-toggle="modal" data-target="#registerModal">Join Us</button>
+                        <button class="btn join-button w-50" >Join Us</button>
                     </div>
                 </div>
             </div>
@@ -224,7 +224,7 @@
         </div>
     </footer>
 
-<!-- Login Modal -->
+{{-- <!-- Login Modal User -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content" style="height: 90vh;">
@@ -244,7 +244,7 @@
 
 
                         <h5 class="text-left" style="margin-bottom: 20px;">LOG IN</h5>
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('login.user') }}">
                         @csrf
                             <!-- Email Floating Label -->
                             <div class="form-row">
@@ -277,11 +277,13 @@
         </div>
     </div>
 </div>
-</form>
+</form> --}}
+
+
 
 
 <!-- Register Modal -->
-@if($errors->any())
+{{-- @if($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach($errors->all() as $error)
@@ -347,7 +349,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
