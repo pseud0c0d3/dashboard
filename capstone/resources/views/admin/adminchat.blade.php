@@ -1,37 +1,113 @@
 @extends('layouts.admin')
 
 @section('content')
-                <div class="chat-container">
-                    <!-- Chat Box -->
-                    <div class="chat-box">
-                        <h3>Chat with User 1</h3>
-                        <div class="chat-messages">
-                            <div class="message user">
-                                <img src="/img/profile.jpg" alt="User 1">
-                                <div class="message-bubble">Hello! How can I assist you today?</div>
-                            </div>
-                            <div class="message contact">
-                                <img src="/img/profile.jpg" alt="Doctor">
-                                <div class="message-bubble">I have a question regarding my recent diagnosis.</div>
-                            </div>
-                            <!-- Add more messages as needed -->
-                        </div>
-                        <div class="chat-input">
-                            <input type="text" placeholder="Type a message...">
-                            <button>Send</button>
-                        </div>
+<div class="row">
+    <div class="col-md-12 mt-4 grid-margin">
+        <div class="row">
+            <!-- Left column: Chat list -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Chats</h4>
                     </div>
-                    <!-- Contacts List -->
-                    <div class="contacts-list">
-                        <h3>Contacts</h3>
-                        <ul>
-                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 1">User 1</li>
-                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 2">User 2</li>
-                            <li><img class="profile-pic" src="/img/profile.jpg" alt="User 3">User 3</li>
-                            <!-- Add more contacts as needed -->
+                    <div class="list-group chat-list" id="chatList" style="max-height: 500px; overflow-y: auto;">
+                        <ul class="list-group list-group-flush">
+                            @if($chats->isEmpty())
+                                <!-- If no chats found, show all users -->
+                                @isset($users)  <!-- Check if $users is set -->
+                                    @foreach ($users as $user)
+                                        <li class="list-group-item d-flex align-items-center chat-item">
+                                            <img src="{{ asset('storage/' . $user->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
+                                            <div class="profile_info">
+                                                <span class="profile_name font-weight-bold">{{ $user->name }}</span>
+                                                <span class="id" style="display: none;">{{ $user->id }}</span>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @endisset
+                            @else
+                                <!-- If chats are found, display chat profiles -->
+                                @foreach ($chats as $chat)
+                                    <li class="list-group-item d-flex align-items-center chat-item">
+                                        @if ($chat->sender_id == session('LoggedAdminInfo'))
+                                            <!-- Display receiver profile -->
+                                            @if ($chat->receiver)
+                                                <img src="{{ asset('storage/' . $chat->receiver->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
+                                                <div class="profile_info">
+                                                    <span class="profile_name font-weight-bold">{{ $chat->receiver->name }}</span>
+                                                </div>
+                                            @else
+                                                <div class="profile_info">
+                                                    <span class="profile_name font-weight-bold">Receiver not found</span>
+                                                </div>
+                                            @endif
+                                        @else
+                                            <!-- Display sender profile -->
+                                            @if ($chat->sender)
+                                                <img src="{{ asset('storage/' . $chat->sender->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
+                                                <div class="profile_info">
+                                                    <span class="profile_name font-weight-bold">{{ $chat->sender->name }}</span>
+                                                </div>
+                                            @else
+                                                <div class="profile_info">
+                                                    <span class="profile_name font-weight-bold">Sender not found</span>
+                                                </div>
+                                            @endif
+                                        @endif
+                                        <span class="id" style="display: none;">{{ $chat->sender_id == session('LoggedAdminInfo') ? $chat->receiver_id : $chat->sender_id }}</span>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
+                        
                     </div>
                 </div>
+            </div>
+
+            <!-- Right column: Chat area -->
+            <div class="col-md-8 col-lg-9">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex align-items-center">
+                            <img id="chat_img" src="" class="rounded-circle mr-3" alt="Profile Picture" style="width: 40px; height: 40px;">
+                            <h4 class="mb-0" id="chat_name">Chatting with</h4>
+                        </div>
+                    </div>
+
+                    <div class="card-body chat-window" style="height: 400px; overflow-y: auto;">
+                        <div class="chat-message-container" id="chatMessageContainer">
+                            <!-- Chat messages will be dynamically loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <form id="messageForm" method="POST">
+                            @csrf
+                            <input type="hidden" name="receiver_id" id="receiver_id">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Type your message here..." id="messageInput" name="message">
+                                <button class="btn btn-primary" type="submit" id="sendMessageButton">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+                </div>
+
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+
+                    </div>
+                </div>
+
 
 
         </div>
