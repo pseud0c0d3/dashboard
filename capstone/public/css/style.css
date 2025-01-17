@@ -154,189 +154,133 @@
     background-color: #f0f0f0;
   }
 
-  /*Notification*/
-  .notifications-dropdown {
-    display: none;
-    position: absolute;
-    right: 10px;
-    top: 50px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    z-index: 100;
-  }
-
-  .notifications-dropdown ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 10px;
-  }
-
-  .notifications-dropdown li {
-    padding: 10px;
-    border-bottom: 1px solid #f0f0f0;
-  }
-
-  .notifications-dropdown li:last-child {
-    border-bottom: none;
-  }
-
-
-
-
-  /*---------------------------------------------------------------------------------------------------------*/
-  /* General Styles for Sidebar */
-.sidebar {
-  width: 250px;
-  background-color: #5fa8f1; /* Soft light background */
-  color: #000000; /* Dark text for high contrast */
-  position: fixed;
-  border: solid #000000 1px;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  padding-top: 20px;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  z-index: 100;
-  box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.1); /* Gentle shadow */
-  font-family: 'Arial', sans-serif; /* Clear and simple font */
+/*---------------------------------------------------------------------------------------------------------*/
+  .sidebar {
+    width: 250px;
+    background-image: linear-gradient( #2c67f2, #62cff4);
+    color: #ecf0f1;
+    padding: 20px;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: all 0.3s ease;
 }
 
-/* Logo Style */
-.angel-logo {
-  width: 65%;
-  margin-bottom: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.sidebar .angel-logo {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-/* Profile Section */
 .profile-section {
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-  padding: 15px 20px;
-  margin-left: -6px;
-  border-radius: 25px;
-  border: solid #000000 1px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: #000000 solid 1px;
 }
 
-.profile-section .profile-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #333; /* Dark text */
+.profile-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ecf0f1; /* Set default text color */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.profile-section .profile-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 15px;
-  border: 2px solid #66b3ff; /* Subtle border */
+.profile-link:hover {
+    color: #3498db; /* Change color on hover */
 }
 
-.profile-section .profile-details p {
-  margin: 0;
-  padding: 0;
-  font-weight: bold;
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
-/* Menu Styles */
-.menu {
-  list-style-type: none;
-  padding-left: 0;
-  padding-right: 10px;
-  width: 100%;
+.profile-details p {
+    margin: 0;
+    color: #000000;
+}
+
+.menu{
+    list-style-type: none;
+    padding: 0;
 }
 
 .menu li{
-  margin-bottom: 20px;
+    margin: 10px 0;
 }
 
-.menu li a {
-  text-decoration: none;
-  color: #000000; /* Softer text color */
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-radius: 8px; /* Rounded corners */
-  transition: all 0.3s ease;
+.menu a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px; /* Rounded corners */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.menu li a:hover, .bottom-container .menu li a:hover {
-  background-color: #023263; /* Soft blue highlight */
-  color: #fff; /* White text on hover */
-
-
+.menu a:hover {
+    background-color: #092642; /* Change background on hover */
+    color: #fff; /* White text on hover */
 }
 
-.menu li a:focus, .bottom-container .menu li a:hover  {
-  outline: none;
-  background-color: #023263;
-  color: #fff;
-  box-shadow: 0 0 5px 2px rgba(102, 179, 255, 0.7);
-  
+.menu a i{
+    margin-right: 10px;
 }
 
-.menu li a i {
-  margin-right: 15px;
+.dropdown-list {
+    display: none;
+    padding-left: 50px;
 }
 
-/* Dropdown Styles */
-.dropdown {
-  display: none;
-  padding-left: 50px;
-  
-}
-.dropdown li:last-child  a {
-  font-size: 18px;
-  color: #1b1515; /* Slightly lighter color for dropdown items */
-  margin-top: -30px;
-}
-.dropdown li a:hover{
-  background-color: #415569;
-  padding: 5;
+.dropdown a {
+    cursor: pointer;
 }
 
-.dropdown.show {
-  display: block;
+.dropdown li:last-child a{
+  margin-top: -10px;
 }
 
-/* Bottom Menu */
+.dropdown .dropdown-arrow {
+    margin-left: auto;
+}
+
 .bottom-container {
-  margin-top: auto;
-  margin-bottom: 20px;
-  list-style-type: none;
-  padding-left: 0;
-  padding-right: 10px;
-  width: 100%;
+    position: absolute;
+    bottom: 20px;
+    width: 85%;
+    list-style-type: none;
+  
+    margin-right: auto;
 }
 
-.bottom-container li:last-child a{
-  color: #f44336; /* Red color for log out */
-} 
+.bottom-container li:last-child a {
+    color: #f44336; /* Red color for log out */
+}
 
-.bottom-container li:last-child a:hover{ 
-  background-color: #f44336;
-  color: #fff;
+.bottom-container li:last-child a:hover {
+    background-color: #f44336;
+    color: #fff;
 }
 
 
+.dropdown-list li a:hover {
+    background-color: #092642; /* Lighter hover effect for dropdown */
+    color: #ecf0f1; /* Ensure text remains readable */
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .sidebar {
-      width: 100%;
-      position: relative;
-  }
+    .sidebar {
+        width: 200px;
+    }
 }
+
 
   /*---------------------------------------------------------------------------------------------------------*/
   /* Modal styles */
@@ -361,11 +305,8 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
   .main-content {
-    margin-top: 10px; /* Matches the height of the fixed header */
-    margin-left: 250px; /* Matches the width of the sidebar */
-    padding: 20px; /* Optional: Add padding for better spacing */
-
-    height: calc(100vh - 70px);
+    margin-top: -20px;
+    margin-left: 200px; /* Matches the width of the sidebar */
 }
 
 

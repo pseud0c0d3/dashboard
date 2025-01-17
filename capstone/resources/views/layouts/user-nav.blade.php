@@ -26,18 +26,20 @@
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
-            <div class="profile-section">
-                <a href="{{ route('user.profile') }}" class="profile-link" >
-                    <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
-                    <div class="profile-details">
-                        <p><strong>Joseph Chan</strong></p>
-                        <p>Father</p>
-                    </div>
-                </a>
+  <!-- Sidebar -->
+<div class="sidebar">
+    <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
+    
+    <!-- Profile Section -->
+    <div class="profile-section">
+        <a href="{{ route('user.profile') }}" class="profile-link">
+            <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
+            <div class="profile-details">
+                <p><strong>Joseph Chan</strong></p>
+                <p>Father</p>
             </div>
+        </a>
+    </div>
 
             <ul class="menu">
                 <li><a href="{{ route('user.forum') }}"><i class="fas fa-home"></i> Forum</a></li>
@@ -54,14 +56,14 @@
                 <li><a href="{{ route('user.chats') }}"> Chats</a></li>
             </ul>
 
-            <div class="bottom-container">
-                <ul class="menu">
-                    <li><a href="{{ route('user.faq') }}"><i class="fas fa-question-circle"></i> Help</a></li>
-                    <li><a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-                </ul>
-            </div>
-        </div>
-
+    <!-- Bottom Menu -->
+    <div class="bottom-container">
+        <ul class="menu">
+            <li><a href="{{ route('user.faq') }}"><i class="fas fa-question-circle"></i> Help</a></li>
+            <li><a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+        </ul>
+    </div>
+</div>
         <!-- Main Content -->
         <main class="py-4">
             <div class="main-content">
@@ -75,5 +77,19 @@
             </div>
         </main>
     </div>
+    <script>
+    function toggleDropdown(event, dropdownId) {
+        event.preventDefault();
+        const dropdown = document.getElementById(dropdownId);
+        const arrow = event.target.querySelector('.dropdown-arrow');
+        const isOpen = dropdown.style.display === 'block';
+        
+        // Toggle dropdown visibility
+        dropdown.style.display = isOpen ? 'none' : 'block';
+        
+        // Change arrow direction based on dropdown state
+        arrow.textContent = isOpen ? '▼' : '▲';
+    }
+</script>
 </body>
 </html>
