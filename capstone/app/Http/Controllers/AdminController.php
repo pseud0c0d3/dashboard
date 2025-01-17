@@ -2,25 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\GoogleCalendarService;  // Make sure you import the service
+use Illuminate\Http\Request;
+use App\Models\Post;
 
-class CalendarController extends Controller
+class AdminController extends Controller
 {
+    public function calendar()
+    {
+        return view('admin.calendar_admin');
+    }
+
     protected $googleCalendarService;
 
     public function __construct(GoogleCalendarService $googleCalendarService)
     {
         $this->googleCalendarService = $googleCalendarService;
-    }
-
-    public function calendar()
-    {
-        return view('admin.calendar_admin');
-    }
-    public function calendar_user()
-    {
-        return view('loggedIn.calendar_user');
     }
 
     public function store(Request $request)
@@ -58,6 +55,12 @@ class CalendarController extends Controller
         // Redirect with success message
         return redirect()->route('admin.calendar_admin')->with('success', 'Event added successfully to Google Calendar!');
     }
+
+    public function adminforum()
+{
+    $posts = Post::latest()->paginate(6);
+    return view('admin.adminforum', ['posts' => $posts]);
+}
 
 
 }
