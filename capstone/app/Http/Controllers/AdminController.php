@@ -20,6 +20,10 @@ class AdminController extends Controller
         $this->googleCalendarService = $googleCalendarService;
     }
 
+    public function dashboard(): View
+    {
+        return view('admin.dashboard');
+    }
     public function store(Request $request)
     {
         // Validate the form input

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CreateNewUser;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\Adminmiddleware;
@@ -14,30 +13,33 @@ use Spatie\GoogleCalendar\Event;
 
 
 
-// Test route
-Route::get('/', function () {
-    return view('loggedOut.index');
- })->name('index');
-// ->middleware(Adminmiddleware::class);
+// LoggedOut Routes (wag baguhin mag log in ka nalang kapag may ichecheck kang feature)
+Route::get('/', function () {return view('loggedOut.index');})->name('index'); // ->middleware(Adminmiddleware::class);
 
-// Admin Calendar route
+Route::get('/loggedOut/seemore', function () {return view('loggedOut.seemore');})->name('seemore');
+
+//admin routes
 Route::post('/admin/calendar', [AdminController::class, 'store'])->name('calendar.store');
+Route::get('/admin/adminforum', [AdminController::class, 'adminforum'])->name('admin.adminforum');
+Route::get('/admin/calendar_admin', [AdminController::class, 'calendar'])->name('admin.calendar_admin');
+Route::get('/admin/get-google-calendar-events', [AdminController::class, 'getGoogleCalendarEvents']);
+Route::get('/admin/calendar_admin', [AdminController::class, 'calendar'])->name('admin.calendar_admin');
+Route::get('/admin/get-google-calendar-events', [AdminController::class, 'getGoogleCalendarEvents']);
 
-// Registration route
-Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
-
-
-Route::get('/loggedOut/seemore', function () {
-    return view('loggedOut.seemore');
-})->name('seemore');
+//user routes
+Route::post('register', [UserController::class, 'store'])->name('registration.post');
+Route::get('/loggedIn/user', [UserController::class, 'user'])->name('loggedIn.user');
+Route::get('/workspace/colormatch', [UserController::class, 'colormatch'])->name('workspace.colormatch');
+Route::get('/workspace/game', [UserController::class, 'game'])->name('workspace.game');
+Route::get('/loggedIn/userprofile', [UserController::class, 'userprofile'])->name('loggedIn.userprofile');
+Route::get('/loggedIn/faq', [UserController::class, 'faq'])->name('loggedIn.faq');
 
 // Log in and Log out routes
 Route::post('/loggedIn/user', [LogInController::class, 'login'])->name('login');
 Route::post('/', [LogInController::class, 'logout'])->name('logout');
 
 // User routes
-Route::get('/loggedIn/user', [UserController::class, 'user'])->name('loggedIn.user');
-Route::get('/admin/adminforum', [AdminController::class, 'adminforum'])->name('admin.adminforum');
+
 Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
 // Employee routes
@@ -46,12 +48,11 @@ Route::get('/employee/EmployeeCalendar', [EmployeeController::class, 'EmployeeCa
 Route::get('/employee/EmployeeForum', [EmployeeController::class, 'EmployeeForum'])->name('employee.EmployeeForum');
 
 // Activities routes
-Route::get('/workspace/colormatch', [UserController::class, 'colormatch'])->name('workspace.colormatch');
-Route::get('/workspace/game', [UserController::class, 'game'])->name('workspace.game');
+
+
 
 // User profile routes
-Route::get('/loggedIn/userprofile', [UserController::class, 'userprofile'])->name('loggedIn.userprofile');
-Route::get('/loggedIn/faq', [UserController::class, 'faq'])->name('loggedIn.faq');
+
 
 // Chat routes
 Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn.chat');
@@ -59,7 +60,7 @@ Route::get('/loggedIn/adminchat', [MessageController::class, 'adminchat'])->name
 
 
 //calendar routes
-Route::get('/admin/calendar_admin', [AdminController::class, 'calendar'])->name('admin.calendar_admin');
+
 Route::get('/loggedIn/calendar_user', [UserController::class, 'calendar_user'])->name('loggedIn.calendar_user');
 
 
@@ -75,14 +76,14 @@ Route::resource('/posts', PostController::class)->except(['index', 'show']);
 // Route::get('/forum', [PostController::class, 'index'])->name('posts.index');
 
 // para mag reflect sa fullcalendar yung ginawa sa gcalendar
-Route::get('/admin/get-google-calendar-events', [AdminController::class, 'getGoogleCalendarEvents']);
+
 
 
 
 // Calendar routes
-Route::get('/admin/calendar_admin', [AdminController::class, 'calendar'])->name('admin.calendar_admin');
+
 Route::get('/loggedIn/calendar_user', [userController::class, 'calendar_user'])->name('loggedIn.calendar_user');
-Route::get('/admin/get-google-calendar-events', [AdminController::class, 'getGoogleCalendarEvents']);
+
 
 // Posts routes
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
