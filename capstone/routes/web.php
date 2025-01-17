@@ -9,21 +9,14 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\LogInController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\EmployeeController;
->>>>>>> 50b82802c6ad77379f914eba9d899dd58b8220ff
 use Spatie\GoogleCalendar\Event;
 
 
 
 // Test route
 Route::get('/', function () {
-<<<<<<< HEAD
     return view('loggedOut.index');
-=======
-    return view('loggedOut.index');
->>>>>>> 50b82802c6ad77379f914eba9d899dd58b8220ff
  })->name('index');
 // ->middleware(Adminmiddleware::class);
 
