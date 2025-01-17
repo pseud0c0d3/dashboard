@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-            
+
 
             <!-- Edit Profile Modal -->
             <div id="profileModal" class="modal-custom">
@@ -90,9 +90,6 @@
 
                     <label for="editProfileName">Name</label>
                     <input type="text" id="editProfileName" value="Joseph Chan">
-
-                    <label for="editProfileRole">Role</label>
-                    <input type="text" id="editProfileRole" value="Parent/Guardian">
 
                     <label for="editProfileAddress">Address</label>
                     <input type="text" id="editProfileAddress" value="Amaya 2, Tanza Cavite">

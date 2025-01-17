@@ -43,9 +43,8 @@ class UserController extends Controller
     {
         // Validate the incoming request
         $validated = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'username' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'], // Include username validation
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
@@ -55,15 +54,12 @@ class UserController extends Controller
 
         // Create the user
         $user = User::create([
-            'name' => $request->name,
             'email' => $request->email,
-            'username' => $request->username,
+            'username' => $request->username, // Include username field
             'password' => Hash::make($request->password),
-
         ]);
 
-
-        // // Optional: Login the user
+        // Optional: Login the user
         // auth()->login($user);
 
         return redirect()->route('index')->with('success', 'Registration successful!');

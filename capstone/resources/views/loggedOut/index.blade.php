@@ -307,20 +307,15 @@
                         <h5 class="text-left">REGISTER</h5>
                         <form action="{{ route('registration.post') }}" method="POST">
                         @csrf
-                            <!-- Full Name Floating Label -->
+                            <!-- Username Floating Label -->
                             <div class="form-row mb-3">
-                                <input type="text" class="form-control form-control-sm" id="fullName" name="name" placeholder=" " required>
-                                <label for="fullName">Full Name</label>
+                                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder=" " required>
+                                <label for="username">Username</label>
                             </div>
                             <!-- Email Floating Label -->
                             <div class="form-row mb-3">
                                 <input type="email" class="form-control form-control-sm" id="registerEmail" name="email" placeholder=" " required>
                                 <label for="registerEmail">Email Address</label>
-                            </div>
-                            <!-- Username Floating Label -->
-                            <div class="form-row mb-3">
-                                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder=" " required>
-                                <label for="username">Username</label>
                             </div>
                             <!-- Password Floating Label -->
                             <div class="form-row mb-3">
