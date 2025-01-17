@@ -37,6 +37,7 @@
             </div> --}}
 
             <ul class="menu">
+                <li><a href="{{ route('admin.dashboard') }}" onclick="showLoading('dashboard.html')"><i class="fas fa-chart-pie"></i> Profile</a></li>
                 <li><a href="{{ route('admin.dashboard') }}" onclick="showLoading('dashboard.html')"><i class="fas fa-chart-pie"></i> Report</a></li>
                 <li><a href="{{ route('admin.adminforum') }}" onclick="showLoading('user.html')"><i class="fas fa-comments"></i> Forum</a></li>
                 <li><a href="{{ route('admin.calendar_admin') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
