@@ -9,18 +9,18 @@ class EmployeeController extends Controller
 {
     public function EmployeeCalendar()
     {
-        return view('employee.EmployeeCalendar');
+        return view('employee.Calendar');
     }
 
     public function EmployeeChat()
     {
-        return view('employee.EmployeeChat');
+        return view('employee.Chat');
     }
 
     public function EmployeeForum()
     {
         $posts = Post::latest()->paginate(6);
-        return view('posts.index', ['posts' => $posts]);
+        return view('employee.forum', ['posts' => $posts]);
     }
     
 }

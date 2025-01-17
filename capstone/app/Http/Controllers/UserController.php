@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function userprofile()
+    public function profile()
     {
-        return view('loggedIn.userprofile');
+        return view('user.profile');
     }
     public function faq()
     {
-        return view('loggedIn.faq');
+        return view('user.faq');
     }
     public function colormatch()
     {
@@ -28,14 +28,14 @@ class UserController extends Controller
         return view('workspace.game');
     }
 
-    public function calendar_user()
+    public function calendar()
     {
-        return view('loggedIn.calendar_user');
+        return view('user.calendar');
     }
-    public function user()
+    public function forum()
     {
         $posts = Post::latest()->paginate(6);
-        return view('loggedIn.user', ['posts' => $posts]);
+        return view('user.forum', ['posts' => $posts]);
     }
 
     //register for new user

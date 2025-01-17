@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user-nav')
 
 @section('content')
 <div class="container"style="margin-top:5%;">

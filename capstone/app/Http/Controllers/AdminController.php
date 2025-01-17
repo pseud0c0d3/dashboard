@@ -11,8 +11,14 @@ class AdminController extends Controller
 {
     public function calendar()
     {
-        return view('admin.calendar_admin');
+        return view('admin.calendar');
     }
+
+    public function forum()
+{
+    $posts = Post::latest()->paginate(6);
+    return view('admin.forum', ['posts' => $posts]);
+}
 
     protected $googleCalendarService;
 
@@ -25,6 +31,7 @@ class AdminController extends Controller
     {
         return view('admin.dashboard');
     }
+    //calendar
     public function store(Request $request)
     {
         // Validate the form input
@@ -58,14 +65,8 @@ class AdminController extends Controller
         );
 
         // Redirect with success message
-        return redirect()->route('admin.calendar_admin')->with('success', 'Event added successfully to Google Calendar!');
+        return redirect()->route('admin.calendar')->with('success', 'Event added successfully to Google Calendar!');
     }
-
-    public function adminforum()
-{
-    $posts = Post::latest()->paginate(6);
-    return view('admin.adminforum', ['posts' => $posts]);
-}
 
 
 }

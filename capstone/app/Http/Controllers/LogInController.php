@@ -28,7 +28,7 @@ class LogInController extends Controller
         if ($admin && Hash::check($credentials['password'], $admin->password)) {
             Auth::loginUsingId($admin->id); // Log in the admin
             $request->session()->regenerate(); // Regenerate the session
-            return redirect()->route('admin.calendar_admin'); // Redirect to admin dashboard
+            return redirect()->route('admin.calendar'); // Redirect to admin dashboard
         }
 
         // Check in 'employees' table
@@ -36,7 +36,7 @@ class LogInController extends Controller
         if ($employee && Hash::check($credentials['password'], $employee->password)) {
             Auth::loginUsingId($employee->id); // Log in the employee
             $request->session()->regenerate(); // Regenerate the session
-            return redirect()->route('employee.EmployeeForum'); // Redirect to employee dashboard
+            return redirect()->route('employee.Forum'); // Redirect to employee dashboard
         }
 
         // Check in 'users' table
@@ -45,7 +45,7 @@ class LogInController extends Controller
             Auth::loginUsingId($user->id); // Log in the user
             $request->session()->regenerate(); // Regenerate the session
             $posts = Post::latest()->paginate(6); // Load posts for user dashboard
-            return view('loggedIn.user', ['posts' => $posts]); // Redirect to user dashboard
+            return view('user.forum', ['posts' => $posts]); // Redirect to user dashboard
         }
 
         // If no matches were found, authentication failed
