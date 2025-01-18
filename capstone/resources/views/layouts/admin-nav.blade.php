@@ -44,9 +44,10 @@
                 <li><a href="{{ route('admin.calendar') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
                 <li><a href="{{ route('admin.chats') }}"> Chats</a></li>
             </ul>
+
             <div class="bottom-container">
                 <ul class="menu">
-                    <li><a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+                    <li><a href="{{ route('admin.logout') }}"method="GET"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
                 </ul>
             </div>
         </div>

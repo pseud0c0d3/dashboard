@@ -26,6 +26,7 @@ Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('adm
 Route::get('/admin/chats', [AdminController::class, 'chats'])->name('admin.chats');
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 Route::post('/admin/check', [AdminController::class, 'check'])->name('admin.check');
+Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 //user routes
 Route::post('user/save', [UserController::class, 'save'])->name('user.save');
