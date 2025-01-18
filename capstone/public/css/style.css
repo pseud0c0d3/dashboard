@@ -2,22 +2,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  body {
-
+}
+body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     overflow: hidden;
-
-  }
-  .container {
+}
+.container {
     display: flex;
     flex-direction: column;
     height: 100vh;
-  }
-  /*---------------------------------------------------------------------------------------------------------*/
-  /* Search */
-  .search-container {
+}
+/*---------------------------------------------------------------------------------------------------------*/
+/* Search */
+.search-container {
     background-color: #f9f9f9;
     width: 30%;
     padding: 1px 15px;
@@ -27,9 +25,9 @@
     margin-left: 650px;
     display: flex;
     align-items: center;
-  }
+}
 
-  .search-container input {
+.search-container input {
     flex: 1;
     background-color: transparent;
     border: none;
@@ -38,34 +36,32 @@
     font-size: 16px;
     color: #333;
     transition: border-color 0.3s;
-  }
+}
 
-  .search-container input:focus {
+.search-container input:focus {
     outline: none;
-  }
+}
 
-  .search-container::before {
+.search-container::before {
     content: '\f002';
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     color: #0079bf;
     margin-right: 10px;
-  }
+}
 
-
-  .icons{
+.icons {
     padding-right: 30px;
     margin-left: 450%;
     color: rgb(0, 0, 0);
-    
-  }
+}
 
-  .headers {
+.headers {
     position: fixed;
     top: 0;
     left: 250px; /* Match the width of the sidebar */
     width: calc(100% - 250px); /* Account for sidebar width */
-    background-image: linear-gradient(to right,#5fa8f1, white);
+    background-image: linear-gradient(to right, #5fa8f1, white);
     border: solid #000000 1px;
     border-left: none;
     height: 50px; /* Ensure consistency across all pages */
@@ -75,32 +71,31 @@
     padding-top: 20px;
 }
 
-
-  .header {
+.header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-  }
+}
 
-
-  .header .icons {
+.header .icons {
     display: flex;
     gap: 20px;
-  }
+}
 
-  .header input[type="text"] {
+.header input[type="text"] {
     width: 60%;
     padding: 10px;
     border-radius: 20px;
     border: none;
-  }
-  .icons i {
+}
+
+.icons i {
     font-size: 24px;
     margin-left: 20px;
     cursor: pointer;
-  }
+}
 
-  .dropdown-content {
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: white;
@@ -109,9 +104,9 @@
     z-index: 1;
     top: 30px;
     right: 0;
-  }
+}
 
-  .dropdown-content button {
+.dropdown-content button {
     background-color: white;
     color: black;
     border: none;
@@ -119,18 +114,19 @@
     text-align: left;
     width: 100%;
     cursor: pointer;
-  }
-  .ellipsis-btn:hover + .dropdown-content,
-  .dropdown-content:hover {
-  display: block;
-  }
+}
 
-  .dropdown-content button:hover {
+.ellipsis-btn:hover + .dropdown-content,
+.dropdown-content:hover {
+    display: block;
+}
+
+.dropdown-content button:hover {
     background-color: #ddd;
-  }
+}
 
-  /*For Setting*/
-  .settings-dropdown {
+/*For Setting*/
+.settings-dropdown {
     position: absolute;
     top: 40px;
     right: 10px;
@@ -140,24 +136,24 @@
     border-radius: 5px;
     width: 150px;
     z-index: 1000;
-  }
+}
 
-  .settings-dropdown a {
+.settings-dropdown a {
     display: block;
     padding: 10px;
     text-decoration: none;
     color: #333;
     font-size: 14px;
-  }
+}
 
-  .settings-dropdown a:hover {
+.settings-dropdown a:hover {
     background-color: #f0f0f0;
-  }
+}
 
 /*---------------------------------------------------------------------------------------------------------*/
-  .sidebar {
+.sidebar {
     width: 250px;
-    background-image: linear-gradient( #2c67f2, #62cff4);
+    background-image: linear-gradient(#2c67f2, #62cff4);
     color: #ecf0f1;
     padding: 20px;
     position: fixed;
@@ -165,6 +161,11 @@
     top: 0;
     left: 0;
     transition: all 0.3s ease;
+    z-index: 1000;
+}
+/* Sidebar when opened */
+.sidebar.open {
+    left: 0; /* Slide sidebar into view */
 }
 
 .sidebar .angel-logo {
@@ -174,9 +175,10 @@
 
 .profile-section {
     margin-bottom: 20px;
-    background-color: #ffffff;
+    box-shadow: rgb(35, 209, 240) 0px 50px 100px -20px, rgb(59, 83, 189) 0px 30px 60px -30px, rgba(72, 135, 199, 0.719) 0px -2px 6px 0px inset;
     padding: 10px 20px;
     border-radius: 10px;
+    background-color: #f0f0f0;
     border: #000000 solid 1px;
 }
 
@@ -204,13 +206,35 @@
     color: #000000;
 }
 
-.menu{
+.close-sidebar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+    color: #ecf0f1;
+    cursor: pointer;
+    z-index: 1100; /* Ensure it's on top of other elements */
+    display: none; /* Hide by default */
+}
+
+/* Show close button when sidebar is open */
+.sidebar.open .close-sidebar {
+    display: block; /* Only show the button when the sidebar is open */
+}
+
+.close-sidebar:hover {
+    color: #f44336; /* Change color on hover */
+}
+
+.menu {
     list-style-type: none;
     padding: 0;
 }
 
-.menu li{
-    margin: 10px 0;
+.menu li {
+    margin: 6px 0;
 }
 
 .menu a {
@@ -227,23 +251,41 @@
 .menu a:hover {
     background-color: #092642; /* Change background on hover */
     color: #fff; /* White text on hover */
+    box-shadow: rgb(35, 209, 240) 0px 50px 100px -20px, rgb(59, 83, 189) 0px 30px 60px -30px, rgba(72, 135, 199, 0.719) 0px -2px 6px 0px inset;
 }
 
-.menu a i{
+.menu a i {
     margin-right: 10px;
+}
+
+.menu-toggle {
+    display: none;
 }
 
 .dropdown-list {
     display: none;
-    padding-left: 50px;
+    padding-left: 2px;
+    list-style-type: none; /* Removes bullets */
+}
+
+.dropdown-list li:last-child a {
+    margin-top: -20px;
+}
+
+/* Style the image icons */
+.list-icon {
+    width: 35px; /* Icon size */
+    height: 35px;
+    margin-right: 40px; /* Space between icon and text */
+    vertical-align: middle;
 }
 
 .dropdown a {
     cursor: pointer;
 }
 
-.dropdown li:last-child a{
-  margin-top: -10px;
+.dropdown li:last-child a {
+    margin-top: -50px;
 }
 
 .dropdown .dropdown-arrow {
@@ -252,10 +294,9 @@
 
 .bottom-container {
     position: absolute;
-    bottom: 20px;
+    bottom: -10px;
     width: 85%;
     list-style-type: none;
-  
     margin-right: auto;
 }
 
@@ -268,23 +309,175 @@
     color: #fff;
 }
 
-
 .dropdown-list li a:hover {
     background-color: #092642; /* Lighter hover effect for dropdown */
     color: #ecf0f1; /* Ensure text remains readable */
 }
 
-/* Responsive Design */
+
+/* Main content */
+.main-content {
+  margin-left: 0; /* Default margin for main content */
+  transition: all 0.3s ease; /* Smooth transition when sidebar opens/closes */
+}
+
+/* When sidebar is open */
+.sidebar-open .main-content {
+  margin-left: 250px; /* Shift content to the right when sidebar is open */
+}
+
+/* Initially hide the sidebar on mobile devices */
 @media (max-width: 768px) {
-    .sidebar {
-        width: 200px;
-    }
+
+  .sidebar {
+    max-height: 100%;
+    top: 0;
+    left: 0;
+    width: 160px;
+    display: none; /* Hide sidebar by default */
+    padding: 10px;
+    font-size: 7px; /* Adjust font size for smaller screens */
+    z-index: 1000;
+  }
+
+  .sidebar .angel-logo {
+      width: 60%; /* Scale down logo size */
+      margin: 0 auto 10px; /* Center logo */
+  }
+
+  .profile-section {
+    margin-bottom: 10px;
+    box-shadow: rgb(35, 209, 240) 0px 50px 100px -20px, rgb(59, 83, 189) 0px 30px 60px -30px, rgba(72, 135, 199, 0.719) 0px -2px 6px 0px inset;
+    padding: 3px 1px 1px 3px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    border: #000000 solid 1px;
+    height: 48px;
+}
+
+.profile-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #ecf0f1; /* Set default text color */
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+.profile-link:hover {
+  color: #3498db; /* Change color on hover */
+}
+
+.profile-pic {
+  width: 0px;
+  height: 0px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 
-  /*---------------------------------------------------------------------------------------------------------*/
-  /* Modal styles */
-  .modal {
+
+  .menu a {
+    text-decoration: none;
+      font-size: 8px; /* Adjust menu font size */
+      padding: 3px; /* Reduce padding for better fit */
+  }
+
+  .menu a:hover {
+    background-color: #092642; /* Change background on hover */
+    color: #fff; /* White text on hover */
+    border-radius: 5px;
+    box-shadow: rgb(35, 209, 240) 0px 50px 100px -20px, rgb(59, 83, 189) 0px 30px 60px -30px, rgba(72, 135, 199, 0.719) 0px -2px 6px 0px inset;
+}
+
+  .menu-toggle {
+      display: block;
+      background-color: #003049;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+  }
+
+  /* Style the image icons */
+.list-icon {
+  width: 25px; /* Icon size */
+  height: 25px;
+  margin-right: 40px; /* Space between icon and text */
+  
+}
+.dropdown-list li a:hover {
+  background-color: #092642; /* Lighter hover effect for dropdown */
+  color: #ecf0f1; /* Ensure text remains readable */
+  height: 30px;
+  border-radius: 25px;
+}
+.dropdown li:last-child a {
+  margin-top: -10px;
+}
+
+  .sidebar.open {
+      display: block;
+  }
+
+  .close-sidebar {
+      display: block;
+      font-size: 24px;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      color: #ecf0f1;
+      cursor: pointer;
+  }
+
+  .main-content {
+      margin-left: 0; /* Remove left margin to fit smaller screens */
+  }
+
+
+    /* Show the sidebar when 'open' class is added */
+    .sidebar.open {
+        display: block;
+    }
+
+    /* Show close button when sidebar is open */
+    .sidebar.open .close-sidebar {
+        display: block; /* Only show the button when the sidebar is open */
+    }
+
+    /* Hide the close button when sidebar is closed */
+    .close-sidebar {
+        display: none; /* Hide by default */
+    }
+
+    
+}
+
+@media (min-width: 769px) {
+    /* Ensure that on desktop mode, the sidebar is always visible */
+    .sidebar {
+        display: block !important;
+        width: 250px; /* Full width for desktop */
+    }
+
+    /* Ensure the menu-toggle button is hidden on desktop */
+    .menu-toggle {
+        display: none !important;
+    }
+
+    /* Hide close button on desktop */
+    .close-sidebar {
+        display: none;
+    }
+}
+
+/*---------------------------------------------------------------------------------------------------------*/
+/* Modal styles */
+.modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -294,8 +487,8 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
-  }
-  .modal-content {
+}
+.modal-content {
     background-color: #fff;
     margin: 5% auto;
     padding: 20px;
@@ -303,15 +496,14 @@
     width: 90%;
     max-width: 500px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-  .main-content {
+}
+.main-content {
     margin-top: -20px;
     margin-left: 200px; /* Matches the width of the sidebar */
 }
 
-
-  /*calendar modal */
-  .calendar-modal {
+/*calendar modal */
+.calendar-modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -321,41 +513,23 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
-  }
-  .calendar-modal-content {
+}
+.calendar-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-  }
-  .close-calendar {
+}
+.close-calendar {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
-  .close-calendar:hover,
-  .close-calendar:focus {
+}
+.close-calendar:hover,
+.close-calendar:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-  }
-  /*---------------------------------------------------------------------------------------------------------*/
-
-  /* For mobile devices */
-  @media (max-width: 768px) {
-    .sidebar {
-        display: none; /* Hide sidebar on mobile */
-    }
-    .menu-toggle {
-        display: block;
-        background-color: #003049;
-        color: #fff;
-        padding: 10px;
-        border: none;
-        cursor: pointer;
-    }
-  }
-
-
+}

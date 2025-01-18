@@ -26,9 +26,14 @@
 </head>
 <body>
     <div class="container">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
   <!-- Sidebar -->
 <div class="sidebar">
+<button class="close-sidebar" onclick="closeSidebar()">×</button>
     <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
+    <!-- Button to open sidebar on mobile -->
+
+
     
     <!-- Profile Section -->
     <div class="profile-section">
@@ -45,15 +50,24 @@
                 <li><a href="{{ route('user.forum') }}"><i class="fas fa-home"></i> Forum</a></li>
                 <li>
                     <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
-                        <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
+                    <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
                     </a>
-                    <ul class="dropdown" id="activitiesDropdown">
-                        <li><a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">Colormatch Game</a></li>
-                        <li><a href="{{ route('workspace.game') }}" onclick="showLoading('workspace.game')">Sound Game</a></li>
-                    </ul>
+                    <ul class="dropdown-list" id="activitiesDropdown">
+    <li>
+        <a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">
+            <img src="/img/colorgame.png" alt="Colormatch Icon" class="list-icon"> Colormatch Game
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('workspace.game') }}" onclick="showLoading('workspace.game')">
+            <img src="/img/sound.png" alt="Sound Game Icon" class="list-icon"> Sound Game
+        </a>
+    </li>
+</ul>
+
                 </li>
                 <li><a href="{{ route('user.calendar') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-                <li><a href="{{ route('user.chats') }}"> Chats</a></li>
+                <li><a href="{{ route('user.chats') }}"><i class="bi bi-chat-dots"></i> Chats</a></li>
             </ul>
 
     <!-- Bottom Menu -->
@@ -79,17 +93,87 @@
     </div>
     <script>
     function toggleDropdown(event, dropdownId) {
-        event.preventDefault();
+        event.stopPropagation();
         const dropdown = document.getElementById(dropdownId);
-        const arrow = event.target.querySelector('.dropdown-arrow');
-        const isOpen = dropdown.style.display === 'block';
-        
-        // Toggle dropdown visibility
-        dropdown.style.display = isOpen ? 'none' : 'block';
-        
-        // Change arrow direction based on dropdown state
-        arrow.textContent = isOpen ? '▼' : '▲';
+        if (dropdown) {
+            const isHidden = dropdown.style.display === "none" || !dropdown.style.display;
+            dropdown.style.display = isHidden ? "block" : "none";
+        }
     }
+    
+
+    // Ensure clicking outside the dropdown closes it
+    document.addEventListener('click', () => {
+        const dropdowns = document.querySelectorAll('.dropdown-list');
+        dropdowns.forEach(dropdown => {
+            dropdown.style.display = 'none';
+        });
+    });
+
+
+// Function to toggle the sidebar (for mobile mode)
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const toggleButton = document.querySelector('.menu-toggle');
+    const closeButton = document.querySelector('.close-sidebar');
+    const body = document.body;
+
+    sidebar.classList.toggle('open'); // Toggle 'open' class for showing/hiding sidebar
+
+
+    // Function to open sidebar
+    toggleButton.addEventListener('click', () => {
+        sidebar.classList.add('open'); // Open sidebar
+        body.classList.add('sidebar-open'); // Add class to shift main content
+    });
+
+    // Function to close sidebar
+    closeButton.addEventListener('click', () => {
+        sidebar.classList.remove('open'); // Close sidebar
+        body.classList.remove('sidebar-open'); // Remove class to reset main content
+    });
+    // Hide or show the toggle button and close button based on sidebar state
+    if (sidebar.classList.contains('open')) {
+        toggleButton.style.display = 'none'; // Hide menu-toggle when sidebar is open
+        closeButton.style.display = 'block'; // Show close button when sidebar is open
+    } else {
+        toggleButton.style.display = 'block'; // Show menu-toggle when sidebar is closed
+        closeButton.style.display = 'none'; // Hide close button when sidebar is closed
+    }
+}
+
+// Function to close the sidebar
+function closeSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const toggleButton = document.querySelector('.menu-toggle');
+    const closeButton = document.querySelector('.close-sidebar');
+
+    sidebar.classList.remove('open'); // Remove 'open' class to hide sidebar
+    toggleButton.style.display = 'block'; // Show the toggle button again
+    closeButton.style.display = 'none'; // Hide the close button when sidebar is closed
+}
+
+// Event listener to adjust visibility of buttons when resizing the window
+window.addEventListener('resize', function() {
+    const sidebar = document.querySelector('.sidebar');
+    const toggleButton = document.querySelector('.menu-toggle');
+    const closeButton = document.querySelector('.close-sidebar');
+
+    if (window.innerWidth > 768) {
+        // On desktop mode, hide both buttons and the sidebar should be visible
+        toggleButton.style.display = 'none';
+        closeButton.style.display = 'none';
+        sidebar.classList.remove('open'); // Make sure the sidebar is hidden
+    } else {
+        // On mobile mode, show the menu toggle button
+        toggleButton.style.display = 'block';
+        if (!sidebar.classList.contains('open')) {
+            closeButton.style.display = 'none'; // Hide close button if sidebar is not open
+        }
+    }
+});
+
+
 </script>
 </body>
 </html>

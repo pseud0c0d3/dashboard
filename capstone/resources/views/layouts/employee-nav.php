@@ -26,7 +26,7 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
-            {{-- <div class="profile-section">
+            <div class="profile-section">
                 <a href="{{ route('loggedIn.userprofile') }}" class="profile-link" onclick="showLoading('userprofile.html')">
                     <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
                     <div class="profile-details">
@@ -34,7 +34,7 @@
                         <p>Father</p>
                     </div>
                 </a>
-            </div> --}}
+            </div>
 
             <ul class="menu">
                 <li><a href="{{ route('employee.EmployeeChat') }}" onclick="showLoading('dashboard.html')"><i class="fas fa-bullhorn"></i> Dashboard</a></li>
