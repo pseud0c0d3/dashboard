@@ -101,6 +101,10 @@
 </div>
 </div>
 </div>
+
+
+
+
         </div>
 
         <div class="col-12 grid-margin stretch-card">
@@ -108,194 +112,212 @@
 
             </div>
         </div>
-        <script src="{{ asset('/build/assets/app-D1ylovWN.js') }}"></script>
 
-        <!-- container-scroller -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-        <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <!-- plugins:js -->
-        <script src="/vendors/js/vendor.bundle.base.js"></script>
-        <!-- endinject -->
-        <!-- Plugin js for this page -->
-        <script src="/vendors/chart.js/Chart.min.js"></script>
-        <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
-        <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-        <script src="/js/dataTables.select.min.js"></script>
 
-        <!-- End plugin js for this page -->
-        <!-- inject:js -->
-        <script src="/js/off-canvas.js"></script>
-        <script src="/js/hoverable-collapse.js"></script>
-        <script src="/js/template.js"></script>
-        <script src="/js/settings.js"></script>
-        <script src="/js/todolist.js"></script>
-        <!-- endinject -->
-        <!-- Custom js for this page-->
-        <script src="/js/dashboard.js"></script>
-        <script src="/js/Chart.roundedBarCharts.js"></script>
-        <!-- End custom js for this page-->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <!-- JavaScript to handle profile card click -->
-                                          
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©
+                    2021. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin
+                        template</a> from BootstrapDash. All rights reserved.</span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made
+                    with <i class="ti-heart text-danger ml-1"></i></span>
+            </div>
+        </footer>
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+</div>
+<script src="{{ asset('/build/assets/app-D1ylovWN.js') }}"></script>
+
+<!-- container-scroller -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- plugins:js -->
+<script src="/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="/vendors/chart.js/Chart.min.js"></script>
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="/js/dataTables.select.min.js"></script>
+
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="/js/off-canvas.js"></script>
+<script src="/js/hoverable-collapse.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/settings.js"></script>
+<script src="/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="/js/dashboard.js"></script>
+<script src="/js/Chart.roundedBarCharts.js"></script>
+<!-- End custom js for this page-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- JavaScript to handle profile card click -->
+                                  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/7.0.3/pusher.min.js"></script>
 <script>
-   
-   var pusher = new Pusher('56ae557b83a4903265fc', {
-    cluster: 'ap1', // Ensure the cluster matches your Pusher configuration
-    encrypted: true
+
+var pusher = new Pusher('56ae557b83a4903265fc', {
+cluster: 'ap1', // Ensure the cluster matches your Pusher configuration
+encrypted: true
 });
 
 var channel = pusher.subscribe('my-channel'); // Subscribe to the channel
 
 channel.bind('my-event', function(data) { // Bind the event
-    console.log('Message received:', data);
+console.log('Message received:', data);
 
-    // Display the message in the chat container
-    if (data && data.message) {
-        let messageHtml = `
-            <div class="chat-message">
-                <div class="message-content">
-                    <p><strong>${data.user.name}:</strong> ${data.message}</p>
-                    <div class="timestamp">${new Date(data.created_at).toLocaleTimeString()}</div>
-                </div>
-            </div>`;
+// Display the message in the chat container
+if (data && data.message) {
+let messageHtml = `
+    <div class="chat-message">
+        <div class="message-content">
+            <p><strong>${data.user.name}:</strong> ${data.message}</p>
+            <div class="timestamp">${new Date(data.created_at).toLocaleTimeString()}</div>
+        </div>
+    </div>`;
 
-        $('#chatMessageContainer').append(messageHtml);
+$('#chatMessageContainer').append(messageHtml);
 
-        // Scroll to the bottom
-        $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
-    }
+// Scroll to the bottom
+$('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
+}
 });
 </script>
 <script>$(document).ready(function() {
-    // Function to handle chat item click
-    function handleChatItemClick() {
-        // Remove the active class from all chat items
-        $('.chat-item').removeClass('active');
+// Function to handle chat item click
+function handleChatItemClick() {
+// Remove the active class from all chat items
+$('.chat-item').removeClass('active');
 
-        // Add the active class to the clicked chat item
-        $(this).addClass('active');
+// Add the active class to the clicked chat item
+$(this).addClass('active');
 
-        let profileImage = $(this).find('.profile_img').attr('src');
-        let profileName = $(this).find('.profile_name').text();
-        let receiverId = $(this).find('.id').text();
+let profileImage = $(this).find('.profile_img').attr('src');
+let profileName = $(this).find('.profile_name').text();
+let receiverId = $(this).find('.id').text();
 
-        // Set receiver details in the chat area
-        $('#receiver_id').val(receiverId);
-        $('#chat_img').attr('src', profileImage);
-        $('#chat_name').text('Chatting with ' + profileName);
+// Set receiver details in the chat area
+$('#receiver_id').val(receiverId);
+$('#chat_img').attr('src', profileImage);
+$('#chat_name').text('Chatting with ' + profileName);
 
-        // Fetch chat messages for the selected user
-        $.ajax({
-            url: '{{ route('admin.fetchMessages') }}',
-            method: 'GET',
-            data: {
-                receiver_id: receiverId
-            },
-            success: function(response) {
-                $('#chatMessageContainer').empty(); // Clear the chat container
+// Fetch chat messages for the selected user
+$.ajax({
+    url: '{{ route('admin.fetchMessages') }}',
+    method: 'GET',
+    data: {
+        receiver_id: receiverId
+    },
+    success: function(response) {
+        $('#chatMessageContainer').empty(); // Clear the chat container
 
-                // Populate chat with fetched messages
-                response.messages.forEach(function(message) {
-                    let isSender = message.sender_id == '{{ session('LoggedAdminInfo') }}';
-                    let userAvatar = isSender ? '{{ asset('storage/' . $LoggedAdminInfo->picture) }}' : profileImage;
-                    let userName = isSender ? '{{ $LoggedAdminInfo->name }}' : profileName;
+        // Populate chat with fetched messages
+        response.messages.forEach(function(message) {
+            let isSender = message.sender_id == '{{ session('LoggedAdminInfo') }}';
+            let userAvatar = isSender ? '{{ asset('storage/' . $LoggedAdminInfo->picture) }}' : profileImage;
+            let userName = isSender ? '{{ $LoggedAdminInfo->name }}' : profileName;
 
-                    let messageTime = new Date(message.created_at).toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
+            let messageTime = new Date(message.created_at).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
 
-                    let messageHtml = `
-                        <div class="chat-message ${isSender ? 'sender' : 'receiver'}">
-                            
-                            <div class="message-content">
-                                <p><strong>${userName}:</strong> ${message.message}</p>
-                                <div class="timestamp">${messageTime}</div>
-                            </div>
-                        </div>`;
-                    $('#chatMessageContainer').append(messageHtml);
-                });
-
-                // Scroll to the bottom of the chat container
-                $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching messages:', error);
-            }
+            let messageHtml = `
+                <div class="chat-message ${isSender ? 'sender' : 'receiver'}">
+                    
+                    <div class="message-content">
+                        <p><strong>${userName}:</strong> ${message.message}</p>
+                        <div class="timestamp">${messageTime}</div>
+                    </div>
+                </div>`;
+            $('#chatMessageContainer').append(messageHtml);
         });
+
+        // Scroll to the bottom of the chat container
+        $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
+    },
+    error: function(xhr, status, error) {
+        console.error('Error fetching messages:', error);
     }
+});
+}
 
-    // Attach the click event to chat items
-    $(document).on('click', '.chat-item', handleChatItemClick);
+// Attach the click event to chat items
+$(document).on('click', '.chat-item', handleChatItemClick);
 
-    // Event listener for sending a message
-    $('#messageForm').on('submit', function(e) {
-        e.preventDefault();
+// Event listener for sending a message
+$('#messageForm').on('submit', function(e) {
+e.preventDefault();
 
-        let message = $('#messageInput').val().trim();
-        let receiverId = $('#receiver_id').val();
+let message = $('#messageInput').val().trim();
+let receiverId = $('#receiver_id').val();
 
-        if (message === "") {
-            alert("Message cannot be empty.");
-            return;
+if (message === "") {
+    alert("Message cannot be empty.");
+    return;
+}
+
+$.ajax({
+    type: 'POST',
+    url: '{{ route('admin.sendMessage') }}',
+    data: {
+        _token: $('input[name="_token"]').val(),
+        message: message,
+        receiver_id: receiverId
+    },
+    beforeSend: function() {
+        // Disable the send button and change its text to "Sending..."
+        $('#sendMessageButton').text('Sending...').attr('disabled', true);
+    },
+    success: function(response) {
+        if (response.success) {
+            toastr.success(response.message, "Success");
+            $('#messageInput').val(''); // Clear the input
+
+            let userAvatar = '{{ asset('storage/' . $LoggedAdminInfo->picture) }}';
+            let userName = '{{ $LoggedAdminInfo->name }}';
+
+            let messageTime = new Date().toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            let messageHtml = `
+                <div class="chat-message sender">
+                    
+                    <div class="message-content">
+                        <p><strong>${userName}:</strong> ${message}</p>
+                        <div class="timestamp">${messageTime}</div>
+                    </div>
+                </div>`;
+
+            $('#chatMessageContainer').append(messageHtml);
+            $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
+        } else {
+            toastr.error(response.message, "Error");
         }
-
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('admin.sendMessage') }}',
-            data: {
-                _token: $('input[name="_token"]').val(),
-                message: message,
-                receiver_id: receiverId
-            },
-            beforeSend: function() {
-                // Disable the send button and change its text to "Sending..."
-                $('#sendMessageButton').text('Sending...').attr('disabled', true);
-            },
-            success: function(response) {
-                if (response.success) {
-                    toastr.success(response.message, "Success");
-                    $('#messageInput').val(''); // Clear the input
-
-                    let userAvatar = '{{ asset('storage/' . $LoggedAdminInfo->picture) }}';
-                    let userName = '{{ $LoggedAdminInfo->name }}';
-
-                    let messageTime = new Date().toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-
-                    let messageHtml = `
-                        <div class="chat-message sender">
-                            
-                            <div class="message-content">
-                                <p><strong>${userName}:</strong> ${message}</p>
-                                <div class="timestamp">${messageTime}</div>
-                            </div>
-                        </div>`;
-
-                    $('#chatMessageContainer').append(messageHtml);
-                    $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
-                } else {
-                    toastr.error(response.message, "Error");
-                }
-            },
-            error: function(xhr) {
-                console.error('Error:', xhr.responseJSON.message);
-                toastr.error('Failed to send message', "Error");
-            },
-            complete: function() {
-                // Re-enable the send button and change its text back to "Send"
-                $('#sendMessageButton').text('Send').attr('disabled', false);
-            }
-        });
-    });
+    },
+    error: function(xhr) {
+        console.error('Error:', xhr.responseJSON.message);
+        toastr.error('Failed to send message', "Error");
+    },
+    complete: function() {
+        // Re-enable the send button and change its text back to "Send"
+        $('#sendMessageButton').text('Send').attr('disabled', false);
+    }
+});
+});
 });
 
 </script>

@@ -28,6 +28,7 @@ Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login
 Route::post('/admin/check', [AdminController::class, 'check'])->name('admin.check');
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
+
 //user routes
 Route::post('user/save', [UserController::class, 'save'])->name('user.save');
 Route::get('/user/forum', [UserController::class, 'forum'])->name('user.forum');
@@ -40,6 +41,7 @@ Route::get('/user/chats', [UserController::class, 'chats'])->name('user.chats');
 Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
 Route::post('/user/check', [UserController::class, 'check'])->name('user.check');
 Route::get('/user/register', [UserController::class, 'register'])->name('user.register');
+Route::get('/user/logout', [AdminController::class, 'logout'])->name('user.logout');
 
 // Employee routes
 Route::get('/employee/EmployeeChat', [EmployeeController::class, 'EmployeeChat'])->name('employee.EmployeeChat');
@@ -65,3 +67,14 @@ Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmi
 
 Route::get('/admin/fetch-messages', [ChatsController::class, 'fetchMessages'])->name('admin.fetchMessages');
 Route::post('/admin/send-message', [ChatsController::class, 'sendMessage'])->name('admin.sendMessage');
+
+//fullcalendar
+// Admin
+Route::post('/admin/events', [AdminController::class, 'createEvent'])->name('admin.events.create');
+Route::get('/admin/fullcalendar', [AdminController::class, 'fullcalendar'])->name('admin.fullcalendar');
+Route::get('/admin/events', [AdminController::class, 'getEvents'])->name('admin.events');
+
+// User
+Route::get('/user/events', [UserController::class, 'getEvents'])->name('user.events');
+Route::get('/user/fullcalendar', [UserController::class, 'fullcalendar'])->name('user.fullcalendar');
+

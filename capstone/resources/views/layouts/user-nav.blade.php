@@ -67,6 +67,7 @@
 
                 </li>
                 <li><a href="{{ route('user.calendar') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="{{ route('user.fullcalendar') }}"><i class="fas fa-calendar-alt"></i>FullCalendar</a></li>
                 <li><a href="{{ route('user.chats') }}"><i class="bi bi-chat-dots"></i> Chats</a></li>
             </ul>
 
@@ -74,7 +75,7 @@
     <div class="bottom-container">
         <ul class="menu">
             <li><a href="{{ route('user.faq') }}"><i class="fas fa-question-circle"></i> Help</a></li>
-            <li><a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+            <li><a href="{{ route('user.logout') }}"method="GET"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
         </ul>
     </div>
 </div>
