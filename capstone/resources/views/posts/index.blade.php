@@ -8,6 +8,15 @@
     <input type="text" placeholder="Search...">
 </div>
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <!-- Scrollable container -->
     <div class="scrollable-posts" style="max-height: 100vh; overflow-y: auto; padding-right: 15px;margin-top:5%">
         @foreach($posts as $post)
@@ -89,11 +98,11 @@
 
 
 
-@if(session('success'))
+{{-- @if(session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
-@endif
+@endif --}}
 <script>
 // Modal handling for adding new posts
 

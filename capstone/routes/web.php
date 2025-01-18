@@ -57,6 +57,7 @@ Route::resource('/posts', PostController::class)->except(['index', 'show']);
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::resource('/posts', PostController::class)->except(['index', 'show']);
+Route::resource('/posts', PostController::class)->middleware('check.badwords');
 
 // chats
 Route::get('/fetch-messages', [ChatsController::class, 'fetchMessagesFromUserToAdmin'])->name('fetch.messagesFromSellerToAdmin');

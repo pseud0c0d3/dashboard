@@ -20,10 +20,10 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('posts.create');
-    }
+    // public function create()
+    // {
+    //     return view('posts.create');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -75,7 +75,7 @@ class PostController extends Controller
             'title' => ['required', 'max:255'],
             'body' => ['required'],
             'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
-            
+
 
         ]);
 
