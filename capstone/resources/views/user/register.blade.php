@@ -8,12 +8,6 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="/img/logo.png" alt="Brand Logo">
-        </a>
-    </nav>
 
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">

@@ -11,6 +11,7 @@ use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 class AdminController extends Controller
 {
     public function calendar()
@@ -80,7 +81,7 @@ class AdminController extends Controller
     {
         $LoggedAdminInfo = Admin::find(session('LoggedAdminInfo'));
         if (!$LoggedAdminInfo) {
-            return redirect()->route('loggedOut.index')->with('fail', 'You must be logged in to access the dashboard');
+            return redirect()->route('admin.login')->with('fail', 'You must be logged in to access the dashboard');
         }
     
         // Fetch chats where the admin is either the sender or the receiver
@@ -152,5 +153,13 @@ public function check(Request $request)
         // Redirect to the admin dashboard
         return redirect()->route('admin.dashboard');
     }
+    public function logout()
+    {
+        if (Session::has('LoggedAdminInfo')) {
+            Session::forget('LoggedAdminInfo');
+        }
+        Session::flush();
 
+        return redirect()->route('admin.login');
+    }
 }
