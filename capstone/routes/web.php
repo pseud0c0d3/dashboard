@@ -74,7 +74,8 @@ Route::post('/admin/events', [AdminController::class, 'createEvent'])->name('adm
 Route::get('/admin/fullcalendar', [AdminController::class, 'fullcalendar'])->name('admin.fullcalendar');
 Route::get('/admin/events', [AdminController::class, 'getEvents'])->name('admin.events');
 
-// User
-Route::get('/user/events', [UserController::class, 'getEvents'])->name('user.events');
-Route::get('/user/fullcalendar', [UserController::class, 'fullcalendar'])->name('user.fullcalendar');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/events', [UserController::class, 'getEvents'])->name('user.events');
+    Route::get('/user/fullcalendar', [UserController::class, 'fullcalendar'])->name('user.fullcalendar');
+});
 

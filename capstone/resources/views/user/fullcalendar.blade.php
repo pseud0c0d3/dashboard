@@ -15,11 +15,15 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         initialView: 'dayGridMonth',
         selectable: true,
-        events: '/user/events', // Fetch events visible to the user via AJAX
+        events: '/user/events', // Fetch events via AJAX
+        eventSourceFailure: function() {
+            alert('Failed to load events. Please try again later.');
+        },
     });
 
     calendar.render();
 });
+
 
 </script>
 
