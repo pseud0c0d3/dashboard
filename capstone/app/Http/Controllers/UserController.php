@@ -150,6 +150,6 @@ class UserController extends Controller
         // Use Auth facade for logout
         Auth::logout();
 
-        return redirect()->route('user.dashboard');
+        return redirect()->route('index');
     }
 }

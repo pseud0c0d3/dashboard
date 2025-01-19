@@ -10,7 +10,7 @@ class Event extends Model
     
 
     protected $fillable = [
-        'title', 'description','is_public', 'user_id',
+        'title', 'description','start_time', 'end_time', 'is_public', 'user_id',
     ];
 
     
