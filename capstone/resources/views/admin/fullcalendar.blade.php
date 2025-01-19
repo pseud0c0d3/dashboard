@@ -63,8 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
         headerToolbar: {
             left: 'prev,next today addEventButton',
             center: 'title',
-            right: 'multiMonthYear,dayGridMonth,timeGridWeek',
+            right: 'multiMonthYear,dayGridMonth,timeGridWeek,listWeek',
         },
+        
         customButtons: {
             addEventButton: {
                 text: 'Add Event',

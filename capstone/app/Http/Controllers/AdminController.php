@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\EventCreated; // Import the Mailable
+use Illuminate\Support\Facades\Mail; // Import the Mail facade
 
 class AdminController extends Controller
 {
@@ -29,37 +31,42 @@ class AdminController extends Controller
     }
 
     public function createEvent(Request $request)
-    {
-        // Preprocess 'is_public' to always have a boolean value
-        $request->merge([
-            'is_public' => $request->has('is_public') && $request->input('is_public') === 'on' ? true : false,
-        ]);
+{
+    // Preprocess 'is_public' to always have a boolean value
+    $request->merge([
+        'is_public' => $request->has('is_public') && $request->input('is_public') === 'on' ? true : false,
+    ]);
 
-        // Validate the request
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after_or_equal:start_time',
-            'is_public' => 'required|boolean',
-            'user_email' => 'nullable|email|exists:users,email',
-        ]);
+    // Validate the request
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'start_time' => 'required|date',
+        'end_time' => 'required|date|after_or_equal:start_time',
+        'is_public' => 'required|boolean',
+        'user_email' => 'nullable|email|exists:users,email',
+    ]);
 
-        // Handle optional user assignment
-        $user = $validated['is_public'] ? null : User::where('email', $validated['user_email'])->first();
+    // Handle optional user assignment
+    $user = $validated['is_public'] ? null : User::where('email', $validated['user_email'])->first();
 
-        // Create the event
-        Event::create([
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-            'start_time' => $validated['start_time'],
-            'end_time' => $validated['end_time'],
-            'is_public' => $validated['is_public'],
-            'user_id' => $user?->id,
-        ]);
+    // Create the event
+    $event = Event::create([
+        'title' => $validated['title'],
+        'description' => $validated['description'],
+        'start_time' => $validated['start_time'],
+        'end_time' => $validated['end_time'],
+        'is_public' => $validated['is_public'],
+        'user_id' => $user?->id,
+    ]);
 
-        return response()->json(['message' => 'Event created successfully.']);
+    // Send email notification if the event is private and assigned to a user
+    if ($user) {
+        Mail::to($user->email)->send(new EventCreated($event));
     }
+
+    return response()->json(['message' => 'Event created successfully.']);
+}
 
     public function calendar()
     {
