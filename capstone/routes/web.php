@@ -29,6 +29,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/appointments/{event}/edit', [AdminController::class, 'editAppointment'])->name('appointments.edit');
     Route::put('/appointments/{event}', [AdminController::class, 'updateAppointment'])->name('appointments.update');
     Route::delete('/appointments/{event}', [AdminController::class, 'deleteAppointment'])->name('appointments.destroy');
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
 
     // Admin Chats
     Route::get('/admin/fetch-messages', [ChatsController::class, 'fetchMessages'])->name('admin.fetchMessages');
