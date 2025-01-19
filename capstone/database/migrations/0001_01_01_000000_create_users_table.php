@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->string('picture')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('username')->unique();
+            $table->string('username')->unique()->nullable();
             $table->timestamps(); // created_at and updated_at
             $table->boolean('status')->default(true); // active status
         });

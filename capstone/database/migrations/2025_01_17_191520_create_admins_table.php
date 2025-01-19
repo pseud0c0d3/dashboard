@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->text('bio')->nullable();
-            $table->string('username')->unique();
+            $table->string('username')->unique()->nullable();
             $table->string('picture')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamps(); // created_at and updated_at

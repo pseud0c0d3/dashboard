@@ -15,8 +15,8 @@ return new class extends Migration
         $table->id();
         $table->string('title');
         $table->text('description')->nullable();
-        $table->datetime('start_time');
-        $table->datetime('end_time');
+        $table->datetime('start_time')->nullable();
+        $table->datetime('end_time')->nullable();
         $table->boolean('is_public')->default(false);
         $table->unsignedBigInteger('user_id')->nullable();
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
