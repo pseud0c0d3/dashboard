@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\EventCreated; // Import the Mailable
 use Illuminate\Support\Facades\Mail; // Import the Mail facade
+use App\Notifications\EventUpdatedOrDeleted;
 
 class AdminController extends Controller
 {
@@ -147,6 +148,42 @@ class AdminController extends Controller
         // Redirect to the admin dashboard
         return redirect()->route('admin.forum');
     }
+
+    //crud
+    public function viewAppointments()
+    {
+        $events = Event::with('user')->get(); // Fetch all events with related user data
+        return view('admin.appointments', compact('events'));
+    }
+        public function updateAppointment(Request $request, Event $event)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_time' => 'required|date',
+            'end_time' => 'required|date|after_or_equal:start_time',
+        ]);
+
+        $event->update($validated);
+
+        if ($event->user) {
+            $event->user->notify(new EventUpdatedOrDeleted($event, 'updated'));
+        }
+
+        return redirect()->route('appointments.index')->with('success', 'Event updated successfully.');
+    }
+        public function deleteAppointment(Event $event)
+    {
+        $event->delete();
+
+        if ($event->user) {
+            $event->user->notify(new EventUpdatedOrDeleted($event, 'deleted'));
+        }
+
+        return redirect()->route('appointments.index')->with('success', 'Event deleted successfully.');
+    }
+
+
 
     public function logout()
     {

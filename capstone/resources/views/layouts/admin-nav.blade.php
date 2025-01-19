@@ -47,6 +47,7 @@
                 <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-chart-pie"></i> Report</a></li>
                 <li><a href="{{ route('admin.forum') }}"><i class="fas fa-comments"></i> Forum</a></li>
                 <li><a href="{{ route('admin.fullcalendar') }}"><i class="fas fa-calendar-alt"></i> FullCalendar</a></li>
+                <li><a href="{{ route('appointments.index') }}"> Appointments</a></li>
                 <li><a href="{{ route('admin.chats') }}"> Chats</a></li>
             </ul>
 

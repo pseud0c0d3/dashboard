@@ -25,11 +25,17 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/fullcalendar', [AdminController::class, 'fullcalendar'])->name('admin.fullcalendar');
     Route::get('/admin/events', [AdminController::class, 'getEvents'])->name('admin.events');
     Route::post('/admin/events', [AdminController::class, 'createEvent'])->name('admin.events.create');
+    Route::get('/appointments', [AdminController::class, 'viewAppointments'])->name('appointments.index');
+    Route::get('/appointments/{event}/edit', [AdminController::class, 'editAppointment'])->name('appointments.edit');
+    Route::put('/appointments/{event}', [AdminController::class, 'updateAppointment'])->name('appointments.update');
+    Route::delete('/appointments/{event}', [AdminController::class, 'deleteAppointment'])->name('appointments.destroy');
 
     // Admin Chats
     Route::get('/admin/fetch-messages', [ChatsController::class, 'fetchMessages'])->name('admin.fetchMessages');
     Route::post('/admin/send-message', [ChatsController::class, 'sendMessage'])->name('admin.sendMessage');
 });
+
+
 
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 Route::post('/admin/check', [AdminController::class, 'check'])->name('admin.check');
