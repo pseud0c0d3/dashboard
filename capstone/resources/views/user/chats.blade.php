@@ -172,9 +172,9 @@ success: function(response) {
     $('#chatMessageContainer').empty();
 
     response.messages.forEach(function(message) {
-        let isSender = message.sender_id == '{{ session('LoggedUserInfo') }}';
-        let userAvatar = isSender ? '{{ asset('storage/' . $LoggedUserInfo->picture) }}' : profileImage;
-        let userName = isSender ? '{{ $LoggedUserInfo->name }}' : profileName;
+        let isSender = message.sender_id == '{{ Auth::id() }}';
+        let userAvatar = isSender ? '{{ asset('storage/' . Auth::user()->picture) }}' : profileImage;
+        let userName = isSender ? '{{ Auth::user()->name }}' : profileName;
 
         let messageTime = new Date(message.created_at).toLocaleTimeString([], {
             hour: '2-digit',
@@ -229,8 +229,8 @@ if (response.success) {
     toastr.success(response.message, "Success");
     $('#messageInput').val(''); // Clear the input
 
-    let userAvatar = '{{ asset('storage/' . $LoggedUserInfo->picture) }}';
-    let userName = '{{ $LoggedUserInfo->name }}';
+    let userAvatar = '{{ asset('storage/' . Auth::user()->picture) }}';
+    let userName = '{{ Auth::user()->name }}';
 
     let messageTime = new Date().toLocaleTimeString([], {
         hour: '2-digit',

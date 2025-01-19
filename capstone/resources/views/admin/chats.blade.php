@@ -19,7 +19,7 @@
                 <ul class="list-group list-group-flush">
                     @if($chats->isEmpty())
                         <!-- If no chats found, show all users -->
-                        @isset($users)  <!-- Check if $users is set -->
+                        @isset($users)
                             @foreach ($users as $user)
                                 <li class="list-group-item d-flex align-items-center chat-item">
                                     <img src="{{ asset('storage/' . $user->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
@@ -34,8 +34,7 @@
                         <!-- If chats are found, display chat profiles -->
                         @foreach ($chats as $chat)
                             <li class="list-group-item d-flex align-items-center chat-item">
-                                @if ($chat->sender_id == session('LoggedAdminInfo'))
-                                    <!-- Display receiver profile -->
+                                @if ($chat->sender_id == Auth::guard('admin')->id())
                                     @if ($chat->receiver)
                                         <img src="{{ asset('storage/' . $chat->receiver->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
                                         <div class="profile_info">
@@ -47,7 +46,6 @@
                                         </div>
                                     @endif
                                 @else
-                                    <!-- Display sender profile -->
                                     @if ($chat->sender)
                                         <img src="{{ asset('storage/' . $chat->sender->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
                                         <div class="profile_info">
@@ -59,12 +57,11 @@
                                         </div>
                                     @endif
                                 @endif
-                                <span class="id" style="display: none;">{{ $chat->sender_id == session('LoggedAdminInfo') ? $chat->receiver_id : $chat->sender_id }}</span>
+                                <span class="id" style="display: none;">{{ $chat->sender_id == Auth::guard('admin')->id() ? $chat->receiver_id : $chat->sender_id }}</span>
                             </li>
                         @endforeach
                     @endif
                 </ul>
-                
             </div>
         </div>
     </div>
@@ -102,9 +99,6 @@
 </div>
 </div>
 
-
-
-
         </div>
 
         <div class="col-12 grid-margin stretch-card">
@@ -113,10 +107,7 @@
             </div>
         </div>
 
-
-
         <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
         <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
                 <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©
@@ -126,7 +117,6 @@
                     with <i class="ti-heart text-danger ml-1"></i></span>
             </div>
         </footer>
-        <!-- partial -->
     </div>
     <!-- main-panel ends -->
 </div>
@@ -160,165 +150,121 @@
 <script src="/js/dashboard.js"></script>
 <script src="/js/Chart.roundedBarCharts.js"></script>
 <!-- End custom js for this page-->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- JavaScript to handle profile card click -->
-                                  
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/7.0.3/pusher.min.js"></script>
+
+<!-- JavaScript to handle chat item click -->
 <script>
-
-var pusher = new Pusher('56ae557b83a4903265fc', {
-cluster: 'ap1', // Ensure the cluster matches your Pusher configuration
-encrypted: true
-});
-
-var channel = pusher.subscribe('my-channel'); // Subscribe to the channel
-
-channel.bind('my-event', function(data) { // Bind the event
-console.log('Message received:', data);
-
-// Display the message in the chat container
-if (data && data.message) {
-let messageHtml = `
-    <div class="chat-message">
-        <div class="message-content">
-            <p><strong>${data.user.name}:</strong> ${data.message}</p>
-            <div class="timestamp">${new Date(data.created_at).toLocaleTimeString()}</div>
-        </div>
-    </div>`;
-
-$('#chatMessageContainer').append(messageHtml);
-
-// Scroll to the bottom
-$('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
-}
-});
-</script>
-<script>$(document).ready(function() {
-// Function to handle chat item click
-function handleChatItemClick() {
-// Remove the active class from all chat items
-$('.chat-item').removeClass('active');
-
-// Add the active class to the clicked chat item
-$(this).addClass('active');
-
-let profileImage = $(this).find('.profile_img').attr('src');
-let profileName = $(this).find('.profile_name').text();
-let receiverId = $(this).find('.id').text();
-
-// Set receiver details in the chat area
-$('#receiver_id').val(receiverId);
-$('#chat_img').attr('src', profileImage);
-$('#chat_name').text('Chatting with ' + profileName);
-
-// Fetch chat messages for the selected user
-$.ajax({
-    url: '{{ route('admin.fetchMessages') }}',
-    method: 'GET',
-    data: {
-        receiver_id: receiverId
-    },
-    success: function(response) {
-        $('#chatMessageContainer').empty(); // Clear the chat container
-
-        // Populate chat with fetched messages
-        response.messages.forEach(function(message) {
-            let isSender = message.sender_id == '{{ session('LoggedAdminInfo') }}';
-            let userAvatar = isSender ? '{{ asset('storage/' . $LoggedAdminInfo->picture) }}' : profileImage;
-            let userName = isSender ? '{{ $LoggedAdminInfo->name }}' : profileName;
-
-            let messageTime = new Date(message.created_at).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-
-            let messageHtml = `
-                <div class="chat-message ${isSender ? 'sender' : 'receiver'}">
-                    
-                    <div class="message-content">
-                        <p><strong>${userName}:</strong> ${message.message}</p>
-                        <div class="timestamp">${messageTime}</div>
-                    </div>
-                </div>`;
-            $('#chatMessageContainer').append(messageHtml);
-        });
-
-        // Scroll to the bottom of the chat container
-        $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
-    },
-    error: function(xhr, status, error) {
-        console.error('Error fetching messages:', error);
-    }
-});
-}
+$(document).ready(function() {
+// Replace session-based ID with Auth guard
+const loggedAdminId = '{{ Auth::guard('admin')->id() }}';
+const loggedAdminName = '{{ Auth::guard('admin')->user()->name }}';
+const loggedAdminPicture = '{{ asset('storage/' . Auth::guard('admin')->user()->picture) }}';
 
 // Attach the click event to chat items
-$(document).on('click', '.chat-item', handleChatItemClick);
+$('.chat-item').on('click', function() {
+    $('.chat-item').removeClass('active');
+    $(this).addClass('active');
 
-// Event listener for sending a message
-$('#messageForm').on('submit', function(e) {
-e.preventDefault();
+    let profileImage = $(this).find('.profile_img').attr('src');
+    let profileName = $(this).find('.profile_name').text();
+    let receiverId = $(this).find('.id').text();
 
-let message = $('#messageInput').val().trim();
-let receiverId = $('#receiver_id').val();
+    $('#receiver_id').val(receiverId);
+    $('#chat_img').attr('src', profileImage);
+    $('#chat_name').text('Chatting with ' + profileName);
 
-if (message === "") {
-    alert("Message cannot be empty.");
-    return;
-}
+    // Fetch chat messages for the selected user
+    $.ajax({
+        url: '{{ route('admin.fetchMessages') }}',
+        method: 'GET',
+        data: { receiver_id: receiverId },
+        success: function(response) {
+            $('#chatMessageContainer').empty();
 
-$.ajax({
-    type: 'POST',
-    url: '{{ route('admin.sendMessage') }}',
-    data: {
-        _token: $('input[name="_token"]').val(),
-        message: message,
-        receiver_id: receiverId
-    },
-    beforeSend: function() {
-        // Disable the send button and change its text to "Sending..."
-        $('#sendMessageButton').text('Sending...').attr('disabled', true);
-    },
-    success: function(response) {
-        if (response.success) {
-            toastr.success(response.message, "Success");
-            $('#messageInput').val(''); // Clear the input
+            response.messages.forEach(function(message) {
+                let isSender = message.sender_id == loggedAdminId;
+                let userAvatar = isSender ? loggedAdminPicture : profileImage;
+                let userName = isSender ? loggedAdminName : profileName;
 
-            let userAvatar = '{{ asset('storage/' . $LoggedAdminInfo->picture) }}';
-            let userName = '{{ $LoggedAdminInfo->name }}';
+                let messageTime = new Date(message.created_at).toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
 
-            let messageTime = new Date().toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
+                let messageHtml = `
+                    <div class="chat-message ${isSender ? 'sender' : 'receiver'}">
+                        <div class="message-content">
+                            <p><strong>${userName}:</strong> ${message.message}</p>
+                            <div class="timestamp">${messageTime}</div>
+                        </div>
+                    </div>`;
+                $('#chatMessageContainer').append(messageHtml);
             });
 
-            let messageHtml = `
-                <div class="chat-message sender">
-                    
-                    <div class="message-content">
-                        <p><strong>${userName}:</strong> ${message}</p>
-                        <div class="timestamp">${messageTime}</div>
-                    </div>
-                </div>`;
-
-            $('#chatMessageContainer').append(messageHtml);
+            // Scroll to the bottom of the chat container
             $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
-        } else {
-            toastr.error(response.message, "Error");
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching messages:', error);
         }
-    },
-    error: function(xhr) {
-        console.error('Error:', xhr.responseJSON.message);
-        toastr.error('Failed to send message', "Error");
-    },
-    complete: function() {
-        // Re-enable the send button and change its text back to "Send"
-        $('#sendMessageButton').text('Send').attr('disabled', false);
-    }
-});
-});
+    });
 });
 
+// Handle sending messages
+$('#messageForm').on('submit', function(e) {
+    e.preventDefault();
+
+    let message = $('#messageInput').val().trim();
+    let receiverId = $('#receiver_id').val();
+
+    if (message === "") {
+        alert("Message cannot be empty.");
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '{{ route('admin.sendMessage') }}',
+        data: {
+            _token: $('input[name="_token"]').val(),
+            message: message,
+            receiver_id: receiverId
+        },
+        beforeSend: function() {
+            $('#sendMessageButton').text('Sending...').attr('disabled', true);
+        },
+        success: function(response) {
+            if (response.success) {
+                toastr.success(response.message, "Success");
+                $('#messageInput').val('');
+
+                let messageTime = new Date().toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                let messageHtml = `
+                    <div class="chat-message sender">
+                        <div class="message-content">
+                            <p><strong>${loggedAdminName}:</strong> ${message}</p>
+                            <div class="timestamp">${messageTime}</div>
+                        </div>
+                    </div>`;
+
+                $('#chatMessageContainer').append(messageHtml);
+                $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
+            } else {
+                toastr.error(response.message, "Error");
+            }
+        },
+        error: function(xhr) {
+            console.error('Error:', xhr.responseJSON.message);
+            toastr.error('Failed to send message', "Error");
+        },
+        complete: function() {
+            $('#sendMessageButton').text('Send').attr('disabled', false);
+        }
+    });
+});
+});
 </script>
 @endsection
