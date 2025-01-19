@@ -4,9 +4,23 @@
 
 <h1 class="title" style="margin-top: 5%; ">Latest Posts</h1>
 
-<div class="search-container">
-    <input type="text" placeholder="Search...">
+<div class="search-container" style="margin-bottom: 20px;">
+    <form action="{{ route('posts.index') }}" method="GET">
+        <input
+            type="text"
+            name="search"
+            placeholder="Search by title..."
+            class="form-control"
+            value="{{ request('search') }}"
+        >
+    </form>
 </div>
+
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -17,95 +31,118 @@
         </ul>
     </div>
 @endif
-    <!-- Scrollable container -->
-    <div class="scrollable-posts" style="max-height: 100vh; overflow-y: auto; padding-right: 15px;margin-top:5%">
-        @foreach($posts as $post)
-            <div class="card mb-4 ">
-                <div class="card-body">
-                    <!-- User Info Section -->
-                    <div class="d-flex align-items-center mb-3">
-                        <img src="{{ asset('storage/default-profile.jpg') }}"
-                             class="rounded-circle"
-                             alt="User Profile"
-                             width="50" height="50">
-                        <div class="ms-3">
-                            <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
-                            <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
-                        </div>
-                    </div>
 
-                        <!-- Post Content Section -->
-                        <p class="mb-2 fw-bold">{{ $post->title }}</p>
-
-                        <p class="mb-3">{{ $post->body }}</p>
-
-                        @if($post->image)
-                            <div class="mb-3">
-                                <img src="{{ asset('storage/' . $post->image) }}"
-                                    class="img-fluid rounded"
-                                    alt="{{ $post->image }}">
-                            </div>
-                        @endif
-
-                    <!-- Like and Comment Actions -->
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-light">
-                            <i class="bi bi-hand-thumbs-up"></i> Like
-                        </button>
-                        <button class="btn btn-light">
-                            <i class="bi bi-chat-left-text"></i> Comment
-                        </button>
-                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+<!-- Scrollable container -->
+<div class="scrollable-posts" style="max-height: 100vh; overflow-y: auto; padding-right: 15px;margin-top:5%">
+    @foreach($posts as $post)
+        <div class="card mb-4">
+            <div class="card-body">
+                <!-- User Info Section -->
+                <div class="d-flex align-items-center mb-3">
+                    <img src="{{ asset('storage/default-profile.jpg') }}"
+                         class="rounded-circle"
+                         alt="User Profile"
+                         width="50" height="50">
+                    <div class="ms-3">
+                        <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
+                        <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
                     </div>
                 </div>
+
+                <!-- Post Content Section -->
+                <p class="mb-2 fw-bold">
+                    {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
+                </p>
+                <p class="mb-3">{{ $post->body }}</p>
+
+                <!-- Post Image (if any) -->
+                @if($post->image)
+                    <div class="mb-3">
+                        <img src="{{ asset('storage/' . $post->image) }}"
+                             class="img-fluid rounded"
+                             alt="{{ $post->image }}">
+                    </div>
+                @endif
+
+                <!-- Like and Comment Actions -->
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                        <i class="bi bi-chat-left-text"></i> Comment
+                    </button>
+                    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+                </div>
+
             </div>
-        @endforeach
-    </div>
-    <div class="btn btn-success position-absolute"
+        </div>
+    @endforeach
+</div>
+
+<!-- Add a Post Button -->
+<div class="btn btn-success position-absolute"
      style="bottom: 20px; right: 15%; z-index: 10; cursor: pointer;"
      data-bs-toggle="modal"
      data-bs-target="#PostModal">
     Add a Post
 </div>
-    <!-- Modal -->
-    <div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+
+<!-- Post Modal -->
+<div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="PostModalLabel">Create a Post!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <!-- Title Input -->
+                    <input type="text" name="title" class="form-control mb-3" placeholder="Give your post a title!" required>
+
+                    <!-- Body Input -->
+                    <textarea name="body" class="form-control mb-3" placeholder="What do you want to share today?" rows="4" required></textarea>
+
+                    <!-- Image Input (optional) -->
+                    {{-- <input type="file" name="image" class="form-control mb-3" accept="image/webp, image/png, image/jpg"> --}}
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Comment Modal -->
+@foreach($posts as $post)
+    <div class="modal fade" id="commentModal{{ $post->id }}" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="PostModalLabel">Create a Post!</h5>
+                    <h5 class="modal-title" id="commentModalLabel">Add a Comment</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('posts.comment', $post->id) }}" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <!-- Title Input -->
-                        <input type="text" name="title" class="form-control mb-3" placeholder="Give your post a title!" required>
-
-                        <!-- Body Input -->
-                        <textarea name="body" class="form-control mb-3" placeholder="What do you want to share today?" rows="4" required></textarea>
-
-                        <!-- Image Input (optional) -->
-                        {{-- <input type="file" name="image" class="form-control mb-3" accept="image/webp, image/png, image/jpg"> --}}
+                        <div class="form-group">
+                            <label for="comment">Comment</label>
+                            <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
+                        </div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Post</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+@endforeach
 
-
-
-{{-- @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif --}}
 <script>
 // Modal handling for adding new posts
-
     let postIdCounter = 0;
 
     // Close dropdowns if clicked outside
@@ -122,6 +159,7 @@
         if (settingsDropdown.style.display === "block") {
             settingsDropdown.style.display = "none";
         }
+
         // Close settings dropdown
         const notificationsDropdown = document.getElementById('notificationsDropdown');
         if (notificationsDropdown.style.display === "block") {
@@ -129,9 +167,8 @@
         }
     };
 
-
     function copyPostLink(postId) {
-        const postLink = ${window.location.origin}/post/${postId};
+        const postLink = `${window.location.origin}/post/${postId}`;
         navigator.clipboard.writeText(postLink).then(() => {
             alert("Post link copied to clipboard!");
         }).catch(err => {
@@ -139,8 +176,35 @@
         });
     }
 
-document.getElementById('currentDate').textContent = new Date().toLocaleString();
+    document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.like-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const postId = this.dataset.postId;
+
+            fetch(`/posts/${postId}/like`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'liked') {
+                    alert('Post liked!');
+                } else {
+                    alert('Post unliked!');
+                }
+                location.reload(); // Reload to update the like count
+            });
+        });
+    });
+});
+
+
+    document.getElementById('currentDate').textContent = new Date().toLocaleString();
 </script>
+
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 

@@ -3,27 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Like;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $posts = Post::latest()->paginate(6);
-        return view('posts.index', ['posts' => $posts]);
-    }
+    public function index(Request $request)
+{
+    // Get the search query from the request
+    $search = $request->input('search');
+
+    // Query posts based on the search term (if provided)
+    $posts = Post::when($search, function ($query, $search) {
+        $query->where('title', 'LIKE', "%{$search}%");
+    })->latest()->paginate(10); // Adjust pagination as needed
+
+    // Return the view with filtered posts
+    return view('posts.index', compact('posts'));
+}
 
     /**
      * Show the form for creating a new resource.
      */
-    // public function create()
-    // {
-    //     return view('posts.create');
-    // }
+    public function create()
+    {
+        return view('posts.create');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -109,4 +121,18 @@ class PostController extends Controller
 
         return back()->with('success', 'Your post was deleted.');
     }
+    public function storeComment(Request $request, $postId)
+{
+    $request->validate([
+        'comment' => 'required|max:500',
+    ]);
+
+    Comment::create([
+        'post_id' => $postId,
+        'content' => $request->comment,  // No user_id field
+    ]);
+
+    return back()->with('success', 'Comment added successfully!');
+}
+
 }

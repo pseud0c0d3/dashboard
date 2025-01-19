@@ -75,5 +75,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
     Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
     Route::resource('/posts', PostController::class)->except(['index', 'show'])->middleware('check.badwords');
+    Route::post('/posts/{post}/comment', [PostController::class, 'storeComment'])->name('posts.comment');
+Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->name('posts.like');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 });
 
