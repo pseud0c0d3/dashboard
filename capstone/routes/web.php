@@ -21,9 +21,6 @@ Route::get('/loggedOut/seemore', function () {
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/forum', [AdminController::class, 'forum'])->name('admin.forum');
-    Route::get('/admin/calendar', [AdminController::class, 'calendar'])->name('admin.calendar');
-    Route::get('/admin/get-google-calendar-events', [AdminController::class, 'getGoogleCalendarEvents']);
-    Route::post('/admin/calendar', [AdminController::class, 'store'])->name('calendar.store');
     Route::get('/admin/chats', [AdminController::class, 'chats'])->name('admin.chats');
     Route::get('/admin/fullcalendar', [AdminController::class, 'fullcalendar'])->name('admin.fullcalendar');
     Route::get('/admin/events', [AdminController::class, 'getEvents'])->name('admin.events');
@@ -45,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/faq', [UserController::class, 'faq'])->name('user.faq');
     Route::get('/workspace/colormatch', [UserController::class, 'colormatch'])->name('workspace.colormatch');
     Route::get('/workspace/game', [UserController::class, 'game'])->name('workspace.game');
-    Route::get('/user/calendar', [UserController::class, 'calendar'])->name('user.calendar');
+   
     Route::get('/user/chats', [UserController::class, 'chats'])->name('user.chats');
     Route::get('/user/events', [UserController::class, 'getEvents'])->name('user.events');
     Route::get('/user/fullcalendar', [UserController::class, 'fullcalendar'])->name('user.fullcalendar');

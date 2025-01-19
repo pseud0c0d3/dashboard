@@ -66,7 +66,6 @@
 </ul>
 
                 </li>
-                <li><a href="{{ route('user.calendar') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
                 <li><a href="{{ route('user.fullcalendar') }}"><i class="fas fa-calendar-alt"></i>FullCalendar</a></li>
                 <li><a href="{{ route('user.chats') }}"><i class="bi bi-chat-dots"></i> Chats</a></li>
             </ul>

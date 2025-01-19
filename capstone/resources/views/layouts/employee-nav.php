@@ -39,7 +39,6 @@
             <ul class="menu">
                 <li><a href="{{ route('employee.EmployeeChat') }}" onclick="showLoading('dashboard.html')"><i class="fas fa-bullhorn"></i> Dashboard</a></li>
                 <li><a href="{{ route('employee.EmployeeForum') }}" onclick="showLoading('user.html')"><i class="fas fa-comments"></i> Forum</a></li>
-                <li><a href="{{ route('employee.EmployeeCalendar') }}"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             </ul>
 
             <div class="bottom-container">
