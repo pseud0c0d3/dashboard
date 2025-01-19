@@ -209,6 +209,8 @@ public function dashboard(Request $request)
         ->whereBetween('created_at', [$startDateTime, $endDateTime])
         ->count();
 
+        // Fetch all users for the CRUD
+    $users = User::select('id', 'name', 'email', 'bio', 'picture', 'phone_number', 'username', 'status', 'created_at')->get();
     // Return the data to the view
     return view('admin.dashboard', [
         'newPostsCount' => $newPostsCount,
@@ -216,7 +218,9 @@ public function dashboard(Request $request)
         'appointmentsCount' => $appointmentsCount,
         'startDate' => $startDate,
         'endDate' => $endDate,
+        'users' =>$users
     ]);
+
 }
 
 

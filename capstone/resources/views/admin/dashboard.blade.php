@@ -1,48 +1,109 @@
-@extends('layouts.admin-nav') <!-- Adjust to your layout -->
+@extends('layouts.admin-nav')
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="mb-4">Admin Dashboard</h1>
-    
-    <form action="{{ route('admin.dashboard') }}" method="GET" class="mb-4">
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-                <label for="start_date" class="form-label">Start Date</label>
-                <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request('start_date', now()->format('Y-m-d')) }}">
-            </div>
-            <div class="col-auto">
-                <label for="end_date" class="form-label">End Date</label>
-                <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request('end_date', now()->format('Y-m-d')) }}">
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary mt-4">Filter</button>
-            </div>
+    <h1 class="mb-4">Dashboard</h1>
+
+    <!-- Date Range Filter -->
+    <form method="GET" action="{{ route('admin.dashboard') }}" class="row mb-4">
+        <div class="col-md-4">
+            <label for="start_date" class="form-label">Filter Reports from:</label>
+            <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request('start_date') }}">
+        </div>
+        <div class="col-md-4">
+            <label for="end_date" class="form-label">to:</label>
+            <input type="date" id="end_date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Filter</button>
         </div>
     </form>
 
-    <div class="row">
+    <!-- Reports Section -->
+    <div class="row mb-4">
         <div class="col-md-4">
-            <div class="card text-white bg-info mb-3">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">New Forum Posts</h5>
-                    <p class="card-text display-4">{{ $newPostsCount }}</p>
+                    <h5 class="card-title">New Posts in Forum</h5>
+                    <p class="card-text">{{ $newPostsCount }}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card text-white bg-success mb-3">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">New Users</h5>
-                    <p class="card-text display-4">{{ $newUsersCount }}</p>
+                    <h5 class="card-title">New Users Registered</h5>
+                    <p class="card-text">{{ $newUsersCount }}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card text-white bg-warning mb-3">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Appointments Made</h5>
-                    <p class="card-text display-4">{{ $appointmentsCount }}</p>
+                    <p class="card-text">{{ $appointmentsCount }}</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registered Users Section -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Registered Users</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Username</th>
+                            <th>Status</th>
+                            <th>Registered At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($users as $user)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td>
+                                    @if($user->picture)
+                                        <img src="{{ asset('storage/' . $user->picture) }}" alt="User Picture" width="50">
+                                    @else
+                                        <span>No Picture</span>
+                                    @endif
+                                </td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->phone_number ?? 'N/A' }}</td>
+                                <td>{{ $user->username ?? 'N/A' }}</td>
+                                <td>
+                                    <span class="badge {{ $user->status ? 'bg-success' : 'bg-danger' }}">
+                                        {{ $user->status ? 'Active' : 'Inactive' }}
+                                    </span>
+                                </td>
+                                <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
+                                <td>
+                                    <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="9" class="text-center">No users found.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
