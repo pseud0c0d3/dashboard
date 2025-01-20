@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Mail; // Import the Mail facade
 use Carbon\Carbon;  
 use App\Mail\EventUpdatedMail;
 use App\Mail\EventDeletedMail;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -196,17 +197,65 @@ class AdminController extends Controller
 
     
 
-public function dashboard(Request $request)
+    public function dashboard(Request $request)
+    {
+        // Get the start and end dates from the request, default to today
+        $startDate = $request->input('start_date', Carbon::today()->toDateString());
+        $endDate = $request->input('end_date', Carbon::today()->toDateString());
+    
+        // Format the dates for query purposes
+        $startDateTime = Carbon::parse($startDate)->startOfDay();
+        $endDateTime = Carbon::parse($endDate)->endOfDay();
+    
+        // Fetch the counts from the database
+        $newPostsCount = \DB::table('posts')
+            ->whereBetween('created_at', [$startDateTime, $endDateTime])
+            ->count();
+    
+        $newUsersCount = \DB::table('users')
+            ->whereBetween('created_at', [$startDateTime, $endDateTime])
+            ->count();
+    
+        $appointmentsCount = \DB::table('events')
+            ->whereBetween('created_at', [$startDateTime, $endDateTime])
+            ->count();
+    
+        // Count all registered users
+        $totalUsersCount = \DB::table('users')->count();
+    
+        // Count total number of posts
+        $totalPostsCount = \DB::table('posts')->count();
+    
+        // Count upcoming events
+        $upcomingEventsCount = \DB::table('events')
+            ->where('start_time', '>=', Carbon::now())
+            ->count();
+    
+        // Fetch all users for the CRUD
+        $users = User::select('id', 'name', 'email', 'bio', 'picture', 'phone_number', 'username', 'status', 'created_at')->get();
+    
+        // Return the data to the view
+        return view('admin.dashboard', [
+            'newPostsCount' => $newPostsCount,
+            'newUsersCount' => $newUsersCount,
+            'appointmentsCount' => $appointmentsCount,
+            'totalUsersCount' => $totalUsersCount,
+            'totalPostsCount' => $totalPostsCount,
+            'upcomingEventsCount' => $upcomingEventsCount,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'users' => $users
+        ]);
+    }
+
+    public function downloadDashboard(Request $request)
 {
-    // Get the start and end dates from the request, default to today
+    // Fetch the same data as the dashboard
     $startDate = $request->input('start_date', Carbon::today()->toDateString());
     $endDate = $request->input('end_date', Carbon::today()->toDateString());
-
-    // Format the dates for query purposes
     $startDateTime = Carbon::parse($startDate)->startOfDay();
     $endDateTime = Carbon::parse($endDate)->endOfDay();
 
-    // Fetch the counts from the database
     $newPostsCount = \DB::table('posts')
         ->whereBetween('created_at', [$startDateTime, $endDateTime])
         ->count();
@@ -219,18 +268,28 @@ public function dashboard(Request $request)
         ->whereBetween('created_at', [$startDateTime, $endDateTime])
         ->count();
 
-        // Fetch all users for the CRUD
+    $totalUsersCount = \DB::table('users')->count();
+    $totalPostsCount = \DB::table('posts')->count();
+    $upcomingEventsCount = \DB::table('events')
+        ->where('start_time', '>=', Carbon::now())
+        ->count();
+
     $users = User::select('id', 'name', 'email', 'bio', 'picture', 'phone_number', 'username', 'status', 'created_at')->get();
-    // Return the data to the view
-    return view('admin.dashboard', [
+
+    // Load the view and pass data
+    $pdf = Pdf::loadView('admin.dashboard-pdf', [
         'newPostsCount' => $newPostsCount,
         'newUsersCount' => $newUsersCount,
         'appointmentsCount' => $appointmentsCount,
+        'totalUsersCount' => $totalUsersCount,
+        'totalPostsCount' => $totalPostsCount,
+        'upcomingEventsCount' => $upcomingEventsCount,
         'startDate' => $startDate,
         'endDate' => $endDate,
-        'users' =>$users
+        'users' => $users,
     ]);
 
+    return $pdf->download('dashboard.pdf');
 }
 
 
