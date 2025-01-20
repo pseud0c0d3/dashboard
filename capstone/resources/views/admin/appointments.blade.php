@@ -64,9 +64,33 @@
         </tbody>
     </table>
 
-    <!-- Always display pagination -->
-    <div class="d-flex justify-content-center mt-4">
-        {{ $events->links() }}
-    </div>
+    <!-- Pagination Links -->
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm">
+            <!-- Previous Button -->
+            <li class="page-item {{ $events->onFirstPage() ? 'disabled' : '' }}">
+                <a class="page-link" href="{{ $events->previousPageUrl() }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <!-- Page Numbers -->
+            @foreach ($events->getUrlRange(1, $events->lastPage()) as $page => $url)
+                <li class="page-item {{ $page == $events->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                </li>
+            @endforeach
+
+            <!-- Next Button -->
+            <li class="page-item {{ $events->hasMorePages() ? '' : 'disabled' }}">
+                <a class="page-link" href="{{ $events->nextPageUrl() }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 </div>
 @endsection
