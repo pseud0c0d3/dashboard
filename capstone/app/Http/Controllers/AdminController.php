@@ -37,14 +37,22 @@ class AdminController extends Controller
         $posts = Post::latest()->paginate(6);
         return view('admin.forum', ['posts' => $posts]);
     }
-    public function clients()
-    {
+    public function clients(Request $request)
+{
+    $search = $request->input('search'); // Get the search input
+
+    // Query to filter users by name, username, or email
     $users = User::select('id', 'name', 'email', 'bio', 'phone_number', 'username', 'status', 'created_at')
+        ->when($search, function ($query, $search) {
+            // Filter users by username or email
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+        })
         ->latest() // Orders users by the most recently created
         ->paginate(10); // Fetch 10 users per page
 
     return view('admin.clients', compact('users'));
-    }
+}
 
 
     public function fullcalendar()

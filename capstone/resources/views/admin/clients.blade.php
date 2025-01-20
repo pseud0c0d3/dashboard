@@ -5,6 +5,11 @@
 <div class="card mt-4">
     <div class="card-header">
         <h5>Registered Users</h5>
+        <!-- Search Form -->
+        <form method="GET" action="{{ route('admin.clients') }}" class="d-flex justify-content-between">
+            <input type="text" name="search" class="form-control w-75" placeholder="Search by username or email" value="{{ request('search') }}">
+            <button type="submit" class="btn btn-primary ms-2">Search</button>
+        </form>
     </div>
     <div class="card-body">
         <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
@@ -12,7 +17,6 @@
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
-                        {{-- <th>Picture</th> --}}
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
@@ -25,13 +29,6 @@
                     @forelse($users as $user)
                         <tr>
                             <td>{{ $user->id }}</td>
-                            {{-- <td>
-                                @if($user->picture)
-                                    <img src="{{ asset('storage/' . $user->picture) }}" alt="User Picture" width="50">
-                                @else
-                                    <span>No Picture</span>
-                                @endif
-                            </td> --}}
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone_number ?? 'N/A' }}</td>

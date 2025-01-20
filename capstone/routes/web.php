@@ -33,6 +33,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/dashboard/download-pdf', [AdminController::class, 'downloadDashboard'])->name('admin.dashboard.pdf');
     Route::get('/admin/clients', [AdminController::class, 'clients'])->name('admin.clients');
 
+    Route::get('/admin/clients', [AdminController::class, 'clients'])->name('admin.clients');
+
     Route::get('admin/users', [AdminController::class, 'viewUsers'])->name('admin.users');
     Route::delete('admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
 
