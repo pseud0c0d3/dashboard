@@ -95,26 +95,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Submit Event Form
     document.getElementById('eventForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const formData = new FormData(this);
+    event.preventDefault();
+    const formData = new FormData(this);
 
-        fetch('/admin/events', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            },
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                alert(data.message);
-                calendar.refetchEvents(); // Refresh events on the calendar
-                bootstrap.Modal.getInstance(document.getElementById('addEventModal')).hide();
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
+    fetch('/admin/events', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errors => {
+                if (errors.message) {
+                    alert(errors.message); // Display a general error message
+                } else {
+                    let errorMessages = Object.values(errors.errors || {}).flat().join('\n');
+                    alert(errorMessages); // Display validation errors
+                }
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            calendar.refetchEvents(); // Refresh events on the calendar
+            bootstrap.Modal.getInstance(document.getElementById('addEventModal')).hide();
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
 });
 </script>
 

@@ -85,6 +85,7 @@
     <!-- Pagination Links -->
 <div class="d-flex justify-content-center mt-4">
     {{ $posts->appends(['search' => request('search')])->links() }}
+    
 </div>
 </div>
 
