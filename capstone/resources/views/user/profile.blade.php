@@ -60,73 +60,63 @@
         </div>
     </div>
 </div>
-
-<!-- Custom CSS for Styling Profile Image and Body -->
 <style>
-    /* Disable scroll for the entire page */
-    body, html {
-        overflow: hidden;
-        height: 100%;
-    }
-/* Custom Font for the Heading */
+body, html {
+    overflow: hidden;
+    height: 100%;
+}
+
 .profile-heading {
-    font-family: 'Poppins', sans-serif; /* Clean and modern font */
-    font-weight: 600; /* Semi-bold for emphasis */
-    font-size: 2.5rem; /* Larger size for more prominence */
-    color: #007bff; /* Subtle blue shade */
-    text-transform: uppercase; /* All caps for a more structured look */
-    letter-spacing: 2px; /* Spacing between letters for a modern feel */
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    margin-bottom: 1.5rem; /* More space below the heading */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2.5rem;
+    color: #007bff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
 }
 
-/* Add smooth hover effect */
 .profile-heading:hover {
-    color: #0056b3; /* Darker shade on hover */
-    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
-    transform: scale(1.05); /* Slight zoom effect */
-    transition: all 0.3s ease; /* Smooth transition */
+    color: #0056b3;
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
-  
-  /* Custom Border with Gradient and Rounded Corners */
 .border-custom {
     border: 2px solid transparent;
-    border-radius: 20px; /* Rounded corners */
+    border-radius: 20px;
     background-origin: border-box;
     background-clip: content-box;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
-    
 }
 
-/* Hover effect for the profile card */
 .card:hover {
-    transform: translateY(-5px); /* Slight lift effect */
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
-    border-color:rgb(31, 0, 103); /* Change border color on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    border-color: rgb(31, 0, 103);
 }
 
-/* Hover effect for profile picture */
 .profile-img:hover {
-    transform: scale(1.05); /* Slight zoom effect */
-    box-shadow: 0 0 15px rgba(255, 87, 34, 0.5); /* Glowing effect */
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 87, 34, 0.5);
 }
 
-/* Styling for action buttons */
 .btn {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-primary {
-    background-color:rgb(113, 195, 245);
+    background-color: rgb(113, 195, 245);
     border-color: #007bff;
     color: black;
 }
 
 .btn-warning {
-    background-color:rgb(113, 195, 245);
-    border-color:#007bff;
+    background-color: rgb(113, 195, 245);
+    border-color: #007bff;
 }
 
 .btn-primary:hover, .btn-warning:hover {
@@ -135,44 +125,37 @@
     color: whitesmoke;
 }
 
-/* Lift effect for buttons */
 .btn:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Adding padding and smooth font sizes for text */
 .card-body p {
     font-size: 1.2rem;
     line-height: 1.7;
     margin-bottom: 1rem;
 }
 
-/* Adjusting profile picture styles */
 .profile-img {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .profile-img:hover {
-    transform: scale(1.05); /* Slight zoom effect */
-    box-shadow: 0 0 15px rgba(255, 87, 34, 0.5); /* Glowing effect */
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 87, 34, 0.5);
 }
 
-/* Styling for header text */
 h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
     font-size: 2rem;
 }
 
-/* More refined button styles */
 .btn-lg {
     font-size: 1.2rem;
     padding: 0.75rem 1.5rem;
 }
-
 </style>
-
 <!-- Modal Edit Profile -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
