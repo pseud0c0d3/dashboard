@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\EventCreated; // Import the Mailable
 use Illuminate\Support\Facades\Mail; // Import the Mail facade
-use Carbon\Carbon;  
+use Carbon\Carbon;
 use App\Mail\EventUpdatedMail;
 use App\Mail\EventDeletedMail;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -64,19 +64,20 @@ class AdminController extends Controller
 
 
     public function getEvents()
-    {
-        $events = Event::all(['id', 'title', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
-        return response()->json($events);
-    }
+{
+    $events = Event::all(['id', 'title', 'description', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
+    return response()->json($events);
+}
+
 
     public function createEvent(Request $request)
     {
         $request->merge([
             'is_public' => $request->has('is_public') && $request->input('is_public') === 'on',
         ]);
-    
+
         $now = now();
-    
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -93,7 +94,7 @@ class AdminController extends Controller
             'is_public' => 'required|boolean',
             'user_email' => 'nullable|email|exists:users,email',
         ]);
-    
+
         $overlappingEvent = Event::where(function ($query) use ($validated) {
             $query->whereBetween('start_time', [$validated['start_time'], $validated['end_time']])
                 ->orWhereBetween('end_time', [$validated['start_time'], $validated['end_time']])
@@ -102,13 +103,13 @@ class AdminController extends Controller
                         ->where('end_time', '>=', $validated['end_time']);
                 });
         })->first();
-    
+
         if ($overlappingEvent) {
             return response()->json(['message' => 'Cannot create an event. The selected time overlaps with another event.'], 422);
         }
-    
+
         $user = $validated['is_public'] ? null : User::where('email', $validated['user_email'])->first();
-    
+
         $event = Event::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
@@ -117,17 +118,17 @@ class AdminController extends Controller
             'is_public' => $validated['is_public'],
             'user_id' => $user?->id,
         ]);
-    
+
         if ($user) {
             Mail::to($user->email)->send(new EventCreated($event));
         } else {
             // Dispatch the job to send emails to all users for public events
             SendPublicEventEmails::dispatch($event,'created');
         }
-    
+
         return response()->json(['message' => 'Event created successfully.']);
     }
-    
+
 
 
         public function updateAppointment(Request $request, Event $event)
@@ -140,15 +141,15 @@ class AdminController extends Controller
         ]);
 
         $event->update($validated);
-        
+
 
         if ($event->is_public) {
             SendPublicEventEmails::dispatch($event, 'updated');
         } else {
             Mail::to($event->user->email)->send(new EventUpdatedMail($event));
         }
-        
-        
+
+
 
         return redirect()->route('appointments.index')->with('success', 'Event updated successfully.');
     }
@@ -161,8 +162,8 @@ class AdminController extends Controller
         } else {
             Mail::to($event->user->email)->send(new EventDeletedMail($event));
         }
-        
-        
+
+
 
         return redirect()->route('appointments.index')->with('success', 'Event deleted successfully.');
     }
@@ -230,59 +231,76 @@ class AdminController extends Controller
         return redirect()->route('admin.forum');
     }
 
-    
+
 
     public function dashboard(Request $request)
-    {
-        // Get the start and end dates from the request, default to today
-        $startDate = $request->input('start_date', Carbon::today()->toDateString());
-        $endDate = $request->input('end_date', Carbon::today()->toDateString());
-    
-        // Format the dates for query purposes
-        $startDateTime = Carbon::parse($startDate)->startOfDay();
-        $endDateTime = Carbon::parse($endDate)->endOfDay();
-    
-        // Fetch the counts from the database
-        $newPostsCount = \DB::table('posts')
-            ->whereBetween('created_at', [$startDateTime, $endDateTime])
-            ->count();
-    
-        $newUsersCount = \DB::table('users')
-            ->whereBetween('created_at', [$startDateTime, $endDateTime])
-            ->count();
-    
-        $appointmentsCount = \DB::table('events')
-            ->whereBetween('created_at', [$startDateTime, $endDateTime])
-            ->count();
-    
-        // Count all registered users
-        $totalUsersCount = \DB::table('users')->count();
-    
-        // Count total number of posts
-        $totalPostsCount = \DB::table('posts')->count();
-    
-        // Count upcoming events
-        $upcomingEventsCount = \DB::table('events')
-            ->where('start_time', '>=', Carbon::now())
-            ->count();
-    
-        // Fetch all users for the CRUD
-       
-    
-        // Return the data to the view
-        return view('admin.dashboard', [
-            'newPostsCount' => $newPostsCount,
-            'newUsersCount' => $newUsersCount,
-            'appointmentsCount' => $appointmentsCount,
-            'totalUsersCount' => $totalUsersCount,
-            'totalPostsCount' => $totalPostsCount,
-            'upcomingEventsCount' => $upcomingEventsCount,
-            'startDate' => $startDate,
-            'endDate' => $endDate,
-            
-        ]);
-    }
+{
+    // Get the start and end dates from the request, default to today
+    $startDate = $request->input('start_date', Carbon::today()->toDateString());
+    $endDate = $request->input('end_date', Carbon::today()->toDateString());
 
+    // Format the dates for query purposes
+    $startDateTime = Carbon::parse($startDate)->startOfDay();
+    $endDateTime = Carbon::parse($endDate)->endOfDay();
+
+    // Fetch the counts from the database
+    $newPostsCount = \DB::table('posts')
+        ->whereBetween('created_at', [$startDateTime, $endDateTime])
+        ->count();
+
+    $newUsersCount = \DB::table('users')
+        ->whereBetween('created_at', [$startDateTime, $endDateTime])
+        ->count();
+
+    $appointmentsCount = \DB::table('events')
+        ->whereBetween('created_at', [$startDateTime, $endDateTime])
+        ->count();
+
+    // Count all registered users
+    $totalUsersCount = \DB::table('users')->count();
+
+    // Count total number of posts
+    $totalPostsCount = \DB::table('posts')->count();
+
+    // Count upcoming events
+    $upcomingEventsCount = \DB::table('events')
+        ->where('start_time', '>=', Carbon::now())
+        ->count();
+
+    // Monthly data for the graphs
+    $newPostsData = \DB::table('posts')
+        ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->pluck('count', 'month');
+
+    $newUsersData = \DB::table('users')
+        ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->pluck('count', 'month');
+
+    $upcomingEventsData = \DB::table('events')
+        ->selectRaw('MONTH(start_time) as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->pluck('count', 'month');
+
+    // Return the data to the view
+    return view('admin.dashboard', [
+        'newPostsCount' => $newPostsCount,
+        'newUsersCount' => $newUsersCount,
+        'appointmentsCount' => $appointmentsCount,
+        'totalUsersCount' => $totalUsersCount,
+        'totalPostsCount' => $totalPostsCount,
+        'upcomingEventsCount' => $upcomingEventsCount,
+        'newPostsData' => $newPostsData,
+        'newUsersData' => $newUsersData,
+        'upcomingEventsData' => $upcomingEventsData,
+        'startDate' => $startDate,
+        'endDate' => $endDate,
+    ]);
+}
     public function downloadDashboard(Request $request)
 {
     // Fetch the same data as the dashboard

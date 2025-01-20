@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Admin;
+use App\Http\Controllers\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -21,21 +22,33 @@ class UserController extends Controller
     }
 
     public function getEvents(Request $request)
-    {
-        // Ensure the user is authenticated
-        $userId = auth()->id();
-        if (!$userId) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        // Retrieve public events or events assigned to the authenticated user
-        $events = Event::where(function ($query) use ($userId) {
-            $query->where('is_public', true)
-                  ->orWhere('user_id', $userId);
-        })->get(['id', 'title', 'start_time as start', 'end_time as end']);
-
-        return response()->json($events);
+{
+    // Ensure the user is authenticated
+    $userId = auth()->id();
+    if (!$userId) {
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
+
+    // Retrieve public events or events assigned to the authenticated user
+    $events = Event::where(function ($query) use ($userId) {
+        $query->where('is_public', true)
+              ->orWhere('user_id', $userId);
+    })
+    ->get(['id', 'title', 'start_time', 'end_time', 'description', 'is_public']) // Make sure you are including description and is_public
+    ->map(function($event) {
+        $event->start = $event->start_time->toIso8601String();  // Ensure start is in ISO 8601 format
+        $event->end = $event->end_time ? $event->end_time->toIso8601String() : null;  // Ensure end is in ISO 8601 format
+        // Add additional properties inside extendedProps
+        $event->extendedProps = [
+            'description' => $event->description ?? 'No description available',
+            'is_public' => $event->is_public,
+        ];
+        return $event;
+    });
+
+    return response()->json($events);
+}
+
 
     public function login()
     {
@@ -121,31 +134,32 @@ class UserController extends Controller
     }
 
     public function check(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:5|max:12',
-        ]);
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:5|max:12',
+    ]);
 
-        $userInfo = User::where('email', $request->email)->first();
+    $userInfo = User::where('email', $request->email)->first();
 
-        if (!$userInfo) {
-            return back()->withInput()->withErrors(['email' => 'Email not found']);
-        }
-
-        if ($userInfo->status === 'inactive') {
-            return back()->withInput()->withErrors(['status' => 'Your account is inactive']);
-        }
-
-        if (!Hash::check($request->password, $userInfo->password)) {
-            return back()->withInput()->withErrors(['password' => 'Incorrect password']);
-        }
-
-        // Use built-in authentication for proper session handling
-        Auth::login($userInfo);
-
-        return redirect()->route('user.forum');
+    if (!$userInfo) {
+        return back()->withInput()->withErrors(['email' => 'Email not found']);
     }
+
+
+    if (!Hash::check($request->password, $userInfo->password)) {
+        return back()->withInput()->withErrors(['password' => 'Incorrect password']);
+    }
+
+    // Update status to active (1) on successful login
+    $userInfo->update(['status' => 1]);
+
+    // Use built-in authentication for proper session handling
+    Auth::login($userInfo);
+
+    return redirect()->route('user.forum');
+}
+
 
     public function viewProfile()
     {
@@ -169,7 +183,12 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
             'bio' => 'nullable|string',
             'picture' => 'nullable|image|max:2048',
-            'phone_number' => 'nullable|string',
+            'phone_number' => [
+                'nullable',
+                'regex:/^(09|\+639)\d{9}$/',  // Ensure 09 or +63 followed by 9 digits
+                'max:11',
+                'min:11',
+            ],
             'username' => 'nullable|string|max:255|unique:users,username,' . Auth::id(),
         ]);
 
@@ -180,7 +199,14 @@ class UserController extends Controller
         $user->phone_number = $request->phone_number;
         $user->username = $request->username;
 
+        // Handle profile picture upload
         if ($request->hasFile('picture')) {
+            // Delete the old profile picture if it exists
+            if ($user->picture) {
+                Storage::disk('public')->delete($user->picture);
+            }
+
+            // Store the new profile picture
             $path = $request->file('picture')->store('profile_pictures', 'public');
             $user->picture = $path;
         }
@@ -189,6 +215,7 @@ class UserController extends Controller
 
         return redirect()->route('user.profile')->with('success', 'Profile updated successfully.');
     }
+
 
     // Change Password View
     public function changePassword()
@@ -221,11 +248,21 @@ class UserController extends Controller
     return redirect()->route('user.profile')->with('success', 'Password updated successfully!');
 }
 
-    public function logout()
-    {
-        // Use Auth facade for logout
-        Auth::logout();
+public function logout()
+{
+    // Get the authenticated user
+    $user = Auth::user();
 
-        return redirect()->route('index');
+    if ($user) {
+        // Update the user's status to inactive (0)
+        $user->update(['status' => 0]);
     }
+
+    // Use Auth facade for logout
+    Auth::logout();
+
+    // Redirect to the index page
+    return redirect()->route('index');
+}
+
 }

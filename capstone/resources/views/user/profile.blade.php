@@ -1,6 +1,17 @@
 @extends('layouts.user-nav')
 
 @section('content')
+
+        <!-- Display error messages -->
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 @if(session('success'))
 <div class="alert alert-success">
     {{ session('success') }}
@@ -200,7 +211,7 @@ h1 {
 
                     <div class="mb-3">
                         <label for="phone_number" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}">
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" placeholder="09-- --- ----" maxlength="11">
                     </div>
 
                     <div class="mb-3">

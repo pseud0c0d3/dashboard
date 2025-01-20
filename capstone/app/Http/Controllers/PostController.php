@@ -27,6 +27,21 @@ class PostController extends Controller
 
         return view('posts.index', compact('posts'));
     }
+
+
+    public function admin(Request $request)
+    {
+        $search = $request->input('search');
+        $posts = Post::when($search, function ($query, $search) {
+            $query->where('title', 'LIKE', "%{$search}%");
+        })
+        ->with('user') // Ensure the 'user' relationship is eagerly loaded
+        ->latest()
+        ->paginate(10);
+
+
+        return view('posts.admin', compact('posts'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -60,8 +75,34 @@ class PostController extends Controller
         ]);
 
 
+
+
         return back()->with('success', 'Your post was created.');
     }
+
+    // public function storeadmin(Request $request)
+    // {
+    //     $request->validate([
+    //         'title' => ['required', 'max:255'],
+    //         'body' => ['required'],
+    //         'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
+
+    //     ]);
+
+    //     $path = null;
+    //     if ($request->hasFile('image')) {
+    //         $path = Storage::disk('public')->put('posts_images', $request->image);
+    //     }
+
+    //     Post::create([
+    //         'title' => $request->title,
+    //         'body' => $request->body,
+    //         'admin_id' => Auth::id(),
+    //         'image' => $path,
+    //     ]);
+
+    //     return back()->with('success', 'Your post was created.');
+    // }
 
     /**
      * Display the specified resource.
@@ -76,6 +117,14 @@ class PostController extends Controller
         return view('posts.show', ['post' => $post]);
     }
 
+    public function showadmin(Post $post)
+    {
+        // Assuming the user is authenticated
+        $post->user_id = auth()->id();
+        $post->save();
+        $post->load('user'); // Eager load the 'user' relationship
+        return view('posts.showadmin', ['post' => $post]);
+    }
 
     /**
      * Show the form for editing the specified resource.

@@ -17,7 +17,6 @@
                         <th>Email</th>
                         <th>Phone Number</th>
                         <th>Username</th>
-                        <th>Status</th>
                         <th>Registered At</th>
                         <th>Actions</th>
                     </tr>
@@ -37,11 +36,6 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone_number ?? 'N/A' }}</td>
                             <td>{{ $user->username ?? 'N/A' }}</td>
-                            <td>
-                                <span class="badge {{ $user->status ? 'bg-success' : 'bg-danger' }}">
-                                    {{ $user->status ? 'Active' : 'Inactive' }}
-                                </span>
-                            </td>
                             <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
                             <td>
                                 <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
