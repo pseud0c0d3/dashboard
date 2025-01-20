@@ -17,28 +17,29 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $posts = Post::when($search, function ($query, $search) {
-            $query->where('title', 'LIKE', "%{$search}%");
-        })
-        ->with('user') // Ensure the 'user' relationship is eagerly loaded
-        ->latest()
-        ->paginate(10);
-
+        $posts = Post::recent() // Only fetch posts from the last 15 days
+            ->when($search, function ($query, $search) {
+                $query->where('title', 'LIKE', "%{$search}%");
+            })
+            ->with('user') // Ensure the 'user' relationship is eagerly loaded
+            ->latest()
+            ->paginate(10);
 
         return view('posts.index', compact('posts'));
     }
 
 
+
     public function admin(Request $request)
     {
         $search = $request->input('search');
-        $posts = Post::when($search, function ($query, $search) {
-            $query->where('title', 'LIKE', "%{$search}%");
-        })
-        ->with('user') // Ensure the 'user' relationship is eagerly loaded
-        ->latest()
-        ->paginate(10);
-
+        $posts = Post::recent() // Only fetch posts from the last 15 days
+            ->when($search, function ($query, $search) {
+                $query->where('title', 'LIKE', "%{$search}%");
+            })
+            ->with('user') // Ensure the 'user' relationship is eagerly loaded
+            ->latest()
+            ->paginate(10);
 
         return view('posts.admin', compact('posts'));
     }

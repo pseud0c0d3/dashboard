@@ -27,11 +27,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // Schedule the command to run daily at 8 AM
+        // Schedule the 'notify-upcoming' command to run daily at 8 AM
         $schedule->command('events:notify-upcoming')->dailyAt('08:00');
+
+        // Schedule the 'hide-old' command to run daily
+        $schedule->command('posts:hide-old')->daily();
     }
+
+    // Register the commands
     protected $commands = [
         \App\Console\Commands\NotifyUpcomingEvents::class,
+        \App\Console\Commands\HideOldPosts::class, // Add the new command to the array
     ];
-    
 }
