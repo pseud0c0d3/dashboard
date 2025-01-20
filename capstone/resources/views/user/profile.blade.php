@@ -6,35 +6,167 @@
     {{ session('success') }}
 </div>
 @endif
-<div class="container">
-    <h1>Your Profile</h1>
-    <div>
-        <p>Name: {{ $user->name ?? 'No name provided' }}</p>
-        <p>Email: {{ $user->email ?? 'No email provided' }}</p>
-        <p>Bio: {{ $user->bio ?? 'No bio provided' }}</p>
-        <p>Phone Number: {{ $user->phone_number ?? 'Not provided' }}</p>
-        <p>Username: {{ $user->username ?? 'Not set' }}</p>
+<div class="container py-4">
+<h1 class="text-center mb-4 text-primary profile-heading">Your Profile</h1>
 
-        @if($user->picture)
-            <p>Profile Picture: <img src="{{ asset('storage/' . $user->picture) }}" alt="Profile Picture" width="100"></p>
-        @else
-            <p>No profile picture set</p>
-        @endif
-
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-            Edit Profile
-        </button>
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
-            Change Password
-        </button>
+    <div class="row justify-content-center" >
+        <div class="col-md-11">
+            <div class="card  rounded-5 " style="width: 1000px; box-shadow: rgba(82, 194, 245, 0.94) 5px 5px, rgba(22, 163, 202, 0.83) 10px 10px, rgba(71, 125, 212, 0.79) 15px 15px, rgba(57, 139, 227, 0.66) 20px 20px, rgba(56, 170, 222, 0.81) 25px 25px;">
+                <div class="card-body p-5">
+                    <!-- Profile Picture Section -->
+                    <div class="text-center mb-4">
+                        @if($user->picture)
+                            <img src="{{ asset('storage/' . $user->picture) }}" alt="Profile Picture" 
+                                class="img-fluid shadow-sm rounded-circle border-3 border-custom" width="160">
+                        @else
+                            <div class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
+                                style="width: 160px; height: 160px; border: 3px solid #ff5722;">
+                                <span class="h3 text-muted">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                            </div>
+                        @endif
+                    </div>
+                    
+                    <!-- User Info Section -->
+                    <div class="mb-4">
+                        <p><strong class="text-muted">Name:</strong> <span class="fw-bold">{{ $user->name ?? 'No name provided' }}</span></p>
+                        <p><strong class="text-muted">Email:</strong> <span class="fw-bold">{{ $user->email ?? 'No email provided' }}</span></p>
+                        <p><strong class="text-muted">Bio:</strong> <span class="fw-bold">{{ $user->bio ?? 'No bio provided' }}</span></p>
+                        <p><strong class="text-muted">Phone Number:</strong> <span class="fw-bold">{{ $user->phone_number ?? 'Not provided' }}</span></p>
+                        <p><strong class="text-muted">Username:</strong> <span class="fw-bold">{{ $user->username ?? 'Not set' }}</span></p>
+                    </div>
+                    
+                    <!-- Action Buttons Section -->
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary btn-lg rounded-pill px-4 py-2 shadow-lg" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                            <i class="bi bi-pencil-square me-2"></i>Edit Profile
+                        </button>
+                        <button type="button" class="btn btn-warning btn-lg rounded-pill px-4 py-2 shadow-lg" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                            <i class="bi bi-lock-fill me-2"></i>Change Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- Custom CSS for Styling Profile Image and Body -->
+<style>
+    /* Disable scroll for the entire page */
+    body, html {
+        overflow: hidden;
+        height: 100%;
+    }
+/* Custom Font for the Heading */
+.profile-heading {
+    font-family: 'Poppins', sans-serif; /* Clean and modern font */
+    font-weight: 600; /* Semi-bold for emphasis */
+    font-size: 2.5rem; /* Larger size for more prominence */
+    color: #007bff; /* Subtle blue shade */
+    text-transform: uppercase; /* All caps for a more structured look */
+    letter-spacing: 2px; /* Spacing between letters for a modern feel */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    margin-bottom: 1.5rem; /* More space below the heading */
+}
+
+/* Add smooth hover effect */
+.profile-heading:hover {
+    color: #0056b3; /* Darker shade on hover */
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+  
+  /* Custom Border with Gradient and Rounded Corners */
+.border-custom {
+    border: 2px solid transparent;
+    border-radius: 20px; /* Rounded corners */
+    background-origin: border-box;
+    background-clip: content-box;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+    transition: all 0.3s ease;
+    
+}
+
+/* Hover effect for the profile card */
+.card:hover {
+    transform: translateY(-5px); /* Slight lift effect */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    border-color:rgb(31, 0, 103); /* Change border color on hover */
+}
+
+/* Hover effect for profile picture */
+.profile-img:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 0 15px rgba(255, 87, 34, 0.5); /* Glowing effect */
+}
+
+/* Styling for action buttons */
+.btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary {
+    background-color:rgb(113, 195, 245);
+    border-color: #007bff;
+    color: black;
+}
+
+.btn-warning {
+    background-color:rgb(113, 195, 245);
+    border-color:#007bff;
+}
+
+.btn-primary:hover, .btn-warning:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    color: whitesmoke;
+}
+
+/* Lift effect for buttons */
+.btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+}
+
+/* Adding padding and smooth font sizes for text */
+.card-body p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* Adjusting profile picture styles */
+.profile-img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 0 15px rgba(255, 87, 34, 0.5); /* Glowing effect */
+}
+
+/* Styling for header text */
+h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+/* More refined button styles */
+.btn-lg {
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+}
+
+</style>
 
 <!-- Modal Edit Profile -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -76,17 +208,18 @@
                         <input type="text" class="form-control" id="username" name="username" value="{{ old('username', $user->username) }}">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    <button type="submit" class="btn btn-primary w-100">Update Profile</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 <!-- Modal Change Password -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-warning text-white">
                 <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -117,12 +250,13 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Change Password</button>
+                    <button type="submit" class="btn btn-warning w-100">Change Password</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 @if($errors->any())
     <script>
         var myModal = new bootstrap.Modal(document.getElementById('changePasswordModal'), {
@@ -132,7 +266,7 @@
     </script>
 @endif
 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 @endsection
