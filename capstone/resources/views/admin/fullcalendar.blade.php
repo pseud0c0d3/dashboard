@@ -68,7 +68,7 @@
         <p><strong>Description:</strong> <span id="eventDescription"></span></p>
         <p><strong>Start Time:</strong> <span id="eventStartTime"></span></p>
         <p><strong>End Time:</strong> <span id="eventEndTime"></span></p>
-        <p><strong>Public:</strong> <span id="eventIsPublic"></span></p>
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -86,20 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: 'multiMonthYear,dayGridMonth,timeGridWeek,listWeek',
         },
-        
         customButtons: {
             addEventButton: {
                 text: 'Add Event',
                 click: function() {
-                    const isPublicCheckbox = document.getElementById('isPublic');
-                    const userEmailGroup = document.getElementById('exclusiveUserEmailGroup');
-
-                    isPublicCheckbox.addEventListener('change', function() {
-                        userEmailGroup.style.display = this.checked ? 'none' : 'block';
-                    });
-
-                    userEmailGroup.style.display = isPublicCheckbox.checked ? 'none' : 'block';
-
                     new bootstrap.Modal(document.getElementById('addEventModal')).show();
                 },
             },
@@ -109,14 +99,25 @@ document.addEventListener('DOMContentLoaded', function() {
         selectable: true,
         dayMaxEvents: true,
         events: '/admin/events', // Fetch all events for admins via AJAX
- 
+        eventClick: function(info) {
+            // Populate modal fields
+            document.getElementById('eventTitle').textContent = info.event.title;
+            document.getElementById('eventDescription').textContent = info.event.extendedProps.description 
+            document.getElementById('eventStartTime').textContent = info.event.start.toLocaleString();
+            document.getElementById('eventEndTime').textContent = info.event.end
+                ? info.event.end.toLocaleString()
+                : 'N/A';
+
+            // Show modal
+            new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
+        },
     });
-    
 
     calendar.render();
+    //submit event form below
+});
 
-    // Submit Event Form
-    document.getElementById('eventForm').addEventListener('submit', function(event) {
+document.getElementById('eventForm').addEventListener('submit', function(event) {
     event.preventDefault();
     const formData = new FormData(this);
 
@@ -148,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })
     .catch(error => console.error('Error:', error));
-});
 });
 </script>
 

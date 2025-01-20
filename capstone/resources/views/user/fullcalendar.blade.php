@@ -2,7 +2,9 @@
 
 @section('content')
 
-<div id="calendar"></div>
+<div id="calendar">
+    
+</div>
 <!-- Event Details Modal -->
 <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -40,10 +42,26 @@ document.addEventListener('DOMContentLoaded', function() {
         eventSourceFailure: function() {
             alert('Failed to load events. Please try again later.');
         },
+        eventClick: function(info) {
+    console.log(info); // Check the structure of the event object
+
+    // Populate modal fields
+    document.getElementById('eventTitle').textContent = info.event.title;
+    document.getElementById('eventDescription').textContent = info.event.extendedProps.description || 'N/A';
+    document.getElementById('eventStartTime').textContent = info.event.start.toLocaleString();
+    document.getElementById('eventEndTime').textContent = info.event.end
+        ? info.event.end.toLocaleString()
+        : 'N/A';
+    document.getElementById('eventIsPublic').textContent = info.event.extendedProps.is_public ? 'Yes' : 'No';
+
+    // Show modal
+    new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
+},
     });
 
     calendar.render();
 });
+
 
 
 </script>

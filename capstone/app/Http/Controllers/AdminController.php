@@ -64,10 +64,11 @@ class AdminController extends Controller
 
 
     public function getEvents()
-    {
-        $events = Event::all(['id', 'title', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
-        return response()->json($events);
-    }
+{
+    $events = Event::all(['id', 'title', 'description', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
+    return response()->json($events);
+}
+
 
     public function createEvent(Request $request)
     {

@@ -39,25 +39,30 @@ class SendPublicEventEmails implements ShouldQueue
      * @return void
      */
     public function handle()
-    {
-        // Fetch all users
-        $users = User::all();
+{
+    // Fetch all users
+    $users = User::whereNotNull('email')->get(); // Ensure only users with valid emails are fetched
 
-        // Send the appropriate email to each user
-        foreach ($users as $user) {
-            switch ($this->emailType) {
-                case 'created':
-                    Mail::to($user->email)->send(new EventCreated($this->event));
-                    break;
+    foreach ($users as $user) {
+        if (!filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+            // Skip invalid email addresses
+            continue;
+        }
 
-                case 'updated':
-                    Mail::to($user->email)->send(new EventUpdatedMail($this->event));
-                    break;
+        // Switch case for email type
+        switch ($this->emailType) {
+            case 'created':
+                Mail::to($user->email)->send(new EventCreated($this->event));
+                break;
 
-                case 'deleted':
-                    Mail::to($user->email)->send(new EventDeletedMail($this->event));
-                    break;
-            }
+            case 'updated':
+                Mail::to($user->email)->send(new EventUpdatedMail($this->event));
+                break;
+
+            case 'deleted':
+                Mail::to($user->email)->send(new EventDeletedMail($this->event));
+                break;
         }
     }
+}
 }
