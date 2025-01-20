@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container" style="margin-top:5%;">
-    <div class="card">
+    <div class="card" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
         <div class="card-body">
-            <h1>{{ $post->title }}</h1>
+            <h1 style="color:rgb(15, 93, 202);">{{ $post->title }}</h1>
 
             <!-- Display the name of the user who posted -->
             <p>Posted by: {{ $post->user->name ?? 'Anonymous' }}</p>
@@ -15,18 +15,20 @@
             <!-- Like and Back Buttons -->
             <div class="d-flex justify-content-between mt-3">
                 <!-- Comment Button -->
-                <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
                     <i class="bi bi-chat-left-text"></i> Comment
                 </button>
+                
 
                 <!-- Back Button -->
-                <a href="{{ route('posts.index') }}" class="btn btn-secondary ms-auto" style="width:15%;">Back to Posts</a>
+                <a href="{{ route('posts.index') }}" class="btn btn-primary">Back to Posts</a>
+
             </div>
         </div>
     </div>
 
     <!-- Comments Section -->
-    <div class="card mt-4">
+    <div class="card mt-4" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
         <div class="card-body">
             <h5>Comments:</h5>
 
@@ -35,7 +37,7 @@
                 <p>No comments yet. Be the first to comment!</p>
             @else
                 @foreach($post->comments as $comment)
-                    <div class="card mb-2">
+                    <div class="card mb-2" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
                         <div class="card-body d-flex align-items-center">
                             <!-- User Avatar (Optional) -->
                             <img src="{{ asset('storage/default-profile.jpg') }}" class="rounded-circle me-3" width="40" height="40" alt="User">

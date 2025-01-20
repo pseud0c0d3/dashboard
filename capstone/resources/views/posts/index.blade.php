@@ -2,130 +2,138 @@
 
 @section('content')
 
-<h1 class="title" style="margin-top: 5%;">Latest Posts</h1>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 
-<div class="search-container" style="margin-bottom: 20px;">
-    <form action="{{ route('posts.index') }}" method="GET">
-        @csrf
-        <input
-            type="text"
-            name="search"
-            placeholder="Search by title..."
-            class="form-control"
-            value="{{ request('search') }}"
-        >
-    </form>
-</div>
-
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
-
-<div class="scrollable-posts" style="max-height: 100vh; auto; padding-right: 15px; margin-top: 5%;">
-    @if($posts->isEmpty())
-        <div class="alert alert-warning text-center">
-            No posts found. Please try a different search term.
-        </div>
-    @else
-        @foreach($posts as $post)
-            <div class="card mb-4 shadow-sm rounded-lg border-0">
-                <div class="card-body">
-                    <!-- User Info Section -->
-                    <div class="d-flex align-items-center mb-4">
-                        <img src="{{ asset('storage/default-profile.jpg') }}"
-                             class="rounded-circle"
-                             alt="User Profile"
-                             width="50" height="50">
-                        <div class="ms-3">
-                            <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
-                            <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
-                        </div>
-                    </div>
-
-                    <!-- Post Content Section -->
-                    <h5 class="fw-bold text-primary mb-3">
-                        {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
-                    </h5>
-                    <p class="mb-3 text-muted">{{ Str::limit($post->body, 150) }}</p>
-
-                    <!-- Post Image (if any) -->
-                    @if($post->image)
-                        <div class="mb-3">
-                            <img src="{{ asset('storage/' . $post->image) }}"
-                                 class="img-fluid rounded-3"
-                                 alt="{{ $post->image }}">
-                        </div>
-                    @endif
-
-                    <!-- Like and Comment Actions -->
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
-                                <i class="bi bi-chat-left-text"></i> Comment
-                            </button>
-                        </div>
-                        <div>
-                            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
+<div class="container mt-5">
+    <!-- Title and Search Bar -->
+    <div class="mb-5">
+    <h1 class="display-4 text-dark font-weight-bold mb-1" style="font-family: 'Roboto', sans-serif;">Latest Posts</h1>
+        <div class="search-container mt-6" style="max-width: 600px; margin: 0 auto;">
+            <form action="{{ route('posts.index') }}" method="GET" class="d-flex w-200">
+                @csrf
+                <div class="input-group">
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search by title..."
+                        class="form-control rounded-pill"
+                        value="{{ request('search') }}"
+                        style="padding-left: 15px; font-size: 1rem; border: 1px solid #ced4da; box-shadow: none;"
+                    >
+                    <button type="submit" class="btn btn-primary rounded-pill ms-2">
+                        <i class="bi bi-search"></i> Search
+                    </button>
                 </div>
-            </div>
-        @endforeach
+            </form>
+        </div>
+    </div>
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
     @endif
-<!-- Pagination Links -->
-<div class="d-flex justify-content-center mt-4">
-    <nav aria-label="Page navigation">
-        <ul class="pagination pagination-sm">
-            <!-- Previous Button -->
-            <li class="page-item {{ $posts->onFirstPage() ? 'disabled' : '' }}">
-                <a class="page-link" href="{{ $posts->previousPageUrl() }}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
 
-            <!-- Page Numbers -->
-            @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
-                <li class="page-item {{ $page == $posts->currentPage() ? 'active' : '' }}">
-                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                </li>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <div class="scrollable-posts" style="max-height: 100vh; padding-right: 15px;">
+        @if($posts->isEmpty())
+            <div class="alert alert-warning text-center">
+                No posts found. Please try a different search term.
+            </div>
+        @else
+            @foreach($posts as $post)
+<div class="card mb-4 box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; rounded-lg border-0" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+    <div class="card-body">
+        <!-- User Info Section -->
+        <div class="d-flex align-items-center mb-4">
+            <img src="{{ asset('storage/default-profile.jpg') }}"
+                 class="rounded-circle"
+                 alt="User Profile"
+                 width="50" height="50">
+            <div class="ms-3">
+                <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
+                <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+            </div>
+        </div>
+
+        <!-- Post Content Section -->
+        <h5 class="fw-bold text-primary mb-3">
+            {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
+        </h5>
+        <p class="mb-3 text-muted">{{ Str::limit($post->body, 150) }}</p>
+
+        <!-- Post Image (if any) -->
+        @if($post->image)
+            <div class="mb-3">
+                <img src="{{ asset('storage/' . $post->image) }}"
+                     class="img-fluid rounded-3"
+                     alt="{{ $post->image }}">
+            </div>
+        @endif
+
+        <!-- Like and Comment Actions -->
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                    <i class="bi bi-chat-left-text"></i> Comment
+                </button>
+            </div>
+            <div>
+                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
             @endforeach
+        @endif
 
-            <!-- Next Button -->
-            <li class="page-item {{ $posts->hasMorePages() ? '' : 'disabled' }}">
-                <a class="page-link" href="{{ $posts->nextPageUrl() }}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+        <!-- Pagination Links -->
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm">
+                    <!-- Previous Button -->
+                    <li class="page-item {{ $posts->onFirstPage() ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $posts->previousPageUrl() }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <!-- Page Numbers -->
+                    @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
+                        <li class="page-item {{ $page == $posts->currentPage() ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                        </li>
+                    @endforeach
+
+                    <!-- Next Button -->
+                    <li class="page-item {{ $posts->hasMorePages() ? '' : 'disabled' }}">
+                        <a class="page-link" href="{{ $posts->nextPageUrl() }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Add a Post Button -->
+    <div class="btn btn-success position-fixed"
+         style="bottom: 20px; right: 15%; z-index: 10; cursor: pointer;"
+         data-bs-toggle="modal"
+         data-bs-target="#PostModal">
+        Add a Post
+    </div>
 </div>
-
-
-
-
-
-<!-- Add a Post Button -->
-<div class="btn btn-success position-fixed"
-     style="bottom: 20px; right: 15%; z-index: 10; cursor: pointer;"
-     data-bs-toggle="modal"
-     data-bs-target="#PostModal">
-    Add a Post
-</div>
-
-
 
 <!-- Post Modal -->
 <div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
