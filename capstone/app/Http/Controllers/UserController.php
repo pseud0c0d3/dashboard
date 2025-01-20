@@ -169,7 +169,12 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
             'bio' => 'nullable|string',
             'picture' => 'nullable|image|max:2048',
-            'phone_number' => 'nullable|string',
+            'phone_number' => [
+                'nullable',
+                'regex:/^(09|\+639)\d{9}$/',  // Ensure 09 or +63 followed by 9 digits
+                'max:11',
+                'min:11',
+            ],
             'username' => 'nullable|string|max:255|unique:users,username,' . Auth::id(),
         ]);
 
@@ -189,6 +194,7 @@ class UserController extends Controller
 
         return redirect()->route('user.profile')->with('success', 'Profile updated successfully.');
     }
+
 
     // Change Password View
     public function changePassword()
