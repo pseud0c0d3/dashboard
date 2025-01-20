@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\EventCreated; // Import the Mailable
 use Illuminate\Support\Facades\Mail; // Import the Mail facade
 use Carbon\Carbon;  
-use App\Notifications\EventUpdatedOrDeleted;
+use App\Mail\EventUpdatedMail;
+use App\Mail\EventDeletedMail;
 
 class AdminController extends Controller
 {
@@ -165,10 +166,18 @@ class AdminController extends Controller
         ]);
 
         $event->update($validated);
+        
 
-        if ($event->user) {
-            $event->user->notify(new EventUpdatedOrDeleted($event, 'updated'));
-        }
+        Mail::to($event->user->email)->send(new EventUpdatedMail($event));
+
+        // if ($event->user) {
+        //     $event->user->notify(new EventUpdatedOrDeleted($event, 'updated'));
+        // }
+       
+    
+        
+            Mail::to($event->user->email)->send(new EventUpdatedMail($event));
+        
 
         return redirect()->route('appointments.index')->with('success', 'Event updated successfully.');
     }
@@ -176,9 +185,10 @@ class AdminController extends Controller
     {
         $event->delete();
 
-        if ($event->user) {
-            $event->user->notify(new EventUpdatedOrDeleted($event, 'deleted'));
-        }
+        // if ($event->user) {
+        //     $event->user->notify(new EventUpdatedOrDeleted($event, 'deleted'));
+        // }
+        Mail::to($event->user->email)->send(new EventDeletedMail($event));
 
         return redirect()->route('appointments.index')->with('success', 'Event deleted successfully.');
     }
