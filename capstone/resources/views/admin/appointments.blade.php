@@ -8,6 +8,11 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <!-- Sorting buttons above the table -->
+    <div class="mb-3">
+        <a href="{{ route('appointments.index') }}?sort_order=asc" class="btn btn-secondary btn-sm">Sort by Date (Ascending)</a>
+        <a href="{{ route('appointments.index') }}?sort_order=desc" class="btn btn-secondary btn-sm">Sort by Date (Descending)</a>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -40,14 +45,14 @@
                         <td>
                             <input type="datetime-local" class="form-control" name="end_time" value="{{ \Carbon\Carbon::parse($event->end_time)->format('Y-m-d\TH:i') }}" required>
                         </td>
-                        
+
                         <td>
                             <form action="{{ route('appointments.update', $event->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-primary btn-sm">Update</button>
                             </form>
-                            
+
                             <form action="{{ route('appointments.destroy', $event->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
@@ -64,9 +69,34 @@
         </tbody>
     </table>
 
-    <!-- Always display pagination -->
-    <div class="d-flex justify-content-center mt-4">
-        {{ $events->links() }}
-    </div>
+
+    <!-- Pagination Links -->
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm">
+            <!-- Previous Button -->
+            <li class="page-item {{ $events->onFirstPage() ? 'disabled' : '' }}">
+                <a class="page-link" href="{{ $events->previousPageUrl() }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <!-- Page Numbers -->
+            @foreach ($events->getUrlRange(1, $events->lastPage()) as $page => $url)
+                <li class="page-item {{ $page == $events->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                </li>
+            @endforeach
+
+            <!-- Next Button -->
+            <li class="page-item {{ $events->hasMorePages() ? '' : 'disabled' }}">
+                <a class="page-link" href="{{ $events->nextPageUrl() }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 </div>
 @endsection
