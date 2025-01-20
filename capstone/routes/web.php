@@ -36,6 +36,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('admin/users', [AdminController::class, 'viewUsers'])->name('admin.users');
     Route::delete('admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
 
+    Route::get('/posts/admin', [PostController::class, 'admin'])->name('posts.admin');
+    Route::get('/posts/admin/{post}', [PostController::class, 'showadmin'])->name('posts.showadmin');
 
 
 

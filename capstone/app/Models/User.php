@@ -49,4 +49,8 @@ public function posts()
 {
     return $this->hasMany(Post::class);
 }
+public function getProfilePictureAttribute($value)
+{
+    return $value ? asset('storage/' . $value) : asset('storage/default-profile.jpg');
+}
 }
