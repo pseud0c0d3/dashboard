@@ -18,108 +18,10 @@ use Carbon\Carbon;
 use App\Mail\EventUpdatedMail;
 use App\Mail\EventDeletedMail;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Jobs\SendPublicEventEmails;
 
 class AdminController extends Controller
 {
-    public function clients()
-    {
-    $users = User::select('id', 'name', 'email', 'bio', 'phone_number', 'username', 'status', 'created_at')
-        ->latest() // Orders users by the most recently created
-        ->paginate(10); // Fetch 10 users per page
-
-    return view('admin.clients', compact('users'));
-    }
-
-
-    public function fullcalendar()
-    {
-        $events = Event::all(['id', 'title', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
-        return view('admin.fullcalendar', ['events' => $events]);
-    }
-
-    public function getEvents()
-    {
-        $events = Event::all(['id', 'title', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
-        return response()->json($events);
-    }
-
-    public function createEvent(Request $request)
-{
-    // Preprocess 'is_public' to always have a boolean value
-    $request->merge([
-        'is_public' => $request->has('is_public') && $request->input('is_public') === 'on',
-    ]);
-
-    // Get the current time
-    $now = now();
-
-    // Validate the request
-    $validated = $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'start_time' => [
-            'required',
-            'date',
-            function ($attribute, $value, $fail) use ($now) {
-                if (Carbon::parse($value)->lt($now)) {
-                    $fail('The start time must be in the future.');
-                }
-            },
-        ],
-        'end_time' => 'required|date|after:start_time',
-        'is_public' => 'required|boolean',
-        'user_email' => 'nullable|email|exists:users,email',
-    ]);
-
-    // Check for overlapping events
-    $overlappingEvent = Event::where(function ($query) use ($validated) {
-        $query->whereBetween('start_time', [$validated['start_time'], $validated['end_time']])
-            ->orWhereBetween('end_time', [$validated['start_time'], $validated['end_time']])
-            ->orWhere(function ($query) use ($validated) {
-                $query->where('start_time', '<=', $validated['start_time'])
-                    ->where('end_time', '>=', $validated['end_time']);
-            });
-    })->first();
-
-    if ($overlappingEvent) {
-        return response()->json(['message' => 'Cannot create an event. The selected time overlaps with another event.'], 422);
-    }
-
-    // Handle optional user assignment
-    $user = $validated['is_public'] ? null : User::where('email', $validated['user_email'])->first();
-
-    // Create the event
-    $event = Event::create([
-        'title' => $validated['title'],
-        'description' => $validated['description'],
-        'start_time' => $validated['start_time'],
-        'end_time' => $validated['end_time'],
-        'is_public' => $validated['is_public'],
-        'user_id' => $user?->id,
-    ]);
-
-    // Send email notification if the event is private and assigned to a user
-    // if ($user) {
-    //     Mail::to($user->email)->send(new EventCreated($event));
-    // }
-    if ($user) {
-        // Send email to the specific user
-        Mail::to($user->email)->send(new EventCreated($event));
-    } else {
-        // Fetch all users from the database
-        $allUsers = User::all();
-    
-        // Loop through each user and send the email
-        foreach ($allUsers as $recipient) {
-            Mail::to($recipient->email)->send(new EventCreated($event));
-        }
-    }
-
-    return response()->json(['message' => 'Event created successfully.']);
-}
-
-
-
     public function calendar()
     {
         return view('admin.calendar');
@@ -135,7 +37,135 @@ class AdminController extends Controller
         $posts = Post::latest()->paginate(6);
         return view('admin.forum', ['posts' => $posts]);
     }
+    public function clients()
+    {
+    $users = User::select('id', 'name', 'email', 'bio', 'phone_number', 'username', 'status', 'created_at')
+        ->latest() // Orders users by the most recently created
+        ->paginate(10); // Fetch 10 users per page
 
+    return view('admin.clients', compact('users'));
+    }
+
+
+    public function fullcalendar()
+    {
+        $events = Event::all(['id', 'title', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
+        return view('admin.fullcalendar', ['events' => $events]);
+    }
+    public function viewAppointments()
+    {
+        $events = Event::with('user') // Fetch events with related user data
+            ->latest() // Order by the most recently created events
+            ->paginate(10) // Paginate with 10 events per page
+            ->withQueryString(); // Ensure query strings (if any) persist
+
+        return view('admin.appointments', compact('events'));
+    }
+
+
+    public function getEvents()
+    {
+        $events = Event::all(['id', 'title', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
+        return response()->json($events);
+    }
+
+    public function createEvent(Request $request)
+    {
+        $request->merge([
+            'is_public' => $request->has('is_public') && $request->input('is_public') === 'on',
+        ]);
+    
+        $now = now();
+    
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_time' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) use ($now) {
+                    if (Carbon::parse($value)->lt($now)) {
+                        $fail('The start time must be in the future.');
+                    }
+                },
+            ],
+            'end_time' => 'required|date|after:start_time',
+            'is_public' => 'required|boolean',
+            'user_email' => 'nullable|email|exists:users,email',
+        ]);
+    
+        $overlappingEvent = Event::where(function ($query) use ($validated) {
+            $query->whereBetween('start_time', [$validated['start_time'], $validated['end_time']])
+                ->orWhereBetween('end_time', [$validated['start_time'], $validated['end_time']])
+                ->orWhere(function ($query) use ($validated) {
+                    $query->where('start_time', '<=', $validated['start_time'])
+                        ->where('end_time', '>=', $validated['end_time']);
+                });
+        })->first();
+    
+        if ($overlappingEvent) {
+            return response()->json(['message' => 'Cannot create an event. The selected time overlaps with another event.'], 422);
+        }
+    
+        $user = $validated['is_public'] ? null : User::where('email', $validated['user_email'])->first();
+    
+        $event = Event::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'start_time' => $validated['start_time'],
+            'end_time' => $validated['end_time'],
+            'is_public' => $validated['is_public'],
+            'user_id' => $user?->id,
+        ]);
+    
+        if ($user) {
+            Mail::to($user->email)->send(new EventCreated($event));
+        } else {
+            // Dispatch the job to send emails to all users for public events
+            SendPublicEventEmails::dispatch($event,'created');
+        }
+    
+        return response()->json(['message' => 'Event created successfully.']);
+    }
+    
+
+
+        public function updateAppointment(Request $request, Event $event)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_time' => 'required|date',
+            'end_time' => 'required|date|after_or_equal:start_time',
+        ]);
+
+        $event->update($validated);
+        
+
+        if ($event->is_public) {
+            SendPublicEventEmails::dispatch($event, 'updated');
+        } else {
+            Mail::to($event->user->email)->send(new EventUpdatedMail($event));
+        }
+        
+        
+
+        return redirect()->route('appointments.index')->with('success', 'Event updated successfully.');
+    }
+        public function deleteAppointment(Event $event)
+    {
+        $event->delete();
+
+        if ($event->is_public) {
+            SendPublicEventEmails::dispatch($event, 'deleted');
+        } else {
+            Mail::to($event->user->email)->send(new EventDeletedMail($event));
+        }
+        
+        
+
+        return redirect()->route('appointments.index')->with('success', 'Event deleted successfully.');
+    }
     public function chats()
     {
         $LoggedAdminInfo = Auth::guard('admin')->user(); // Use Auth guard to get the logged-in admin
@@ -199,55 +229,6 @@ class AdminController extends Controller
         // Redirect to the admin dashboard
         return redirect()->route('admin.forum');
     }
-
-    //crud
-    public function viewAppointments()
-    {
-        $events = Event::with('user') // Fetch events with related user data
-            ->latest() // Order by the most recently created events
-            ->paginate(10) // Paginate with 10 events per page
-            ->withQueryString(); // Ensure query strings (if any) persist
-
-        return view('admin.appointments', compact('events'));
-    }
-
-        public function updateAppointment(Request $request, Event $event)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after_or_equal:start_time',
-        ]);
-
-        $event->update($validated);
-        
-
-        Mail::to($event->user->email)->send(new EventUpdatedMail($event));
-
-        // if ($event->user) {
-        //     $event->user->notify(new EventUpdatedOrDeleted($event, 'updated'));
-        // }
-       
-    
-        
-            Mail::to($event->user->email)->send(new EventUpdatedMail($event));
-        
-
-        return redirect()->route('appointments.index')->with('success', 'Event updated successfully.');
-    }
-        public function deleteAppointment(Event $event)
-    {
-        $event->delete();
-
-        // if ($event->user) {
-        //     $event->user->notify(new EventUpdatedOrDeleted($event, 'deleted'));
-        // }
-        Mail::to($event->user->email)->send(new EventDeletedMail($event));
-
-        return redirect()->route('appointments.index')->with('success', 'Event deleted successfully.');
-    }
-
 
     
 
