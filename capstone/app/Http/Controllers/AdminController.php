@@ -60,15 +60,20 @@ class AdminController extends Controller
         $events = Event::all(['id', 'title', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
         return view('admin.fullcalendar', ['events' => $events]);
     }
-    public function viewAppointments()
-    {
-        $events = Event::with('user') // Fetch events with related user data
-            ->latest() // Order by the most recently created events
-            ->paginate(10) // Paginate with 10 events per page
-            ->withQueryString(); // Ensure query strings (if any) persist
 
-        return view('admin.appointments', compact('events'));
-    }
+    public function viewAppointments(Request $request)
+{
+    $sortOrder = $request->get('sort_order', 'desc'); // Default to 'desc' if no sort_order is provided
+
+    $events = Event::with('user')
+        ->orderBy('start_time', $sortOrder)  // Sort by start_time (ascending or descending)
+        ->paginate(10)
+        ->withQueryString();  // Ensure query strings (like sort_order) persist with pagination
+
+    return view('admin.appointments', compact('events'));
+}
+
+
 
 
     public function getEvents()

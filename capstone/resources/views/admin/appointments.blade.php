@@ -8,6 +8,11 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <!-- Sorting buttons above the table -->
+    <div class="mb-3">
+        <a href="{{ route('appointments.index') }}?sort_order=asc" class="btn btn-secondary btn-sm">Sort by Date (Ascending)</a>
+        <a href="{{ route('appointments.index') }}?sort_order=desc" class="btn btn-secondary btn-sm">Sort by Date (Descending)</a>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -40,14 +45,14 @@
                         <td>
                             <input type="datetime-local" class="form-control" name="end_time" value="{{ \Carbon\Carbon::parse($event->end_time)->format('Y-m-d\TH:i') }}" required>
                         </td>
-                        
+
                         <td>
                             <form action="{{ route('appointments.update', $event->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-primary btn-sm">Update</button>
                             </form>
-                            
+
                             <form action="{{ route('appointments.destroy', $event->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
@@ -64,9 +69,11 @@
         </tbody>
     </table>
 
-    <!-- Always display pagination -->
-    <div class="d-flex justify-content-center mt-4">
-        {{ $events->links() }}
+
+        <!-- Always display pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ $events->appends(['sort_order' => request()->get('sort_order', 'desc')])->links() }}
+        </div>
     </div>
 </div>
 @endsection
