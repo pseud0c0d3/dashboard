@@ -47,18 +47,43 @@ class AdminController extends Controller
 {
     // Preprocess 'is_public' to always have a boolean value
     $request->merge([
-        'is_public' => $request->has('is_public') && $request->input('is_public') === 'on' ? true : false,
+        'is_public' => $request->has('is_public') && $request->input('is_public') === 'on',
     ]);
+
+    // Get the current time
+    $now = now();
 
     // Validate the request
     $validated = $request->validate([
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'start_time' => 'required|date',
-        'end_time' => 'required|date|after_or_equal:start_time',
+        'start_time' => [
+            'required',
+            'date',
+            function ($attribute, $value, $fail) use ($now) {
+                if (Carbon::parse($value)->lt($now)) {
+                    $fail('The start time must be in the future.');
+                }
+            },
+        ],
+        'end_time' => 'required|date|after:start_time',
         'is_public' => 'required|boolean',
         'user_email' => 'nullable|email|exists:users,email',
     ]);
+
+    // Check for overlapping events
+    $overlappingEvent = Event::where(function ($query) use ($validated) {
+        $query->whereBetween('start_time', [$validated['start_time'], $validated['end_time']])
+            ->orWhereBetween('end_time', [$validated['start_time'], $validated['end_time']])
+            ->orWhere(function ($query) use ($validated) {
+                $query->where('start_time', '<=', $validated['start_time'])
+                    ->where('end_time', '>=', $validated['end_time']);
+            });
+    })->first();
+
+    if ($overlappingEvent) {
+        return response()->json(['message' => 'Cannot create an event. The selected time overlaps with another event.'], 422);
+    }
 
     // Handle optional user assignment
     $user = $validated['is_public'] ? null : User::where('email', $validated['user_email'])->first();
@@ -74,12 +99,26 @@ class AdminController extends Controller
     ]);
 
     // Send email notification if the event is private and assigned to a user
+    // if ($user) {
+    //     Mail::to($user->email)->send(new EventCreated($event));
+    // }
     if ($user) {
+        // Send email to the specific user
         Mail::to($user->email)->send(new EventCreated($event));
+    } else {
+        // Fetch all users from the database
+        $allUsers = User::all();
+    
+        // Loop through each user and send the email
+        foreach ($allUsers as $recipient) {
+            Mail::to($recipient->email)->send(new EventCreated($event));
+        }
     }
 
     return response()->json(['message' => 'Event created successfully.']);
 }
+
+
 
     public function calendar()
     {

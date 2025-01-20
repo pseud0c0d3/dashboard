@@ -87,30 +87,8 @@
     @endif
 <!-- Pagination Links -->
 <div class="d-flex justify-content-center mt-4">
-    <nav aria-label="Page navigation">
-        <ul class="pagination pagination-sm">
-            <!-- Previous Button -->
-            <li class="page-item {{ $posts->onFirstPage() ? 'disabled' : '' }}">
-                <a class="page-link" href="{{ $posts->previousPageUrl() }}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-
-            <!-- Page Numbers -->
-            @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
-                <li class="page-item {{ $page == $posts->currentPage() ? 'active' : '' }}">
-                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                </li>
-            @endforeach
-
-            <!-- Next Button -->
-            <li class="page-item {{ $posts->hasMorePages() ? '' : 'disabled' }}">
-                <a class="page-link" href="{{ $posts->nextPageUrl() }}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    {{ $posts->appends(['search' => request('search')])->links() }}
+</div>
 </div>
 
 
