@@ -10,6 +10,8 @@ use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controller; // Import the base controller class
+
 
 class UserController extends Controller
 {
@@ -104,14 +106,14 @@ class UserController extends Controller
     {
         // Use Auth facade to get the authenticated user
         $LoggedUserInfo = Auth::user();
-    
+
         if (!$LoggedUserInfo) {
             return redirect('user/login')->with('fail', 'You must be logged in to access the chats page.');
         }
-    
+
         // Retrieve all admins
         $admins = Admin::all();
-    
+
         return view('user.chats', [
             'LoggedUserInfo' => $LoggedUserInfo,
             'admins' => $admins, // Pass only admins to the view
@@ -144,6 +146,80 @@ class UserController extends Controller
 
         return redirect()->route('user.forum');
     }
+
+    public function viewProfile()
+    {
+        // Ensure user is authenticated, or replace with actual user fetching logic
+        $user = Auth::user();  // Use Auth facade instead of helper
+        return view('user.profile', compact('user'));
+    }
+
+    // Edit Profile
+    public function editProfile()
+    {
+        $user = Auth::user();
+        return view('profile.edit', compact('user'));
+    }
+
+    // Update Profile
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+            'bio' => 'nullable|string',
+            'picture' => 'nullable|image|max:2048',
+            'phone_number' => 'nullable|string',
+            'username' => 'nullable|string|max:255|unique:users,username,' . Auth::id(),
+        ]);
+
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->bio = $request->bio;
+        $user->phone_number = $request->phone_number;
+        $user->username = $request->username;
+
+        if ($request->hasFile('picture')) {
+            $path = $request->file('picture')->store('profile_pictures', 'public');
+            $user->picture = $path;
+        }
+
+        $user->save();
+
+        return redirect()->route('user.profile')->with('success', 'Profile updated successfully.');
+    }
+
+    // Change Password View
+    public function changePassword()
+    {
+        return view('profile.change_password');
+    }
+
+    // Update Password
+    public function updatePassword(Request $request)
+{
+    $user = Auth::user();
+
+    // Validate the input
+    $request->validate([
+        'current_password' => 'required|string',
+        'new_password' => 'required|string|min:8|confirmed',
+        'new_password_confirmation' => 'required|string|min:8',
+    ]);
+
+    // Check if the current password is correct
+    if (!Hash::check($request->current_password, $user->password)) {
+        // Return error message if current password is incorrect
+        return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+    }
+
+    // Update the password
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    return redirect()->route('user.profile')->with('success', 'Password updated successfully!');
+}
 
     public function logout()
     {
