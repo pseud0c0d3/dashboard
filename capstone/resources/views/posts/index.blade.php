@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1 class="title" style="margin-top: 5%; ">Latest Posts</h1>
+<h1 class="title" style="margin-top: 5%;">Latest Posts</h1>
 
 <div class="search-container" style="margin-bottom: 20px;">
     <form action="{{ route('posts.index') }}" method="GET">
@@ -33,7 +33,7 @@
 @endif
 
 <!-- Scrollable container -->
-<div class="scrollable-posts" style="max-height: 100vh; overflow-y: auto; padding-right: 15px;margin-top:5%">
+<div class="scrollable-posts" style="max-height: 100vh;  auto; padding-right: 15px;margin-top:5%">
     @foreach($posts as $post)
         <div class="card mb-4">
             <div class="card-body">
@@ -78,12 +78,14 @@
 </div>
 
 <!-- Add a Post Button -->
-<div class="btn btn-success position-absolute"
+<div class="btn btn-success position-fixed"
      style="bottom: 20px; right: 15%; z-index: 10; cursor: pointer;"
      data-bs-toggle="modal"
      data-bs-target="#PostModal">
     Add a Post
 </div>
+
+
 
 <!-- Post Modal -->
 <div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
@@ -93,7 +95,7 @@
                 <h5 class="modal-title" id="PostModalLabel">Create a Post!</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('posts.store', $post->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <!-- Title Input -->
@@ -143,40 +145,40 @@
 
 <script>
 // Modal handling for adding new posts
-    let postIdCounter = 0;
+let postIdCounter = 0;
 
-    // Close dropdowns if clicked outside
-    window.onclick = function(event) {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        dropdowns.forEach(dropdown => {
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            }
-        });
-
-        // Close settings dropdown
-        const settingsDropdown = document.getElementById('settingsDropdown');
-        if (settingsDropdown.style.display === "block") {
-            settingsDropdown.style.display = "none";
+// Close dropdowns if clicked outside
+window.onclick = function(event) {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
         }
+    });
 
-        // Close settings dropdown
-        const notificationsDropdown = document.getElementById('notificationsDropdown');
-        if (notificationsDropdown.style.display === "block") {
-            notificationsDropdown.style.display = "none";
-        }
-    };
-
-    function copyPostLink(postId) {
-        const postLink = `${window.location.origin}/post/${postId}`;
-        navigator.clipboard.writeText(postLink).then(() => {
-            alert("Post link copied to clipboard!");
-        }).catch(err => {
-            console.error("Failed to copy: ", err);
-        });
+    // Close settings dropdown
+    const settingsDropdown = document.getElementById('settingsDropdown');
+    if (settingsDropdown.style.display === "block") {
+        settingsDropdown.style.display = "none";
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    // Close notifications dropdown
+    const notificationsDropdown = document.getElementById('notificationsDropdown');
+    if (notificationsDropdown.style.display === "block") {
+        notificationsDropdown.style.display = "none";
+    }
+};
+
+function copyPostLink(postId) {
+    const postLink = `${window.location.origin}/post/${postId}`;
+    navigator.clipboard.writeText(postLink).then(() => {
+        alert("Post link copied to clipboard!");
+    }).catch(err => {
+        console.error("Failed to copy: ", err);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.like-btn').forEach(button => {
         button.addEventListener('click', function () {
             const postId = this.dataset.postId;
@@ -201,8 +203,7 @@
     });
 });
 
-
-    document.getElementById('currentDate').textContent = new Date().toLocaleString();
+document.getElementById('currentDate').textContent = new Date().toLocaleString();
 </script>
 
 <!-- Bootstrap CSS -->

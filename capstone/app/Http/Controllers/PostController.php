@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Like;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,19 +15,18 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    // Get the search query from the request
-    $search = $request->input('search');
+    {
+        $search = $request->input('search');
+        $posts = Post::when($search, function ($query, $search) {
+            $query->where('title', 'LIKE', "%{$search}%");
+        })
+        ->with('user') // Ensure the 'user' relationship is eagerly loaded
+        ->latest()
+        ->paginate(10);
 
-    // Query posts based on the search term (if provided)
-    $posts = Post::when($search, function ($query, $search) {
-        $query->where('title', 'LIKE', "%{$search}%");
-    })->latest()->paginate(10); // Adjust pagination as needed
 
-    // Return the view with filtered posts
-    return view('posts.index', compact('posts'));
-}
-
+        return view('posts.index', compact('posts'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -46,6 +44,7 @@ class PostController extends Controller
             'title' => ['required', 'max:255'],
             'body' => ['required'],
             'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
+
         ]);
 
         $path = null;
@@ -56,8 +55,10 @@ class PostController extends Controller
         Post::create([
             'title' => $request->title,
             'body' => $request->body,
+            'user_id' => Auth::id(),
             'image' => $path,
         ]);
+
 
         return back()->with('success', 'Your post was created.');
     }
@@ -65,10 +66,16 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show(Post $post)
     {
+        // Assuming the user is authenticated
+        $post->user_id = auth()->id();
+        $post->save();
+        $post->load('user'); // Eager load the 'user' relationship
         return view('posts.show', ['post' => $post]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -87,7 +94,6 @@ class PostController extends Controller
             'title' => ['required', 'max:255'],
             'body' => ['required'],
             'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
-
 
         ]);
 
@@ -122,17 +128,19 @@ class PostController extends Controller
         return back()->with('success', 'Your post was deleted.');
     }
     public function storeComment(Request $request, $postId)
-{
-    $request->validate([
-        'comment' => 'required|max:500',
-    ]);
+    {
+        $request->validate([
+            'comment' => 'required|max:500',
+        ]);
 
-    Comment::create([
-        'post_id' => $postId,
-        'content' => $request->comment,  // No user_id field
-    ]);
+        Comment::create([
+            'post_id' => $postId,
+            'user_id' => Auth::id(), // Associate the logged-in user
+            'content' => $request->comment,
+        ]);
 
-    return back()->with('success', 'Comment added successfully!');
-}
+        return back()->with('success', 'Comment added successfully!');
+    }
+
 
 }
