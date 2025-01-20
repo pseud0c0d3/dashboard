@@ -32,5 +32,6 @@ class EventUpcomingNotification extends Mailable
         return $this->subject('Reminder: Your Event is Tomorrow!')
                     ->view('emails.event_upcoming')
                     ->onQueue('emails');
+                    
     }
 }
