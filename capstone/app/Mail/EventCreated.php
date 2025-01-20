@@ -33,9 +33,11 @@ class EventCreated extends Mailable
      */
     public function build()
     {
-        return $this->subject('New Event Created')
+        return $this->subject('Your Event Has Been Created')
                     ->view('emails.event-created')
-                    ->with('event', $this->event);
+                    ->with([
+                        'event' => $this->event,
+                    ]);
     }
 }
 // class EventCreated extends Mailable

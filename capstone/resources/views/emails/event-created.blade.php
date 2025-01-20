@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>New Event Created</title>
+    <title>Event Details</title>
 </head>
 <body>
     <h1>{{ $event->title }}</h1>
