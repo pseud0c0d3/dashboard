@@ -6,6 +6,7 @@
 
 <div class="search-container" style="margin-bottom: 20px;">
     <form action="{{ route('posts.index') }}" method="GET">
+        @csrf
         <input
             type="text"
             name="search"
@@ -32,50 +33,66 @@
     </div>
 @endif
 
-<!-- Scrollable container -->
-<div class="scrollable-posts" style="max-height: 100vh;  auto; padding-right: 15px;margin-top:5%">
-    @foreach($posts as $post)
-        <div class="card mb-4">
-            <div class="card-body">
-                <!-- User Info Section -->
-                <div class="d-flex align-items-center mb-3">
-                    <img src="{{ asset('storage/default-profile.jpg') }}"
-                         class="rounded-circle"
-                         alt="User Profile"
-                         width="50" height="50">
-                    <div class="ms-3">
-                        <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
-                        <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
-                    </div>
-                </div>
 
-                <!-- Post Content Section -->
-                <p class="mb-2 fw-bold">
-                    {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
-                </p>
-                <p class="mb-3">{{ $post->body }}</p>
-
-                <!-- Post Image (if any) -->
-                @if($post->image)
-                    <div class="mb-3">
-                        <img src="{{ asset('storage/' . $post->image) }}"
-                             class="img-fluid rounded"
-                             alt="{{ $post->image }}">
-                    </div>
-                @endif
-
-                <!-- Like and Comment Actions -->
-                <div class="d-flex justify-content-between">
-                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
-                        <i class="bi bi-chat-left-text"></i> Comment
-                    </button>
-                    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
-                </div>
-
-            </div>
+<div class="scrollable-posts" style="max-height: 100vh; auto; padding-right: 15px; margin-top: 5%;">
+    @if($posts->isEmpty())
+        <div class="alert alert-warning text-center">
+            No posts found. Please try a different search term.
         </div>
-    @endforeach
+    @else
+        @foreach($posts as $post)
+            <div class="card mb-4">
+                <div class="card-body">
+                    <!-- User Info Section -->
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ asset('storage/default-profile.jpg') }}"
+                             class="rounded-circle"
+                             alt="User Profile"
+                             width="50" height="50">
+                        <div class="ms-3">
+                            <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
+                            <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+                        </div>
+                    </div>
+
+                    <!-- Post Content Section -->
+                    <p class="mb-2 fw-bold">
+                        {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
+                    </p>
+                    <p class="mb-3">{{ $post->body }}</p>
+
+                    <!-- Post Image (if any) -->
+                    @if($post->image)
+                        <div class="mb-3">
+                            <img src="{{ asset('storage/' . $post->image) }}"
+                                 class="img-fluid rounded"
+                                 alt="{{ $post->image }}">
+                        </div>
+                    @endif
+
+                    <!-- Like and Comment Actions -->
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                            <i class="bi bi-chat-left-text"></i> Comment
+                        </button>
+                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+                    </div>
+
+                </div>
+            </div>
+        @endforeach
+    @endif
+    <!-- Pagination Links -->
+<div class="d-flex justify-content-center mt-4">
+    {{ $posts->appends(['search' => request('search')])->links() }}
 </div>
+</div>
+
+
+
+
+
+
 
 <!-- Add a Post Button -->
 <div class="btn btn-success position-fixed"
@@ -95,7 +112,7 @@
                 <h5 class="modal-title" id="PostModalLabel">Create a Post!</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('posts.store', $post->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <!-- Title Input -->

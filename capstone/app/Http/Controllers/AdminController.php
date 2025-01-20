@@ -21,6 +21,16 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
+    public function clients()
+    {
+    $users = User::select('id', 'name', 'email', 'bio', 'phone_number', 'username', 'status', 'created_at')
+        ->latest() // Orders users by the most recently created
+        ->paginate(10); // Fetch 10 users per page
+
+    return view('admin.clients', compact('users'));
+    }
+
+
     public function fullcalendar()
     {
         $events = Event::all(['id', 'title', 'start_time as start', 'end_time as end', 'is_public', 'user_id']);
@@ -154,9 +164,14 @@ class AdminController extends Controller
     //crud
     public function viewAppointments()
     {
-        $events = Event::with('user')->get(); // Fetch all events with related user data
+        $events = Event::with('user') // Fetch events with related user data
+            ->latest() // Order by the most recently created events
+            ->paginate(10) // Paginate with 10 events per page
+            ->withQueryString(); // Ensure query strings (if any) persist
+
         return view('admin.appointments', compact('events'));
     }
+
         public function updateAppointment(Request $request, Event $event)
     {
         $validated = $request->validate([
@@ -232,7 +247,7 @@ class AdminController extends Controller
             ->count();
     
         // Fetch all users for the CRUD
-        $users = User::select('id', 'name', 'email', 'bio', 'picture', 'phone_number', 'username', 'status', 'created_at')->get();
+       
     
         // Return the data to the view
         return view('admin.dashboard', [
@@ -244,7 +259,7 @@ class AdminController extends Controller
             'upcomingEventsCount' => $upcomingEventsCount,
             'startDate' => $startDate,
             'endDate' => $endDate,
-            'users' => $users
+            
         ]);
     }
 

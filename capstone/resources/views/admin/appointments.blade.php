@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($events as $event)
+            @forelse ($events as $event)
                 <tr>
                     <form action="{{ route('appointments.update', $event->id) }}" method="POST">
                         @csrf
@@ -56,8 +56,17 @@
                         </td>
                     </form>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="6" class="text-center">No appointments found.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
+
+    <!-- Always display pagination -->
+    <div class="d-flex justify-content-center mt-4">
+        {{ $events->links() }}
+    </div>
 </div>
 @endsection

@@ -31,6 +31,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/appointments/{event}', [AdminController::class, 'deleteAppointment'])->name('appointments.destroy');
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/dashboard/download-pdf', [AdminController::class, 'downloadDashboard'])->name('admin.dashboard.pdf');
+    Route::get('/admin/clients', [AdminController::class, 'clients'])->name('admin.clients');
 
     Route::get('admin/users', [AdminController::class, 'viewUsers'])->name('admin.users');
     Route::delete('admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
@@ -88,6 +89,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/posts', PostController::class)->except(['index', 'show'])->middleware('check.badwords');
     Route::post('/posts/{post}/comment', [PostController::class, 'storeComment'])->name('posts.comment');
 Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->name('posts.like');
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
 });
 

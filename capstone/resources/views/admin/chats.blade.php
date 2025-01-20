@@ -22,7 +22,7 @@
                         @isset($users)
                             @foreach ($users as $user)
                                 <li class="list-group-item d-flex align-items-center chat-item">
-                                    <img src="{{ asset('storage/' . $user->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
+                                    {{-- <img src="{{ asset('storage/' . $user->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture"> --}}
                                     <div class="profile_info">
                                         <span class="profile_name font-weight-bold">{{ $user->name }}</span>
                                         <span class="id" style="display: none;">{{ $user->id }}</span>
@@ -71,7 +71,7 @@
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
                 <div class="d-flex align-items-center">
-                    <img id="chat_img" src="" class="rounded-circle mr-3" alt="Profile Picture" style="width: 40px; height: 40px;">
+                    {{-- <img id="chat_img" src="" class="rounded-circle mr-3" alt="Profile Picture" style="width: 40px; height: 40px;"> --}}
                     <h4 class="mb-0" id="chat_name">Chatting with</h4>
                 </div>
             </div>
