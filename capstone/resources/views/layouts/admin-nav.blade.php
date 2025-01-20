@@ -23,7 +23,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Bundle JS (includes Popper.js) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
 
 
 </head>
@@ -43,7 +43,7 @@
             </div> --}}
 
             <ul class="menu">
-                <li><a href="{{ route('admin.dashboard') }}" > Profile</a></li>
+                {{-- <li><a href="{{ route('admin.dashboard') }}" > Profile</a></li> --}}
                 <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-chart-pie"></i> Report</a></li>
                 <li><a href="{{ route('admin.forum') }}"><i class="fas fa-comments"></i> Forum</a></li>
                 <li><a href="{{ route('admin.fullcalendar') }}"><i class="fas fa-calendar-alt"></i> FullCalendar</a></li>

@@ -34,9 +34,9 @@
     <!-- Button to open sidebar on mobile -->
 
 
-    
+
     <!-- Profile Section -->
-    <div class="profile-section">
+    {{-- <div class="profile-section">
         <a href="{{ route('user.profile') }}" class="profile-link">
             <img src="/img/modpic.jpg" alt="Profile" class="profile-pic">
             <div class="profile-details">
@@ -44,9 +44,10 @@
                 <p>Father</p>
             </div>
         </a>
-    </div>
+    </div> --}}
 
             <ul class="menu">
+                <li><a href="{{ route('user.profile') }}"><i class="bi bi-person"></i> Profile</a></li>
                 <li><a href="{{ route('user.forum') }}"><i class="fas fa-home"></i> Forum</a></li>
                 <li>
                     <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
@@ -100,7 +101,7 @@
             dropdown.style.display = isHidden ? "block" : "none";
         }
     }
-    
+
 
     // Ensure clicking outside the dropdown closes it
     document.addEventListener('click', () => {
