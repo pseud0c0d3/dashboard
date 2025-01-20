@@ -40,28 +40,25 @@ document.addEventListener('DOMContentLoaded', function() {
         selectable: true,
         events: '/user/events', // Fetch events via AJAX
         eventSourceFailure: function() {
-            alert('Failed to load events. Please try again later.');
+            console.error('Failed to load events. Please check the server response.');
         },
         eventClick: function(info) {
-    console.log(info); // Check the structure of the event object
+            console.log(info);  // Check the structure of the event object
 
-    // Populate modal fields
-    document.getElementById('eventTitle').textContent = info.event.title;
-    document.getElementById('eventDescription').textContent = info.event.extendedProps.description || 'N/A';
-    document.getElementById('eventStartTime').textContent = info.event.start.toLocaleString();
-    document.getElementById('eventEndTime').textContent = info.event.end
-        ? info.event.end.toLocaleString()
-        : 'N/A';
-    document.getElementById('eventIsPublic').textContent = info.event.extendedProps.is_public ? 'Yes' : 'No';
+            // Populate modal fields using extendedProps
+            document.getElementById('eventTitle').textContent = info.event.title;
+            document.getElementById('eventDescription').textContent = info.event.extendedProps.description || 'N/A';
+            document.getElementById('eventStartTime').textContent = info.event.start.toLocaleString();
+            document.getElementById('eventEndTime').textContent = info.event.end ? info.event.end.toLocaleString() : 'N/A';
+            document.getElementById('eventIsPublic').textContent = info.event.extendedProps.is_public ? 'Yes' : 'No';
 
-    // Show modal
-    new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
-},
+            // Show modal
+            new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
+        }
     });
 
     calendar.render();
 });
-
 
 
 </script>
