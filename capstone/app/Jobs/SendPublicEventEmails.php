@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EventCreated;
 use App\Mail\EventUpdatedMail;
 use App\Mail\EventDeletedMail;
+use Illuminate\Support\Facades\Log;
 
 class SendPublicEventEmails implements ShouldQueue
 {
@@ -40,29 +41,28 @@ class SendPublicEventEmails implements ShouldQueue
      */
     public function handle()
 {
-    // Fetch all users
-    $users = User::whereNotNull('email')->get(); // Ensure only users with valid emails are fetched
+    // Fetch all users with valid emails in chunks of 50
+    User::whereNotNull('email')
+        ->chunk(10, function ($users) {
+            foreach ($users as $user) {
+                if (!filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+                    continue; // Skip invalid emails
+                }
 
-    foreach ($users as $user) {
-        if (!filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
-            // Skip invalid email addresses
-            continue;
-        }
-
-        // Switch case for email type
-        switch ($this->emailType) {
-            case 'created':
-                Mail::to($user->email)->send(new EventCreated($this->event));
-                break;
-
-            case 'updated':
-                Mail::to($user->email)->send(new EventUpdatedMail($this->event));
-                break;
-
-            case 'deleted':
-                Mail::to($user->email)->send(new EventDeletedMail($this->event));
-                break;
-        }
-    }
+                switch ($this->emailType) {
+                    case 'created':
+                        Mail::to($user->email)->send(new EventCreated($this->event));
+                        break;
+                    case 'updated':
+                        Mail::to($user->email)->send(new EventUpdatedMail($this->event));
+                        break;
+                    case 'deleted':
+                        Mail::to($user->email)->send(new EventDeletedMail($this->event));
+                        break;
+                }
+            }
+        });
+    
 }
+
 }
