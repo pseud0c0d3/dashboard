@@ -240,7 +240,7 @@ body {
 .menu a {
     text-decoration: none;
     color: #000000;
-    font-size: 16px;
+    font-size: 22px;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -288,9 +288,10 @@ body {
     margin-top: -50px;
 }
 
-.dropdown .dropdown-arrow {
-    margin-left: auto;
+.dropdown-arrow{
+    margin-left: 25px;
 }
+
 
 .bottom-container {
     position: absolute;

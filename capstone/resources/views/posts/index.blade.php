@@ -41,10 +41,10 @@
         </div>
     @else
         @foreach($posts as $post)
-            <div class="card mb-4">
+            <div class="card mb-4 shadow-sm rounded-lg border-0">
                 <div class="card-body">
                     <!-- User Info Section -->
-                    <div class="d-flex align-items-center mb-3">
+                    <div class="d-flex align-items-center mb-4">
                         <img src="{{ asset('storage/default-profile.jpg') }}"
                              class="rounded-circle"
                              alt="User Profile"
@@ -56,42 +56,62 @@
                     </div>
 
                     <!-- Post Content Section -->
-                    <p class="mb-2 fw-bold">
+                    <h5 class="fw-bold text-primary mb-3">
                         {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
-                    </p>
-                    <p class="mb-3">{{ $post->body }}</p>
+                    </h5>
+                    <p class="mb-3 text-muted">{{ Str::limit($post->body, 150) }}</p>
 
                     <!-- Post Image (if any) -->
                     @if($post->image)
                         <div class="mb-3">
                             <img src="{{ asset('storage/' . $post->image) }}"
-                                 class="img-fluid rounded"
+                                 class="img-fluid rounded-3"
                                  alt="{{ $post->image }}">
                         </div>
                     @endif
 
                     <!-- Like and Comment Actions -->
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
-                            <i class="bi bi-chat-left-text"></i> Comment
-                        </button>
-                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                                <i class="bi bi-chat-left-text"></i> Comment
+                            </button>
+                        </div>
+                        <div>
+                            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+                        </div>
                     </div>
-
                 </div>
             </div>
         @endforeach
     @endif
-    <!-- Pagination Links -->
+<!-- Pagination Links -->
 <div class="d-flex justify-content-center mt-4">
-    {{ $posts->appends(['search' => request('search')])->links() }}
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm">
+            <!-- Previous Button -->
+            <li class="page-item {{ $posts->onFirstPage() ? 'disabled' : '' }}">
+                <a class="page-link" href="{{ $posts->previousPageUrl() }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <!-- Page Numbers -->
+            @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
+                <li class="page-item {{ $page == $posts->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                </li>
+            @endforeach
+
+            <!-- Next Button -->
+            <li class="page-item {{ $posts->hasMorePages() ? '' : 'disabled' }}">
+                <a class="page-link" href="{{ $posts->nextPageUrl() }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
-</div>
-
-
-
-
-
 
 
 <!-- Add a Post Button -->
