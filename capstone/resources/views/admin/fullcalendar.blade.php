@@ -58,24 +58,24 @@
 <!-- Event Details Modal -->
 <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventDetailsModalLabel">Event Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="eventDetailsModalLabel">Event Details</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p><strong>Title:</strong> <span id="eventDetailsTitle"></span></p>
+              <p><strong>Description:</strong> <span id="eventDetailsDescription"></span></p>
+              <p><strong>Start Time:</strong> <span id="eventDetailsStartTime"></span></p>
+              <p><strong>End Time:</strong> <span id="eventDetailsEndTime"></span></p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
       </div>
-      <div class="modal-body">
-        <p><strong>Title:</strong> <span id="eventTitle"></span></p>
-        <p><strong>Description:</strong> <span id="eventDescription"></span></p>
-        <p><strong>Start Time:</strong> <span id="eventStartTime"></span></p>
-        <p><strong>End Time:</strong> <span id="eventEndTime"></span></p>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
   </div>
 </div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -99,18 +99,22 @@ document.addEventListener('DOMContentLoaded', function() {
         selectable: true,
         dayMaxEvents: true,
         events: '/admin/events', // Fetch all events for admins via AJAX
+        
         eventClick: function(info) {
-            // Populate modal fields
-            document.getElementById('eventTitle').textContent = info.event.title;
-            document.getElementById('eventDescription').textContent = info.event.extendedProps.description 
-            document.getElementById('eventStartTime').textContent = info.event.start.toLocaleString();
-            document.getElementById('eventEndTime').textContent = info.event.end
-                ? info.event.end.toLocaleString()
-                : 'N/A';
+    // Safely populate modal fields
+    document.getElementById('eventDetailsTitle').textContent = info.event.title || 'No Title Provided';
+    document.getElementById('eventDetailsDescription').textContent = info.event.extendedProps.description || 'No Description Provided';
+    document.getElementById('eventDetailsStartTime').textContent = info.event.start
+        ? info.event.start.toLocaleString()
+        : 'No Start Time Provided';
+    document.getElementById('eventDetailsEndTime').textContent = info.event.end
+        ? info.event.end.toLocaleString()
+        : 'No End Time Provided';
 
-            // Show modal
-            new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
-        },
+    // Show modal
+    new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
+},
+
     });
 
     calendar.render();
