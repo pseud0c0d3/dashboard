@@ -1,281 +1,138 @@
 @extends('layouts.user-nav')
 
 @section('content')
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+<div class="container">
+    <h1>Your Profile</h1>
+    <div>
+        <p>Name: {{ $user->name ?? 'No name provided' }}</p>
+        <p>Email: {{ $user->email ?? 'No email provided' }}</p>
+        <p>Bio: {{ $user->bio ?? 'No bio provided' }}</p>
+        <p>Phone Number: {{ $user->phone_number ?? 'Not provided' }}</p>
+        <p>Username: {{ $user->username ?? 'Not set' }}</p>
 
-                <div class="profile" id="profile-container">
-                    <h2 class="profile-header">My Profile</h2>
-                    <div class="profile-card">
-                        <div class="profile-header-section position-relative">
-                            <!-- Profile Image -->
-                            <img src="/img/modpic.jpg" alt="Profile picture" class="profile-image rounded-circle" id="profile-image"      onclick="triggerFileInput()">
+        @if($user->picture)
+            <p>Profile Picture: <img src="{{ asset('storage/' . $user->picture) }}" alt="Profile Picture" width="100"></p>
+        @else
+            <p>No profile picture set</p>
+        @endif
 
-                            <!-- Hidden File Input for Image Upload -->
-                            <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="previewImage(event)">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+            Edit Profile
+        </button>
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+            Change Password
+        </button>
+    </div>
+</div>
 
-                            <div class="profile-name-section">
-                                <p class="profile-name"><strong id="profile-name">Joseph Chan</strong></p>
-                                <p id="profile-role">Parent/Guardian</p>
-                                <p id="profile-address">Amaya 2, Tanza Cavite</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Personal Information Section -->
-                <div class="info-section personal-info">
-                    <div class="info-header">
-                        <h3>Personal Information</h3>
-                        <button class="edit-button" onclick="openModal('personalInfoModal')">Edit</button>
-                    </div>
-                    <div class="info-content">
-                        <div class="info-row">
-                            <div>
-                                <p><strong>First Name:</strong></p>
-                                <p id="first-name">Joseph</p>
-                            </div>
-                            <div>
-                                <p><strong>Last Name:</strong></p>
-                                <p id="last-name">Chan</p>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <div>
-                                <p><strong>Email:</strong></p>
-                                <p id="email">josephchan@email.com</p>
-                            </div>
-                            <div>
-                                <p><strong>Phone:</strong></p>
-                                <p id="phone">09618357581</p>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                          <div style="flex: 0 0 100%;">
-                              <p><strong>Bio:</strong></p>
-                              <p id="bio">Good bless</p>
-                          </div>
-                      </div>
-                    </div>
-                </div>
-
-                <!-- Address Information Section -->
-                <div class="info-section address-info">
-                    <div class="info-header">
-                        <h3>Address</h3>
-                        <button class="edit-button" onclick="openModal('addressModal')">Edit</button>
-                    </div>
-                    <div class="info-content">
-                        <div class="info-row">
-                            <div>
-                                <p><strong>Barangay:</strong></p>
-                                <p id="barangay">Daang Amaya 2</p>
-                            </div>
-                            <div>
-                                <p><strong>City:</strong></p>
-                                <p id="city">Tanza</p>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <div>
-                                <p><strong>Postal Code:</strong></p>
-                                <p id="postal-code">4108</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            <!-- Edit Profile Modal -->
-            <div id="profileModal" class="modal-custom">
-                <div class="modal-content-custom">
-                    <span class="close-custom" onclick="closeModal('profileModal')">&times;</span>
-                    <h2>Edit Profile</h2>
-
-                    <label for="editProfileName">Name</label>
-                    <input type="text" id="editProfileName" value="Joseph Chan">
-
-                    <label for="editProfileAddress">Address</label>
-                    <input type="text" id="editProfileAddress" value="Amaya 2, Tanza Cavite">
-
-                    <button class="save-button-custom" onclick="saveProfile()">Save</button>
-                </div>
+<!-- Modal Edit Profile -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}" required>
+                    </div>
 
-            <!-- Edit Personal Information Modal -->
-            <div id="personalInfoModal" class="modal-custom">
-                <div class="modal-content-custom">
-                    <span class="close-custom" onclick="closeModal('personalInfoModal')">&times;</span>
-                    <h2>Edit Personal Information</h2>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                    </div>
 
+                    <div class="mb-3">
+                        <label for="bio" class="form-label">Bio</label>
+                        <textarea class="form-control" id="bio" name="bio">{{ old('bio', $user->bio) }}</textarea>
+                    </div>
 
-                    <label for="editFirstName">First Name</label>
-                    <input type="text" id="editFirstName" value="Joseph">
+                    <div class="mb-3">
+                        <label for="picture" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="picture" name="picture">
+                        @if($user->picture)
+                            <p>Current profile picture: <img src="{{ asset('storage/' . $user->picture) }}" alt="Profile Picture" width="100"></p>
+                        @else
+                            <p>No profile picture set</p>
+                        @endif
+                    </div>
 
-                    <label for="editLastName">Last Name</label>
-                    <input type="text" id="editLastName" value="Chan">
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}">
+                    </div>
 
-                    <label for="editEmail">Email</label>
-                    <input type="email" id="editEmail" value="josephchan@email.com">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ old('username', $user->username) }}">
+                    </div>
 
-                    <label for="editPhone">Phone Number</label>
-                    <input type="text" id="editPhone" value="09618357581">
-
-                    <label for="editBio">Bio</label>
-                    <textarea id="editBio">Good bless</textarea>
-
-                    <button class="save-button-custom" onclick="savePersonalInfo()">Save</button>
-                </div>
-            </div>
-
-            <!-- Edit Address Modal -->
-            <div id="addressModal" class="modal-custom">
-                <div class="modal-content-custom">
-                    <span class="close-custom" onclick="closeModal('addressModal')">&times;</span>
-                    <h2>Edit Address</h2>
-
-                    <label for="editBarangay">Barangay</label>
-                    <input type="text" id="editBarangay" value="Daang Amaya 2">
-
-                    <label for="editCity">City</label>
-                    <input type="text" id="editCity" value="Tanza">
-
-                    <label for="editPostalCode">Postal Code</label>
-                    <input type="text" id="editPostalCode" value="4108">
-
-                    <button class="save-button-custom" onclick="saveAddress()">Save</button>
-                </div>
-
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
             </div>
         </div>
-
     </div>
+</div>
+<!-- Modal Change Password -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ route('password.update') }}">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="current_password" name="current_password" value="{{ old('current_password') }}" required>
+                        @error('current_password')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-<!------------------------------------------------------------------------------------------------------------------------------>
- <script>
-            function openModal(modalId) {
-    var modal = document.getElementById(modalId);
-    modal.classList.add('show');
-}
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password" value="{{ old('new_password') }}" required>
+                        @error('new_password')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-function closeModal(modalId) {
-    var modal = document.getElementById(modalId);
-    modal.classList.remove('show');
-}
-        // Show loading overlay for navigation
-        function showLoading(url) {
-            const loadingOverlay = document.getElementById("loadingOverlay");
-            loadingOverlay.style.display = "flex";
-            setTimeout(() => {
-                window.location.href = url;
-            }, 2000);
-        }
+                    <div class="mb-3">
+                        <label for="new_password_confirmation" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" id="new_password_confirmation" name="new_password_confirmation" value="{{ old('new_password_confirmation') }}" required>
+                        @error('new_password_confirmation')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-        function openNotifications() {
-            toggleDropdown(event, 'notificationsDropdown');
-        }
-
-        function toggleSettingsDropdown() {
-            toggleDropdown(event, 'settingsDropdown');
-        }
-
-        function changePassword() {
-            alert("Change password functionality goes here.");
-        }
-
-        function updateProfile() {
-            alert("Update profile functionality goes here.");
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            const isHidden = sidebar.style.display === 'none' || sidebar.style.display === '';
-            sidebar.style.display = isHidden ? 'flex' : 'none';
-        }
-
-
-        function toggleDropdown(event, dropdownId) {
-            event.stopPropagation();
-            const dropdown = document.getElementById(dropdownId);
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        }
-
-        function logout() {
-            alert("Log out functionality goes here.");
-        }
-//<------------------------------------------------------------------------------------------------------------------------->
-
-function triggerFileInput() {
-    document.getElementById('file-input').click();
-}
-
-function previewImage(event) {
-    const image = document.getElementById('profile-image');
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            image.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-}
-function saveProfile() {
-    var name = document.getElementById("editProfileName").value;
-    var role = document.getElementById("editProfileRole").value;
-    var address = document.getElementById("editProfileAddress").value;
-    document.getElementById("profile-name").textContent = name;
-    document.getElementById("profile-role").textContent = role;
-    document.getElementById("profile-address").textContent = address;
-    closeModal("profileModal");
-}
-
-function savePersonalInfo() {
-    var firstName = document.getElementById("editFirstName").value;
-    var lastName = document.getElementById("editLastName").value;
-    var email = document.getElementById("editEmail").value;
-    var phone = document.getElementById("editPhone").value;
-    var bio = document.getElementById("editBio").value;
-    document.getElementById("first-name").textContent = firstName;
-    document.getElementById("last-name").textContent = lastName;
-    document.getElementById("email").textContent = email;
-    document.getElementById("phone").textContent = phone;
-    document.getElementById("bio").textContent = bio;
-    closeModal("personalInfoModal");
-}
-
-function saveAddress() {
-    var barangay = document.getElementById("editBarangay").value;
-    var city = document.getElementById("editCity").value;
-    var postalCode = document.getElementById("editPostalCode").value;
-    document.getElementById("barangay").textContent = barangay;
-    document.getElementById("city").textContent = city;
-    document.getElementById("postal-code").textContent = postalCode;
-    closeModal("addressModal");
-}
-
-
-        // Close dropdowns if clicked outside
-        window.onclick = function(event) {
-            const dropdowns = document.querySelectorAll('.dropdown');
-            dropdowns.forEach(dropdown => {
-                if (dropdown.style.display === "block") {
-                    dropdown.style.display = "none";
-                }
-            });
-
-            // Close settings dropdown
-            const settingsDropdown = document.getElementById('settingsDropdown');
-            if (settingsDropdown.style.display === "block") {
-                settingsDropdown.style.display = "none";
-            }
-            // Close settings dropdown
-            const notificationsDropdown = document.getElementById('notificationsDropdown');
-            if (notificationsDropdown.style.display === "block") {
-                notificationsDropdown.style.display = "none";
-            }
-        };
-
-
-
-
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@if($errors->any())
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById('changePasswordModal'), {
+            keyboard: false
+        });
+        myModal.show();
     </script>
+@endif
 
 
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 @endsection

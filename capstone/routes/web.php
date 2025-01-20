@@ -35,7 +35,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::get('admin/users', [AdminController::class, 'viewUsers'])->name('admin.users');
     Route::delete('admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
-    
+
 
 
 
@@ -53,14 +53,25 @@ Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.log
 // User Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/forum', [UserController::class, 'forum'])->name('user.forum');
-    Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
+    // Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::get('/user/faq', [UserController::class, 'faq'])->name('user.faq');
     Route::get('/workspace/colormatch', [UserController::class, 'colormatch'])->name('workspace.colormatch');
     Route::get('/workspace/game', [UserController::class, 'game'])->name('workspace.game');
-   
+
     Route::get('/user/chats', [UserController::class, 'chats'])->name('user.chats');
     Route::get('/user/events', [UserController::class, 'getEvents'])->name('user.events');
     Route::get('/user/fullcalendar', [UserController::class, 'fullcalendar'])->name('user.fullcalendar');
+
+    // View profile
+    Route::get('user/profile', [UserController::class, 'viewProfile'])->name('user.profile');
+
+    // Edit profile
+    Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::post('/profile/edit', [UserController::class, 'updateProfile'])->name('profile.update');
+
+    // Change password
+    Route::get('/profile/change-password', [UserController::class, 'changePassword'])->name('password.change');
+    Route::post('/profile/change-password', [UserController::class, 'updatePassword'])->name('password.update');
 
     // User Chats
     Route::get('/fetch-messages', [ChatsController::class, 'fetchMessagesFromUserToAdmin'])->name('fetch.messagesFromSellerToAdmin');
