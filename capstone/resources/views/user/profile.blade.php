@@ -25,18 +25,18 @@
             <div class="card  rounded-5 " style="width: 1000px; box-shadow: rgba(82, 194, 245, 0.94) 5px 5px, rgba(22, 163, 202, 0.83) 10px 10px, rgba(71, 125, 212, 0.79) 15px 15px, rgba(57, 139, 227, 0.66) 20px 20px, rgba(56, 170, 222, 0.81) 25px 25px;">
                 <div class="card-body p-5">
                     <!-- Profile Picture Section -->
-                    <div class="text-center mb-4">
+                    {{-- <div class="text-center mb-4">
                         @if($user->picture)
-                            <img src="{{ asset('storage/' . $user->picture) }}" alt="Profile Picture" 
+                            <img src="{{ asset('storage/' . $user->picture) }}" alt="Profile Picture"
                                 class="img-fluid shadow-sm rounded-circle border-3 border-custom" width="160">
                         @else
-                            <div class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
+                            <div class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm"
                                 style="width: 160px; height: 160px; border: 3px solid #ff5722;">
                                 <span class="h3 text-muted">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                             </div>
                         @endif
-                    </div>
-                    
+                    </div> --}}
+
                     <!-- User Info Section -->
                     <div class="mb-4">
                         <p><strong class="text-muted">Name:</strong> <span class="fw-bold">{{ $user->name ?? 'No name provided' }}</span></p>
@@ -45,7 +45,7 @@
                         <p><strong class="text-muted">Phone Number:</strong> <span class="fw-bold">{{ $user->phone_number ?? 'Not provided' }}</span></p>
                         <p><strong class="text-muted">Username:</strong> <span class="fw-bold">{{ $user->username ?? 'Not set' }}</span></p>
                     </div>
-                    
+
                     <!-- Action Buttons Section -->
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-primary btn-lg rounded-pill px-4 py-2 shadow-lg" data-bs-toggle="modal" data-bs-target="#editProfileModal">
@@ -182,7 +182,7 @@ h1 {
                         <textarea class="form-control" id="bio" name="bio">{{ old('bio', $user->bio) }}</textarea>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="picture" class="form-label">Profile Picture</label>
                         <input type="file" class="form-control" id="picture" name="picture">
                         @if($user->picture)
@@ -190,9 +190,9 @@ h1 {
                         @else
                             <p>No profile picture set</p>
                         @endif
-                    </div>
+                    </div> --}}
 
-                    <div class="mb-3">
+                    <div class="mbs-3">
                         <label for="phone_number" class="form-label">Phone Number</label>
                         <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" placeholder="09-- --- ----" maxlength="11">
                     </div>
