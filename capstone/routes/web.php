@@ -13,7 +13,7 @@ Route::get('/', function () {
     return view('loggedOut.index');
 })->name('index');
 
-Route::get('/loggedOut/seemore', function () {
+Route::get('/seemore', function () {
     return view('loggedOut.seemore');
 })->name('seemore');
 
