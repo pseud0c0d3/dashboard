@@ -142,6 +142,38 @@
 <script src="/js/dashboard.js"></script>
 <script src="/js/Chart.roundedBarCharts.js"></script>
 <!-- End custom js for this page-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/7.0.3/pusher.min.js"></script>
+<script>
+var pusher = new Pusher('56ae557b83a4903265fc', {
+cluster: 'ap1', // Ensure the cluster matches your Pusher configuration
+encrypted: true
+});
+
+var channel = pusher.subscribe('my-channel'); // Subscribe to the channel
+
+channel.bind('my-event', function(data) { // Bind the event
+console.log('Message received:', data);
+
+// Display the message in the chat container
+if (data && data.message) {
+let messageHtml = `
+<div class="chat-message">
+    <div class="message-content">
+        <p><strong>${data.user.name}:</strong> ${data.message}</p>
+        <div class="timestamp">${new Date(data.created_at).toLocaleTimeString()}</div>
+    </div>
+</div>`;
+
+$('#chatMessageContainer').append(messageHtml);
+
+// Scroll to the bottom
+$('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
+}
+});
+
+</script> 
 
 <!-- JavaScript to handle chat item click -->
 <script>
