@@ -177,44 +177,42 @@ class UserController extends Controller
 
     // Update Profile
     public function updateProfile(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
-            'bio' => 'nullable|string',
-            'picture' => 'nullable|image|max:2048',
-            'phone_number' => [
-                'nullable',
-                'regex:/^(09|\+639)\d{9}$/',  // Ensure 09 or +63 followed by 9 digits
-                'max:11',
-                'min:11',
-            ],
-            'username' => 'nullable|string|max:255|unique:users,username,' . Auth::id(),
-        ]);
+{
+    $user = auth()->user();
 
-        $user = Auth::user();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->bio = $request->bio;
-        $user->phone_number = $request->phone_number;
-        $user->username = $request->username;
+    // Validate input
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+        'bio' => 'nullable|string|max:500',
+        'phone_number' => 'nullable|string|max:15',
+        'username' => 'nullable|string|max:50|unique:users,username,' . $user->id,
+        'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        // Handle profile picture upload
-        if ($request->hasFile('picture')) {
-            // Delete the old profile picture if it exists
-            if ($user->picture) {
-                Storage::disk('public')->delete($user->picture);
-            }
+    // Handle profile picture upload
+    if ($request->hasFile('picture')) {
+        $file = $request->file('picture');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $filePath = $file->storeAs('profile_pictures', $fileName, 'public');
 
-            // Store the new profile picture
-            $path = $request->file('picture')->store('profile_pictures', 'public');
-            $user->picture = $path;
-        }
+    
 
-        $user->save();
-
-        return redirect()->route('user.profile')->with('success', 'Profile updated successfully.');
+        // Save new picture path
+        $user->picture = $filePath;
     }
+
+    // Update other fields
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->bio = $request->bio;
+    $user->phone_number = $request->phone_number;
+    $user->username = $request->username;
+
+    $user->save();
+
+    return redirect()->back()->with('success', 'Profile updated successfully.');
+}
 
 
     // Change Password View
