@@ -17,6 +17,9 @@ Route::get('/loggedOut/seemore', function () {
     return view('loggedOut.seemore');
 })->name('seemore');
 
+Route::get('/loggedOut/forgotpassword', [LogInController::class, 'forgotpass'])->name('forgot.password');
+
+
 // Admin Routes
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -98,6 +101,10 @@ Route::get('/employee/EmployeeForum', [EmployeeController::class, 'EmployeeForum
 // Log in and Log out routes
 Route::post('/', [LogInController::class, 'login'])->name('login.user');
 Route::post('/', [LogInController::class, 'logout'])->name('logout');
+Route::post('/send-password-reset', [LogInController::class, 'sendreset'])->name('sendreset');
+Route::get('/password-reset-form', [LogInController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password-reset', [LogInController::class, 'resetPassword'])->name('password.update');
+
 
 // Forum Routes
 Route::middleware(['auth'])->group(function () {
