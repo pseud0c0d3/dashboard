@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordReset;
+use Illuminate\Support\Str;
 
 
 class LogInController extends Controller
@@ -73,4 +77,74 @@ public function logoutgame(Request $request)
 
     return redirect('/loggedIn/user');
 }
+    public function forgotpass()
+    {
+        return view('loggedOut.forgotpassword');
+    }
+
+    public function sendreset(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email|exists:users,email',
+    ]);
+
+    // Find the user by email
+    $user = User::where('email', $request->email)->first();
+
+    // Generate a unique token
+    $token = Str::random(64);
+
+    // Save token to a password_resets table (this is default in Laravel)
+    \DB::table('password_resets')->updateOrInsert(
+        ['email' => $user->email],
+        [
+            'token' => $token,
+            'created_at' => now(),
+        ]
+    );
+
+    // Send an email with the reset link
+    $resetLink = url('/password-reset-form?token=' . $token . '&email=' . urlencode($user->email));
+    Mail::to($user->email)->send(new PasswordReset($resetLink));
+
+    return redirect()->back()->with('status', 'We have emailed your password reset link!');
+}
+public function showResetForm(Request $request)
+{
+    $token = $request->query('token');
+    $email = $request->query('email');
+    return view('user.reset', compact('token', 'email'));
+}
+
+public function resetPassword(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email|exists:users,email',
+        'password' => 'required|confirmed|min:8',
+        'token' => 'required',
+    ]);
+
+    // Validate the token
+    $reset = \DB::table('password_resets')->where([
+        ['email', $request->email],
+        ['token', $request->token],
+    ])->first();
+
+    if (!$reset) {
+        return redirect()->back()->withErrors(['email' => 'Invalid or expired token.']);
+    }
+
+    // Update user's password
+    $user = User::where('email', $request->email)->first();
+    $user->password = bcrypt($request->password);
+    $user->save();
+
+    // Delete the token
+    \DB::table('password_resets')->where('email', $request->email)->delete();
+
+    return redirect()->route('user.login')->with('status', 'Password has been reset!');
+}
+
+
+
 }

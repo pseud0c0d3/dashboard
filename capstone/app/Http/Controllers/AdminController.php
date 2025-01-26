@@ -191,7 +191,18 @@ class AdminController extends Controller
         $chats = Chat::with(['senderProfilee', 'receiverProfilee', 'senderSellerProfile', 'receiverSellerProfile'])
             ->where('sender_id', $LoggedAdminInfo->id)
             ->orWhere('receiver_id', $LoggedAdminInfo->id)
+            ->latest('created_at') // Sort by latest messages
             ->get();
+
+        // // Group chats by user and only keep the latest message per user
+        // $groupedChats = $chats->groupBy(function ($chat) use ($LoggedAdminInfo) {
+        //     return $chat->sender_id == $LoggedAdminInfo->id ? $chat->receiver_id : $chat->sender_id;
+        // });
+
+        // // Reformat the grouped chats into a single collection
+        // $sortedChats = $groupedChats->map(function ($chatGroup) {
+        //     return $chatGroup->first(); // Get the most recent chat per user
+        // })->sortByDesc('created_at')->values();
 
         // Combine both results and remove duplicates
         $allChats = $chats->map(function ($chat) use ($LoggedAdminInfo) {

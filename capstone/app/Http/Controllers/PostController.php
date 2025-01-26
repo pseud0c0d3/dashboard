@@ -72,7 +72,7 @@ class PostController extends Controller
             'title' => $request->title,
             'body' => $request->body,
             'user_id' => Auth::id(),
-            'image' => $path,
+            // 'image' => $path,
         ]);
 
 
@@ -143,22 +143,22 @@ class PostController extends Controller
         $request->validate([
             'title' => ['required', 'max:255'],
             'body' => ['required'],
-            'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
+            // 'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
 
         ]);
 
         $path = $post->image ?? null;
-        if ($request->hasFile('image')) {
-            if ($post->image) {
-                Storage::disk('public')->delete($post->image);
-            }
-            $path = Storage::disk('public')->put('posts_images', $request->image);
-        }
+        // if ($request->hasFile('image')) {
+        //     if ($post->image) {
+        //         Storage::disk('public')->delete($post->image);
+        //     }
+        //     $path = Storage::disk('public')->put('posts_images', $request->image);
+        // }
 
         $post->update([
             'title' => $request->title,
             'body' => $request->body,
-            'image' => $path,
+            // 'image' => $path,
         ]);
 
         return redirect()->route('posts.index')->with('success', 'Your post was updated.');

@@ -46,41 +46,36 @@
                     <div class="list-group chat-list" id="chatList" style="max-height: 500px; overflow-y: auto;">
                         <ul class="list-group list-group-flush">
                             @if($chats->isEmpty())
-                                <!-- If no chats found, show all users -->
-                                @isset($users)
-                                    @foreach ($users as $user)
-                                        <li class="list-group-item d-flex align-items-center chat-item">
-                                            <div class="profile_info">
-                                                <span class="profile_name font-weight-bold">{{ $user->name }}</span>
-                                                <span class="id" style="display: none;">{{ $user->id }}</span>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                @endisset
+                               
+                                <li class="list-group-item">No chats available</li>
                             @else
                                 <!-- If chats are found, display chat profiles -->
                                 @foreach ($chats as $chat)
                                     <li class="list-group-item d-flex align-items-center chat-item">
                                         @if ($chat->sender_id == Auth::guard('admin')->id())
                                             @if ($chat->receiver)
-                                                <img src="{{ asset('storage/' . $chat->receiver->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
+                                                {{-- <img src="{{ asset('storage/' . $chat->receiver->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture"> --}}
                                                 <div class="profile_info">
                                                     <span class="profile_name font-weight-bold">{{ $chat->receiver->name }}</span>
+                                                    <small class="text-muted">{{ $chat->created_at->diffForHumans() }}</small>
                                                 </div>
                                             @else
                                                 <div class="profile_info">
                                                     <span class="profile_name font-weight-bold">Receiver not found</span>
+                                                    <small class="text-muted">{{ $chat->created_at->diffForHumans() }}</small>
                                                 </div>
                                             @endif
                                         @else
                                             @if ($chat->sender)
-                                                <img src="{{ asset('storage/' . $chat->sender->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
+                                                {{-- <img src="{{ asset('storage/' . $chat->sender->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture"> --}}
                                                 <div class="profile_info">
                                                     <span class="profile_name font-weight-bold">{{ $chat->sender->name }}</span>
+                                                    <small class="text-muted">{{ $chat->created_at->diffForHumans() }}</small>
                                                 </div>
                                             @else
                                                 <div class="profile_info">
                                                     <span class="profile_name font-weight-bold">Sender not found</span>
+                                                    <small class="text-muted">{{ $chat->created_at->diffForHumans() }}</small>
                                                 </div>
                                             @endif
                                         @endif
@@ -142,6 +137,38 @@
 <script src="/js/dashboard.js"></script>
 <script src="/js/Chart.roundedBarCharts.js"></script>
 <!-- End custom js for this page-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/7.0.3/pusher.min.js"></script>
+<script>
+var pusher = new Pusher('56ae557b83a4903265fc', {
+cluster: 'ap1', // Ensure the cluster matches your Pusher configuration
+encrypted: true
+});
+
+var channel = pusher.subscribe('my-channel'); // Subscribe to the channel
+
+channel.bind('my-event', function(data) { // Bind the event
+console.log('Message received:', data);
+
+// Display the message in the chat container
+if (data && data.message) {
+let messageHtml = `
+<div class="chat-message">
+    <div class="message-content">
+        <p><strong>${data.user.name}:</strong> ${data.message}</p>
+        <div class="timestamp">${new Date(data.created_at).toLocaleTimeString()}</div>
+    </div>
+</div>`;
+
+$('#chatMessageContainer').append(messageHtml);
+
+// Scroll to the bottom
+$('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight);
+}
+});
+
+</script> 
 
 <!-- JavaScript to handle chat item click -->
 <script>
@@ -226,7 +253,7 @@ $('#messageForm').on('submit', function(e) {
         },
         success: function(response) {
             if (response.success) {
-                toastr.success(response.message, "Success");
+                // toastr.success(response.message, "Success");
                 $('#messageInput').val('');
 
                 let messageTime = new Date().toLocaleTimeString([], {
