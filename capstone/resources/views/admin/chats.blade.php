@@ -57,10 +57,12 @@
                                                 {{-- <img src="{{ asset('storage/' . $chat->receiver->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture"> --}}
                                                 <div class="profile_info">
                                                     <span class="profile_name font-weight-bold">{{ $chat->receiver->name }}</span>
+                                                    <small class="text-muted">{{ $chat->created_at->diffForHumans() }}</small>
                                                 </div>
                                             @else
                                                 <div class="profile_info">
                                                     <span class="profile_name font-weight-bold">Receiver not found</span>
+                                                    <small class="text-muted">{{ $chat->created_at->diffForHumans() }}</small>
                                                 </div>
                                             @endif
                                         @else
@@ -68,10 +70,12 @@
                                                 {{-- <img src="{{ asset('storage/' . $chat->sender->picture) }}" class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture"> --}}
                                                 <div class="profile_info">
                                                     <span class="profile_name font-weight-bold">{{ $chat->sender->name }}</span>
+                                                    <small class="text-muted">{{ $chat->created_at->diffForHumans() }}</small>
                                                 </div>
                                             @else
                                                 <div class="profile_info">
                                                     <span class="profile_name font-weight-bold">Sender not found</span>
+                                                    <small class="text-muted">{{ $chat->created_at->diffForHumans() }}</small>
                                                 </div>
                                             @endif
                                         @endif
