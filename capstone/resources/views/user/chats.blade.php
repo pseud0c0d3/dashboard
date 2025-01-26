@@ -14,8 +14,8 @@
                                 <div class="card shadow-sm">
                                     <div class="card-header bg-primary text-white">
                                         <div class="d-flex align-items-center">
-                                            <img id="chat_img" src="{{ asset('public/img/logo.png') }}" class="rounded-circle mr-3" alt="Profile Picture" style="width: 40px; height: 40px;">
-                                            <h4 class="mb-0" id="chat_name">Chatting with Aid of Angels</h4>
+                                            <img src="/img/logo.png" class="rounded-circle mr-3"  style="width: 70px; height: 40px;">
+                                            <h4 class="mb-0" id="chat_name">Aid of Angels</h4>
                                         </div>
                                     </div>
 
@@ -165,7 +165,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.success) {
-                    toastr.success(response.message, "Success");
+                    // toastr.success(response.message, "Success");
                     $('#messageInput').val(''); // Clear the input
 
                     let userAvatar = '{{ asset('storage/' . Auth::user()->picture) }}';
