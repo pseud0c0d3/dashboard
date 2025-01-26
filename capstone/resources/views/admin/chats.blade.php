@@ -253,7 +253,7 @@ $('#messageForm').on('submit', function(e) {
         },
         success: function(response) {
             if (response.success) {
-                toastr.success(response.message, "Success");
+                // toastr.success(response.message, "Success");
                 $('#messageInput').val('');
 
                 let messageTime = new Date().toLocaleTimeString([], {
