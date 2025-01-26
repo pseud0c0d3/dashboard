@@ -120,7 +120,7 @@
     </div>
 </nav>
 
-<header class="jumbotron text-center relative" id="home" style="background-image: url('img/bck.png'); background-size: cover; background-position: center; font-family: 'Poppins', sans-serif;">
+<header class="jumbotron text-center relative" id="home" style="background-image: url('img/bck.png'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Poppins', sans-serif;">
   <div class="absolute inset-0 bg-black opacity-50"></div>
   <div class="container relative z-10 text-center py-24 px-6">
     <h1 class="display-4 text-white font-bold mb-4 opacity-0 transform -translate-y-20 scale-75 intro-effect" style="font-size: 3rem; letter-spacing: 1px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
