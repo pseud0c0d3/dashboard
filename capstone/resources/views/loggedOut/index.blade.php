@@ -122,19 +122,18 @@
 
 <header class="jumbotron text-center relative" id="home" style="background-image: url('img/bck.png'); background-size: cover; background-position: center; font-family: 'Poppins', sans-serif;">
   <div class="absolute inset-0 bg-black opacity-50"></div>
-    <div class="container relative z-10 text-center py-24 px-6">
-        <h1 class="display-4 text-white font-bold mb-4 opacity-0 transform -translate-y-20 scale-75 intro-effect"style="font-size: 3rem; letter-spacing: 1px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
-            Aid of Angels Therapy and Learning Center
-        </h1>
-        <p class="lead text-white mb-6 opacity-0 transform -translate-y-20 scale-75 intro-effect" style="font-family: 'Open Sans', sans-serif; font-size: 1.2rem; line-height: 1.8; font-weight: 400; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">
-        Welcome to our website, where we offer comprehensive<br />
-        diagnostic testing and personalized support for children with autism.
-        </p>
-        <a href="{{ route('user.register') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold">
-            Get Started
-        </a>
-   
-    </div>
+  <div class="container relative z-10 text-center py-24 px-6">
+    <h1 class="display-4 text-white font-bold mb-4 opacity-0 transform -translate-y-20 scale-75 intro-effect" style="font-size: 3rem; letter-spacing: 1px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
+      Aid of Angels Therapy and Learning Center
+    </h1>
+    <p class="lead text-white mb-6 opacity-0 transform -translate-y-20 scale-75 intro-effect" style="font-family: 'Open Sans', sans-serif; font-size: 1.2rem; line-height: 1.8; font-weight: 400; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">
+      Welcome to our website, where we offer comprehensive<br />
+      diagnostic testing and personalized support for children with autism.
+    </p>
+    <a href="{{ route('user.register') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold">
+      Get Started
+    </a>
+  </div>
 </header>
 
 

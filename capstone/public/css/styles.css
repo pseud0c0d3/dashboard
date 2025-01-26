@@ -25,7 +25,28 @@ p {
   font-size: 1.125rem;
   line-height: 1.8;
 }
+#home {
+  background-image: url('img/bck.png');
+  background-size: cover;
+  background-position: center;
+}
 
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  #home {
+    background-size: cover;
+    background-position: center;
+  }
+  .container {
+    padding: 16px; /* Adjust padding for better spacing on mobile */
+  }
+  h1 {
+    font-size: 2rem; /* Adjust font size for mobile */
+  }
+  p {
+    font-size: 1rem; /* Adjust font size for mobile */
+  }
+}
 /* Navbar -------------------------------------------------------------------------------*/
 .navbar {
   background-color: transparent; 
@@ -494,7 +515,7 @@ a {
         height: 100vh;
         border-radius: 0%; 
     }
-  
+    
     .empowering-families-image {
         flex: 0 0 100%; 
         max-width: 100%; 

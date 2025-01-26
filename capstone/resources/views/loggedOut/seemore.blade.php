@@ -59,21 +59,21 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="d-block w-100 hero-carousel-image" src="/img/pic2.png" alt="First slide">
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-block">
                         <h5>First Slide Title</h5>
                         <p>Description for the first slide goes here.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img class="d-block w-100 hero-carousel-image" src="/img/pic3.png" alt="Second slide">
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-block">
                         <h5>Second Slide Title</h5>
                         <p>Description for the second slide goes here.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img class="d-block w-100 hero-carousel-image" src="/img/pic4.png" alt="Third slide">
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-block">
                         <h5>Third Slide Title</h5>
                         <p>Description for the third slide goes here.</p>
                     </div>
@@ -158,7 +158,7 @@
         <h2 class="display-4" style="font-family: 'Roboto', sans-serif;">Become a Part of Our Journey</h2>
         <p class="lead mb-4" style="font-family: 'Roboto', sans-serif; color:white">At Aid of Angels, we are dedicated to providing comprehensive therapy and learning support for children and families facing autism. Your support is essential in helping us create a brighter future for those who need it the most.</p>
         <p class="mb-4" style="font-family: 'Roboto', sans-serif; color:white">By joining us, you contribute to a community that believes in compassion, understanding, and progress. Together, we can empower children and families to overcome challenges and thrive in a supportive environment.</p>
-        <a href="{{ url('/') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold opacity-0 transform -translate-y-20 scale-75 intro-effect">Join Now</a>
+        <a href="{{ route('user.register') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold opacity-0 transform -translate-y-20 scale-75 intro-effect">Join Now</a>
     </div>
 </section>
 
