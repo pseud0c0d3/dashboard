@@ -36,7 +36,7 @@
                         <input type="password" class="form-control" name="password_confirmation" required>
                     </div>
                 </div>
-                <button type="submit">Reset Password</button>
+                <button type="submit" class="btn btn-warning text-black w-100 mt-3">Reset Password</button>
             </form>
             {{-- <form method="POST" action="{{ route('sendreset') }}">
                 @csrf
@@ -48,9 +48,9 @@
                
                 <button type="submit" class="btn btn-warning text-black w-100 mt-3">Send Password Reset Link</button>
             </form> --}}
-            <div class="text-center mt-3">
+            {{-- <div class="text-center mt-3">
                 <a href="{{ route('user.login') }}" class="text-primary">Back to Login</a>
-            </div>
+            </div> --}}
         </div>
     </div>
 
