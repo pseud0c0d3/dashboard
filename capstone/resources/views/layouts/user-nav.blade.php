@@ -40,9 +40,6 @@
 <button class="close-sidebar" onclick="closeSidebar()">×</button>
     <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
     <!-- Button to open sidebar on mobile -->
-
-
-
     <!-- Profile Section -->
     {{-- <div class="profile-section">
         <a href="{{ route('user.profile') }}" class="profile-link">

@@ -4,29 +4,31 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 
-<div class="container mt-5">
-    <!-- Title and Search Bar -->
-    <div class="mb-5">
-    <h1 class="display-4 text-dark font-weight-bold mb-1" style="font-family: 'Roboto', sans-serif;">Latest Posts</h1>
-        <div class="search-container mt-6" style="max-width: 600px; margin: 0 auto;">
-            <form action="{{ route('posts.index') }}" method="GET" class="d-flex w-200">
-                @csrf
-                <div class="input-group">
-                    <input
-                        type="text"
-                        name="search"
-                        placeholder="Search by title..."
-                        class="form-control rounded-pill"
-                        value="{{ request('search') }}"
-                        style="padding-left: 15px; font-size: 1rem; border: 1px solid #ced4da; box-shadow: none;"
-                    >
-                    <button type="submit" class="btn btn-primary rounded-pill ms-2">
-                        <i class="bi bi-search"></i> Search
-                    </button>
-                </div>
-            </form>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; margin-left: 250px; padding-left: 50px;">
+    <div class="container-fluid">
+        <a class="navbar-brand" style="font-size: 45px;" href="{{ route('posts.index') }}">LATEST POSTS</a>
+        <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 400px;">
+            @csrf
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search by title..."
+                    class="form-control rounded-pill"
+                    value="{{ request('search') }}"
+                    style="padding-left: 15px; font-size: 1rem; border: 1px solid #ced4da; box-shadow: none;"
+                >
+                <button type="submit" class="btn btn-light rounded-pill ms-2">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
     </div>
+</nav>
+
+
+
+<div class="container mt-5 pt-5" style="overflow-y: auto; max-height: 100vh;">
 
     @if(session('success'))
         <div class="alert alert-success">
