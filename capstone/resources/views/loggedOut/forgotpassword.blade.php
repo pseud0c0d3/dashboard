@@ -19,7 +19,7 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        
+
     </nav>
 
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
@@ -28,17 +28,27 @@
                 <a a href="{{ route('index') }}">
                     <img src="/img/icon.png" alt="Logo" class="logo-img" style="max-width: 80%; margin-bottom: 20px;">
                 </a>
-                
+
                 <h6>Please enter your registered email adress so we can send you an email password reset link</h6>
             </div>
             <form method="POST" action="{{ route('sendreset') }}">
                 @csrf
                 <div class="form-group">
-                    <label for="loginEmail"></label>
-                    <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Email" required>
+                    <label for="loginEmail">Email</label>
+                    <input
+                        type="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        id="loginEmail"
+                        name="email"
+                        placeholder="Email"
+                        value="{{ old('email') }}"
+                        required
+                    >
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
-                
-               
+
                 <button type="submit" class="btn btn-warning text-black w-100 mt-3">Send Password Reset Link</button>
             </form>
             <div class="text-center mt-3">
