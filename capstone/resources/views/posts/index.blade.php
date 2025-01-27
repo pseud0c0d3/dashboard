@@ -4,13 +4,19 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 
+<style>
+::-webkit-scrollbar {
+    display: none;
+}
+
+    </style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; margin-left: 250px; padding-left: 50px;">
     <div class="container-fluid">
         <a class="navbar-brand" style="font-size: 45px;" href="{{ route('posts.index') }}">LATEST POSTS</a>
         <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 400px;">
             @csrf
             <div class="input-group">
-                <input
+                <input 
                     type="text"
                     name="search"
                     placeholder="Search by title..."
@@ -28,7 +34,7 @@
 
 
 
-<div class="container mt-5 pt-5" style="overflow-y: auto; max-height: 100vh;">
+<div class="container mt-5 pt-5" style=" auto; max-height: 100vh;">
 
     @if(session('success'))
         <div class="alert alert-success">
