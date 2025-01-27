@@ -4,186 +4,263 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AID OF ANGELS</title>
-    <link rel="icon" type="image/x-icon" href="/img/logo.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="/css/seemore.css">
-       
+
+    
+    <!-- FontAwesome & Google Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/seemore.css">
 </head>
-<body class="bg-gray-100">
-
+<body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-      <a class="navbar-brand" href="#">
-          <img src="/img/logo.png" alt="Brand Logo">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav" style="color: white;">
-          <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">About</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Services</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Contact</a>
-              </li>
-          </ul>
-      </div>
-  </nav>
-  
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="font-family: 'Roboto', sans-serif;">
+        <a class="navbar-brand" href="{{ url('/') }}">
+            <img src="/img/logo.png" alt="Brand Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav" style="color: white;">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#docu">Pictures</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#join">Join</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-  <!-- Hero Section -->
+<!-- Hero Section -->
 <section id="home" class="relative hero-bg hero-container">
     <div class="hero-overlay flex flex-col justify-center items-center text-white">
-        <h1 class="hero-title">Our Story<br> 
-            <p>Our Journey, Mission and Vision</p></h1> 
-        <button class="arrow arrow-left" onclick="prevSlide()">&#9664;</button>
-        <div class="carousel-container">
+        <!-- Bootstrap Carousel -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
             
-            <div class="carousel" id="carousel">
-              <img src="/img/pic2.png" alt="Image 1">
-              <img src="/img/pic3.png" alt="Image 2">
-              <img src="/img/pic4.png" alt="Image 3">
-              <img src="/img/pic2.png" alt="Image 4">
-              <img src="/img/pic3.png" alt="Image 5">
-              <img src="https://via.placeholder.com/300?text=Image+6" alt="Image 6">
+            <!-- Carousel Items -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100 hero-carousel-image" src="/img/pic2.png" alt="First slide">
+                    <div class="carousel-caption d-block">
+                        <h5>First Slide Title</h5>
+                        <p>Description for the first slide goes here.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100 hero-carousel-image" src="/img/pic3.png" alt="Second slide">
+                    <div class="carousel-caption d-block">
+                        <h5>Second Slide Title</h5>
+                        <p>Description for the second slide goes here.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100 hero-carousel-image" src="/img/pic4.png" alt="Third slide">
+                    <div class="carousel-caption d-none d-block">
+                        <h5>Third Slide Title</h5>
+                        <p>Description for the third slide goes here.</p>
+                    </div>
+                </div>
             </div>
-          
             
-          </div>
-          <button class="arrow arrow-right" onclick="nextSlide()">&#9654;</button>
+            <!-- Controls -->
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-        
     </div>
 </section>
 
 
-<div class="container">
-    <div class="mission-vision">
-      <div class="mission">
-        <h2>Mission</h2>
-        <p>Lorem ipsum odor amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros. Lorem ipsum odor amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros.</p>
-      </div>
-      <div class="vision">
-        <h2>Vision</h2>
-        <p>Lorem ipsum odor amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros. Lorem ipsum odor amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros.</p>
-      </div>
-    </div>
-
-    <div class="pictures">
-      <h2>Documentary Pictures</h2>
-      <div class="picture-grid">
-        <img src="/img/pic2.png" alt="Documentary Picture 1" class="large">
-        <img src="/img/pic3.png" alt="Documentary Picture 2" class="medium">
-        <img src="/img/pic2.png  " alt="Documentary Picture 3" class="small">
-        <img src="/img/pic2.png" alt="Documentary Picture 4" class="small">
-        <img src="/img/pic4.png" alt="Documentary Picture 6" class="medium">
-        <img src="/img/pic3.png" alt="Documentary Picture 5" class="small">
-        <img src="/img/pic3.png" alt="Documentary Picture 6" class="medium">
-        
-      </div>
-    </div>
-  </div>
 
 
-<section class="py-12 bg-white process-container">
-    <div class="container mx-auto flex flex-col lg:flex-row items-center">
-        <div class="lg:w-1/2 text-content2">
-            <h2 class="process-heading">Philosophy</h2>
-            <p class="process-text">Lorem ipsum odor amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros. Lorem ipsum odor amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros.</p>
-        </div>
-        <div class="lg:w-1/2 image-wrapper lg:pl-12 mt-8 lg:mt-0">
-            <img src="/img/pic3.png" alt="Educational toys and diagnostic tools" class="process-image">
-        </div>
-    </div>
-</section>
-<!-- Footer -->
-<footer>
-    <div class="footer-container">
-        <div class="footer-logo">
-            <img src="/img/logo.png" alt="Aid of Angels Logo" />
-            <p>&copy; 2024 Aid of Angels, Inc. All rights reserved.</p>
-        </div>
-
-        <div class="footer-links">
-            <div class="footer-column">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
+    <!-- Mission & Vision Sections -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <!-- Mission Section -->
+            <div class="col-lg-5 col-md-6 mb-4">
+                <div class="card border-0 rounded-4 ">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bi bi-flag text-primary fs-3 me-3"></i>
+                            <h2 class="card-title text-dark fw-bold">Mission</h2>
+                        </div>
+                        <p class="card-text text-muted mission-text">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros.
+                        </p>
+                        <button class="btn btn-outline-primary btn-sm d-block mx-auto mt-3 toggle-text" data-target=".mission-text">Read More</button>
+                    </div>
+                </div>
             </div>
-            
-            <div class="footer-column">
-                <h3>Resources</h3>
-                <ul>
-                    <li><a href="#">Autism Information</a></li>
-                    <li><a href="#">Therapy Guides</a></li>
-                    <li><a href="#">Location & Directions</a></li>
-                    <li><a href="#">FAQs</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Connect With Us</h3>
-                <ul>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Instagram</a></li>
-                </ul>
+
+            <!-- Vision Section -->
+            <div class="col-lg-5 col-md-6 mb-4">
+                <div class="card border-0 rounded-4 ">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bi bi-eye text-success fs-3 me-3"></i>
+                            <h2 class="card-title text-dark fw-bold">Vision</h2>
+                        </div>
+                        <p class="card-text text-muted vision-text">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vitae eget porttitor egestas; senectus fusce sapien. Nam fusce proin fames et nascetur lobortis curabitur. Aornare ipsum mauris id eros.
+                        </p>
+                        <button class="btn btn-outline-success btn-sm d-block mx-auto mt-3 toggle-text" data-target=".vision-text">Read More</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</footer>
-
  
 
-<script>
-  $(window).scroll(function() {
-    if ($(this).scrollTop() > 50) {
-        $('.navbar').addClass('scrolled');
-    } else {
-        $('.navbar').removeClass('scrolled');
-    }
-});
 
-    const carousel = document.getElementById('carousel');
-  const totalImages = carousel.children.length;
-  let currentIndex = 3; 
+    <section id="docu">
+    <!-- Documentary Pictures Section -->
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Documentary Pictures</h2>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="/img/pic2.png" alt="Documentary Picture 1" class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="/img/pic3.png" alt="Documentary Picture 2" class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="/img/pic4.png" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
+            </div>
+        </div>
+    </div>
+</section>
 
-  function updateCarousel() {
-    const offset = -currentIndex * (300 + 20);
-  }
+<section id="join" class="bg-primary text-white py-5" style=" background: linear-gradient(#102c38,#2b51a8);">
+    <div class="container text-center">
+        <h2 class="display-4" style="font-family: 'Roboto', sans-serif;">Become a Part of Our Journey</h2>
+        <p class="lead mb-4" style="font-family: 'Roboto', sans-serif; color:white">At Aid of Angels, we are dedicated to providing comprehensive therapy and learning support for children and families facing autism. Your support is essential in helping us create a brighter future for those who need it the most.</p>
+        <p class="mb-4" style="font-family: 'Roboto', sans-serif; color:white">By joining us, you contribute to a community that believes in compassion, understanding, and progress. Together, we can empower children and families to overcome challenges and thrive in a supportive environment.</p>
+        <a href="{{ route('user.register') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold opacity-0 transform -translate-y-20 scale-75 intro-effect">Join Now</a>
+    </div>
+</section>
 
-  function nextSlide() {
-    currentIndex++;
-    if (currentIndex >= totalImages - 2) {
-      // Move the first image to the end
-      carousel.appendChild(carousel.firstElementChild);
-      currentIndex--; // Stay on the current image
-    }
-    updateCarousel();
-  }
 
-  function prevSlide() {
-    currentIndex--;
-    if (currentIndex < 1) {
-      // Move the last image to the front
-      carousel.insertBefore(carousel.lastElementChild, carousel.firstElementChild);
-      currentIndex++; // Stay on the current image
-    }
-    updateCarousel();
-  }
-  updateCarousel(); 
-</script>
+
+
+    <!-- Custom CSS -->
+    <style>
+        .card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .toggle-text {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .toggle-text:focus {
+            outline: none;
+        }
+
+        .toggle-text.active {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .mission-text, .vision-text {
+            max-height: 100px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .mission-text.open, .vision-text.open {
+            max-height: 500px;
+        }
+
+        .pictures {
+            padding: 30px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .picture-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .picture-grid img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .navbar.scrolled {
+            background-color: #333;
+        }
+    </style>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Toggle Read More/Read Less functionality
+        document.querySelectorAll('.toggle-text').forEach(button => {
+            button.addEventListener('click', function() {
+                const target = document.querySelector(this.dataset.target);
+                target.classList.toggle('open');
+                this.classList.toggle('active');
+                this.textContent = target.classList.contains('open') ? 'Read Less' : 'Read More';
+            });
+        });
+
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            const carouselInner = document.querySelector('.carousel-inner');
+            const slideWidth = slides[0].clientWidth;
+            carouselInner.style.transform = `translateX(-${index * slideWidth}px)`;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Scroll event for navbar
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 50) {
+                $('.navbar').addClass('scrolled');
+            } else {
+                $('.navbar').removeClass('scrolled');
+            }
+        });
+    </script>
+
 </body>
 </html>

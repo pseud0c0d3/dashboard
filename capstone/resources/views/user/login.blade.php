@@ -6,6 +6,15 @@
     <title>Login - Aid of Angels</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-image: url('/img/bak.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -35,7 +44,7 @@
                 <div class="form-check d-flex justify-content-between">
                     <input class="form-check-input" type="checkbox" id="rememberMe">
                     <label class="form-check-label" for="rememberMe">Remember Me</label>
-                    <a href="#" class="text-primary">Forgot password?</a>
+                    <a href="{{ route('forgot.password') }}" class="text-primary">Forgot password?</a>
                 </div>
                 <button type="submit" class="btn btn-warning text-black w-100 mt-3">SUBMIT</button>
             </form>
