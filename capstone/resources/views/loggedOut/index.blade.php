@@ -130,7 +130,7 @@
       Welcome to our website, where we offer comprehensive<br />
       diagnostic testing and personalized support for children with autism.
     </p>
-    <a href="{{ route('user.register') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold">
+    <a href="{{ route('user.login') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold">
       Get Started
     </a>
   </div>
