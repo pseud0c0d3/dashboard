@@ -13,7 +13,7 @@ class CheckBadWords
      * @var array
      */
     protected $badWords = [
-        'putang ina', 'bobo', 'tanga', // Add your list of bad words here
+        'putang ina', 'bobo', 'tanga', 'kupal','pakyu','fuck you','TANGA','t@ng@','t@nga', // Add your list of bad words here
     ];
 
     /**
