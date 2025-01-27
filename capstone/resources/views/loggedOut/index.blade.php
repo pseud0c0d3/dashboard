@@ -215,10 +215,9 @@
         <div class="row">
             <div class="col-md-4 d-flex align-items-center justify-content-center mb-4">
                 <div class="box founder-box text-center p-4" style="background-color: white; border-radius: 10px; width: 90%;">
-                    <h3>Meet Our Founder</h3>
                     <img src="img/founder.png" alt="Founder" class="img-fluid rounded-circle mb-2" style="width: 150px; height: 150px;">
+                    <h3>Founder</h3>
                     <p>Discover the vision and passion of our founder who established this center to support families.</p>
-                    <a href="#" class="text-primary">Learn More</a>
                 </div>
             </div>
             <div class="col-md-8 d-flex flex-column justify-content-center">
@@ -232,7 +231,7 @@
                                 <li>Connect with other parents going through similar experiences.</li>
                                 <li>Share advice on therapy techniques and interventions.</li>
                             </ul>
-                            <a href="#forum" class="text-primary">Join the Forum</a>
+                            <a href="{{ route('user.login') }}" class="text-primary">Join the Forum</a>
                         </div>
                     </div>
                     <!-- Scheduling Feature -->
@@ -244,7 +243,7 @@
                                 <li>Choose a convenient time for your appointment.</li>
                                 <li>Get reminders for your scheduled appointments.</li>
                             </ul>
-                            <a href="#schedule" class="text-primary">Book an Appointment</a>
+                            <a href="{{ route('user.login') }}" class="text-primary">Book an Appointment</a>
                         </div>
                     </div>
                 </div>
@@ -260,7 +259,7 @@
                 <h2 class="contact-title">Contact Us</h2>
                 <p class="contact-text">At Aid of Angels Therapy and Learning Center, we are committed to providing families with the resources and support they need to navigate the journey of autism.
                     Whether you're looking to schedule a diagnostic test or learn more about our personalized therapy services, we're here to help.</p>
-                <a href="#" class="btn btn-primary">Learn More</a>
+                <a href="#more" class="btn btn-primary">Learn More</a>
                </div>
         </div>
         <div class="col-12 col-md-6">
@@ -277,7 +276,7 @@
     </div>
 </div>
 
-    <footer class="footer text-center text-lg-start bg-gray-900 text-white">
+    <footer class="footer text-center text-lg-start bg-gray-900 text-white" id="more">
         <div class="container">
             <div class="row py-8">
                 <div class="col-lg-4 col-md-12 footer-logo text-lg-left text-center mb-6 mb-lg-0">
@@ -296,16 +295,6 @@
                                 <li><a href="#contact" class="hover:text-primary-light transition">Contact</a></li>
                             </ul>
                         </div>
-                        <!-- Resources -->
-                        <div class="col-lg-4 col-md-4 footer-column mb-4 mb-lg-0">
-                            <h4 class="text-xl font-bold mb-4">Resources:</h4>
-                            <ul class="list-unstyled space-y-2">
-                                <li><a href="#autism-info" class="hover:text-primary-light transition">Autism Information</a></li>
-                                <li><a href="#therapy-guides" class="hover:text-primary-light transition">Therapy Guides</a></li>
-                                <li><a href="#location" class="hover:text-primary-light transition">Location & Directions</a></li>
-                                <li><a href="#faqs" class="hover:text-primary-light transition">FAQs</a></li>
-                            </ul>
-                        </div>
                         <!-- Connect With Us -->
                         <div class="col-lg-4 col-md-4 footer-column">
                             <h4 class="text-xl font-bold mb-4">Connect With Us:</h4>
@@ -313,6 +302,8 @@
                                 <li><a href="#facebook" class="hover:text-primary-light transition">Facebook</a></li>
                                 <li><a href="#twitter" class="hover:text-primary-light transition">Twitter</a></li>
                                 <li><a href="#instagram" class="hover:text-primary-light transition">Instagram</a></li>
+                                <li><a href="#location" class="hover:text-primary-light transition">Location & Directions</a></li>
+
                             </ul>
                         </div>
                     </div>
