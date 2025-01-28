@@ -3,17 +3,48 @@
 @section('content')
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS with Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Make sure you include Bootstrap's JavaScript for the dropdown functionality -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <style>
 ::-webkit-scrollbar {
     display: none;
 }
 
-    </style>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; margin-left: 250px; padding-left: 50px;">
+/* Hover effect for the dropdown button */
+#navbarDropdown:hover {
+    background-color: #f8f9fa; /* Light background on hover */
+    border-color: #007bff; /* Border color when hovered */
+}
+
+/* Hover effect for dropdown items with scale animation */
+.dropdown-item:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: #fff; /* White text on hover */
+    transform: scale(1.05); /* Slightly increase size */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+
+/* Hover effect for the profile picture button */
+.dropdown-toggle:hover img {
+    opacity: 0.8; /* Slight opacity change for profile image on hover */
+    transform: scale(1.15); /* Slightly increase size */
+
+}
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; margin-left: 250px; padding-left: 50px; background-image: linear-gradient(to right,#050C9C,#3ABEF9,#009990);">
     <div class="container-fluid">
-        <a class="navbar-brand" style="font-size: 45px;" href="{{ route('posts.index') }}">LATEST POSTS</a>
-        <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 400px;">
+        <a class="navbar-brand " style="font-size: 45px;" href="{{ route('posts.index') }}">LATEST POSTS</a>
+        <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 500px;">
             @csrf
             <div class="input-group">
                 <input 
@@ -22,20 +53,36 @@
                     placeholder="Search by title..."
                     class="form-control rounded-pill"
                     value="{{ request('search') }}"
-                    style="padding-left: 15px; font-size: 1rem; border: 1px solid #ced4da; box-shadow: none;"
-                >
+                    style="padding-left: 15px; font-size: 1rem; border: 1px solid #ced4da; box-shadow: none;">
                 <button type="submit" class="btn btn-light rounded-pill ms-2">
                     <i class="bi bi-search"></i>
                 </button>
             </div>
         </form>
+
+        <!-- Dropdown Button with Image -->
+        <div class="dropdown ms-4">
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- Replace with your profile picture -->
+                <img src="{{ asset('img/pic2.png') }}" alt="Profile Picture" class="rounded-circle" width="30" height="30" style="object-fit: cover;">
+                <span class="ms-2"></span> <!-- Optional, if you want to display text next to the image -->
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
+
+                <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
+                <li><hr class="dropdown-divider"></li>
+            </ul>
+        </div>
+
     </div>
 </nav>
 
 
 
-<div class="container mt-5 pt-5" style=" auto; max-height: 100vh;">
 
+<div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -59,49 +106,48 @@
             </div>
         @else
             @foreach($posts as $post)
-<div class="card mb-4 box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; rounded-lg border-0" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-    <div class="card-body">
-        <!-- User Info Section -->
-        <div class="d-flex align-items-center mb-4">
-            <img src="{{ asset('storage/default-profile.jpg') }}"
-                 class="rounded-circle"
-                 alt="User Profile"
-                 width="50" height="50">
-            <div class="ms-3">
-                <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
-                <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
-            </div>
-        </div>
+                <div class="card mb-4" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;">
+                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
+                        <!-- User Info Section -->
+                        <div class="d-flex align-items-center mb-4">
+                            <img src="{{ asset('storage/default-profile.jpg') }}"
+                                 class="rounded-circle"
+                                 alt="User Profile"
+                                 width="50" height="50">
+                            <div class="ms-3">
+                                <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
+                                <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+                            </div>
+                        </div>
 
-        <!-- Post Content Section -->
-        <h5 class="fw-bold text-primary mb-3">
-            {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
-        </h5>
-        <p class="mb-3 text-muted">{{ Str::limit($post->body, 150) }}</p>
+                        <!-- Post Content Section -->
+                        <h5 class="fw-bold text-primary mb-3">
+                            {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
+                        </h5>
+                        <p class="mb-3 text-muted">{{ Str::limit($post->body, 150) }}</p>
 
-        <!-- Post Image (if any) -->
-        @if($post->image)
-            <div class="mb-3">
-                <img src="{{ asset('storage/' . $post->image) }}"
-                     class="img-fluid rounded-3"
-                     alt="{{ $post->image }}">
-            </div>
-        @endif
+                        <!-- Post Image (if any) -->
+                        @if($post->image)
+                            <div class="mb-3">
+                                <img src="{{ asset('storage/' . $post->image) }}"
+                                     class="img-fluid rounded-3"
+                                     alt="{{ $post->image }}">
+                            </div>
+                        @endif
 
-        <!-- Like and Comment Actions -->
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
-                    <i class="bi bi-chat-left-text"></i> Comment
-                </button>
-            </div>
-            <div>
-                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
-            </div>
-        </div>
-    </div>
-</div>
-
+                        <!-- Like and Comment Actions -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                                    <i class="bi bi-chat-left-text"></i> Comment
+                                </button>
+                            </div>
+                            <div>
+                                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endforeach
         @endif
 
@@ -134,14 +180,14 @@
         </div>
     </div>
 
-    <!-- Add a Post Button -->
-    <div class="btn btn-success position-fixed"
-         style="bottom: 20px; right: 15%; z-index: 10; cursor: pointer;"
-         data-bs-toggle="modal"
-         data-bs-target="#PostModal">
-        Add a Post
-    </div>
+ <!-- Add a Post Button -->
+<div class="btn btn-success position-fixed"
+     style="bottom: 20px; right: 20px; z-index: 10; cursor: pointer; padding: 15px 25px; font-size: 18px; border-radius: 50%; box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px 0px;"
+     data-bs-toggle="modal"
+     data-bs-target="#PostModal">
+    <i class="bi bi-plus-lg" style="font-size: 24px;"></i> <!-- Icon for adding a post -->
 </div>
+
 
 <!-- Post Modal -->
 <div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
@@ -200,40 +246,8 @@
 @endforeach
 
 <script>
-// Modal handling for adding new posts
-let postIdCounter = 0;
 
-// Close dropdowns if clicked outside
-window.onclick = function(event) {
-    const dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(dropdown => {
-        if (dropdown.style.display === "block") {
-            dropdown.style.display = "none";
-        }
-    });
-
-    // Close settings dropdown
-    const settingsDropdown = document.getElementById('settingsDropdown');
-    if (settingsDropdown.style.display === "block") {
-        settingsDropdown.style.display = "none";
-    }
-
-    // Close notifications dropdown
-    const notificationsDropdown = document.getElementById('notificationsDropdown');
-    if (notificationsDropdown.style.display === "block") {
-        notificationsDropdown.style.display = "none";
-    }
-};
-
-function copyPostLink(postId) {
-    const postLink = `${window.location.origin}/post/${postId}`;
-    navigator.clipboard.writeText(postLink).then(() => {
-        alert("Post link copied to clipboard!");
-    }).catch(err => {
-        console.error("Failed to copy: ", err);
-    });
-}
-
+    
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.like-btn').forEach(button => {
         button.addEventListener('click', function () {
@@ -261,11 +275,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.getElementById('currentDate').textContent = new Date().toLocaleString();
 </script>
-
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Bootstrap JS with Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 @endsection
