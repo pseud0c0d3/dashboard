@@ -1,0 +1,173 @@
+
+    /* Toggle Sidebar Button Styles */
+/* Toggle Sidebar Button Styles */
+/* Toggle Sidebar Button Styles */
+.toggle-sidebar-btn {
+    position: fixed; /* Fixed position for overlay effect */
+    top: 15px; /* Adjust distance from the top */
+    left: 15px; /* Adjust distance from the left */
+    z-index: 2000; /* Ensure it appears above all other elements */
+    background-color: #007bff; /* Blue background */
+    color: white; /* White icon color */
+    border: none; /* Remove border */
+    border-radius: 50%; /* Circular button */
+    width: 50px; /* Fixed width for consistent size */
+    height: 50px; /* Fixed height for consistent size */
+    font-size: 1.5rem; /* Icon size for better visibility */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Center icon */
+    justify-content: center; /* Center icon horizontally */
+    align-items: center; /* Center icon vertically */
+}
+
+/* Hover Effect */
+.toggle-sidebar-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+    ::-webkit-scrollbar {
+        display: none;
+    }
+/* When the sidebar is open */
+#sidebar.open {
+    left: 0; /* Sidebar moves into view */
+}
+    /* Hover effect for the dropdown button */
+    #navbarDropdown:hover {
+        background-color: #f8f9fa; /* Light background on hover */
+        border-color: #007bff; /* Border color when hovered */
+    }
+
+    /* Hover effect for dropdown items with scale animation */
+    .dropdown-item:hover {
+        background-color: #007bff; /* Blue background on hover */
+        color: #fff; /* White text on hover */
+        transform: scale(1.05); /* Slightly increase size */
+        transition: transform 0.2s ease-in-out; /* Smooth transition */
+    }
+
+    /* Hover effect for the profile picture button */
+    .dropdown-toggle:hover img {
+        opacity: 0.8; /* Slight opacity change for profile image on hover */
+        transform: scale(1.15); /* Slightly increase size */
+    }
+
+    #add{
+        bottom: 20px; 
+        right: 20px; 
+        z-index: 10; 
+        cursor: pointer; 
+        padding: 15px 25px; 
+        font-size: 18px; 
+        border-radius: 50%; 
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px 0px;"
+
+    }
+       /* Navbar Style */
+       .navbar {
+        background: linear-gradient(#3677b3, #3677b3);
+        height: 80px;
+        width: calc(100% - 250px); /* Adjust to leave space for sidebar */
+        position: fixed;
+        top: 0;
+        left: 250px; /* Space for the sidebar */
+        z-index: 1000;
+        margin-left: 0;
+        font-family: 'Roboto', sans-serif;
+        
+    }
+    .navbar-brand{
+        font-size: 40px;
+    }
+    
+form .btn{
+    width: 70px;
+}
+
+#add {
+    bottom: 20px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
+    z-index: 10; /* Ensure it stays above other elements */
+    cursor: pointer; 
+    padding: 15px; /* Consistent padding */
+    font-size: 18px; /* Font size for desktop */
+    border-radius: 50%; /* Circular button */
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px 0px; /* Subtle shadow */
+    position: fixed; /* Fixed position */
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+    width: 60px; /* Explicit size for desktop */
+    height: 60px; /* Explicit size for desktop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#add:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+    transition: transform 0.2s ease-in-out;
+}
+/* Navbar adjustment when sidebar is open */
+.navbar.shifted {
+    margin-left: 250px; /* Move the navbar to the right */
+    transition: margin-left 0.3s ease; /* Smooth transition */
+}
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+    .navbar.shifted {
+            margin-left: 0; /* No margin when sidebar is open */
+        }
+
+        /* Hide the search bar on mobile */
+        .navbar form {
+            display: none;
+        }
+    #add {
+        bottom: 15px; /* Closer to the bottom */
+        right: 15px; /* Closer to the right */
+        padding: 10px; /* Reduced padding */
+        font-size: 14px; /* Smaller font size */
+        width: 50px; /* Smaller button width */
+        height: 50px; /* Smaller button height */
+    }
+
+    .navbar {
+            width: 135%; /* Full width for mobile */
+            margin-top: -15px;
+            padding-left: 70px;
+            margin-left: -325px; /* Remove offset for small screens */
+            position: relative;
+    }
+     /* Hide the search bar and show the logo button on mobile */
+     .search-bar {
+            display: none;
+        }
+
+    /* Hide the user name on mobile */
+    #navbarDropdown .user-name {
+        display: none;
+    }
+
+    /* Adjust the profile image size and style */
+    #navbarDropdown img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    /* Make the dropdown toggle button smaller on mobile */
+    #navbarDropdown {
+        padding: 0;
+    }
+
+    form .btn {
+        display: none !important;
+    }
+    .scrollable-posts{
+        margin-top: -100px;
+    }
+}
+

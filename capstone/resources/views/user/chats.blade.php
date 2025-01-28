@@ -1,31 +1,9 @@
 @extends('layouts.user-nav')
 @section('content')
 
+<link rel="stylesheet" href="/css/nav.css">
+
 <style>
-::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hover effect for the dropdown button */
-#navbarDropdown:hover {
-    background-color: #f8f9fa; /* Light background on hover */
-    border-color: #007bff; /* Border color when hovered */
-}
-
-/* Hover effect for dropdown items with scale animation */
-.dropdown-item:hover {
-    background-color: #007bff; /* Blue background on hover */
-    color: #fff; /* White text on hover */
-    transform: scale(1.05); /* Slightly increase size */
-    transition: transform 0.2s ease-in-out; /* Smooth transition */
-}
-
-/* Hover effect for the profile picture button */
-.dropdown-toggle:hover img {
-    opacity: 0.8; /* Slight opacity change for profile image on hover */
-    transform: scale(1.15); /* Slightly increase size */
-}
-
 /* Prevent overlap of chat container with navbar */
 .main-panel {
     margin-top: 50px; /* Adjust this value to match the height of the navbar */
@@ -34,52 +12,147 @@
 .content-wrapper {
     padding-top: 20px; /* Extra space if needed */
 }
+
+/* Chat Window Styling */
+.chat-window {
+    height: 400px;
+    overflow-y: auto;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.chat-message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.chat-message {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+}
+.chat-message.sender {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 15px;
+    padding: 10px;
+    position: relative;
+}
+.chat-message.receiver {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+    color: #333;
+    border-radius: 15px;
+    padding: 10px;
+}
+.message-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.timestamp {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 5px;
+}
+
+/* Input Styling */
+.input-group {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+#messageInput {
+    border-radius: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    flex-grow: 1;
+    margin-right: 10px;
+    transition: border-color 0.3s ease;
+}
+#messageInput:focus {
+    border-color: #007bff;
+}
+
+#sendMessageButton {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#sendMessageButton:hover {
+    background-color: #0056b3;
+}
+
+.dropdown-menu {
+    border-radius: 8px;
+}
+
+#chat_name {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Smooth scrolling for chat */
+.chat-window {
+    scroll-behavior: smooth;
+}
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; height: 80px; margin-left: 250px; padding-left: 50px; background: linear-gradient(#3677b3,#3677b3)">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand " style="font-size: 45px;" href="{{ route('posts.index') }}">CHAT</a>
+        <a class="navbar-brand" href="{{ route('posts.index') }}">CHAT</a>
         <!-- Dropdown Button with Image -->
-        <div class="dropdown ms-4">
-            <button 
-                class="btn btn-light dropdown-toggle d-flex align-items-center" 
-                type="button" 
-                id="navbarDropdown" 
-                data-bs-toggle="dropdown" 
-                aria-expanded="false"
+<div class="dropdown ms-4">
+    <button 
+        class="btn btn-light dropdown-toggle d-flex align-items-center" 
+        type="button" 
+        id="navbarDropdown" 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false"
+    >
+        <!-- Profile Picture or Initials -->
+        @if(Auth::user()->picture)
+            <img 
+                src="{{ asset('storage/' . Auth::user()->picture) }}" 
+                alt="Profile Picture" 
+                class="rounded-circle img-fluid" 
+                width="40" 
+                height="40" 
+                style="object-fit: cover; border: 2px solid #ddd;" 
             >
-                <!-- Profile Picture or Initials -->
-                @if(Auth::user()->picture)
-                    <img 
-                        src="{{ asset('storage/' . Auth::user()->picture) }}" 
-                        alt="Profile Picture" 
-                        class="rounded-circle img-fluid" 
-                        width="40" 
-                        height="40" 
-                        style="object-fit: cover; border: 2px solid #ddd;" 
-                    >
-                @else
-                    <div 
-                        class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
-                        style="width: 40px; height: 40px; border: 2px solid #ff5722;"
-                    >
-                        <span class="h6 text-muted m-0">
-                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                        </span>
-                    </div>
-                @endif
+        @else
+            <div 
+                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
+                style="width: 40px; height: 40px; border: 2px solid #ff5722;">
+                <span class="h6 text-muted m-0">
+                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                </span>
+            </div>
+        @endif
 
-                <!-- Optional Text -->
-                <span class="ms-2">{{ Auth::user()->name }}</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
-                <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
-                <li><hr class="dropdown-divider"></li>
-            </ul>
-        </div>
+        <!-- User Name (Visible except on mobile) -->
+        <span class="ms-2 user-name">{{ Auth::user()->name }}</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
+        <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
+        <li><hr class="dropdown-divider"></li>
+    </ul>
+</div>
+
     </div>
 </nav>
+
 
 <div class="main-panel">
     <div class="content-wrapper">
@@ -123,10 +196,13 @@
                 </div>
             </div>
         </div>
-
         <!-- content-wrapper ends -->
     </div>
 </div>
+<!-- Toggle Sidebar Button -->
+<button class="btn toggle-sidebar-btn d-md-none" onclick="toggleSidebar()">
+    ☰
+</button>
 
 <script src="{{ asset('/build/assets/app-D1ylovWN.js') }}"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
@@ -163,9 +239,7 @@ $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight)
 }
 });
 
-</script> 
 
-<script>
 $(document).ready(function() {
     // Default receiver ID and profile setup
     const defaultReceiverId = 1; // Replace with the actual ID of the admin

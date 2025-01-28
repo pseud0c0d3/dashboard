@@ -7,7 +7,7 @@
 <div class="container mt-5">
     <!-- Title and Search Bar -->
     <div class="mb-5">
-    <h1 class="display-4 text-dark font-weight-bold mb-1" style="font-family: 'Roboto', sans-serif;">Latest Posts</h1>
+        <h1 class="display-4 text-dark font-weight-bold mb-1" style="font-family: 'Roboto', sans-serif;">Latest Posts</h1>
         <div class="search-container mt-6" style="max-width: 600px; margin: 0 auto;">
             <form action="{{ route('posts.admin') }}" method="GET" class="d-flex w-200">
                 @csrf
@@ -51,49 +51,48 @@
             </div>
         @else
             @foreach($posts as $post)
-<div class="card mb-4 box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; rounded-lg border-0" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-    <div class="card-body">
-        <!-- User Info Section -->
-        <div class="d-flex align-items-center mb-4">
-            <img src="{{ asset('storage/default-profile.jpg') }}"
-                 class="rounded-circle"
-                 alt="User Profile"
-                 width="50" height="50">
-            <div class="ms-3">
-                <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
-                <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
-            </div>
-        </div>
+                <div class="card mb-4 shadow-sm rounded-lg border-0" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+                    <div class="card-body">
+                        <!-- User Info Section -->
+                        <div class="d-flex align-items-center mb-4">
+                            <img src="{{ asset('storage/default-profile.jpg') }}"
+                                 class="rounded-circle"
+                                 alt="User Profile"
+                                 width="50" height="50">
+                            <div class="ms-3">
+                                <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
+                                <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+                            </div>
+                        </div>
 
-        <!-- Post Content Section -->
-        <h5 class="fw-bold text-primary mb-3">
-            {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
-        </h5>
-        <p class="mb-3 text-muted">{{ Str::limit($post->body, 150) }}</p>
+                        <!-- Post Content Section -->
+                        <h5 class="fw-bold text-primary mb-3">
+                            {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
+                        </h5>
+                        <p class="mb-3 text-muted">{{ Str::limit($post->body, 150) }}</p>
 
-        <!-- Post Image (if any) -->
-        @if($post->image)
-            <div class="mb-3">
-                <img src="{{ asset('storage/' . $post->image) }}"
-                     class="img-fluid rounded-3"
-                     alt="{{ $post->image }}">
-            </div>
-        @endif
+                        <!-- Post Image (if any) -->
+                        @if($post->image)
+                            <div class="mb-3">
+                                <img src="{{ asset('storage/' . $post->image) }}"
+                                     class="img-fluid rounded-3"
+                                     alt="{{ $post->image }}">
+                            </div>
+                        @endif
 
-        <!-- Like and Comment Actions -->
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
-                    <i class="bi bi-chat-left-text"></i> Comment
-                </button>
-            </div>
-            <div>
-                <a href="{{ route('posts.showadmin', $post->id) }}" class="btn btn-primary">Read More</a>
-            </div>
-        </div>
-    </div>
-</div>
-
+                        <!-- Like and Comment Actions -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                                    <i class="bi bi-chat-left-text"></i> Comment
+                                </button>
+                            </div>
+                            <div>
+                                <a href="{{ route('posts.showadmin', $post->id) }}" class="btn btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endforeach
         @endif
 

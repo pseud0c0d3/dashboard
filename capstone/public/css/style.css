@@ -3,17 +3,19 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     overflow: hidden;
 }
+
 .container {
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
-/*---------------------------------------------------------------------------------------------------------*/
+
 /* Search */
 .search-container {
     background-color: #f9f9f9;
@@ -59,12 +61,12 @@ body {
 .headers {
     position: fixed;
     top: 0;
-    left: 250px; /* Match the width of the sidebar */
-    width: calc(100% - 250px); /* Account for sidebar width */
+    left: 250px;
+    width: calc(100% - 250px);
     background-image: linear-gradient(to right, #5fa8f1, white);
     border: solid #000000 1px;
     border-left: none;
-    height: 50px; /* Ensure consistency across all pages */
+    height: 50px;
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -125,7 +127,7 @@ body {
     background-color: #ddd;
 }
 
-/*For Setting*/
+/* For Settings */
 .settings-dropdown {
     position: absolute;
     top: 40px;
@@ -150,10 +152,10 @@ body {
     background-color: #f0f0f0;
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
+/* Sidebar */
 .sidebar {
     width: 250px;
-    background: linear-gradient(to right,#150f6b,#3677b3);
+    background: linear-gradient(to right, #150f6b, #3677b3);
     color: #ecf0f1;
     padding: 20px;
     position: fixed;
@@ -163,9 +165,9 @@ body {
     transition: all 0.3s ease;
     z-index: 1000;
 }
-/* Sidebar when opened */
+
 .sidebar.open {
-    left: 0; /* Slide sidebar into view */
+    left: 0;
 }
 
 .sidebar .angel-logo {
@@ -173,21 +175,18 @@ body {
     margin-bottom: 20px;
 }
 
-/* Ensure dropdowns don't overlap */
 .sidebar .dropdown-list {
-    display: none; /* Initially hidden */
-    position: absolute; /* Absolute positioning for dropdowns */
-    background-color: #ffffff; /* Background color for dropdown */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for better visibility */
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     padding: 5px;
-    border-radius: 8px; /* Rounded corners */
-    z-index: 1000; /* Ensure dropdown is above other elements */
-    margin-top: 5px; /* Add some space below the parent menu item */
-    list-style: none; /* Remove default list styling */
+    border-radius: 8px;
+    z-index: 1000;
+    margin-top: 5px;
+    list-style: none;
     margin-right: 5px;
 }
-
-
 
 .profile-section {
     margin-bottom: 20px;
@@ -201,12 +200,12 @@ body {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #ecf0f1; /* Set default text color */
-    transition: color 0.3s ease; /* Smooth transition for hover effect */
+    color: #ecf0f1;
+    transition: color 0.3s ease;
 }
 
 .profile-link:hover {
-    color: #3498db; /* Change color on hover */
+    color: #3498db;
 }
 
 .profile-pic {
@@ -230,17 +229,16 @@ body {
     font-size: 30px;
     color: #ecf0f1;
     cursor: pointer;
-    z-index: 1100; /* Ensure it's on top of other elements */
-    display: none; /* Hide by default */
+    z-index: 1100;
+    display: none;
 }
 
-/* Show close button when sidebar is open */
 .sidebar.open .close-sidebar {
-    display: block; /* Only show the button when the sidebar is open */
+    display: block;
 }
 
 .close-sidebar:hover {
-    color: #f44336; /* Change color on hover */
+    color: #f44336;
 }
 
 .menu {
@@ -259,13 +257,13 @@ body {
     display: flex;
     align-items: center;
     padding: 10px;
-    border-radius: 8px; /* Rounded corners */
-    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
 .menu a:hover {
-    background-color: #092642; /* Change background on hover */
-    color: #fff; /* White text on hover */
+    background-color: #092642;
+    color: #fff;
     box-shadow: rgb(35, 209, 240) 0px 50px 100px -20px, rgb(59, 83, 189) 0px 30px 60px -30px, rgba(72, 135, 199, 0.719) 0px -2px 6px 0px inset;
 }
 
@@ -280,18 +278,17 @@ body {
 .dropdown-list {
     display: none;
     padding-left: 2px;
-    list-style-type: none; /* Removes bullets */
+    list-style-type: none;
 }
 
 .dropdown-list li:last-child a {
     margin-top: -10px;
 }
 
-/* Style the image icons */
 .list-icon {
-    width: 35px; /* Icon size */
+    width: 35px;
     height: 35px;
-    margin-right: 40px; /* Space between icon and text */
+    margin-right: 40px;
     vertical-align: middle;
 }
 
@@ -303,10 +300,9 @@ body {
     margin-top: -50px;
 }
 
-.dropdown-arrow{
+.dropdown-arrow {
     margin-left: 25px;
 }
-
 
 .bottom-container {
     position: absolute;
@@ -317,7 +313,7 @@ body {
 }
 
 .bottom-container li:last-child a {
-    color: #f44336; /* Red color for log out */
+    color: #f44336;
 }
 
 .bottom-container li:last-child a:hover {
@@ -326,172 +322,20 @@ body {
 }
 
 .dropdown-list li a:hover {
-    background-color: #092642; /* Lighter hover effect for dropdown */
-    color: #ecf0f1; /* Ensure text remains readable */
+    background-color: #092642;
+    color: #ecf0f1;
 }
-
 
 /* Main content */
 .main-content {
-  margin-left: 0; /* Default margin for main content */
-  transition: all 0.3s ease; /* Smooth transition when sidebar opens/closes */
+    margin-left: 0;
+    transition: all 0.3s ease;
 }
 
-/* When sidebar is open */
 .sidebar-open .main-content {
-  margin-left: 250px; /* Shift content to the right when sidebar is open */
+    margin-left: 250px;
 }
 
-/* Initially hide the sidebar on mobile devices */
-@media (max-width: 768px) {
-
-  .sidebar {
-    max-height: 100%;
-    top: 0;
-    left: 0;
-    width: 160px;
-    display: none; /* Hide sidebar by default */
-    padding: 10px;
-    font-size: 7px; /* Adjust font size for smaller screens */
-    z-index: 1000;
-  }
-
-  .sidebar .angel-logo {
-      width: 60%; /* Scale down logo size */
-      margin: 0 auto 10px; /* Center logo */
-  }
-
-  .profile-section {
-    margin-bottom: 10px;
-    box-shadow: rgb(35, 209, 240) 0px 50px 100px -20px, rgb(59, 83, 189) 0px 30px 60px -30px, rgba(72, 135, 199, 0.719) 0px -2px 6px 0px inset;
-    padding: 3px 1px 1px 3px;
-    border-radius: 10px;
-    background-color: #f0f0f0;
-    border: #000000 solid 1px;
-    height: 48px;
-}
-
-.profile-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #ecf0f1; /* Set default text color */
-  transition: color 0.3s ease; /* Smooth transition for hover effect */
-}
-.profile-link:hover {
-  color: #3498db; /* Change color on hover */
-}
-
-.profile-pic {
-  width: 0px;
-  height: 0px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-
-
-  .menu a {
-    text-decoration: none;
-      font-size: 8px; /* Adjust menu font size */
-      padding: 3px; /* Reduce padding for better fit */
-  }
-
-  .menu a:hover {
-    background-color: #092642; /* Change background on hover */
-    color: #fff; /* White text on hover */
-    border-radius: 5px;
-    box-shadow: rgb(35, 209, 240) 0px 50px 100px -20px, rgb(59, 83, 189) 0px 30px 60px -30px, rgba(72, 135, 199, 0.719) 0px -2px 6px 0px inset;
-}
-
-  .menu-toggle {
-      display: block;
-      background-color: #003049;
-      color: #fff;
-      padding: 10px;
-      border: none;
-      cursor: pointer;
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 1001;
-  }
-
-  /* Style the image icons */
-.list-icon {
-  width: 25px; /* Icon size */
-  height: 25px;
-  margin-right: 40px; /* Space between icon and text */
-  
-}
-.dropdown-list li a:hover {
-  background-color: #092642; /* Lighter hover effect for dropdown */
-  color: #ecf0f1; /* Ensure text remains readable */
-  height: 30px;
-  border-radius: 25px;
-}
-.dropdown li:last-child a {
-  margin-top: -10px;
-}
-
-  .sidebar.open {
-      display: block;
-  }
-
-  .close-sidebar {
-      display: block;
-      font-size: 24px;
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: transparent;
-      border: none;
-      color: #ecf0f1;
-      cursor: pointer;
-  }
-
-  .main-content {
-      margin-left: 0; /* Remove left margin to fit smaller screens */
-  }
-
-
-    /* Show the sidebar when 'open' class is added */
-    .sidebar.open {
-        display: block;
-    }
-
-    /* Show close button when sidebar is open */
-    .sidebar.open .close-sidebar {
-        display: block; /* Only show the button when the sidebar is open */
-    }
-
-    /* Hide the close button when sidebar is closed */
-    .close-sidebar {
-        display: none; /* Hide by default */
-    }
-
-    
-}
-
-@media (min-width: 769px) {
-    /* Ensure that on desktop mode, the sidebar is always visible */
-    .sidebar {
-        display: block !important;
-        width: 250px; /* Full width for desktop */
-    }
-
-    /* Ensure the menu-toggle button is hidden on desktop */
-    .menu-toggle {
-        display: none !important;
-    }
-
-    /* Hide close button on desktop */
-    .close-sidebar {
-        display: none;
-    }
-}
-
-/*---------------------------------------------------------------------------------------------------------*/
 /* Modal styles */
 .modal {
     display: none;
@@ -504,6 +348,7 @@ body {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
 .modal-content {
     background-color: #fff;
     margin: 5% auto;
@@ -513,12 +358,12 @@ body {
     max-width: 500px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+
 .main-content {
     margin-top: -20px;
-    margin-left: 200px; /* Matches the width of the sidebar */
+    margin-left: 200px;
 }
 
-/*calendar modal */
 .calendar-modal {
     display: none;
     position: fixed;
@@ -530,6 +375,7 @@ body {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
 .calendar-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
@@ -537,12 +383,14 @@ body {
     border: 1px solid #888;
     width: 80%;
 }
+
 .close-calendar {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
+
 .close-calendar:hover,
 .close-calendar:focus {
     color: black;
