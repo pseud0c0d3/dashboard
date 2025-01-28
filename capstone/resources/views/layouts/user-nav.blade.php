@@ -55,10 +55,10 @@
                 <li><a href="{{ route('user.profile') }}"><i class="bi bi-person"></i> Profile</a></li>
                 <li><a href="{{ route('user.forum') }}"><i class="fas fa-home"></i> Forum</a></li>
                 <li>
-                    {{-- <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
+                    <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                     <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
-                    </a> --}}
-                    {{-- <ul class="dropdown-list" id="activitiesDropdown">
+                    </a>
+                    <ul class="dropdown-list" id="activitiesDropdown">
     <li>
         <a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">
             <img src="/img/colorgame.png" alt="Colormatch Icon" class="list-icon"> Colormatch Game
@@ -69,7 +69,7 @@
             <img src="/img/sound.png" alt="Sound Game Icon" class="list-icon"> Sound Game
         </a>
     </li>
-</ul> --}}
+</ul>
 
                 </li>
                 <li><a href="{{ route('user.fullcalendar') }}"><i class="fas fa-calendar-alt"></i>FullCalendar</a></li>
