@@ -1,6 +1,86 @@
 @extends('layouts.user-nav')
 @section('content')
 
+<style>
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hover effect for the dropdown button */
+#navbarDropdown:hover {
+    background-color: #f8f9fa; /* Light background on hover */
+    border-color: #007bff; /* Border color when hovered */
+}
+
+/* Hover effect for dropdown items with scale animation */
+.dropdown-item:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: #fff; /* White text on hover */
+    transform: scale(1.05); /* Slightly increase size */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+
+/* Hover effect for the profile picture button */
+.dropdown-toggle:hover img {
+    opacity: 0.8; /* Slight opacity change for profile image on hover */
+    transform: scale(1.15); /* Slightly increase size */
+}
+
+/* Prevent overlap of chat container with navbar */
+.main-panel {
+    margin-top: 50px; /* Adjust this value to match the height of the navbar */
+}
+
+.content-wrapper {
+    padding-top: 20px; /* Extra space if needed */
+}
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; height: 80px; margin-left: 250px; padding-left: 50px; background: linear-gradient(#3677b3,#3677b3)">
+    <div class="container-fluid">
+        <a class="navbar-brand " style="font-size: 45px;" href="{{ route('posts.index') }}">CHAT</a>
+        <!-- Dropdown Button with Image -->
+        <div class="dropdown ms-4">
+            <button 
+                class="btn btn-light dropdown-toggle d-flex align-items-center" 
+                type="button" 
+                id="navbarDropdown" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false"
+            >
+                <!-- Profile Picture or Initials -->
+                @if(Auth::user()->picture)
+                    <img 
+                        src="{{ asset('storage/' . Auth::user()->picture) }}" 
+                        alt="Profile Picture" 
+                        class="rounded-circle img-fluid" 
+                        width="40" 
+                        height="40" 
+                        style="object-fit: cover; border: 2px solid #ddd;" 
+                    >
+                @else
+                    <div 
+                        class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
+                        style="width: 40px; height: 40px; border: 2px solid #ff5722;"
+                    >
+                        <span class="h6 text-muted m-0">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </span>
+                    </div>
+                @endif
+
+                <!-- Optional Text -->
+                <span class="ms-2">{{ Auth::user()->name }}</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
+                <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
+                <li><hr class="dropdown-divider"></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">

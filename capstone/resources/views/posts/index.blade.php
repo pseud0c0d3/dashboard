@@ -38,7 +38,7 @@
     }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; margin-left: 250px; padding-left: 50px; background-image: linear-gradient(to right,#050C9C,#3ABEF9,#009990);">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; height: 80px; margin-left: 250px; padding-left: 50px; background: linear-gradient(#3677b3,#3677b3)">
     <div class="container-fluid">
         <a class="navbar-brand" style="font-size: 45px;" href="{{ route('posts.index') }}">LATEST POSTS</a>
         <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 500px;">
@@ -59,17 +59,44 @@
 
         <!-- Dropdown Button with Image -->
         <div class="dropdown ms-4">
-            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- Replace with your profile picture -->
-                <img src="{{ asset('img/pic2.png') }}" alt="Profile Picture" class="rounded-circle" width="30" height="30" style="object-fit: cover;">
-                <span class="ms-2"></span> <!-- Optional, if you want to display text next to the image -->
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
-                <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
-                <li><hr class="dropdown-divider"></li>
-            </ul>
-        </div>
+    <button 
+        class="btn btn-light dropdown-toggle d-flex align-items-center" 
+        type="button" 
+        id="navbarDropdown" 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false"
+    >
+        <!-- Profile Picture or Initials -->
+        @if(Auth::user()->picture)
+            <img 
+                src="{{ asset('storage/' . Auth::user()->picture) }}" 
+                alt="Profile Picture" 
+                class="rounded-circle img-fluid" 
+                width="40" 
+                height="40" 
+                style="object-fit: cover; border: 2px solid #ddd;" 
+            >
+        @else
+            <div 
+                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
+                style="width: 40px; height: 40px; border: 2px solid #ff5722;"
+            >
+                <span class="h6 text-muted m-0">
+                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                </span>
+            </div>
+        @endif
+
+        <!-- Optional Text -->
+        <span class="ms-2">{{ Auth::user()->name }}</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
+        <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
+        <li><hr class="dropdown-divider"></li>
+    </ul>
+</div>
+
     </div>
 </nav>
 
@@ -114,7 +141,7 @@
                         </div>
 
                         <!-- Post Content Section -->
-                        <h5 class="fw-bold text-dark mb-3" style="font-size: 1.75rem; line-height: 1.5; font-family: 'Merriweather', serif; text-transform: capitalize; letter-spacing: 0.5px;">
+                        <h5 class="fw-bold text-dark mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.8rem; text-transform: capitalize; letter-spacing: 0.5px;">
                             {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
                         </h5>
 

@@ -76,13 +76,7 @@
                 <li><a href="{{ route('user.chats') }}"><i class="bi bi-chat-dots"></i> Chats</a></li>
             </ul>
 
-    <!-- Bottom Menu -->
-    <div class="bottom-container">
-        <ul class="menu">
-            <li><a href="{{ route('user.faq') }}"><i class="fas fa-question-circle"></i> Help</a></li>
-            <li><a href="{{ route('user.logout') }}"method="GET"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-        </ul>
-    </div>
+   
 </div>
         <!-- Main Content -->
         <main class="py-4">

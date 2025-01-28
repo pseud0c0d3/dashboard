@@ -153,7 +153,7 @@ body {
 /*---------------------------------------------------------------------------------------------------------*/
 .sidebar {
     width: 250px;
-    background: linear-gradient(#050C9C,#3ABEF9,#009990);
+    background: linear-gradient(to right,#150f6b,#3677b3);
     color: #ecf0f1;
     padding: 20px;
     position: fixed;
@@ -254,7 +254,7 @@ body {
 
 .menu a {
     text-decoration: none;
-    color: #000000;
+    color: #ffffff;
     font-size: 22px;
     display: flex;
     align-items: center;

@@ -29,24 +29,48 @@
 }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; margin-left: 250px; padding-left: 50px; background-image: linear-gradient(to right,#050C9C,#3ABEF9,#009990);">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; height: 80px; margin-left: 250px; padding-left: 50px; background: linear-gradient(#3677b3,#3677b3)">
     <div class="container-fluid">
         <a class="navbar-brand " style="font-size: 45px;" href="{{ route('posts.index') }}">MAIN POSTS</a>
         <!-- Dropdown Button with Image -->
         <div class="dropdown ms-4">
-            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- Replace with your profile picture -->
-                <img src="{{ asset('img/pic2.png') }}" alt="Profile Picture" class="rounded-circle" width="30" height="30" style="object-fit: cover;">
-                <span class="ms-2"></span> <!-- Optional, if you want to display text next to the image -->
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+    <button 
+        class="btn btn-light dropdown-toggle d-flex align-items-center" 
+        type="button" 
+        id="navbarDropdown" 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false"
+    >
+        <!-- Profile Picture or Initials -->
+        @if(Auth::user()->picture)
+            <img 
+                src="{{ asset('storage/' . Auth::user()->picture) }}" 
+                alt="Profile Picture" 
+                class="rounded-circle img-fluid" 
+                width="40" 
+                height="40" 
+                style="object-fit: cover; border: 2px solid #ddd;" 
+            >
+        @else
+            <div 
+                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
+                style="width: 40px; height: 40px; border: 2px solid #ff5722;"
+            >
+                <span class="h6 text-muted m-0">
+                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                </span>
+            </div>
+        @endif
 
-                <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
-
-                <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
-                <li><hr class="dropdown-divider"></li>
-            </ul>
-        </div>
+        <!-- Optional Text -->
+        <span class="ms-2">{{ Auth::user()->name }}</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
+        <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
+        <li><hr class="dropdown-divider"></li>
+    </ul>
+</div>
 
     </div>
 </nav>
@@ -55,7 +79,7 @@
     <div class="card" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;">
     <div class="card-body">
         <!-- Post Title -->
-        <h1 style="color: rgb(0, 0, 0); font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.8rem; margin-bottom: 0.5rem;">
+        <h1 style="color: rgb(0, 0, 0); font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.8rem; text-transform: capitalize; margin-bottom: 0.5rem;">
             {{ $post->title }}
         </h1>
 
