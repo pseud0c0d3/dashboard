@@ -20,10 +20,13 @@
     <link rel="stylesheet" href="css/seemore.css">
 </head>
 <body>
+    <!-- Include Preloader -->
+ @include('components.preloader')
+ 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="font-family: 'Roboto', sans-serif;">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="/img/logo.png" alt="Brand Logo">
+        <a class="navbar-brand"  href="{{ url('/') }}">
+            <img src="/img/logo.png" alt="Brand Logo" >
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -58,21 +61,21 @@
             <!-- Carousel Items -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100 hero-carousel-image" src="/img/pic2.png" alt="First slide">
+                    <img class="d-block w-100 hero-carousel-image" src="/img/aid.jpg" alt="First slide">
                     <div class="carousel-caption d-block">
                         <h5>First Slide Title</h5>
                         <p>Description for the first slide goes here.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100 hero-carousel-image" src="/img/pic3.png" alt="Second slide">
+                    <img class="d-block w-100 hero-carousel-image" src="/img/aid2.jpeg" alt="Second slide">
                     <div class="carousel-caption d-block">
                         <h5>Second Slide Title</h5>
                         <p>Description for the second slide goes here.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100 hero-carousel-image" src="/img/pic4.png" alt="Third slide">
+                    <img class="d-block w-100 hero-carousel-image" src="/img/doc1.jpg" alt="Third slide">
                     <div class="carousel-caption d-none d-block">
                         <h5>Third Slide Title</h5>
                         <p>Description for the third slide goes here.</p>
@@ -141,13 +144,31 @@
         <h2 class="text-center mb-4">Documentary Pictures</h2>
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4">
-                <img src="/img/pic2.png" alt="Documentary Picture 1" class="img-fluid rounded shadow-lg">
+                <img src="/img/doc10.jpg" alt="Documentary Picture 1" class="img-fluid rounded shadow-lg">
             </div>
             <div class="col-lg-4 col-md-6 mb-4">
-                <img src="/img/pic3.png" alt="Documentary Picture 2" class="img-fluid rounded shadow-lg">
+                <img src="/img/doc2.jpg" alt="Documentary Picture 2" class="img-fluid rounded shadow-lg">
             </div>
             <div class="col-lg-4 col-md-6 mb-4">
-                <img src="/img/pic4.png" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
+                <img src="/img/doc3.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="/img/doc4.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="/img/doc5.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="/img/doc6.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="/img/doc7.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="/img/doc8.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="/img/doc9.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
             </div>
         </div>
     </div>
@@ -158,67 +179,9 @@
         <h2 class="display-4" style="font-family: 'Roboto', sans-serif;">Become a Part of Our Journey</h2>
         <p class="lead mb-4" style="font-family: 'Roboto', sans-serif; color:white">At Aid of Angels, we are dedicated to providing comprehensive therapy and learning support for children and families facing autism. Your support is essential in helping us create a brighter future for those who need it the most.</p>
         <p class="mb-4" style="font-family: 'Roboto', sans-serif; color:white">By joining us, you contribute to a community that believes in compassion, understanding, and progress. Together, we can empower children and families to overcome challenges and thrive in a supportive environment.</p>
-        <a href="{{ route('user.register') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold opacity-0 transform -translate-y-20 scale-75 intro-effect">Join Now</a>
+        <a href="{{ route('user.register') }}" id="join"class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold opacity-0 transform -translate-y-20 scale-75 intro-effect">Join Now</a>
     </div>
 </section>
-
-
-
-
-    <!-- Custom CSS -->
-    <style>
-        .card:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .toggle-text {
-            transition: all 0.3s ease-in-out;
-        }
-
-        .toggle-text:focus {
-            outline: none;
-        }
-
-        .toggle-text.active {
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .mission-text, .vision-text {
-            max-height: 100px;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-
-        .mission-text.open, .vision-text.open {
-            max-height: 500px;
-        }
-
-        .pictures {
-            padding: 30px;
-            background-color: #f9f9f9;
-            text-align: center;
-        }
-
-        .picture-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .picture-grid img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        .navbar.scrolled {
-            background-color: #333;
-        }
-    </style>
-
     <!-- Custom JavaScript -->
     <script>
         // Toggle Read More/Read Less functionality
@@ -260,6 +223,25 @@
                 $('.navbar').removeClass('scrolled');
             }
         });
+
+        // Function to show preloader and then navigate to the href
+function showPreloaderAndRedirect(event) {
+  event.preventDefault();  // Prevent the default behavior of the link
+  
+  // Show the preloader
+  document.getElementById('preloader').style.display = 'flex';
+  
+  // Get the href from the clicked link
+  const href = event.target.getAttribute('href');
+  
+  // Redirect after a short delay (1.5 seconds in this case)
+  setTimeout(function() {
+    window.location.href = href;
+  }, 1500);  // Adjust the delay as needed
+}
+
+document.getElementById('join').addEventListener('click', showPreloaderAndRedirect);
+
     </script>
 
 </body>

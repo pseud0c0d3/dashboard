@@ -112,7 +112,7 @@
 
  <!-- Include Preloader -->
  @include('components.preloader')
- 
+
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="font-family: 'Roboto', sans-serif;">
     <a class="navbar-brand" href="#">
         <img src="img/logo.png" alt="Brand Logo">
@@ -148,7 +148,7 @@
       Welcome to our website, where we offer comprehensive<br />
       diagnostic testing and personalized support for children with autism.
     </p>
-    <a href="{{ route('user.login') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold" id="getButton">
+    <a href="{{ route('user.login') }}" class="btn  rounded-pill px-6 py-3 shadow-lg text-white font-semibold" id="getButton">
       Get Started
     </a>
   </div>
@@ -228,7 +228,7 @@
     </div>
 </div>
 
-<div class="additional-container" style="background-image: url('img/aid.jpg'); background-size: cover; background-position: center; padding: 0; " >
+<div class="additional-container" style="background-image: url('img/pic03.png'); background-size: cover; background-position: center; padding: 0; " >
     <div class="container text-dark">
         <div class="row">
             <div class="col-md-4 d-flex align-items-center justify-content-center mb-4">
@@ -324,9 +324,9 @@
                     <div class="col-lg-4 col-md-4 footer-column">
                         <h4 class="text-xl font-bold mb-4">Connect With Us:</h4>
                         <ul class="list-unstyled space-y-2">
-                            <li><a href="https://www.facebook.com/aidofangels/" class="hover:text-primary-light transition">Facebook</a></li>
-                            <li><a href="https://www.instagram.com/explore/locations/203403116344468/aid-of-angels-therapy-and-learning-center/" class="hover:text-primary-light transition">Instagram</a></li>
-                            <li><a href="https://maps.app.goo.gl/YPJuF3HFWuVuqPgx7" class="hover:text-primary-light transition">Location & Directions</a></li>
+                            <li><a href="https://www.facebook.com/aidofangels/" class="hover:text-primary-light transition"id="link1">Facebook</a></li>
+                            <li><a href="https://www.instagram.com/explore/locations/203403116344468/aid-of-angels-therapy-and-learning-center/" class="hover:text-primary-light transition"id="link2">Instagram</a></li>
+                            <li><a href="https://maps.app.goo.gl/YPJuF3HFWuVuqPgx7" class="hover:text-primary-light transition" id="link3">Location & Directions</a></li>
                         </ul>
                     </div>
                 </div>
@@ -463,8 +463,9 @@ document.getElementById('getButton').addEventListener('click', showPreloaderAndR
 document.getElementById('learnButton').addEventListener('click', showPreloaderAndRedirect);
 document.getElementById('joinButton').addEventListener('click', showPreloaderAndRedirect);
 document.getElementById('forumButton').addEventListener('click', showPreloaderAndRedirect);
-
-
+document.getElementById('link1').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('link2').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('link3').addEventListener('click', showPreloaderAndRedirect);
 
 
 $(window).scroll(function() {

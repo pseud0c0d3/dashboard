@@ -29,6 +29,7 @@
 }
 </style>
 
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; height: 80px; margin-left: 250px; padding-left: 50px; background: linear-gradient(#3677b3,#3677b3)">
     <div class="container-fluid">
         <a class="navbar-brand " style="font-size: 45px;" href="{{ route('posts.index') }}">MAIN POSTS</a>

@@ -26,6 +26,56 @@ p {
   line-height: 1.8;
 }
 
+.card:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+.toggle-text {
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle-text:focus {
+  outline: none;
+}
+
+.toggle-text.active {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.mission-text, .vision-text {
+  max-height: 100px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.mission-text.open, .vision-text.open {
+  max-height: 500px;
+}
+
+.pictures {
+  padding: 30px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.picture-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.picture-grid img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.navbar.scrolled {
+  background-color: #333;
+}
 /* Navbar -------------------------------------------------------------------------------*/
 .navbar {
   background-color: transparent; 
@@ -79,8 +129,8 @@ p {
   object-fit: cover; /* Make the image cover the container without distortion */
   width: 100%; /* Make the image take the full width of the container */
   height: 100%; /* Make the image take the full height of the container */
-  filter: blur(6px); /* Apply a blur effect to the image */
-  opacity: 1; /* Optional: Adjust the opacity for a slightly faded effect */
+  filter: blur(3px); /* Apply a blur effect to the image */
+  opacity: 2; /* Optional: Adjust the opacity for a slightly faded effect */
   background-color: #000; /* Optional: Add a background color */
 }
 
@@ -107,10 +157,14 @@ p {
   }
 }
 
+.img-fluid {
+  width: 100%;  /* Ensures the image takes full width of its container */
+  height: 300px; /* Set a fixed height */
+  object-fit: cover; /* Ensures the image maintains aspect ratio and fills the area */
+}
 
 .card{
-  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-}
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;}
 
 /* Adjust the size of the title and description */
 .carousel-caption h5 {

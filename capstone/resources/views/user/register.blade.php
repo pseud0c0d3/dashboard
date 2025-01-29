@@ -22,6 +22,57 @@
     </style>
 </head>
 <body>
+      <!-- Navbar with Styled Interactive Back Button -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a href="{{ route('index') }}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+</nav>
+
+<!-- FontAwesome for Icons -->
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
+<!-- Custom CSS for Interactive Back Button -->
+<style>
+    .back-button {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        background: rgba(255, 255, 255, 0.2); /* Glassmorphism effect */
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+    }
+
+    .back-button i {
+        font-size: 18px;
+    }
+
+    /* Hover Effect */
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.4);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        color: white;
+    }
+
+    /* Click Effect */
+    .back-button:active {
+        transform: scale(0.95);
+    }
+</style>
+
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; background-color: rgba(255, 255, 255, 0.9);">
             <div class="text-center">
