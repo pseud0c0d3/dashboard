@@ -83,6 +83,7 @@
     .btn-primary {
         background-color: #6c63ff;
         border: none;
+        margin-top: -2px;
         border-radius: 5px;
         padding: 10px 20px;
         font-weight: bold;
@@ -99,6 +100,17 @@
     .d-flex.justify-content-end.mb-3 {
         position: relative;
     }
+
+    @media (max-width: 768px) {
+    .btn-primary {
+        width: 150px;
+        margin-top: 50px;
+    }
+
+    .btn-primary:hover {
+        background-color: #5a54e0;
+    }
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
