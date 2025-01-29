@@ -34,7 +34,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('posts.index') }}">MAIN POSTS</a>
         <!-- Dropdown Button with Image -->
-<div class="dropdown ms-4">
+        <div class="dropdown ms-4">
     <button 
         class="btn btn-light dropdown-toggle d-flex align-items-center" 
         type="button" 
@@ -44,18 +44,19 @@
     >
         <!-- Profile Picture or Initials -->
         @if(Auth::user()->picture)
-            <img 
-                src="{{ asset('storage/' . Auth::user()->picture) }}" 
-                alt="Profile Picture" 
-                class="rounded-circle img-fluid" 
-                width="40" 
-                height="40" 
-                style="object-fit: cover; border: 2px solid #ddd;" 
+            <img
+                src="{{ asset('storage/' . Auth::user()->picture) }}"
+                alt="Profile Picture"
+                class="rounded-circle img-fluid"
+                width="40"
+                height="40"
+                style="object-fit: cover; border: 2px solid #ddd;"
             >
         @else
             <div 
                 class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
-                style="width: 40px; height: 40px; border: 2px solid #ff5722;">
+                style="width: 40px; height: 40px; border: 2px solid #ff5722;"
+            >
                 <span class="h6 text-muted m-0">
                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                 </span>
@@ -147,7 +148,7 @@
                 <h5 class="modal-title" id="commentModalLabel">Add a Comment</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('posts.comment', $post->id) }}" method="POST">
+            <form action="{{ route('posts.comment', $post->id) }}" method="POST" id="commentForm{{ $post->id }}">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
@@ -157,11 +158,14 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="commentSubmitBtn{{ $post->id }}">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- External Resources -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

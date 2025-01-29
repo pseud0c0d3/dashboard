@@ -82,11 +82,11 @@
 
                         <!-- Like and Comment Actions -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <div>
+                            {{-- <div>
                                 <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
                                     <i class="bi bi-chat-left-text"></i> Comment
                                 </button>
-                            </div>
+                            </div> --}}
                             <div>
                                 <a href="{{ route('posts.showadmin', $post->id) }}" class="btn btn-primary">Read More</a>
                             </div>
@@ -164,7 +164,7 @@
 </div>
 
 <!-- Comment Modal -->
-@foreach($posts as $post)
+{{-- @foreach($posts as $post)
     <div class="modal fade" id="commentModal{{ $post->id }}" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -188,7 +188,7 @@
             </div>
         </div>
     </div>
-@endforeach
+@endforeach --}}
 
 <script>
 // Modal handling for adding new posts

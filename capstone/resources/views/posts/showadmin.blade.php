@@ -78,7 +78,22 @@
         </div>
     </div>
 </div>
+<script>
+    // Disable the submit button when the form is submitted in the comment modal
+    document.getElementById('commentModal{{ $post->id }}').addEventListener('shown.bs.modal', function () {
+        var form = document.getElementById('commentForm{{ $post->id }}');
+        var submitButton = document.getElementById('commentSubmitBtn{{ $post->id }}');
 
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();  // Prevent the form from submitting immediately
+            submitButton.disabled = true;
+            submitButton.classList.add('btn-secondary');  // Change color to grey
+            submitButton.classList.remove('btn-primary'); // Remove blue color
+
+            form.submit(); // Now submit the form
+        });
+    });
+</script>
 <!-- External Resources -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

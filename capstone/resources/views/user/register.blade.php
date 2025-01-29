@@ -9,16 +9,29 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-image: url('/img/bak.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+        }
+    </style>
 </head>
+<body>
+      <!-- Navbar with Styled Interactive Back Button -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a href="{{ route('index') }}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+</nav>
+
+<!-- FontAwesome for Icons -->
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
 <!-- Custom CSS for Interactive Back Button -->
 <style>
-    body {
-        background-image: url('/img/bak.jpg'); /* Replace with your image URL */
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        min-height: 100vh;
-    }
     .back-button {
         position: absolute;
         top: 15px;
@@ -73,8 +86,8 @@
                 <img src="/img/icon.png" alt="Logo" class="logo-img" style="max-width: 80%; margin-bottom: 20px;">
                 <h4>REGISTER</h4>
             </div>
-            
-            <form action="{{ route('user.save') }}" method="POST">
+
+            <form action="{{ route('user.save') }}" method="POST" id="registrationForm">
                 @csrf
 
                 <!-- Username Input -->
@@ -157,7 +170,7 @@
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="btn btn-warning text-black w-100">SUBMIT</button>
+                <button type="submit" class="btn btn-warning text-black w-100" id="submitBtn">SUBMIT</button>
             </form>
 
             <div class="text-center mt-3">
@@ -170,26 +183,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-              // Function to show preloader and then navigate to the href
-function showPreloaderAndRedirect(event) {
-  event.preventDefault();  // Prevent the default behavior of the link
-  
-  // Show the preloader
-  document.getElementById('preloader').style.display = 'flex';
-  
-  // Get the href from the clicked link
-  const href = event.target.getAttribute('href');
-  
-  // Redirect after a short delay (1.5 seconds in this case)
-  setTimeout(function() {
-    window.location.href = href;
-  }, 1500);  // Adjust the delay as needed
-}
-
-// Attach event listener to the 'Get Started' button
-document.getElementById('log').addEventListener('click', showPreloaderAndRedirect);
-
-    </script>
 </body>
 </html>
