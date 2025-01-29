@@ -1,5 +1,5 @@
 @extends('layouts.user-nav')
-
+@section('navbar_title', 'MAIN POSTS')
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
@@ -32,6 +32,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
+        <a class="navbar-brand" href="{{ route('posts.index') }}">MAIN POSTS</a>
         <!-- Dropdown Button with Image -->
         <div class="dropdown ms-4">
     <button
@@ -164,7 +165,4 @@
     </div>
 </div>
 
-<!-- External Resources -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
