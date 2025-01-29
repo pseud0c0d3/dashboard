@@ -25,8 +25,8 @@
  
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="font-family: 'Roboto', sans-serif;">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="/img/logo.png" alt="Brand Logo">
+        <a class="navbar-brand"  href="{{ url('/') }}">
+            <img src="/img/logo.png" alt="Brand Logo" >
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -179,7 +179,7 @@
         <h2 class="display-4" style="font-family: 'Roboto', sans-serif;">Become a Part of Our Journey</h2>
         <p class="lead mb-4" style="font-family: 'Roboto', sans-serif; color:white">At Aid of Angels, we are dedicated to providing comprehensive therapy and learning support for children and families facing autism. Your support is essential in helping us create a brighter future for those who need it the most.</p>
         <p class="mb-4" style="font-family: 'Roboto', sans-serif; color:white">By joining us, you contribute to a community that believes in compassion, understanding, and progress. Together, we can empower children and families to overcome challenges and thrive in a supportive environment.</p>
-        <a href="{{ route('user.register') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold opacity-0 transform -translate-y-20 scale-75 intro-effect">Join Now</a>
+        <a href="{{ route('user.register') }}" id="join"class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold opacity-0 transform -translate-y-20 scale-75 intro-effect">Join Now</a>
     </div>
 </section>
     <!-- Custom JavaScript -->
@@ -240,11 +240,7 @@ function showPreloaderAndRedirect(event) {
   }, 1500);  // Adjust the delay as needed
 }
 
-// Attach event listener to the 'Get Started' button
-document.getElementById('getButton').addEventListener('click', showPreloaderAndRedirect);
-document.getElementById('learnButton').addEventListener('click', showPreloaderAndRedirect);
-document.getElementById('joinButton').addEventListener('click', showPreloaderAndRedirect);
-document.getElementById('forumButton').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('join').addEventListener('click', showPreloaderAndRedirect);
 
     </script>
 

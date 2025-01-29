@@ -262,7 +262,7 @@ body {
 }
 
 .menu a:hover {
-    background-color: #092642;
+    background-color: #012b52;
     color: #fff;
     box-shadow: rgb(35, 209, 240) 0px 50px 100px -20px, rgb(59, 83, 189) 0px 30px 60px -30px, rgba(72, 135, 199, 0.719) 0px -2px 6px 0px inset;
 }
