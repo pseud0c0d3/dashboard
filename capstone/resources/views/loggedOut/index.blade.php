@@ -39,7 +39,7 @@
     font-family: 'Arial', sans-serif; 
     font-size: 1.1rem;
     line-height: 1.6;
-    color: #555; 
+    color: black; 
     text-align: left;
 }
 
@@ -57,44 +57,62 @@
         max-width: 80%;
     }
 }
-
-/*
-.preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+/* Initial hidden state */
+.service-box {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.spinner {
-    border: 4px solid #f3f3f3; 
-    border-top: 4px solid #3498db; 
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
+/* Fade-in and slide-up effect when in view */
+.service-box.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Initial hidden state for text */
+.empowering-families-text {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Slide-in effect when in view */
+.empowering-families-text.in-view {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}*/
+/* Add this CSS to your stylesheet */
+@keyframes popUp {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.box {
+    opacity: 0; /* Initially hidden */
+    transform: scale(0.8); /* Initially scaled down */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Smooth transition */
+}
+
+.box.visible {
+    opacity: 1;
+    transform: scale(1); /* Trigger the pop-up effect */
+}
         
 </style>
 <body>
-<!--
-<div id="preloader" class="preloader">
-    <div class="spinner"></div>
-</div>
 
- Navbar -->
+ <!-- Include Preloader -->
+ @include('components.preloader')
+ 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="font-family: 'Roboto', sans-serif;">
     <a class="navbar-brand" href="#">
         <img src="img/logo.png" alt="Brand Logo">
@@ -130,7 +148,7 @@
       Welcome to our website, where we offer comprehensive<br />
       diagnostic testing and personalized support for children with autism.
     </p>
-    <a href="{{ route('user.login') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold">
+    <a href="{{ route('user.login') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold" id="getButton">
       Get Started
     </a>
   </div>
@@ -143,35 +161,35 @@
     <div class="row">
         <!-- Comprehensive Evaluation -->
         <div class="col-md-4 text-center mb-4">
-            <div class="service-box p-5 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl bg-light">
+            <div class="service-box p-5 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl ">
                 <div class="service-icon-container mb-3">
                     <i class="fas fa-brain fa-4x text-primary"></i>
                     <i class="fas fa-cogs fa-4x text-muted placeholder-icon"></i>
                 </div>
                 <h5 class="font-weight-bold mb-3 text-dark">Comprehensive Evaluation</h5>
-                <p class="text-muted">We provide thorough evaluations to identify each child's unique needs, ensuring the right support.</p>
+                <p>We provide thorough evaluations to identify each child's unique needs, ensuring the right support.</p>
             </div>
         </div>
         <!-- Personalized Therapy -->
         <div class="col-md-4 text-center mb-4">
-            <div class="service-box p-5 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl bg-light">
+            <div class="service-box p-5 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl ">
                 <div class="service-icon-container mb-3">
                     <i class="fas fa-heart fa-4x text-danger"></i>
                     <i class="fas fa-cogs fa-4x text-muted placeholder-icon"></i>
                 </div>
                 <h5 class="font-weight-bold mb-3 text-dark">Personalized Therapy</h5>
-                <p class="text-muted">Our therapy sessions are tailored to suit the individual requirements of each child, promoting growth and development.</p>
+                <p>Our therapy sessions are tailored to suit the individual requirements of each child, promoting growth and development.</p>
             </div>
         </div>
         <!-- Supportive Community -->
         <div class="col-md-4 text-center mb-4">
-            <div class="service-box p-5 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl bg-light">
+            <div class="service-box p-5 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl">
                 <div class="service-icon-container mb-3">
                     <i class="fas fa-users fa-4x text-info"></i>
                     <i class="fas fa-cogs fa-4x text-muted placeholder-icon"></i>
                 </div>
                 <h5 class="font-weight-bold mb-3 text-dark">Supportive Community</h5>
-                <p class="text-muted">We foster a nurturing community that supports both children and their families, creating a safe space for growth.</p>
+                <p>We foster a nurturing community that supports both children and their families, creating a safe space for growth.</p>
             </div>
         </div>
     </div>
@@ -181,7 +199,7 @@
 <div class="empowering-families-container">
     <div class="row">
         <div class="col-md-6">
-            <img src="img/pic2.png" alt="Empowering Families" class="empowering-families-image">
+            <img src="img/modpic.jpg" alt="Empowering Families" class="empowering-families-image">
         </div>
         <div class="col-md-6 empowering-families-text">
             <h2>Empowering Families, Transforming Lives</h2>
@@ -204,18 +222,18 @@
         full potential through specialized care and attention.
     </p>
     <div class="text-center">
-        <a href="{{ route('seemore') }}" class="btn btn-primary text-black hover:from-blue-600 hover:to-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-full px-6 transition duration-300" style="background: linear-gradient(135deg, #3a63d5, #1b3248);">
+        <a href="{{ route('seemore') }}" class="btn btn-primary text-black hover:from-blue-600 hover:to-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-full px-6 transition duration-300" id="learnButton" style="background: linear-gradient(135deg, #3a63d5, #1b3248);">
             Learn More
         </a>
     </div>
 </div>
 
-<div class="additional-container" style="background-image: url('img/pic4.png'); background-size: cover; background-position: center; padding: 0;">
+<div class="additional-container" style="background-image: url('img/aid.jpg'); background-size: cover; background-position: center; padding: 0; " >
     <div class="container text-dark">
         <div class="row">
             <div class="col-md-4 d-flex align-items-center justify-content-center mb-4">
                 <div class="box founder-box text-center p-4" style="background-color: white; border-radius: 10px; width: 90%;">
-                    <img src="img/founder.png" alt="Founder" class="img-fluid rounded-circle mb-2" style="width: 150px; height: 150px;">
+                    <img src="img/founder.png" alt="Founder" class="img-fluid rounded-circle mb-2" style="width: 150px; height: 150px; ">
                     <h3>Founder</h3>
                     <p>Discover the vision and passion of our founder who established this center to support families.</p>
                 </div>
@@ -231,7 +249,7 @@
                                 <li>Connect with other parents going through similar experiences.</li>
                                 <li>Share advice on therapy techniques and interventions.</li>
                             </ul>
-                            <a href="{{ route('user.login') }}" class="text-primary">Join the Forum</a>
+                            <a href="{{ route('user.register') }}" id="forumButton" class="text-primary">Join the Forum</a>
                         </div>
                     </div>
                     <!-- Scheduling Feature -->
@@ -243,7 +261,7 @@
                                 <li>Choose a convenient time for your appointment.</li>
                                 <li>Get reminders for your scheduled appointments.</li>
                             </ul>
-                            <a href="{{ route('user.login') }}" class="text-primary">Book an Appointment</a>
+                            <a href="{{ route('user.register') }}" id="bookButton" class="text-primary">Book an Appointment</a>
                         </div>
                     </div>
                 </div>
@@ -255,19 +273,26 @@
 <div class="container-fluid contact mt-4" id="contact">
     <div class="row g-4">
         <div class="col-12 col-md-6">
-            <div class="contact-card p-4">
-                <h2 class="contact-title">Contact Us</h2>
-                <p class="contact-text">At Aid of Angels Therapy and Learning Center, we are committed to providing families with the resources and support they need to navigate the journey of autism.
-                    Whether you're looking to schedule a diagnostic test or learn more about our personalized therapy services, we're here to help.</p>
-                <a href="#more" class="btn btn-primary">Learn More</a>
-               </div>
+        <div class="contact-card p-4">
+    <h2 class="contact-title">Contact Us</h2>
+    <p class="contact-text">
+        At Aid of Angels Therapy and Learning Center, we are committed to providing families with the resources and support they need to navigate the journey of autism.
+        Whether you're looking to schedule a diagnostic test or learn more about our personalized therapy services, we're here to help.
+        <span class="extra-text" style="display: none;">
+            Our team is dedicated to ensuring that each family receives the best care and resources tailored to their unique needs. We believe in creating a welcoming and supportive environment for both parents and children.
+        </span>
+    </p>
+    <button class="btn btn-primary mx-auto mt-3 toggle-text" data-target=".extra-text">Read More</button>
+</div>
+
+
         </div>
         <div class="col-12 col-md-6">
             <div class="contact-card-connect">
                 <h2 class="contact-title-connect">Stay Connected</h2>
                 <p class="contact-text-connect">Join our community for the latest updates and resources on autism.</p>
                 <div class="d-flex justify-content-center">
-                <a href="{{ route('user.register') }}" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold">
+                <a href="{{ route('user.register') }}" id="joinButton" class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold">
             Join Us!
         </a>
                 </div>
@@ -276,41 +301,40 @@
     </div>
 </div>
 
-    <footer class="footer text-center text-lg-start bg-gray-900 text-white" id="more">
-        <div class="container">
-            <div class="row py-8">
-                <div class="col-lg-4 col-md-12 footer-logo text-lg-left text-center mb-6 mb-lg-0">
-                    <img src="img/logo.png" alt="Logo" class="img-fluid mb-4" style="max-width: 120px;">
-                    <p class="text-sm font-light text-gray-400">© 2025 Aid of Angels, Inc. All rights reserved.</p>
-                </div>
+<footer class="footer text-right text-lg-start text-white" id="more">
+    <div class="container">
+        <div class="row py-9">
+            <div class="col-lg-4 col-md-12 footer-logo text-lg-left text-center mb-6 mb-lg-0">
+                <img src="img/logo.png" alt="Logo" class="img-fluid mb-4" style="max-width: 120px;">
+                <p class="text-sm font-light text-gray-400">© 2025 Aid of Angels, Inc. All rights reserved.</p>
+            </div>
 
-                <div class="col-lg-8 col-md-12 footer-links">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 footer-column mb-4 mb-lg-0">
-                            <h4 class="text-xl font-bold mb-4 ">Quick Links:</h4>
-                            <ul class="list-unstyled space-y-2">
-                                <li><a href="#home" class="hover:text-primary-light transition">Home</a></li>
-                                <li><a href="#services" class="hover:text-primary-light transition">Services</a></li>
-                                <li><a href="#about" class="hover:text-primary-light transition">About</a></li>
-                                <li><a href="#contact" class="hover:text-primary-light transition">Contact</a></li>
-                            </ul>
-                        </div>
-                        <!-- Connect With Us -->
-                        <div class="col-lg-4 col-md-4 footer-column">
-                            <h4 class="text-xl font-bold mb-4">Connect With Us:</h4>
-                            <ul class="list-unstyled space-y-2">
-                                <li><a href="#facebook" class="hover:text-primary-light transition">Facebook</a></li>
-                                <li><a href="#twitter" class="hover:text-primary-light transition">Twitter</a></li>
-                                <li><a href="#instagram" class="hover:text-primary-light transition">Instagram</a></li>
-                                <li><a href="#location" class="hover:text-primary-light transition">Location & Directions</a></li>
-
-                            </ul>
-                        </div>
+            <div class="col-lg-8 col-md-12 footer-links text-lg-center">
+                <div class="row justify-content-lg-end">
+                    <div class="col-lg-4 col-md-4 footer-column mb-4 mb-lg-0">
+                        <h4 class="text-xl font-bold mb-4">Quick Links:</h4>
+                        <ul class="list-unstyled space-y-2">
+                            <li><a href="#home" class="hover:text-primary-light transition">Home</a></li>
+                            <li><a href="#services" class="hover:text-primary-light transition">Services</a></li>
+                            <li><a href="#about" class="hover:text-primary-light transition">About</a></li>
+                            <li><a href="#contact" class="hover:text-primary-light transition">Contact</a></li>
+                        </ul>
+                    </div>
+                    <!-- Connect With Us -->
+                    <div class="col-lg-4 col-md-4 footer-column">
+                        <h4 class="text-xl font-bold mb-4">Connect With Us:</h4>
+                        <ul class="list-unstyled space-y-2">
+                            <li><a href="https://www.facebook.com/aidofangels/" class="hover:text-primary-light transition">Facebook</a></li>
+                            <li><a href="https://www.instagram.com/explore/locations/203403116344468/aid-of-angels-therapy-and-learning-center/" class="hover:text-primary-light transition">Instagram</a></li>
+                            <li><a href="https://maps.app.goo.gl/YPJuF3HFWuVuqPgx7" class="hover:text-primary-light transition">Location & Directions</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
+
 </body>
 <script>
     
@@ -346,29 +370,102 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollElements.forEach((el) => observer.observe(el));
   });
 
+  document.querySelector('.toggle-text').addEventListener('click', function() {
+        var extraText = document.querySelector('.extra-text');
+        var button = this;
+        
+        if (extraText.style.display === "none") {
+            extraText.style.display = "inline";
+            button.textContent = "Read Less";
+        } else {
+            extraText.style.display = "none";
+            button.textContent = "Read More";
+        }
+    });
 
-  /* // Wait for the window to load completely
-window.onload = function() {
-    // Hide the preloader after the page has loaded
-    document.getElementById('preloader').style.display = 'none';
+// Detect when elements are in view
+const serviceBoxes = document.querySelectorAll('.service-box');
+const empoweringText = document.querySelector('.empowering-families-text');
+
+const checkInView = () => {
+    const windowHeight = window.innerHeight;
+    
+    // Check service boxes
+    serviceBoxes.forEach((box) => {
+        const boxTop = box.getBoundingClientRect().top;
+        const boxBottom = box.getBoundingClientRect().bottom;
+
+        if (boxTop < windowHeight - 100 && boxBottom > 0) {
+            box.classList.add('in-view');
+        } else {
+            box.classList.remove('in-view');
+        }
+    });
+
+    // Check empowering text
+    const textTop = empoweringText.getBoundingClientRect().top;
+    const textBottom = empoweringText.getBoundingClientRect().bottom;
+
+    if (textTop < windowHeight - 100 && textBottom > 0) {
+        empoweringText.classList.add('in-view');
+    } else {
+        empoweringText.classList.remove('in-view');
+    }
+};
+
+// Initial check on page load
+window.addEventListener('load', () => {
+    checkInView();
+});
+
+// Check on scroll
+window.addEventListener('scroll', () => {
+    checkInView();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const boxes = document.querySelectorAll('.box');
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            } else {
+                entry.target.classList.remove('visible'); // Remove the class when it's out of view
+            }
+        });
+    }, { threshold: 0.5 }); // Trigger when 50% of the box is in view
+
+    boxes.forEach(box => {
+        observer.observe(box);
+    });
+});
+
+
+// Function to show preloader and then navigate to the href
+function showPreloaderAndRedirect(event) {
+  event.preventDefault();  // Prevent the default behavior of the link
+  
+  // Show the preloader
+  document.getElementById('preloader').style.display = 'flex';
+  
+  // Get the href from the clicked link
+  const href = event.target.getAttribute('href');
+  
+  // Redirect after a short delay (1.5 seconds in this case)
+  setTimeout(function() {
+    window.location.href = href;
+  }, 1500);  // Adjust the delay as needed
 }
 
-// Get the button and preloader elements
-const getStartedButton = document.getElementById('getStartedButton');
-const preloader = document.getElementById('preloader');
+// Attach event listener to the 'Get Started' button
+document.getElementById('getButton').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('learnButton').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('joinButton').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('forumButton').addEventListener('click', showPreloaderAndRedirect);
 
-// When the button is clicked, show the preloader and prevent the default link behavior
-getStartedButton.onclick = function(event) {
-    event.preventDefault();  // Prevent the default navigation behavior
-    preloader.style.display = 'flex';  // Show the preloader
 
-    // Simulate a delay (replace this with actual logic if needed)
-    setTimeout(function() {
-        preloader.style.display = 'none';  // Hide the preloader after the delay
-        $('#registerModal').modal('show'); // Show the register modal
-    }, 1000);  // Wait for 0.9 seconds before showing the modal (adjust the time as needed)
-};
-*/
+
 
 $(window).scroll(function() {
     if ($(this).scrollTop() > 50) {
