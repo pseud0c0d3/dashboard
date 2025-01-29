@@ -1,83 +1,10 @@
 @extends('layouts.user-nav')
-
+@section('navbar_title', 'MAIN POSTS') 
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
-<style>
-::-webkit-scrollbar {
-    display: none;
-}
-/* Hover effect for the dropdown button */
-#navbarDropdown:hover {
-    background-color: #f8f9fa; /* Light background on hover */
-    border-color: #007bff; /* Border color when hovered */
-}
 
-/* Hover effect for dropdown items with scale animation */
-.dropdown-item:hover {
-    background-color: #007bff; /* Blue background on hover */
-    color: #fff; /* White text on hover */
-    transform: scale(1.05); /* Slightly increase size */
-    transition: transform 0.2s ease-in-out; /* Smooth transition */
-}
-
-/* Hover effect for the profile picture button */
-.dropdown-toggle:hover img {
-    opacity: 0.8; /* Slight opacity change for profile image on hover */
-    transform: scale(1.15); /* Slightly increase size */
-
-}
-</style>
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('posts.index') }}">MAIN POSTS</a>
-        <!-- Dropdown Button with Image -->
-        <div class="dropdown ms-4">
-    <button 
-        class="btn btn-light dropdown-toggle d-flex align-items-center" 
-        type="button" 
-        id="navbarDropdown" 
-        data-bs-toggle="dropdown" 
-        aria-expanded="false"
-    >
-        <!-- Profile Picture or Initials -->
-        @if(Auth::user()->picture)
-            <img
-                src="{{ asset('storage/' . Auth::user()->picture) }}"
-                alt="Profile Picture"
-                class="rounded-circle img-fluid"
-                width="40"
-                height="40"
-                style="object-fit: cover; border: 2px solid #ddd;"
-            >
-        @else
-            <div 
-                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
-                style="width: 40px; height: 40px; border: 2px solid #ff5722;"
-            >
-                <span class="h6 text-muted m-0">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                </span>
-            </div>
-        @endif
-
-        <!-- User Name (Visible except on mobile) -->
-        <span class="ms-2 user-name">{{ Auth::user()->name }}</span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
-        <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
-        <li><hr class="dropdown-divider"></li>
-    </ul>
-</div>
-
-    </div>
-</nav>
-
-
-<div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
+<div class="containers mt-5 pt-5" style="auto; max-height: 100vh;">
     <div class="card" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;">
     <div class="card-body">
         <!-- Post Title -->
@@ -165,7 +92,4 @@
     </div>
 </div>
 
-<!-- External Resources -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
