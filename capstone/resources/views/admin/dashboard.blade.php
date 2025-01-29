@@ -1,16 +1,112 @@
 @extends('layouts.admin-nav')
 
+@section('navbar_title', 'DASHBOARD') 
 @section('content')
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/nav.css">
 <!-- Include Chart.js -->
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .btn-primary.position-fixed {
+        top: 90px;
+        right: 20px;
+        z-index: 1050;
+        background-color: #6c63ff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary.position-fixed:hover {
+        background-color: #5a54e0;
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+    }
+
+    .card-title {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .card-body {
+        background-color: #f9f9f9;
+    }
+
+    .card-new-posts {
+        background-color: #f4e1d2;
+        border-left: 5px solid #ff6f61;
+    }
+
+    .card-new-users {
+        background-color: #d3eaf9;
+        border-left: 5px solid #4fa3f7;
+    }
+
+    .card-upcoming-events {
+        background-color: #d8f7e4;
+        border-left: 5px solid #76d7c4;
+    }
+
+    .card-total-posts {
+        background-color: #fff3e6;
+        border-left: 5px solid #ffb84d;
+    }
+
+    .card-total-users {
+        background-color: #e6f7ff;
+        border-left: 5px solid #1d9bfa;
+    }
+
+    .card-events-appointments {
+        background-color: #f0f9f1;
+        border-left: 5px solid #2baf4e;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        background-color: #6c63ff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: bold;
+    }
+
+    .btn-primary:hover {
+        background-color: #5a54e0;
+    }
+
+    .row.mb-4 {
+        margin-bottom: 30px;
+    }
+
+    .d-flex.justify-content-end.mb-3 {
+        position: relative;
+    }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="container mt-4">
-    <h1 class="mb-4">Dashboard</h1>
 
     <div class="d-flex justify-content-end mb-3">
         <a href="{{ route('admin.dashboard.pdf') }}" class="btn btn-primary position-fixed" style="top: 20px; right: 20px;">Download as PDF</a>
     </div>
-
 
     <!-- Date Range Filter -->
     <form method="GET" action="{{ route('admin.dashboard') }}" class="row mb-4">
@@ -30,7 +126,7 @@
     <!-- Reports Section -->
     <div class="row mb-4">
         <div class="col-md-4">
-            <div class="card">
+            <div class="card card-new-posts">
                 <div class="card-body">
                     <h5 class="card-title">New Posts in Forum</h5>
                     <p class="card-text">{{ $newPostsCount }}</p>
@@ -39,7 +135,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
+            <div class="card card-new-users">
                 <div class="card-body">
                     <h5 class="card-title">New Users Registered</h5>
                     <p class="card-text">{{ $newUsersCount }}</p>
@@ -48,27 +144,25 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
+            <div class="card card-upcoming-events">
                 <div class="card-body">
                     <h6 class="card-title">Upcoming Events and Appointments</h6>
                     <p class="card-text">{{ $upcomingEventsCount }}</p>
                     <canvas id="upcomingEventsChart"></canvas>
-
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card">
+            <div class="card card-total-posts">
                 <div class="card-body">
                     <h5 class="card-title">Total Posts</h5>
                     <p class="card-text">{{ $totalPostsCount }}</p>
-
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
+            <div class="card card-total-users">
                 <div class="card-body">
                     <h5 class="card-title">Total Registered Users</h5>
                     <p class="card-text">{{ $totalUsersCount }}</p>
@@ -76,7 +170,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
+            <div class="card card-events-appointments">
                 <div class="card-body">
                     <h6 class="card-title">Events and Appointments Made</h6>
                     <p class="card-text">{{ $appointmentsCount }}</p>
@@ -85,10 +179,6 @@
         </div>
 
     </div>
-
-
-
-
 
 </div>
 
@@ -116,8 +206,8 @@
             datasets: [{
                 label: 'New Posts',
                 data: newPostsData,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1
             }]
         }
@@ -130,8 +220,8 @@
             datasets: [{
                 label: 'New Users',
                 data: newUsersData,
-                backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                borderColor: 'rgba(153, 102, 255, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             }]
         }
@@ -144,8 +234,8 @@
             datasets: [{
                 label: 'Upcoming Events',
                 data: upcomingEventsData,
-                backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                borderColor: 'rgba(255, 159, 64, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
         }

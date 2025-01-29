@@ -116,8 +116,7 @@
 <button class="btn toggle-sidebar-btn d-md-none" onclick="toggleSidebar()">
     ☰
 </button>
-    <div class="container">
-
+<div class="container">
         <!-- Sidebar -->
 <div class="sidebar" style="background-image: url(/img/bak.jpg); ">
     <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">

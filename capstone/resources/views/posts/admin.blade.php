@@ -3,31 +3,44 @@
 @section('content')
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="container mt-5">
-    <!-- Title and Search Bar -->
-    <div class="mb-5">
-        <h1 class="display-4 text-dark font-weight-bold mb-1" style="font-family: 'Roboto', sans-serif;">Latest Posts</h1>
-        <div class="search-container mt-6" style="max-width: 600px; margin: 0 auto;">
-            <form action="{{ route('posts.admin') }}" method="GET" class="d-flex w-200">
-                @csrf
-                <div class="input-group">
-                    <input
-                        type="text"
-                        name="search"
-                        placeholder="Search by title..."
-                        class="form-control rounded-pill"
-                        value="{{ request('search') }}"
-                        style="padding-left: 15px; font-size: 1rem; border: 1px solid #ced4da; box-shadow: none;"
-                    >
-                    <button type="submit" class="btn btn-primary rounded-pill ms-2">
-                        <i class="bi bi-search"></i> Search
-                    </button>
-                </div>
-            </form>
-        </div>
+<!-- Bootstrap JS with Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Make sure you include Bootstrap's JavaScript for the dropdown functionality -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<link rel="stylesheet" href="/css/nav.css">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ route('posts.index') }}">LATEST POSTS</a>
+        <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 500px;">
+    @csrf
+    <div class="input-group w-100">
+        <!-- Input field always visible -->
+        <input
+            type="text"
+            name="search"
+            placeholder="Search by title..."
+            class="form-control rounded-pill"
+            value="{{ request('search') }}"
+            style="display: block;" >
+        <!-- Hide button on mobile -->
+        <button
+            type="submit"
+            class="btn btn-light rounded-pill ms-2 d-none d-sm-block">
+            <i class="bi bi-search"></i>
+        </button>
     </div>
+</form>
 
+    </div>
+</nav>
+
+<div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
+    
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -51,8 +64,8 @@
             </div>
         @else
             @foreach($posts as $post)
-                <div class="card mb-4 shadow-sm rounded-lg border-0" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-                    <div class="card-body">
+            <div class="card mb-4" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset; font-family: 'Inter', sans-serif;">
+                    <div class="card-body" style="background-color: #ffffff;">
                         <!-- User Info Section -->
                         <div class="d-flex align-items-center mb-4">
                             <img src="{{ asset('storage/default-profile.jpg') }}"
@@ -60,16 +73,21 @@
                                  alt="User Profile"
                                  width="50" height="50">
                             <div class="ms-3">
-                                <h6 class="mb-0">{{ $post->user->name ?? 'Anonymous' }}</h6>
-                                <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+                                <h6 class="mb-0" style="font-size: 1rem; font-weight: 600; color: #333; font-family: 'Poppins', sans-serif;">
+                                    {{ $post->user->name ?? 'Anonymous' }}
+                                </h6>
+                                <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>
                             </div>
                         </div>
 
                         <!-- Post Content Section -->
-                        <h5 class="fw-bold text-primary mb-3">
+                        <h5 class="fw-bold text-dark mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.8rem; text-transform: capitalize; letter-spacing: 0.5px;">
                             {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
                         </h5>
-                        <p class="mb-3 text-muted">{{ Str::limit($post->body, 150) }}</p>
+
+                        <p class="mb-3" style="font-size: 1rem; line-height: 1.6; color: #555; font-family: 'Roboto', sans-serif;">
+                            {{ Str::limit($post->body, 150) }}
+                        </p>
 
                         <!-- Post Image (if any) -->
                         @if($post->image)
@@ -80,15 +98,15 @@
                             </div>
                         @endif
 
-                        <!-- Like and Comment Actions -->
+                        <!-- Comment Actions -->
                         <div class="d-flex justify-content-between align-items-center">
                             {{-- <div>
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}" style="font-size: 0.9rem; font-family: 'Roboto', sans-serif;">
                                     <i class="bi bi-chat-left-text"></i> Comment
                                 </button>
                             </div> --}}
                             <div>
-                                <a href="{{ route('posts.showadmin', $post->id) }}" class="btn btn-primary">Read More</a>
+                                <a href="{{ route('posts.showadmin', $post->id) }}" class="btn btn-primary" style="font-size: 0.9rem; font-family: 'Roboto', sans-serif;">Read More</a>
                             </div>
                         </div>
                     </div>
@@ -125,14 +143,12 @@
         </div>
     </div>
 
-    <!-- Add a Post Button -->
-    <div class="btn btn-success position-fixed"
-         style="bottom: 20px; right: 15%; z-index: 10; cursor: pointer;"
+   <!-- Add a Post Button -->
+   <div class="btn btn-success position-fixed" id="add"
          data-bs-toggle="modal"
          data-bs-target="#PostModal">
-        Add a Post
+        <i class="bi bi-plus-lg"></i> <!-- Icon for adding a post -->
     </div>
-</div>
 
 <!-- Post Modal -->
 <div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
@@ -253,10 +269,5 @@ document.addEventListener('DOMContentLoaded', function () {
 document.getElementById('currentDate').textContent = new Date().toLocaleString();
 </script>
 
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Bootstrap JS with Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 @endsection
