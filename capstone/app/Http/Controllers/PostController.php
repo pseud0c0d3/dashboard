@@ -113,7 +113,7 @@ class PostController extends Controller
     {
         // Assuming the user is authenticated
         $post->user_id = auth()->id();
-        $post->save();
+        // $post->save();
         $post->load('user'); // Eager load the 'user' relationship
         return view('posts.show', ['post' => $post]);
     }
@@ -122,7 +122,7 @@ class PostController extends Controller
     {
         // Assuming the user is authenticated
         $post->user_id = auth()->id();
-        $post->save();
+        // $post->save();
         $post->load('user'); // Eager load the 'user' relationship
         return view('posts.showadmin', ['post' => $post]);
     }
