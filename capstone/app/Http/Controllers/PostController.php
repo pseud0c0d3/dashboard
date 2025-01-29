@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller; // Ensure this line is present
 
 class PostController extends Controller
-{
-    /**
+{   /**
      * Display a listing of the resource.
      */
     public function index(Request $request)

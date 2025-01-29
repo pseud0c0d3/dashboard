@@ -20,7 +20,7 @@
     @csrf
     <div class="input-group w-100">
         <!-- Input field always visible -->
-        <input 
+        <input
             type="text"
             name="search"
             placeholder="Search by title..."
@@ -28,39 +28,39 @@
             value="{{ request('search') }}"
             style="display: block;" >
         <!-- Hide button on mobile -->
-        <button 
-            type="submit" 
+        <button
+            type="submit"
             class="btn btn-light rounded-pill ms-2 d-none d-sm-block">
             <i class="bi bi-search"></i>
         </button>
     </div>
 </form>
 
-        
+
 
         <!-- Dropdown Button with Image -->
         <!-- Dropdown Button with Image -->
 <div class="dropdown ms-4">
-    <button 
-        class="btn btn-light dropdown-toggle d-flex align-items-center" 
-        type="button" 
-        id="navbarDropdown" 
-        data-bs-toggle="dropdown" 
+    <button
+        class="btn btn-light dropdown-toggle d-flex align-items-center"
+        type="button"
+        id="navbarDropdown"
+        data-bs-toggle="dropdown"
         aria-expanded="false"
     >
         <!-- Profile Picture or Initials -->
         @if(Auth::user()->picture)
-            <img 
-                src="{{ asset('storage/' . Auth::user()->picture) }}" 
-                alt="Profile Picture" 
-                class="rounded-circle img-fluid" 
-                width="40" 
-                height="40" 
-                style="object-fit: cover; border: 2px solid #ddd;" 
+            <img
+                src="{{ asset('storage/' . Auth::user()->picture) }}"
+                alt="Profile Picture"
+                class="rounded-circle img-fluid"
+                width="40"
+                height="40"
+                style="object-fit: cover; border: 2px solid #ddd;"
             >
         @else
-            <div 
-                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
+            <div
+                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm"
                 style="width: 40px; height: 40px; border: 2px solid #ff5722;">
                 <span class="h6 text-muted m-0">
                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
@@ -141,11 +141,11 @@
 
                         <!-- Comment Actions -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <div>
+                            {{-- <div>
                                 <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}" style="font-size: 0.9rem; font-family: 'Roboto', sans-serif;">
                                     <i class="bi bi-chat-left-text"></i> Comment
                                 </button>
-                            </div>
+                            </div> --}}
                             <div>
                                 <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary" style="font-size: 0.9rem; font-family: 'Roboto', sans-serif;">Read More</a>
                             </div>
@@ -220,7 +220,7 @@
         </div>
     </div>
 
-    <!-- Comment Modal -->
+    {{-- <!-- Comment Modal -->
     @foreach($posts as $post)
         <div class="modal fade" id="commentModal{{ $post->id }}" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -245,7 +245,7 @@
                 </div>
             </div>
         </div>
-    @endforeach
+    @endforeach --}}
     <!-- Toggle Sidebar Button (visible in mobile mode) -->
 <!-- Toggle Sidebar Button -->
 <button class="btn toggle-sidebar-btn d-md-none" onclick="toggleSidebar()">
@@ -254,7 +254,7 @@
 
 
     <script>
-        
+
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.like-btn').forEach(button => {
                 button.addEventListener('click', function () {
@@ -282,7 +282,7 @@
 
         document.getElementById('currentDate').textContent = new Date().toLocaleString();
 
- 
+
     </script>
 
 @endsection

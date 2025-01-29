@@ -13,48 +13,49 @@
 
 <!-- Modal for Adding Events -->
 <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form action="{{ route('admin.events.create') }}" method="POST" id="eventForm">
-        @csrf
-        <div class="modal-header">
-          <h5 class="modal-title" id="addEventModalLabel">Add Event</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="eventTitle" class="form-label">Title</label>
-            <input type="text" class="form-control" id="eventTitle" name="title" required>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="{{ route('admin.events.create') }}" method="POST" id="eventForm">
+          @csrf
+          <div class="modal-header">
+            <h5 class="modal-title" id="addEventModalLabel">Add Event</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="mb-3">
-            <label for="eventDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="eventDescription" name="description"></textarea>
+          <div class="modal-body">
+            <!-- Form Fields Here -->
+            <div class="mb-3">
+              <label for="eventTitle" class="form-label">Title</label>
+              <input type="text" class="form-control" id="eventTitle" name="title" required>
+            </div>
+            <div class="mb-3">
+              <label for="eventDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="eventDescription" name="description"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="startTime" class="form-label">Start Time</label>
+              <input type="datetime-local" class="form-control" id="startTime" name="start_time" required>
+            </div>
+            <div class="mb-3">
+              <label for="endTime" class="form-label">End Time</label>
+              <input type="datetime-local" class="form-control" id="endTime" name="end_time" required>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="isPublic" name="is_public">
+              <label class="form-check-label" for="isPublic">Make Public</label>
+            </div>
+            <div class="mb-3" id="exclusiveUserEmailGroup">
+              <label for="userEmail" class="form-label">Exclusive User Email</label>
+              <input type="email" class="form-control" id="userEmail" name="user_email">
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="startTime" class="form-label">Start Time</label>
-            <input type="datetime-local" class="form-control" id="startTime" name="start_time" required>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" id="submitEventBtn" class="btn btn-primary">Save Event</button>
           </div>
-          <div class="mb-3">
-            <label for="endTime" class="form-label">End Time</label>
-            <input type="datetime-local" class="form-control" id="endTime" name="end_time" required>
-          </div>
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="isPublic" name="is_public">
-            <label class="form-check-label" for="isPublic">Make Public</label>
-          </div>
-          <div class="mb-3" id="exclusiveUserEmailGroup">
-            <label for="userEmail" class="form-label">Exclusive User Email</label>
-            <input type="email" class="form-control" id="userEmail" name="user_email">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save Event</button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 <!-- Event Details Modal -->
 <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -78,6 +79,24 @@
 
 
 <script>
+    // Wait for the modal to be shown
+  document.getElementById('addEventModal').addEventListener('shown.bs.modal', function () {
+    const form = document.getElementById('eventForm');
+    const submitButton = document.getElementById('submitEventBtn');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent the default form submission
+
+      // Disable the submit button
+      submitButton.disabled = true;
+      submitButton.classList.add('btn-secondary'); // Change the button color to grey
+      submitButton.classList.remove('btn-primary'); // Remove the primary button color
+
+      // Submit the form via JavaScript
+      form.submit();
+    });
+  });
+
 document.addEventListener('DOMContentLoaded', function() {
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -99,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         selectable: true,
         dayMaxEvents: true,
         events: '/admin/events', // Fetch all events for admins via AJAX
-        
+
         eventClick: function(info) {
     // Safely populate modal fields
     document.getElementById('eventDetailsTitle').textContent = info.event.title || 'No Title Provided';
