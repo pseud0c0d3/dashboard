@@ -4,31 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Aid of Angels</title>
+    <!-- FontAwesome for Icons -->
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        body {
+</head>
+<!-- Custom CSS for Interactive Back Button -->
+<style>
+            body {
             background-image: url('/img/bak.jpg'); /* Replace with your image URL */
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             min-height: 100vh;
         }
-    </style>
-</head>
-<body>
-   <!-- Navbar with Styled Interactive Back Button -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <a href="{{ route('index') }}" class="back-button">
-        <i class="fas fa-arrow-left"></i> Back
-    </a>
-</nav>
 
-<!-- FontAwesome for Icons -->
-<script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
-
-<!-- Custom CSS for Interactive Back Button -->
-<style>
     .back-button {
         position: absolute;
         top: 15px;
@@ -67,6 +57,16 @@
         transform: scale(0.95);
     }
 </style>
+<body>
+
+@include('components.preloader')
+
+   <!-- Navbar with Styled Interactive Back Button -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a href="{{ route('index') }}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+</nav>
 
 
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
@@ -129,7 +129,7 @@
             <!-- Registration Link -->
             <div class="text-center mt-3">
                 <span>Don't have an account? </span>
-                <a href="{{ route('user.register') }}" class="text-primary">Register here</a>
+                <a href="{{ route('user.register') }}" id="reg"class="text-primary">Register here</a>
             </div>
         </div>
     </div>
@@ -138,5 +138,26 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Function to show preloader and then navigate to the href
+function showPreloaderAndRedirect(event) {
+  event.preventDefault();  // Prevent the default behavior of the link
+  
+  // Show the preloader
+  document.getElementById('preloader').style.display = 'flex';
+  
+  // Get the href from the clicked link
+  const href = event.target.getAttribute('href');
+  
+  // Redirect after a short delay (1.5 seconds in this case)
+  setTimeout(function() {
+    window.location.href = href;
+  }, 1500);  // Adjust the delay as needed
+}
+
+// Attach event listener to the 'Get Started' button
+document.getElementById('reg').addEventListener('click', showPreloaderAndRedirect);
+
+    </script>
 </body>
 </html>

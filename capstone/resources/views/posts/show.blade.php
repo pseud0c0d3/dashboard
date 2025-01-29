@@ -2,7 +2,7 @@
 
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="/css/nav.css">
 <style>
 ::-webkit-scrollbar {
     display: none;
@@ -30,11 +30,11 @@
 </style>
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-family: 'Roboto', sans-serif; height: 80px; margin-left: 250px; padding-left: 50px; background: linear-gradient(#3677b3,#3677b3)">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand " style="font-size: 45px;" href="{{ route('posts.index') }}">MAIN POSTS</a>
+        <a class="navbar-brand" href="{{ route('posts.index') }}">MAIN POSTS</a>
         <!-- Dropdown Button with Image -->
-        <div class="dropdown ms-4">
+<div class="dropdown ms-4">
     <button 
         class="btn btn-light dropdown-toggle d-flex align-items-center" 
         type="button" 
@@ -55,16 +55,15 @@
         @else
             <div 
                 class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
-                style="width: 40px; height: 40px; border: 2px solid #ff5722;"
-            >
+                style="width: 40px; height: 40px; border: 2px solid #ff5722;">
                 <span class="h6 text-muted m-0">
                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                 </span>
             </div>
         @endif
 
-        <!-- Optional Text -->
-        <span class="ms-2">{{ Auth::user()->name }}</span>
+        <!-- User Name (Visible except on mobile) -->
+        <span class="ms-2 user-name">{{ Auth::user()->name }}</span>
     </button>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
@@ -75,6 +74,7 @@
 
     </div>
 </nav>
+
 
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     <div class="card" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;">
@@ -164,7 +164,4 @@
     </div>
 </div>
 
-<!-- External Resources -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

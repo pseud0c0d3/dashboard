@@ -1,6 +1,8 @@
 @extends('layouts.user-nav')
-
+@section('navbar_title', 'HELP') 
 @section('content')
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/nav.css">
 
     <!-- Main content and other structure -->
             

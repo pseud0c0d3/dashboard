@@ -68,6 +68,10 @@
        /* Navbar Style */
        .navbar {
         background: linear-gradient(#3677b3, #3677b3);
+        background-image: url(/img/bak.jpg); 
+        background-repeat: no-repeat;
+        background-size: auto;
+        
         height: 80px;
         width: calc(100% - 250px); /* Adjust to leave space for sidebar */
         position: fixed;
@@ -75,6 +79,7 @@
         left: 250px; /* Space for the sidebar */
         z-index: 1000;
         margin-left: 0;
+        
         font-family: 'Roboto', sans-serif;
         
     }
@@ -116,6 +121,7 @@ form .btn{
     margin-left: 250px; /* Move the navbar to the right */
     transition: margin-left 0.3s ease; /* Smooth transition */
 }
+
 /* Mobile specific adjustments */
 @media (max-width: 768px) {
     .navbar.shifted {
@@ -141,27 +147,37 @@ form .btn{
             padding-left: 70px;
             margin-left: -325px; /* Remove offset for small screens */
             position: relative;
+            
     }
+    .navbar-brand{
+        margin-left: 200px;
+        margin-right: 0;
+}
+
      /* Hide the search bar and show the logo button on mobile */
      .search-bar {
             display: none;
+        }
+        #navbarDropdown{
+            margin-left: -220px ;
+            width: 85px;
+            height: 55px;
         }
 
     /* Hide the user name on mobile */
     #navbarDropdown .user-name {
         display: none;
     }
+   
+    
 
     /* Adjust the profile image size and style */
     #navbarDropdown img {
-        width: 35px;
-        height: 35px;
+        width: 85px;
+        height: 55px;
     }
     
-    /* Make the dropdown toggle button smaller on mobile */
-    #navbarDropdown {
-        padding: 0;
-    }
+    
 
     form .btn {
         display: none !important;

@@ -62,10 +62,64 @@
 
 </style>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <!-- Dynamic Title -->
+        <a class="navbar-brand">
+            @yield('navbar_title') <!-- Default title is PROFILE -->
+        </a>
+
+        <div class="dropdown ms-4">
+    <button 
+        class="btn btn-light dropdown-toggle d-flex align-items-center" 
+        type="button" 
+        id="navbarDropdown" 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false"
+    >
+        <!-- Profile Picture or Initials -->
+        @if(Auth::user()->picture)
+            <img 
+                src="{{ asset('storage/' . Auth::user()->picture) }}" 
+                alt="Profile Picture" 
+                class="rounded-circle img-fluid" 
+                width="40" 
+                height="40" 
+                style="object-fit: cover; border: 2px solid #ddd;" 
+            >
+        @else
+            <div 
+                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
+                style="width: 40px; height: 40px; border: 2px solid #ff5722;">
+                <span class="h6 text-muted m-0">
+                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                </span>
+            </div>
+        @endif
+
+        <!-- User Name (Hidden on mobile, visible on larger screens) -->
+        <span class="ms-2 user-name d-none d-lg-inline">{{ Auth::user()->name }}</span>
+    </button>
+
+    <!-- Dropdown Menu (Updated with proper positioning) -->
+    <ul class="dropdown-menu dropdown-menu-end mt-2 shadow-sm custom-dropdown" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
+        <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
+        <li><hr class="dropdown-divider"></li>
+    </ul>
+</div>
+
+    </div>
+</nav>
+
+<!-- Toggle Sidebar Button -->
+<button class="btn toggle-sidebar-btn d-md-none" onclick="toggleSidebar()">
+    ☰
+</button>
     <div class="container">
 
         <!-- Sidebar -->
-<div class="sidebar">
+<div class="sidebar" style="background-image: url(/img/bak.jpg); ">
     <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
     <ul class="menu">
         <li><a href="{{ route('user.profile') }}"><i class="bi bi-person"></i> Profile</a></li>

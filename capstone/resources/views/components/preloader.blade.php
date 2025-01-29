@@ -1,6 +1,6 @@
 <!-- Preloader -->
 <div id="preloader">
-  <img src="img/angel.gif" alt="Loading..." class="floating-image">
+  <img src="/img/angel.gif" alt="Loading..." class="floating-image">
 </div>
 
 <style>
