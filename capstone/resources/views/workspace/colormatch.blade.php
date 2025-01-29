@@ -18,8 +18,8 @@
     <div class="button-container">
       <button id="startButton" class="button start-button">Start Game</button>
     </div>
-    <button  id="exitButton" class="button exit-button">Exit</button>
-  </div>
+    <button id="exitButton" class="button exit-button" onclick="window.location.href='{{ route('user.forum') }}'">Exit</button>
+</div>
 
 
   <!-- Game -->
@@ -30,6 +30,9 @@
     <button id="quitButton" class="button quit-button">Quit</button>
   </div>
 
-  <script src="{{ asset('/js/colormatchscript.js') }}"></script>
+  <script src="{{ asset('/js/colormatchscript.js') }}">
+document.getElementById("exitButton").addEventListener("click", function() {
+    window.location.href = "/user/forum"; // Adjust this URL to match your Laravel route
+});</script>
 </body>
 </html>

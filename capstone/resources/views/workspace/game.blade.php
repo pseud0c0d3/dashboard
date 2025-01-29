@@ -15,8 +15,7 @@
     <p>Let's have fun and play a game to match the sounds with their categories (Land, Air, or Sea)!</p>
     <p id="highest-score-home">Highest Score: 0</p>
     <button id="start-game">Start Game 🎮</button>
-    <button id="exit-home" onclick="exitGame()">Exit Game</button>
-</div>
+    <button id="exitButton" class="button exit-button" onclick="window.location.href='{{ route('user.forum') }}'">Exit</button></div>
 
 
 <!-- Instruction Modal -->
@@ -57,6 +56,8 @@
         </div>
     </div>
 
-    <script src="/js/gamescript.js"></script>
+    <script src="/js/gamescript.js">document.getElementById("exitButton").addEventListener("click", function() {
+        window.location.href = "/user/forum"; // Adjust this URL to match your Laravel route
+    });</script>
 </body>
 </html>

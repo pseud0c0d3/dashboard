@@ -32,14 +32,13 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('posts.index') }}">MAIN POSTS</a>
         <!-- Dropdown Button with Image -->
         <div class="dropdown ms-4">
-    <button 
-        class="btn btn-light dropdown-toggle d-flex align-items-center" 
-        type="button" 
-        id="navbarDropdown" 
-        data-bs-toggle="dropdown" 
+    <button
+        class="btn btn-light dropdown-toggle d-flex align-items-center"
+        type="button"
+        id="navbarDropdown"
+        data-bs-toggle="dropdown"
         aria-expanded="false"
     >
         <!-- Profile Picture or Initials -->
@@ -53,8 +52,8 @@
                 style="object-fit: cover; border: 2px solid #ddd;"
             >
         @else
-            <div 
-                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" 
+            <div
+                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm"
                 style="width: 40px; height: 40px; border: 2px solid #ff5722;"
             >
                 <span class="h6 text-muted m-0">

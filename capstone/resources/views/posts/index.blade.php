@@ -16,25 +16,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('posts.index') }}">LATEST POSTS</a>
-        <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 500px;">
-    @csrf
-    <div class="input-group w-100">
-        <!-- Input field always visible -->
-        <input
-            type="text"
-            name="search"
-            placeholder="Search by title..."
-            class="form-control rounded-pill"
-            value="{{ request('search') }}"
-            style="display: block;" >
-        <!-- Hide button on mobile -->
-        <button
-            type="submit"
-            class="btn btn-light rounded-pill ms-2 d-none d-sm-block">
-            <i class="bi bi-search"></i>
-        </button>
-    </div>
-</form>
 
 
 
@@ -99,6 +80,25 @@
     @endif
 
     <div class="scrollable-posts" style="max-height: 100vh; padding-right: 15px;">
+        <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 500px;">
+            @csrf
+            <div class="input-group w-100">
+                <!-- Input field always visible -->
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search by title..."
+                    class="form-control rounded-pill"
+                    value="{{ request('search') }}"
+                    style="display: block;" >
+                <!-- Hide button on mobile -->
+                <button
+                    type="submit"
+                    class="btn btn-light rounded-pill ms-2 d-none d-sm-block">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
         @if($posts->isEmpty())
             <div class="alert alert-warning text-center">
                 No posts found. Please try a different search term.
