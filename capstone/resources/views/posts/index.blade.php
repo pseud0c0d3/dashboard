@@ -1,5 +1,5 @@
 @extends('layouts.user-nav')
-@section('navbar_title', 'LATEST POSTS') 
+@section('navbar_title', 'LATEST POSTS')
 @section('content')
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
@@ -137,10 +137,10 @@
                     <i class="bi bi-search"></i>
                 </button>
             </div>
-            
+
         </form>
         <div class="d-flex justify-content-between mb-3">
-            
+
             <div>
                 <a href="{{ route('posts.index', ['filter' => 'all']) }}" class="btn btn-outline-primary {{ request('filter', 'all') === 'all' ? 'active' : '' }}">
                     All Posts
@@ -150,7 +150,7 @@
                 </a>
             </div>
         </div>
-        
+
         @if($posts->isEmpty())
             <div class="alert alert-warning text-center">
                 No posts found. Please try a different search term.
@@ -161,10 +161,12 @@
                     <div class="card-body" style="background-color: #ffffff;">
                         <!-- User Info Section -->
                         <div class="d-flex align-items-center mb-4">
-                            <img src="{{ asset('storage/default-profile.jpg') }}"
-                                 class="rounded-circle"
-                                 alt="User Profile"
-                                 width="50" height="50">
+                            <img src="{{ $post->user->picture
+                            ? asset('storage/' . $post->user->picture)
+                            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($post->user->name, 0, 1)) . '&background=random&color=fff&size=50' }}"
+                     class="rounded-circle"
+                     alt="User Profile"
+                     width="50" height="50">
                             <div class="ms-3">
                                 <h6 class="mb-0" style="font-size: 1rem; font-weight: 600; color: #333; font-family: 'Poppins', sans-serif;">
                                     {{ $post->user->name ?? 'Anonymous' }}
@@ -182,22 +184,9 @@
                             {{ Str::limit($post->body, 150) }}
                         </p>
 
-                        <!-- Post Image (if any) -->
-                        @if($post->image)
-                            <div class="mb-3">
-                                <img src="{{ asset('storage/' . $post->image) }}"
-                                     class="img-fluid rounded-3"
-                                     alt="{{ $post->image }}">
-                            </div>
-                        @endif
 
                         <!-- Comment Actions -->
                         <div class="d-flex justify-content-between align-items-center">
-                            {{-- <div>
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}" style="font-size: 0.9rem; font-family: 'Roboto', sans-serif;">
-                                    <i class="bi bi-chat-left-text"></i> Comment
-                                </button>
-                            </div> --}}
                             <div>
                                 <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary" style="font-size: 0.9rem; font-family: 'Roboto', sans-serif;">Read More</a>
                             </div>
@@ -236,7 +225,7 @@
         </div>
     </div>
 
-    
+
 
     <!-- Add a Post Button -->
     <div class="btn btn-success position-fixed" id="add"
