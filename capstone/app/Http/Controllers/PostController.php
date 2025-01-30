@@ -134,51 +134,59 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if ($post->user_id !== Auth::id()) {
+            return redirect()->route('posts.index')->with('error', 'You do not have permission to edit this post.');
+        }
+
         return view('posts.edit', ['post' => $post]);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Post $post)
-    {
-        $request->validate([
-            'title' => ['required', 'max:255'],
-            'body' => ['required'],
-            // 'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
-
-        ]);
-
-        $path = $post->image ?? null;
-        // if ($request->hasFile('image')) {
-        //     if ($post->image) {
-        //         Storage::disk('public')->delete($post->image);
-        //     }
-        //     $path = Storage::disk('public')->put('posts_images', $request->image);
-        // }
-
-        $post->update([
-            'title' => $request->title,
-            'body' => $request->body,
-            // 'image' => $path,
-        ]);
-
-        return redirect()->route('posts.index')->with('success', 'Your post was updated.');
+{
+    // Ensure the authenticated user is the owner of the post
+    if ($post->user_id !== Auth::id()) {
+        return redirect()->route('posts.index')->with('error', 'You are not authorized to edit this post.');
     }
+
+    // Validate the form inputs
+    $request->validate([
+        'title' => ['required', 'max:255'],
+        'body' => ['required'],
+    ]);
+
+    // Update the post
+    $post->update([
+        'title' => $request->title,
+        'body' => $request->body,
+    ]);
+
+    return redirect()->route('posts.index')->with('success', 'Your post was updated.');
+}
+
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Post $post)
-    {
-        if ($post->image) {
-            Storage::disk('public')->delete($post->image);
-        }
-
-        $post->delete();
-
-        return back()->with('success', 'Your post was deleted.');
+{
+    if ($post->user_id !== Auth::id()) {
+        return redirect()->route('posts.index')->with('error', 'You do not have permission to delete this post.');
     }
+
+    if ($post->image) {
+        Storage::disk('public')->delete($post->image);
+    }
+
+    $post->delete();
+
+    return redirect()->route('posts.index')->with('success', 'Your post was deleted.');
+}
+
     public function storeComment(Request $request, $postId) 
 {
     $request->validate([
