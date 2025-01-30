@@ -124,40 +124,42 @@
                 </div>
 
                 <div class="details">
-                    <form action="{{ route('appointments.update', $event->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <td>
-                            <input type="text" class="form-control" style="width:auto" name="title" value="{{ $event->title }}" required>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" style="width:auto" name="description" value="{{ $event->description }}">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" style="width:auto" name="email" value="{{ $event->user?->email ?? 'Public Event' }}" readonly>
-                        </td>
-                        <td>
-                            <input type="datetime-local" class="form-control" name="start_time" value="{{ \Carbon\Carbon::parse($event->start_time)->format('Y-m-d\TH:i') }}" required>
-                        </td>
-                        <td>
-                            <input type="datetime-local" class="form-control" name="end_time" value="{{ \Carbon\Carbon::parse($event->end_time)->format('Y-m-d\TH:i') }}" required>
-                        </td>
+    <form action="{{ route('appointments.update', $event->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" name="title" value="{{ $event->title }}" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" class="form-control" name="description" value="{{ $event->description }}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" name="email" value="{{ $event->user?->email ?? 'Public Event' }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="start_time">Start Time:</label>
+            <input type="datetime-local" class="form-control" name="start_time" value="{{ \Carbon\Carbon::parse($event->start_time)->format('Y-m-d\TH:i') }}" required>
+        </div>
+        <div class="form-group">
+            <label for="end_time">End Time:</label>
+            <input type="datetime-local" class="form-control" name="end_time" value="{{ \Carbon\Carbon::parse($event->end_time)->format('Y-m-d\TH:i') }}" required>
+        </div>
+        <div class="btn-container" style="display: inline;">
+            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+        </div>
+    </form>
 
-                        <td>
-                            <form action="{{ route('appointments.update', $event->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                            </form>
+    <!-- Delete Form remains unchanged -->
+    <form action="{{ route('appointments.destroy', $event->id) }}" method="POST" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?')">Delete</button>
+    </form>
+</div>
 
-                            <form action="{{ route('appointments.destroy', $event->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?')">Delete</button>
-                            </form>
-                        </td>
-                    </form>
-                </div>
             </div>
         @empty
             <div class="card col-span-2">
@@ -196,8 +198,13 @@
 </div>
 
 <script>
-    function toggleDetails(card) {
-        card.classList.toggle('show-details');
+   function toggleDetails(card) {
+    // Check if the click is inside the form or the button, if so don't toggle
+    if (card.contains(event.target) && event.target.closest('form, button')) {
+        return;
     }
+    card.classList.toggle('show-details');
+}
+
 </script>
 @endsection
