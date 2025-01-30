@@ -17,18 +17,24 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $search = $request->input('search');
-        $posts = Post::recent() // Only fetch posts from the last 15 days
-            ->when($search, function ($query, $search) {
-                $query->where('title', 'LIKE', "%{$search}%");
-            })
-            ->with('user') // Ensure the 'user' relationship is eagerly loaded
-            ->latest()
-            ->paginate(10);
+{
+    $search = $request->input('search');
+    $filter = $request->input('filter', 'all'); // Default to 'all' posts
 
-        return view('posts.index', compact('posts'));
-    }
+    $posts = Post::recent()
+        ->when($search, function ($query, $search) {
+            return $query->where('title', 'LIKE', "%{$search}%");
+        })
+        ->when($filter === 'mine' && Auth::check(), function ($query) {
+            return $query->where('user_id', Auth::id());
+        })
+        ->with('user')
+        ->latest()
+        ->paginate(10);
+
+    return view('posts.index', compact('posts', 'filter'));
+}
+
 
 
 

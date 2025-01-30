@@ -25,14 +25,14 @@ class NotificationController extends Controller
         return redirect()->route('notifications.index'); // Redirect back to notifications page
     }
     public function showPost(Notification $notification)
-{
-    // Check if the notification belongs to the logged-in user
-    if ($notification->user_id !== auth()->id()) {
-        abort(403, 'Unauthorized access');
-    }
+    {
+        // Check if the notification belongs to the logged-in user
+        if ($notification->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access');
+        }
 
-    // Redirect to the post associated with this notification
-    return redirect()->route('posts.show', ['post' => $notification->post_id]); // Use post_id
-}
+        // Redirect to the post associated with this notification
+        return redirect()->route('posts.show', $notification->post_id);
+    }
     
 }
