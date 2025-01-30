@@ -76,6 +76,7 @@
 @media (max-width: 768px) {
     .main-content {
         margin-left: 0;
+        margin-top: 60px;
     }
 }
 
@@ -93,7 +94,6 @@
         </a>
         
 
-        <!-- Notifications Dropdown (Positioned next to Profile Dropdown) -->
         <div class="d-flex align-items-center">
             <!-- Notifications Dropdown with Badge -->
             <div class="dropdown me-3 position-relative">

@@ -162,7 +162,15 @@
         width: 35px;  /* Smaller size for mobile */
         height: 35px; /* Smaller size for mobile */
     }
+    .navbar-brand {
+        position: relative;
+        
+        left: 40%;
+        transform: translateX(-50%);
+        font-size: 1.2rem; /* Adjust this based on your preference */
+    }
 }
+
 
 /* Navbar Style */
 .navbar {
@@ -220,6 +228,8 @@ form .btn {
     transition: margin-left 0.3s ease; /* Smooth transition */
 }
 
+
+
 /* Mobile specific adjustments */
 @media (max-width: 768px) {
     .navbar.shifted {
@@ -230,6 +240,7 @@ form .btn {
     .navbar form {
         display: none;
     }
+    
 
     #add {
         bottom: 15px; /* Closer to the bottom */
@@ -244,12 +255,13 @@ form .btn {
         width: 135%; /* Full width for mobile */
         margin-top: -15px;
         padding-left: 70px;
-        margin-left: -325px; /* Remove offset for small screens */
-        position: relative;
+        margin-left: -250px; /* Remove offset for small screens */
+        
+        
     }
 
     .navbar-brand {
-        margin-left: 150px;
+        margin-left: 0px;
         margin-right: 0;
     }
 
