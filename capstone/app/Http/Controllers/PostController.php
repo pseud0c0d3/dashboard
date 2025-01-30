@@ -194,32 +194,57 @@ class PostController extends Controller
     return redirect()->route('posts.index')->with('success', 'Your post was deleted.');
 }
 
-    public function storeComment(Request $request, $postId) 
+public function storeComment(Request $request, $postId) 
 {
     $request->validate([
         'comment' => 'required|string',
     ]);
 
-    // Assuming the post belongs to a user
+    // Find the post by its ID
     $post = Post::findOrFail($postId);
-    $user = $post->user; // Get the user who owns the post
 
-    // Save the comment (you'll have your own logic for saving comments)
+    // Get the user who owns the post (the one who created the post)
+    $postOwner = $post->user;
+
+    // Initialize the comment model
     $comment = new Comment();
-    $comment->user_id = Auth::id();
     $comment->post_id = $postId;
     $comment->content = $request->comment;
+
+    // Check if the authenticated user is an admin
+    if (Auth::guard('admin')->check()) {
+        // If the user is an admin, save their admin_id
+        $comment->admin_id = Auth::guard('admin')->id();
+    } else {
+        // If the user is a regular user, save their user_id
+        $comment->user_id = Auth::id();
+    }
+
+    // Save the comment
     $comment->save();
 
-    // Create a notification for the post owner, linking to the specific post
-    $user->notifications()->create([
+    // Notify the post owner about the new comment
+    $postOwner->notifications()->create([
         'type' => 'comment',
         'message' => 'You have a new comment on your post!',
         'post_id' => $postId,  // Link to the post
     ]);
 
+    // Optional: Notify admins if the commenter is a user (not an admin)
+    if (Auth::guard('admin')->check() === false) {
+        $admins = User::where('is_admin', true)->get();
+        foreach ($admins as $admin) {
+            $admin->notifications()->create([
+                'type' => 'comment',
+                'message' => 'A new comment has been posted on a post by ' . Auth::user()->name,
+                'post_id' => $postId,  // Link to the post
+            ]);
+        }
+    }
+
     return back()->with('success', 'Comment posted and notification sent!');
 }
+
 
 public function updateComment(Request $request, Comment $comment)
 {

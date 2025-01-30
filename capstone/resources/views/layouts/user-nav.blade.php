@@ -104,13 +104,14 @@
     <!-- Apply dropdown-menu-end class for proper alignment -->
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
         <!-- Notifications content -->
-        @forelse (Auth::user()->notifications as $notification)
-        <a class="dropdown-item" href="{{ route('notifications.showPost', $notification->id) }}">
-            {{ $notification->message }} - <small>{{ $notification->created_at->diffForHumans() }}</small>
-        </a>
+        @forelse (Auth::user()->notifications->sortByDesc('created_at') as $notification)
+            <a class="dropdown-item" href="{{ route('notifications.showPost', $notification->id) }}">
+                {{ $notification->message }} - <small>{{ $notification->created_at->diffForHumans() }}</small>
+            </a>
         @empty
             <a class="dropdown-item" href="#">No new notifications</a>
         @endforelse
+
     </div>
 </div>
 
