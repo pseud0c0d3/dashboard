@@ -7,7 +7,7 @@ use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LogInController;
-
+use App\Http\Controllers\NotificationController;
 // LoggedOut Routes
 Route::get('/', function () {
     return view('loggedOut.index');
@@ -115,4 +115,10 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->name('posts.like');
 
 });
+
+// Route to show the notifications dropdown
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+// Route to mark a notification as read
+Route::get('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 

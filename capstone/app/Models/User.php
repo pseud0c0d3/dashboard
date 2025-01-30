@@ -53,4 +53,11 @@ public function getProfilePictureAttribute($value)
 {
     return $value ? asset('storage/' . $value) : asset('storage/default-profile.jpg');
 }
+// In the User model (app/Models/User.php):
+
+public function notifications()
+{
+    return $this->hasMany(Notification::class);
+}
+
 }

@@ -9,6 +9,8 @@ use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller; // Ensure this line is present
+use App\Models\Notification;
+
 
 class PostController extends Controller
 {   /**
@@ -178,19 +180,30 @@ class PostController extends Controller
         return back()->with('success', 'Your post was deleted.');
     }
     public function storeComment(Request $request, $postId)
-    {
-        $request->validate([
-            'comment' => 'required|max:500',
-        ]);
+{
+    $request->validate([
+        'comment' => 'required|string',
+    ]);
 
-        Comment::create([
-            'post_id' => $postId,
-            'user_id' => Auth::id(), // Associate the logged-in user
-            'content' => $request->comment,
-        ]);
+    // Assuming the post belongs to a user
+    $post = Post::findOrFail($postId);
+    $user = $post->user; // Get the user who owns the post
 
-        return back()->with('success', 'Comment added successfully!');
-    }
+    // Save the comment (you'll have your own logic for saving comments)
+    $comment = new Comment();
+    $comment->user_id = Auth::id();
+    $comment->post_id = $postId;
+    $comment->content = $request->comment;
+    $comment->save();
+
+    // Create a notification for the post owner
+    $user->notifications()->create([
+        'type' => 'comment',
+        'message' => 'You have a new comment on your post!',
+    ]);
+
+    return back()->with('success', 'Comment posted and notification sent!');
+}
 
 
 }

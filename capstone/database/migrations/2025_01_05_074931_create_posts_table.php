@@ -24,7 +24,7 @@ class CreatePostsTable extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn(['title', 'body', 'image']);
+            $table->dropColumn(['title', 'body']);
         });
     }
 }
