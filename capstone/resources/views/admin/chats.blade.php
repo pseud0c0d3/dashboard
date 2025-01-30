@@ -1,7 +1,62 @@
 @extends('layouts.admin-nav')
 
+@section('navbar_title', 'CHAT') 
 @section('content')
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 
+<style>
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hover effect for the dropdown button */
+#navbarDropdown:hover {
+    background-color: #f8f9fa; /* Light background on hover */
+    border-color: #007bff; /* Border color when hovered */
+}
+
+/* Hover effect for dropdown items with scale animation */
+.dropdown-item:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: #fff; /* White text on hover */
+    transform: scale(1.05); /* Slightly increase size */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+
+/* Hover effect for the profile picture button */
+.dropdown-toggle:hover img {
+    opacity: 0.8; /* Slight opacity change for profile image on hover */
+    transform: scale(1.15); /* Slightly increase size */
+}
+
+/* Prevent overlap of chat container with navbar */
+.main-panel {
+    margin-top: 50px; /* Adjust this value to match the height of the navbar */
+}
+
+.content-wrapper {
+    padding-top: 20px; /* Extra space if needed */
+}
+
+/* Chat Window Styling */
+.chat-window {
+    height: 400px;
+    overflow-y: auto;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.chat-message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+</style>
+<link rel="stylesheet" href="/css/nav.css">
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
