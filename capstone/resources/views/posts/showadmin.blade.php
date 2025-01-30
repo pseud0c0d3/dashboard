@@ -14,7 +14,10 @@
 
         <!-- Posted By -->
         <p style="font-family: 'Roboto', sans-serif; font-size: 0.9rem; color: rgb(102, 102, 102);">
-            Posted by: <strong>{{ $post->user->name ?? 'Anonymous' }}</strong>
+            Posted by: <strong>
+                {{ $post->admin->name ?? $post->user->name ?? 'Anonymous' }}
+            </strong>
+            
         </p>
 
         <!-- Post Content -->

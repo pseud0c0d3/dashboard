@@ -42,7 +42,7 @@ class AdminController extends Controller
     $search = $request->input('search'); // Get the search input
 
     // Query to filter users by name, username, or email
-    $users = User::select('id', 'name', 'email', 'bio', 'phone_number', 'username', 'status', 'created_at')
+    $users = User::select('id', 'name', 'email', 'bio', 'phone_number', 'username', 'created_at')
         ->when($search, function ($query, $search) {
             // Filter users by username or email
             $query->where('name', 'like', "%{$search}%")
