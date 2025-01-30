@@ -161,12 +161,14 @@
                     <div class="card-body" style="background-color: #ffffff;">
                         <!-- User Info Section -->
                         <div class="d-flex align-items-center mb-4">
-                            <img src="{{ $post->user->picture
-                            ? asset('storage/' . $post->user->picture)
-                            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($post->user->name, 0, 1)) . '&background=random&color=fff&size=50' }}"
-                     class="rounded-circle"
-                     alt="User Profile"
-                     width="50" height="50">
+                            <img src="{{ $post->user ? ($post->user->picture 
+                            ? asset('storage/' . $post->user->picture) 
+                            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($post->user->name, 0, 1)) . '&background=random&color=fff&size=50') 
+                            : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
+                            class="rounded-circle"
+                            alt="User Profile"
+                            width="50" height="50">
+
                             <div class="ms-3">
                                 <h6 class="mb-0" style="font-size: 1rem; font-weight: 600; color: #333; font-family: 'Poppins', sans-serif;">
                                     @if ($post->admin)
