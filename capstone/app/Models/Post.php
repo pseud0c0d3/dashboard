@@ -15,24 +15,31 @@ class Post extends Model
         'title',
         'body',
         'user_id',
+        'admin_id', // Add this
     ];
 
     public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
-public function comments()
-{
-    return $this->hasMany(Comment::class);
-}
-public function likes()
-{
-    return $this->hasMany(Like::class);
-}
-public function scopeRecent($query)
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id'); // Define the admin relationship
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function scopeRecent($query)
     {
         return $query->where('created_at', '>=', now()->subDays(15));
     }
-
 }

@@ -74,8 +74,15 @@
                                  width="50" height="50">
                             <div class="ms-3">
                                 <h6 class="mb-0" style="font-size: 1rem; font-weight: 600; color: #333; font-family: 'Poppins', sans-serif;">
-                                    {{ $post->user->name ?? 'Anonymous' }}
+                                    @if ($post->admin)
+                                        Admin: {{ $post->admin->name }}
+                                    @elseif ($post->user)
+                                        {{ $post->user->name }}
+                                    @else
+                                        Anonymous
+                                    @endif
                                 </h6>
+                                
                                 <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>
                             </div>
                         </div>
@@ -158,7 +165,7 @@
                 <h5 class="modal-title" id="PostModalLabel">Create a Post!</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <!-- Title Input -->

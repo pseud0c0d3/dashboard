@@ -26,9 +26,10 @@ class PostController extends Controller
             return $query->where('title', 'LIKE', "%{$search}%");
         })
         ->when($filter === 'mine' && Auth::check(), function ($query) {
-            return $query->where('user_id', Auth::id());
+            return $query->where('user_id', Auth::id())
+                 ->orWhereNotNull('admin_id');
         })
-        ->with('user')
+        ->with(['user', 'admin'])
         ->latest()
         ->paginate(10);
 
@@ -41,13 +42,14 @@ class PostController extends Controller
     public function admin(Request $request)
     {
         $search = $request->input('search');
-        $posts = Post::recent() // Only fetch posts from the last 15 days
-            ->when($search, function ($query, $search) {
-                $query->where('title', 'LIKE', "%{$search}%");
-            })
-            ->with('user') // Ensure the 'user' relationship is eagerly loaded
-            ->latest()
-            ->paginate(10);
+        $posts = Post::recent()
+        ->where(function ($query) {
+            $query->whereNotNull('user_id')
+                ->orWhereNotNull('admin_id'); // Ensure admin posts are included
+        })
+        ->with(['user', 'admin']) // Load both relationships
+        ->latest()
+        ->paginate(10);
 
         return view('posts.admin', compact('posts'));
     }
@@ -89,29 +91,28 @@ class PostController extends Controller
         return back()->with('success', 'Your post was created.');
     }
 
-    // public function storeadmin(Request $request)
-    // {
-    //     $request->validate([
-    //         'title' => ['required', 'max:255'],
-    //         'body' => ['required'],
-    //         'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
+    public function storeadmin(Request $request)
+{
+    $request->validate([
+        'title' => ['required', 'max:255'],
+        'body' => ['required'],
+    ]);
 
-    //     ]);
+    // Check if the admin is authenticated
+    $admin = Auth::guard('admin')->user();
+    if (!$admin) {
+        return back()->withErrors(['error' => 'Unauthorized. Please log in as an admin.']);
+    }
 
-    //     $path = null;
-    //     if ($request->hasFile('image')) {
-    //         $path = Storage::disk('public')->put('posts_images', $request->image);
-    //     }
+    Post::create([
+        'title' => $request->title,
+        'body' => $request->body,
+        'admin_id' => $admin->id, // Ensure this is set
+    ]);
 
-    //     Post::create([
-    //         'title' => $request->title,
-    //         'body' => $request->body,
-    //         'admin_id' => Auth::id(),
-    //         'image' => $path,
-    //     ]);
+    return back()->with('success', 'Your post was created.');
+}
 
-    //     return back()->with('success', 'Your post was created.');
-    // }
 
     /**
      * Display the specified resource.
@@ -129,9 +130,9 @@ class PostController extends Controller
     public function showadmin(Post $post)
     {
         // Assuming the user is authenticated
-        $post->user_id = auth()->id();
+        // $post->user_id = auth()->id();
         // $post->save();
-        $post->load('user'); // Eager load the 'user' relationship
+        $post->load('admin'); // Eager load the 'admin' relationship
         return view('posts.showadmin', ['post' => $post]);
     }
 

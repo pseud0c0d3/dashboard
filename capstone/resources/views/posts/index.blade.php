@@ -167,8 +167,15 @@
                                  width="50" height="50">
                             <div class="ms-3">
                                 <h6 class="mb-0" style="font-size: 1rem; font-weight: 600; color: #333; font-family: 'Poppins', sans-serif;">
-                                    {{ $post->user->name ?? 'Anonymous' }}
+                                    @if ($post->admin)
+                                        Admin: {{ $post->admin->name }}
+                                    @elseif ($post->user)
+                                        {{ $post->user->name }}
+                                    @else
+                                        Anonymous
+                                    @endif
                                 </h6>
+                                
                                 <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>
                             </div>
                         </div>

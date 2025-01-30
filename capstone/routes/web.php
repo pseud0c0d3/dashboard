@@ -45,6 +45,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/posts/admin/{post}', [PostController::class, 'showadmin'])->name('posts.showadmin');
 
 
+    Route::post('/posts/admin', [PostController::class, 'storeadmin'])->name('admin.store');
 
     // Admin Chats
     Route::get('/admin/fetch-messages', [ChatsController::class, 'fetchMessages'])->name('admin.fetchMessages');
