@@ -177,43 +177,40 @@ class UserController extends Controller
 
     // Update Profile
     public function updateProfile(Request $request)
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    // Validate input
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-        'bio' => 'nullable|string|max:500',
-        'phone_number' => 'nullable|string|max:15',
-        'username' => 'nullable|string|max:50|unique:users,username,' . $user->id,
-        'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+        // Validate input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'bio' => 'nullable|string|max:500',
+            'phone_number' => ['required', 'regex:/^\d{10}$/'],
+            'username' => 'nullable|string|max:50|unique:users,username,' . $user->id,
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    // Handle profile picture upload
-    if ($request->hasFile('picture')) {
-        $file = $request->file('picture');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $filePath = $file->storeAs('profile_pictures', $fileName, 'public');
+        // Handle profile picture upload
+        if ($request->hasFile('picture')) {
+            $file = $request->file('picture');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('profile_pictures', $fileName, 'public');
 
-    
+            // Save new picture path
+            $user->picture = $filePath;
+        }
 
-        // Save new picture path
-        $user->picture = $filePath;
+        // Update other fields
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->bio = $request->bio;
+        $user->phone_number = '63' . $request->phone_number;
+        $user->username = $request->username;
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
-
-    // Update other fields
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->bio = $request->bio;
-    $user->phone_number = $request->phone_number;
-    $user->username = $request->username;
-
-    $user->save();
-
-    return redirect()->back()->with('success', 'Profile updated successfully.');
-}
-
 
     // Change Password View
     public function changePassword()
@@ -223,28 +220,26 @@ class UserController extends Controller
 
     // Update Password
     public function updatePassword(Request $request)
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    // Validate the input
-    $request->validate([
-        'current_password' => 'required|string',
-        'new_password' => 'required|string|min:8|confirmed',
-        'new_password_confirmation' => 'required|string|min:8',
-    ]);
+        // Validate the input
+        $request->validate([
+            'current_password' => ['required'],
+            'new_password' => ['required', 'min:8', 'confirmed'],
+        ]);
 
-    // Check if the current password is correct
-    if (!Hash::check($request->current_password, $user->password)) {
-        // Return error message if current password is incorrect
-        return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+        // Check if the current password is correct
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+        }
+
+        // Update the password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('user.profile')->with('success', 'Password updated successfully!');
     }
-
-    // Update the password
-    $user->password = Hash::make($request->new_password);
-    $user->save();
-
-    return redirect()->route('user.profile')->with('success', 'Password updated successfully!');
-}
 
 public function logout()
 {

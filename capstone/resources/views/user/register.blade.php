@@ -71,7 +71,7 @@
     }
 </style>
 <body>
-    
+
 @include('components.preloader')
       <!-- Navbar with Styled Interactive Back Button -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -180,6 +180,18 @@
         </div>
     </div>
 
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("registrationForm").addEventListener("submit", function() {
+                var submitButton = document.getElementById("submitBtn");
+                submitButton.disabled = true;
+                submitButton.innerText = "Processing...";
+                submitButton.classList.remove("btn-warning");
+                submitButton.classList.add("btn-secondary"); // Turns the button grey
+            });
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

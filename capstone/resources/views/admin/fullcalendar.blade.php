@@ -1,6 +1,6 @@
 @extends('layouts.admin-nav')
 
-@section('navbar_title', 'CALENDAR') 
+@section('navbar_title', 'CALENDAR')
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
@@ -209,24 +209,7 @@
 </div>
 
 <script>
-    // Wait for the modal to be shown
-    document.getElementById('addEventModal').addEventListener('shown.bs.modal', function () {
-        const form = document.getElementById('eventForm');
-        const submitButton = document.getElementById('submitEventBtn');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
-
-            // Disable the submit button
-            submitButton.disabled = true;
-            submitButton.classList.add('btn-secondary'); // Change the button color to grey
-            submitButton.classList.remove('btn-primary'); // Remove the primary button color
-
-            // Submit the form via JavaScript
-            form.submit();
-        });
-    });
-
+    
     document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');
         const calendar = new FullCalendar.Calendar(calendarEl, {

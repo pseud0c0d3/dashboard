@@ -101,7 +101,7 @@
                     <div class="list-group chat-list" id="chatList" style="max-height: 500px; overflow-y: auto;">
                         <ul class="list-group list-group-flush">
                             @if($chats->isEmpty())
-                               
+
                                 <li class="list-group-item">No chats available</li>
                             @else
                                 <!-- If chats are found, display chat profiles -->
@@ -157,7 +157,7 @@
         </div>
 
         <!-- content-wrapper ends -->
-        
+
     </div>
     <!-- main-panel ends -->
 </div>
@@ -223,7 +223,7 @@ $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight)
 }
 });
 
-</script> 
+</script>
 
 <!-- JavaScript to handle chat item click -->
 <script>
@@ -340,5 +340,28 @@ $('#messageForm').on('submit', function(e) {
     });
 });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+        var messageInput = document.getElementById("messageInput");
+        var sendButton = document.getElementById("sendMessageButton");
+
+        // Disable the button initially
+        sendButton.disabled = true;
+        sendButton.classList.add("btn-secondary"); // Start with grey color
+        sendButton.classList.remove("btn-primary");
+
+        // Enable/Disable button based on input
+        messageInput.addEventListener("input", function() {
+            if (messageInput.value.trim() === "") {
+                sendButton.disabled = true;
+                sendButton.classList.add("btn-secondary");
+                sendButton.classList.remove("btn-primary");
+            } else {
+                sendButton.disabled = false;
+                sendButton.classList.remove("btn-secondary");
+                sendButton.classList.add("btn-primary");
+            }
+        });
+    });
 </script>
 @endsection

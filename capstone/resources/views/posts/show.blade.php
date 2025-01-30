@@ -145,7 +145,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                
+
                 <h5 class="modal-title" id="commentModalLabel">Add a Comment</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -165,5 +165,20 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll("form[id^='commentForm']").forEach(form => {
+            form.addEventListener("submit", function() {
+                var submitButton = this.querySelector("button[type='submit']");
+                submitButton.disabled = true;
+                submitButton.innerText = "Submit";
+                submitButton.classList.remove("btn-primary");
+                submitButton.classList.add("btn-secondary"); // Change to grey
+            });
+        });
+    });
+</script>
 
 @endsection
