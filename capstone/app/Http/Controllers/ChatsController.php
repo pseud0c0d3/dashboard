@@ -9,7 +9,7 @@ use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
-
+use App\Models\User;
 class ChatsController extends Controller
 {
     public function fetchMessagesFromUserToAdmin(Request $request)
@@ -57,6 +57,13 @@ class ChatsController extends Controller
         $chat->message = $request->input('message');
         $chat->seen = 0; // Default to not seen
         $chat->save();
+
+        // Trigger notification for the user
+        $user = User::find($userId); // The user sending the message
+        $user->notifications()->create([
+        'type' => 'message',
+        'message' => 'You received a message from the admin: ' . $chat->message,
+        ]);
 
         // Broadcast the message using the SendUserMessage event
         event(new SendUserMessage($chat));

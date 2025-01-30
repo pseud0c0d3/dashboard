@@ -29,6 +29,16 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.js"></script>
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
+
+    <!-- Bootstrap CSS -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS and dependencies (including jQuery and Popper.js) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <style>
     
@@ -69,7 +79,26 @@
             @yield('navbar_title') <!-- Default title is PROFILE -->
         </a>
 
-        <div class="dropdown ms-4">
+        <!-- In your Blade view (resources/views/layouts/app.blade.php or wherever you want the dropdown) -->
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Notifications
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @forelse (Auth::user()->notifications as $notification)
+                    <a class="dropdown-item" href="{{ route('notifications.read', $notification->id) }}">
+                        {{ $notification->message }} - <small>{{ $notification->created_at->diffForHumans() }}</small>
+                    </a>
+                @empty
+                    <a class="dropdown-item" href="#">No new notifications</a>
+                @endforelse
+            </div>
+        </div>
+        
+
+
+            
     <button 
         class="btn btn-light dropdown-toggle d-flex align-items-center" 
         type="button" 
