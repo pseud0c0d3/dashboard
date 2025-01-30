@@ -1,5 +1,5 @@
 @extends('layouts.user-nav')
-@section('navbar_title', 'CHAT') 
+@section('navbar_title', 'CHAT')
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 
@@ -139,7 +139,7 @@ $('#chatMessageContainer').scrollTop($('#chatMessageContainer')[0].scrollHeight)
 }
 });
 
-</script> 
+</script>
 
 <script>
 $(document).ready(function() {
@@ -257,5 +257,28 @@ $(document).ready(function() {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+        var messageInput = document.getElementById("messageInput");
+        var sendButton = document.getElementById("sendMessageButton");
+
+        // Disable the button initially
+        sendButton.disabled = true;
+        sendButton.classList.add("btn-secondary"); // Start with grey color
+        sendButton.classList.remove("btn-primary");
+
+        // Enable/Disable button based on input
+        messageInput.addEventListener("input", function() {
+            if (messageInput.value.trim() === "") {
+                sendButton.disabled = true;
+                sendButton.classList.add("btn-secondary");
+                sendButton.classList.remove("btn-primary");
+            } else {
+                sendButton.disabled = false;
+                sendButton.classList.remove("btn-secondary");
+                sendButton.classList.add("btn-primary");
+            }
+        });
+    });
 </script>
 @endsection

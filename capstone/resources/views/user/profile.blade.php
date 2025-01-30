@@ -1,10 +1,10 @@
 @extends('layouts.user-nav')
-@section('navbar_title', 'PROFILE') 
+@section('navbar_title', 'PROFILE')
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
     <!-- Display error messages -->
-    @if($errors->any())
+    {{-- @if($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -18,12 +18,15 @@
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
-    @endif
+    @endif --}}
 
-    
+
 
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
 
+    @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
     <div class="row gutters-sm justify-content-center">
         <div class="col-12 mb-3">
             <div class="card rounded-5 " style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
@@ -92,8 +95,8 @@
                             {{ $user->username ?? 'Not set' }}
                         </div>
                     </div>
-                    
-             
+
+
                 </div>
             </div>
         </div>
@@ -139,7 +142,11 @@
 
                         <div class="mb-3">
                             <label for="phone_number" class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" placeholder="09-- --- ----" maxlength="11">
+                            <div class="input-group">
+                                <span class="input-group-text">+63</span>
+                                <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', Str::after($user->phone_number, '63')) }}" maxlength="10" pattern="\d{10}" required>
+                            </div>
+                            <small class="text-muted">Enter your 10-digit phone number (e.g., 9123456789).</small>
                         </div>
 
                         <div class="mb-3">
@@ -167,17 +174,41 @@
                         @csrf
                         <div class="mb-3">
                             <label for="current_password" class="form-label">Current Password</label>
-                            <input type="password" class="form-control" id="current_password" name="current_password" required>
+                            <input
+                                type="password"
+                                class="form-control @error('current_password') is-invalid @enderror"
+                                id="current_password"
+                                name="current_password"
+                                required>
+                            @error('current_password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="new_password" class="form-label">New Password</label>
-                            <input type="password" class="form-control" id="new_password" name="new_password" required>
+                            <input
+                                type="password"
+                                class="form-control @error('new_password') is-invalid @enderror"
+                                id="new_password"
+                                name="new_password"
+                                required>
+                            @error('new_password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="confirm_password" class="form-label">Confirm New Password</label>
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                            <input
+                                type="password"
+                                class="form-control @error('new_password_confirmation') is-invalid @enderror"
+                                id="confirm_password"
+                                name="new_password_confirmation"
+                                required>
+                            @error('new_password_confirmation')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-warning w-100">Change Password</button>
@@ -193,5 +224,17 @@
             myModal.show();
         </script>
     @endif
+    <script>
+        document.getElementById("phone_number").addEventListener("input", function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
 
+        document.querySelector("form").addEventListener("submit", function (event) {
+            let phone = document.getElementById("phone_number");
+            if (phone.value.length !== 10) {
+                alert("Phone number must be exactly 10 digits!");
+                event.preventDefault();
+            }
+        });
+    </script>
 @endsection

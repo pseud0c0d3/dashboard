@@ -254,7 +254,15 @@
 
 
     <script>
-
+        document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("#PostModal form").addEventListener("submit", function() {
+            var submitButton = this.querySelector("button[type='submit']");
+            submitButton.disabled = true;
+            submitButton.innerText = "Post";
+            submitButton.classList.remove("btn-primary");
+            submitButton.classList.add("btn-secondary"); // Change to grey
+        });
+    });
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.like-btn').forEach(button => {
                 button.addEventListener('click', function () {
@@ -281,6 +289,7 @@
         });
 
         document.getElementById('currentDate').textContent = new Date().toLocaleString();
+
 
 
     </script>
