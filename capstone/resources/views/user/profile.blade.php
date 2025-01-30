@@ -230,12 +230,85 @@
         </div>
     </div>
 
+<!-- Button to trigger modal -->
+<button class="btn btn-info btn-lg rounded-pill px-4 py-2 shadow-lg" data-bs-toggle="modal" data-bs-target="#childViewModal">
+    <i class="bi bi-eye me-2"></i>View Child Info
+</button>
+
+<!-- Child View Modal -->
+<div class="modal fade" id="childViewModal" tabindex="-1" aria-labelledby="childViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background-color: #17a2b8;">
+                <h5 class="modal-title" id="childViewModalLabel">Child Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Name:</strong> {{ $child->name ?? 'Not Provided' }}</p>
+                <p><strong>Age:</strong> {{ $child->age ?? 'Not Provided' }}</p>
+                <p><strong>Condition:</strong> {{ $child->condition ?? 'Not Provided' }}</p>
+                <p><strong>Height:</strong> {{ $child->height ?? 'Not Provided' }} cm</p>
+                <p><strong>Weight:</strong> {{ $child->weight ?? 'Not Provided' }} kg</p>
+                <button class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#childEditModal" data-bs-dismiss="modal">Edit Information</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Child Edit Modal -->
+<div class="modal fade" id="childEditModal" tabindex="-1" aria-labelledby="childEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background-color: #ffc107;">
+                <h5 class="modal-title" id="childEditModalLabel">Edit Child Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ route('child.update') }}">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label for="child_name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="child_name" name="child_name" value="{{ old('child_name', $child->name ?? '') }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="child_age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="child_age" name="child_age" value="{{ old('child_age', $child->age ?? '') }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="child_condition" class="form-label">Condition</label>
+                        <input type="text" class="form-control" id="child_condition" name="child_condition" value="{{ old('child_condition', $child->condition ?? '') }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="child_height" class="form-label">Height (cm)</label>
+                        <input type="number" step="0.1" class="form-control" id="child_height" name="child_height" value="{{ old('child_height', $child->height ?? '') }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="child_weight" class="form-label">Weight (kg)</label>
+                        <input type="number" step="0.1" class="form-control" id="child_weight" name="child_weight" value="{{ old('child_weight', $child->weight ?? '') }}">
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
     @if($errors->any())
         <script>
             var myModal = new bootstrap.Modal(document.getElementById('changePasswordModal'), { keyboard: false });
             myModal.show();
         </script>
     @endif
+
+
     <script>
         document.getElementById("phone_number").addEventListener("input", function () {
             this.value = this.value.replace(/\D/g, '').slice(0, 10);

@@ -42,16 +42,21 @@ class PostController extends Controller
     public function admin(Request $request)
     {
         $search = $request->input('search');
-        $posts = Post::recent()
-        ->where(function ($query) {
-            $query->whereNotNull('user_id')
-                ->orWhereNotNull('admin_id'); // Ensure admin posts are included
-        })
-        ->with(['user', 'admin']) // Load both relationships
-        ->latest()
-        ->paginate(10);
+        $filter = $request->input('filter', 'all'); // Default to 'all' posts
 
-        return view('posts.admin', compact('posts'));
+        $posts = Post::recent()
+            ->when($search, function ($query, $search) {
+                return $query->where('title', 'LIKE', "%{$search}%");
+            })
+            ->when($filter === 'mine' && Auth::check(), function ($query) {
+                return $query->where('user_id', Auth::id())
+                     ->orWhereNotNull('admin_id');
+            })
+            ->with(['user', 'admin'])
+            ->latest()
+            ->paginate(10);
+
+        return view('posts.admin', compact('posts', 'filter'));;
     }
     /**
      * Show the form for creating a new resource.
@@ -239,7 +244,7 @@ public function adminDestroy($id)
 }
 
 
-public function storeComment(Request $request, $postId) 
+public function storeComment(Request $request, $postId)
 {
     $request->validate([
         'comment' => 'required|string',

@@ -26,33 +26,32 @@
     }
 }
 
-/* Notification Dropdown Menu Styling */
+/* Dropdown Menu */
 .dropdown-menu {
+    position: absolute;
+    right: 10px !important; /* Align to the right within the screen */
+    left: auto !important; /* Remove left positioning */ /* Align to the left side */
+    top: 100%; /* Position directly below the notification icon */
+    min-width: 200px; /* Set a minimum width */
+    max-width: 90vw; /* Prevent dropdown from overflowing the screen */
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-height: 300px;
-    overflow-y: auto;
-    width: 320px; /* Fixed width for dropdown */
-    right: 0; /* Ensure it aligns properly with the parent */
-    left: auto; /* Ensure it doesn't stretch to the left */
-    z-index: 1050; /* Ensure it appears above other elements */
-    overflow-x: hidden; /* Prevent horizontal overflow */
-    padding: 10px 0;
+    overflow: hidden;
+    z-index: 9999; /* Ensure dropdown stays on top */
+    padding: 10px 15px; /* Add padding for better spacing */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
 }
 
-/* Notification Item Styling */
+/* Styling for the profile image in the dropdown */
+.dropdown-menu img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Style adjustments for the dropdown item for better visibility */
 .dropdown-item {
-    padding: 12px 20px;
-    font-size: 14px;
-    color: #333;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    width: 100%;
-    display: block;
-    white-space: normal; /* Allow text to wrap */
-    word-wrap: break-word; /* Allow long words to break and prevent overflow */
-    text-overflow: ellipsis; /* Adds "..." when text overflows */
-    overflow: hidden; /* Prevent overflow of text */
+    white-space: nowrap; /* Prevent wrapping of text */
 }
 
 /* Hover Effect for Notification Items */
@@ -65,6 +64,76 @@
 /* Mark read item styling */
 .dropdown-item.read {
     color: #777;
+}
+    /* Close Button for Mobile Sidebar */
+
+/* Default Sidebar - Visible on larger screens */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #23486A;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: transform 0.3s ease-in-out;
+    z-index: 999; /* Ensure the sidebar stays on top */
+}
+
+/* Hide sidebar on smaller screens */
+@media (max-width: 768px) {
+    .close-sidebar-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 10001; /* Ensure the button stays on top */
+}
+.close-sidebar-btn:hover {
+    background-color: transparent;
+}
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        width: 250px;
+        height: 100vh;
+        z-index: 9999; /* Higher z-index to ensure it's on top of the navbar */
+
+    }
+    /* Ensure navbar is below sidebar when opened on mobile */
+    .navbar {
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    /* Adjust sidebar toggle button */
+    .toggle-sidebar-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 10000;
+        background-color: #23486A; /* Make button visible */
+        color: white;
+    }
+}
+
+/* Ensure main content expands when sidebar is hidden */
+.main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        margin-top: 60px;
+    }
 }
 
 /* Tooltip Styling for Notification Icon */
