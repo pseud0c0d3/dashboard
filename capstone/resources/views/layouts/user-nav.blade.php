@@ -67,10 +67,9 @@
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
         <!-- Notifications content -->
         @forelse (Auth::user()->notifications as $notification)
-            <a class="dropdown-item {{ $notification->read_at ? 'notification-read' : 'notification-unread' }}" href="{{ route('notifications.read', $notification->id) }}" onclick="markAsRead(event, {{ $notification->id }})">
-                <i class="bi bi-bell"></i> 
-                {{ $notification->message }} - <small>{{ $notification->created_at->diffForHumans() }}</small>
-            </a>
+        <a class="dropdown-item" href="{{ route('notifications.showPost', $notification->id) }}">
+            {{ $notification->message }} - <small>{{ $notification->created_at->diffForHumans() }}</small>
+        </a>
         @empty
             <a class="dropdown-item" href="#">No new notifications</a>
         @endforelse
