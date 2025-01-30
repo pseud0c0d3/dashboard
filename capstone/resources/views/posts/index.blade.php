@@ -14,7 +14,34 @@
 
  <link rel="stylesheet" href="/css/nav.css">
 
+<style>
+    /* Custom styles for mobile responsiveness */
+@media (max-width: 576px) {
+    .filter-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
 
+    .filter-buttons .btn {
+        width: 100%; /* Make buttons full width on mobile */
+        margin-bottom: 10px; /* Add spacing between buttons */
+    }
+}
+
+@media (min-width: 577px) {
+    .filter-buttons {
+        display: flex;
+        justify-content: space-between; /* Keep buttons aligned in a row on larger screens */
+    }
+
+    .filter-buttons .btn {
+        width: auto; /* Default width for larger screens */
+    }
+}
+
+</style>
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     @if(session('success'))
         <div class="alert alert-success">
@@ -53,17 +80,17 @@
             </div>
 
         </form>
-        <div class="d-flex justify-content-between mb-3">
+        <div class="filter-buttons d-flex justify-content-between mb-3">
+    <div>
+        <a href="{{ route('posts.index', ['filter' => 'all']) }}" class="btn btn-outline-primary {{ request('filter', 'all') === 'all' ? 'active' : '' }}">
+            All Posts
+        </a>
+        <a href="{{ route('posts.index', ['filter' => 'mine']) }}" class="btn btn-outline-primary {{ request('filter') === 'mine' ? 'active' : '' }}">
+            My Posts
+        </a>
+    </div>
+</div>
 
-            <div>
-                <a href="{{ route('posts.index', ['filter' => 'all']) }}" class="btn btn-outline-primary {{ request('filter', 'all') === 'all' ? 'active' : '' }}">
-                    All Posts
-                </a>
-                <a href="{{ route('posts.index', ['filter' => 'mine']) }}" class="btn btn-outline-primary {{ request('filter') === 'mine' ? 'active' : '' }}">
-                    My Posts
-                </a>
-            </div>
-        </div>
 
         @if($posts->isEmpty())
             <div class="alert alert-warning text-center">
