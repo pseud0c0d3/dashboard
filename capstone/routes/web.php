@@ -81,7 +81,7 @@ Route::middleware(['auth'])->group(function () {
     // Change password
     Route::get('/profile/change-password', [UserController::class, 'changePassword'])->name('password.change');
     Route::post('/profile/change-password', [UserController::class, 'updatePassword'])->name('password.update');
-
+    
     // User Chats
     Route::get('/fetch-messages', [ChatsController::class, 'fetchMessagesFromUserToAdmin'])->name('fetch.messagesFromSellerToAdmin');
     Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmin'])->name('send.Messageofsellertoadmin');

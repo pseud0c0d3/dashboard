@@ -170,7 +170,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ route('profile.update') }}">
+                    <form method="POST" action="{{ url('/profile/change-password') }}">
+
                         @csrf
                         <div class="mb-3">
                             <label for="current_password" class="form-label">Current Password</label>
