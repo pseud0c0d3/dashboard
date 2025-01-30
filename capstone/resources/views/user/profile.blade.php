@@ -3,6 +3,15 @@
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
+<style>
+    /* Ensure profile picture maintains uniform size */
+.profile-picture {
+    width: 150px; /* Set the fixed width */
+    height: 150px; /* Set the fixed height */
+    object-fit: cover; /* Ensures the image scales properly without distorting */
+}
+
+</style>
     <!-- Display error messages -->
     {{-- @if($errors->any())
         <div class="alert alert-danger">
@@ -33,15 +42,16 @@
                 <div class="card-body p-4">
                     <div class="d-flex flex-column align-items-center text-center">
                         <!-- Profile Picture Section -->
-                        <div class="profile-picture-container">
-                            @if($user->picture)
-                                <img src="{{ asset('storage/' . $user->picture) }}" alt="Profile Picture" class="rounded-circle img-fluid" width="150">
-                            @else
-                                <div class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" style="width: 160px; height: 160px; border: 3px solid #ff5722;">
-                                    <span class="h3 text-muted">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
-                                </div>
-                            @endif
-                        </div>
+<div class="profile-picture-container">
+    @if($user->picture)
+        <img src="{{ asset('storage/' . $user->picture) }}" alt="Profile Picture" class="rounded-circle img-fluid profile-picture" width="150" height="150">
+    @else
+        <div class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm profile-picture" style="width: 150px; height: 150px; border: 3px solid #ff5722;">
+            <span class="h3 text-muted">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+        </div>
+    @endif
+</div>
+
                         <div class="mt-3">
                             <h4>{{ $user->name ?? 'No name provided' }}</h4>
                             <p class="text-secondary mb-1">{{ $user->bio ?? 'No bio provided' }}</p>

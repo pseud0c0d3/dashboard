@@ -41,6 +41,43 @@
 
     </head>
     <style>
+/* Default Sidebar - Visible on larger screens */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #23486A;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hide sidebar on smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        width: 250px;
+        height: 100vh;
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+}
+
+/* Ensure main content expands when sidebar is hidden */
+.main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+}
 
 </style>
 
@@ -193,30 +230,44 @@
             mainContent.classList.remove('expanded'); // Adjust main content
         }
 
-    // Function to show preloader and then navigate to the href
-    function showPreloaderAndRedirect(event) {
+    
+        function showPreloaderAndRedirect(event) {
     event.preventDefault();  // Prevent the default behavior of the link
-    
-    // Show the preloader
+
+    // Show the preloader and hide the sidebar content
     document.getElementById('preloader').style.display = 'flex';
-    
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.style.display = 'none';  // Hide the sidebar
+
     // Get the href from the clicked link
     const href = event.target.getAttribute('href');
     
     // Redirect after a short delay (1.5 seconds in this case)
     setTimeout(function() {
         window.location.href = href;
-    }, 1500);  // Adjust the delay as needed
+    }, 1000);  // Adjust the delay as needed
+}
+
+
+    // Function to add event listeners only once
+    function addPreloaderEventListener(id) {
+        const element = document.getElementById(id);
+        
+        // Check if the event listener is already attached
+        if (element && !element.hasAttribute('data-listener-added')) {
+            element.addEventListener('click', showPreloaderAndRedirect);
+            element.setAttribute('data-listener-added', 'true'); // Mark that listener has been added
+        }
     }
 
-    // Attach event listener to the 'Get Started' button
-    document.getElementById('prof').addEventListener('click', showPreloaderAndRedirect);
-    document.getElementById('form').addEventListener('click', showPreloaderAndRedirect);
-    document.getElementById('act').addEventListener('click', showPreloaderAndRedirect);
-    document.getElementById('color').addEventListener('click', showPreloaderAndRedirect);
-    document.getElementById('sound').addEventListener('click', showPreloaderAndRedirect);
-    document.getElementById('full').addEventListener('click', showPreloaderAndRedirect);
-    document.getElementById('chat').addEventListener('click', showPreloaderAndRedirect);
+    // Attach event listener to the necessary sidebar elements
+    addPreloaderEventListener('prof');
+    addPreloaderEventListener('form');
+    addPreloaderEventListener('act');
+    addPreloaderEventListener('color');
+    addPreloaderEventListener('sound');
+    addPreloaderEventListener('full');
+    addPreloaderEventListener('chat');
 
 
     // Toggle Notification Badge Visibility Based on Unread Notifications
