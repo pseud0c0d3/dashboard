@@ -99,7 +99,8 @@
 }
  </style>
 
- 
+
+
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     @if(session('success'))
         <div class="alert alert-success">
@@ -136,7 +137,20 @@
                     <i class="bi bi-search"></i>
                 </button>
             </div>
+            
         </form>
+        <div class="d-flex justify-content-between mb-3">
+            
+            <div>
+                <a href="{{ route('posts.index', ['filter' => 'all']) }}" class="btn btn-outline-primary {{ request('filter', 'all') === 'all' ? 'active' : '' }}">
+                    All Posts
+                </a>
+                <a href="{{ route('posts.index', ['filter' => 'mine']) }}" class="btn btn-outline-primary {{ request('filter') === 'mine' ? 'active' : '' }}">
+                    My Posts
+                </a>
+            </div>
+        </div>
+        
         @if($posts->isEmpty())
             <div class="alert alert-warning text-center">
                 No posts found. Please try a different search term.
@@ -221,6 +235,8 @@
             </nav>
         </div>
     </div>
+
+    
 
     <!-- Add a Post Button -->
     <div class="btn btn-success position-fixed" id="add"

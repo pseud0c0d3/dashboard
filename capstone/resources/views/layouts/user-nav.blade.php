@@ -54,6 +54,7 @@
         <a class="navbar-brand">
             @yield('navbar_title') <!-- Default title is PROFILE -->
         </a>
+        
 
         <!-- Notifications Dropdown (Positioned next to Profile Dropdown) -->
         <div class="d-flex align-items-center">
@@ -137,6 +138,7 @@
 
     <!-- Main Content -->
     <main class="py-4">
+        
         <div class="main-content">
             @yield('content')
         </div>
