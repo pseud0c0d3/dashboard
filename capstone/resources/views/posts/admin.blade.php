@@ -57,6 +57,16 @@
                 </button>
             </div>
         </form>
+        <div class="filter-buttons d-flex justify-content-between mb-3">
+    <div>
+        <a href="{{ route('posts.admin', ['filter' => 'all']) }}" class="btn btn-outline-primary {{ request('filter', 'all') === 'all' ? 'active' : '' }}">
+            All Posts
+        </a>
+        <a href="{{ route('posts.admin', ['filter' => 'mine']) }}" class="btn btn-outline-primary {{ request('filter') === 'mine' ? 'active' : '' }}">
+            My Posts
+        </a>
+    </div>
+</div>
         @if($posts->isEmpty())
             <div class="alert alert-warning text-center">
                 No posts found. Please try a different search term.

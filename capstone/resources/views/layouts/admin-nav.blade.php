@@ -6,62 +6,39 @@
     <title>AID OF ANGELS</title>
     <link rel="icon" type="image/x-icon" href="logo.png">
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/userprofile.css">
-    <link rel="stylesheet" href="/css/forum.css">
-    <link rel="stylesheet" href="/css/faq.css">
-    <link rel="stylesheet" href="/css/chat.css">
-    <link rel="stylesheet" href="/css/adminchat.css">
-    <link rel="stylesheet" href="/css/calendar.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js   "></script>
-    <!-- FullCalendar CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css" rel="stylesheet">
-    <!-- FullCalendar JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Bundle JS (includes Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/userprofile.css">
+        <link rel="stylesheet" href="/css/forum.css">
+        <link rel="stylesheet" href="/css/faq.css">
+        <link rel="stylesheet" href="/css/chat.css">
+        <link rel="stylesheet" href="/css/calendar.css">
+        <link rel="stylesheet" href="/css/adminchat.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- FullCalendar CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css" rel="stylesheet">
+
+        <!-- FullCalendar JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.js"></script>
+        <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
 
+        <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-<style>
-    
-    /* When the sidebar is toggled */
-    #navbar.expanded {
-        margin-left: 250px; /* Match sidebar expansion */
-    }
-    
-    #main-content.expanded {
-        margin-left: 250px; /* Match sidebar expansion */
-    }
-    /* Mobile responsive styles */
-    @media (max-width: 768px) {
-        .sidebar {
-            left: -100%; /* Hide the sidebar initially off-screen */
-        }
-    
-        .sidebar.open {
-            left: 0; /* Show the sidebar when open */
-        }
-    
-        .main-content {
-            margin-left: 0; /* Default margin for mobile */
-        }
-    
-        .main-content.expanded {
-            margin-left: 250px; /* Add space when sidebar is open */
-        }
-        
-    }
-    
-    </style>
+    <!-- Bootstrap JS and dependencies (including jQuery and Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
        <!-- Include Preloader -->
@@ -85,6 +62,8 @@
 <!-- Sidebar -->
 <div class="sidebar" style="background-image: url(/img/bak.jpg); ">
 <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
+<button class="close-sidebar-btn d-md-none" onclick="closeSidebar()">✖</button> <!-- Close button -->
+
 <ul class="menu">
 <li><a href="{{ route('admin.dashboard') }}" id="report"><i class="fas fa-chart-pie"></i> Report</a></li>
 <li><a href="{{ route('admin.forum') }}" id="forum"><i class="fas fa-comments"></i> Forum</a></li>
