@@ -1,5 +1,5 @@
 @extends('layouts.user-nav')
-
+@section('navbar_title', 'LATEST POSTS') 
 @section('content')
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
@@ -13,55 +13,93 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
  <link rel="stylesheet" href="/css/nav.css">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('posts.index') }}">LATEST POSTS</a>
+ <style>
+    /* Notification Badge Styling */
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: pulse 0.6s infinite alternate;
+}
 
+/* Pulse Animation for Notification Badge */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 
+/* Notification Dropdown Menu Styling */
+.dropdown-menu {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 300px;
+    overflow-y: auto;
+    width: 320px; /* Fixed width for dropdown */
+    right: 0; /* Ensure it aligns properly with the parent */
+    left: auto; /* Ensure it doesn't stretch to the left */
+    z-index: 1050; /* Ensure it appears above other elements */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    padding: 10px 0;
+}
 
-        <!-- Dropdown Button with Image -->
-        <!-- Dropdown Button with Image -->
-<div class="dropdown ms-4">
-    <button
-        class="btn btn-light dropdown-toggle d-flex align-items-center"
-        type="button"
-        id="navbarDropdown"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-    >
-        <!-- Profile Picture or Initials -->
-        @if(Auth::user()->picture)
-            <img
-                src="{{ asset('storage/' . Auth::user()->picture) }}"
-                alt="Profile Picture"
-                class="rounded-circle img-fluid"
-                width="40"
-                height="40"
-                style="object-fit: cover; border: 2px solid #ddd;"
-            >
-        @else
-            <div
-                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm"
-                style="width: 40px; height: 40px; border: 2px solid #ff5722;">
-                <span class="h6 text-muted m-0">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                </span>
-            </div>
-        @endif
+/* Notification Item Styling */
+.dropdown-item {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+    display: block;
+    white-space: normal; /* Allow text to wrap */
+    word-wrap: break-word; /* Allow long words to break and prevent overflow */
+    text-overflow: ellipsis; /* Adds "..." when text overflows */
+    overflow: hidden; /* Prevent overflow of text */
+}
 
-        <!-- User Name (Visible except on mobile) -->
-        <span class="ms-2 user-name">{{ Auth::user()->name }}</span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
-        <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
-        <li><hr class="dropdown-divider"></li>
-    </ul>
-</div>
+/* Hover Effect for Notification Items */
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+    cursor: pointer;
+}
 
-    </div>
-</nav>
+/* Mark read item styling */
+.dropdown-item.read {
+    color: #777;
+}
 
+/* Tooltip Styling for Notification Icon */
+.notification-badge[data-toggle="tooltip"] {
+    cursor: pointer;
+}
+
+/* Dropdown Menu Item Alignment */
+.dropdown-item i {
+    margin-right: 10px;
+}
+
+/* Ensure proper padding and size for icons */
+.dropdown-item i.bi, .dropdown-item i.fas {
+    font-size: 16px;
+}
+ </style>
+
+ 
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     @if(session('success'))
         <div class="alert alert-success">
