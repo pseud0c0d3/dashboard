@@ -69,7 +69,7 @@
                 class="form-control rounded-start-pill border-0 shadow-sm px-4" 
                 placeholder="Search by title..."
                 value="{{ request('search') }}"
-                style="height: 45px;">
+                style="height: 45px; font-weight: bold;">
 
             <button 
                 type="submit" 

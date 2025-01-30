@@ -40,14 +40,14 @@
     <div class="scrollable-posts" style="max-height: 100vh; padding-right: 15px;">
     <form action="{{ route('posts.admin') }}" method="GET" class="w-100">
         @csrf
-        <div class="input-group">
+        <div class="input-group" >
             <input 
                 type="text" 
                 name="search" 
                 class="form-control rounded-start-pill border-0 shadow-sm px-4" 
                 placeholder="Search by title..."
                 value="{{ request('search') }}"
-                style="height: 45px;">
+                style="height: 45px; font-weight: bold;">
 
             <button 
                 type="submit" 
