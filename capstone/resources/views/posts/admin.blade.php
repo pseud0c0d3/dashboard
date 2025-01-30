@@ -16,31 +16,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('posts.index') }}">LATEST POSTS</a>
-        <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 500px;">
-    @csrf
-    <div class="input-group w-100">
-        <!-- Input field always visible -->
-        <input
-            type="text"
-            name="search"
-            placeholder="Search by title..."
-            class="form-control rounded-pill"
-            value="{{ request('search') }}"
-            style="display: block;" >
-        <!-- Hide button on mobile -->
-        <button
-            type="submit"
-            class="btn btn-light rounded-pill ms-2 d-none d-sm-block">
-            <i class="bi bi-search"></i>
-        </button>
-    </div>
-</form>
-
     </div>
 </nav>
 
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
-    
+
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -58,6 +38,25 @@
     @endif
 
     <div class="scrollable-posts" style="max-height: 100vh; padding-right: 15px;">
+        <form action="{{ route('posts.admin') }}" method="GET" class="d-flex ms-auto" style="max-width: 500px;">
+            @csrf
+            <div class="input-group w-100">
+                <!-- Input field always visible -->
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search by title..."
+                    class="form-control rounded-pill"
+                    value="{{ request('search') }}"
+                    style="display: block;" >
+                <!-- Hide button on mobile -->
+                <button
+                    type="submit"
+                    class="btn btn-light rounded-pill ms-2 d-none d-sm-block">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
         @if($posts->isEmpty())
             <div class="alert alert-warning text-center">
                 No posts found. Please try a different search term.
@@ -68,14 +67,14 @@
                     <div class="card-body" style="background-color: #ffffff;">
                         <!-- User Info Section -->
                         <div class="d-flex align-items-center mb-4">
-                            <img src="{{ $post->user ? ($post->user->picture 
-                            ? asset('storage/' . $post->user->picture) 
-                            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($post->user->name, 0, 1)) . '&background=random&color=fff&size=50') 
+                            <img src="{{ $post->user ? ($post->user->picture
+                            ? asset('storage/' . $post->user->picture)
+                            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($post->user->name, 0, 1)) . '&background=random&color=fff&size=50')
                             : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
                             class="rounded-circle"
                             alt="User Profile"
                             width="50" height="50">
-                            
+
                             <div class="ms-3">
                                 <h6 class="mb-0" style="font-size: 1rem; font-weight: 600; color: #333; font-family: 'Poppins', sans-serif;">
                                     @if ($post->admin)
@@ -86,7 +85,7 @@
                                         Anonymous
                                     @endif
                                 </h6>
-                                
+
                                 <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>
                             </div>
                         </div>
