@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class NotificationController extends Controller
 {
@@ -23,6 +24,15 @@ class NotificationController extends Controller
 
         return redirect()->route('notifications.index'); // Redirect back to notifications page
     }
+    public function showPost(Notification $notification)
+{
+    // Check if the notification belongs to the logged-in user
+    if ($notification->user_id !== auth()->id()) {
+        abort(403, 'Unauthorized access');
+    }
 
+    // Redirect to the post associated with this notification
+    return redirect()->route('posts.show', ['post' => $notification->post_id]); // Use post_id
+}
     
 }
