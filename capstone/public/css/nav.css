@@ -64,6 +64,21 @@
     border-radius: 50%; 
     box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px 0px;
 }
+/* Profile Image inside Navbar Dropdown */
+#navbarDropdown img {
+    width: 45px;  /* Fixed width */
+    height: 45px; /* Fixed height */
+    border-radius: 50%; /* Circle shape */
+    object-fit: cover; /* Ensures image fits within the size without stretching */
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+    #navbarDropdown img {
+        width: 35px;  /* Smaller size for mobile */
+        height: 35px; /* Smaller size for mobile */
+    }
+}
 
 /* Navbar Style */
 .navbar {
@@ -170,11 +185,7 @@ form .btn {
         display: none;
     }
 
-    /* Adjust the profile image size and style */
-    #navbarDropdown img {
-        width: 45px; /* Adjust image size */
-        height: 45px; /* Keep it proportional */
-    }
+
 
     form .btn {
         display: none !important;
