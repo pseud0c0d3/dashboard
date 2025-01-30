@@ -82,15 +82,13 @@
             @yield('navbar_title') <!-- Default title is PROFILE -->
         </a>
 
-        <!-- In your Blade view (resources/views/layouts/app.blade.php or wherever you want the dropdown) -->
-
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Notifications
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @forelse (Auth::user()->notifications as $notification)
-                    <a class="dropdown-item" href="{{ route('notifications.read', $notification->id) }}">
+                    <a class="dropdown-item" href="{{ route('notifications.showPost', $notification->id) }}">
                         {{ $notification->message }} - <small>{{ $notification->created_at->diffForHumans() }}</small>
                     </a>
                 @empty
@@ -98,6 +96,7 @@
                 @endforelse
             </div>
         </div>
+        
         
 
 

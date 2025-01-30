@@ -179,7 +179,7 @@ class PostController extends Controller
 
         return back()->with('success', 'Your post was deleted.');
     }
-    public function storeComment(Request $request, $postId)
+    public function storeComment(Request $request, $postId) 
 {
     $request->validate([
         'comment' => 'required|string',
@@ -196,14 +196,16 @@ class PostController extends Controller
     $comment->content = $request->comment;
     $comment->save();
 
-    // Create a notification for the post owner
+    // Create a notification for the post owner, linking to the specific post
     $user->notifications()->create([
         'type' => 'comment',
         'message' => 'You have a new comment on your post!',
+        'post_id' => $postId,  // Link to the post
     ]);
 
     return back()->with('success', 'Comment posted and notification sent!');
 }
+
 
 
 }

@@ -227,7 +227,9 @@ class UserController extends Controller
         $request->validate([
             'current_password' => ['required'],
             'new_password' => ['required', 'min:8', 'confirmed'],
+            'new_password_confirmation' => ['required'],
         ]);
+        
 
         // Check if the current password is correct
         if (!Hash::check($request->current_password, $user->password)) {
@@ -238,7 +240,8 @@ class UserController extends Controller
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return redirect()->route('user.profile')->with('success', 'Password updated successfully!');
+        return back()->with('success', 'Password updated successfully!');
+
     }
 
 public function logout()
