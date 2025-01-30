@@ -209,81 +209,91 @@
 </div>
 
 <script>
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        const calendarEl = document.getElementById('calendar');
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            headerToolbar: {
-                left: 'prev,next today addEventButton',
-                center: 'title',
-                right: 'multiMonthYear,dayGridMonth,timeGridWeek,listWeek',
-            },
-            customButtons: {
-                addEventButton: {
-                    text: 'Add Event',
-                    click: function() {
-                        new bootstrap.Modal(document.getElementById('addEventModal')).show();
-                    },
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: {
+            left: 'prev,next today addEventButton',
+            center: 'title',
+            right: 'multiMonthYear,dayGridMonth,timeGridWeek,listWeek',
+        },
+        customButtons: {
+            addEventButton: {
+                text: 'Add Event',
+                click: function() {
+                    new bootstrap.Modal(document.getElementById('addEventModal')).show();
                 },
             },
-            initialView: 'dayGridMonth',
-            editable: true,
-            selectable: true,
-            dayMaxEvents: true,
-            events: '/admin/events', // Fetch all events for admins via AJAX
+        },
+        initialView: 'dayGridMonth',
+        editable: true,
+        selectable: true,
+        dayMaxEvents: true,
+        events: '/admin/events', // Fetch all events for admins via AJAX
 
-            eventClick: function(info) {
-                // Safely populate modal fields
-                document.getElementById('eventDetailsTitle').textContent = info.event.title || 'No Title Provided';
-                document.getElementById('eventDetailsDescription').textContent = info.event.extendedProps.description || 'No Description Provided';
-                document.getElementById('eventDetailsStartTime').textContent = info.event.start
-                    ? info.event.start.toLocaleString()
-                    : 'No Start Time Provided';
-                document.getElementById('eventDetailsEndTime').textContent = info.event.end
-                    ? info.event.end.toLocaleString()
-                    : 'No End Time Provided';
+        eventClick: function(info) {
+            // Safely populate modal fields
+            document.getElementById('eventDetailsTitle').textContent = info.event.title || 'No Title Provided';
+            document.getElementById('eventDetailsDescription').textContent = info.event.extendedProps.description || 'No Description Provided';
+            document.getElementById('eventDetailsStartTime').textContent = info.event.start
+                ? info.event.start.toLocaleString()
+                : 'No Start Time Provided';
+            document.getElementById('eventDetailsEndTime').textContent = info.event.end
+                ? info.event.end.toLocaleString()
+                : 'No End Time Provided';
 
-                // Show modal
-                new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
-            },
-        });
-
-        calendar.render();
+            // Show modal
+            new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
+        },
     });
 
-    document.getElementById('eventForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const formData = new FormData(this);
+    calendar.render();
+});
 
-        fetch('/admin/events', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            },
-            body: formData,
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(errors => {
-                    if (errors.message) {
-                        alert(errors.message); // Display a general error message
-                    } else {
-                        let errorMessages = Object.values(errors.errors || {}).flat().join('\n');
-                        alert(errorMessages); // Display validation errors
-                    }
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.message) {
-                alert(data.message);
-                calendar.refetchEvents(); // Refresh events on the calendar
-                bootstrap.Modal.getInstance(document.getElementById('addEventModal')).hide();
-            }
-        })
-        .catch(error => console.error('Error:', error));
+document.getElementById('eventForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Disable the submit button and make it grey
+    const submitButton = event.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.classList.add('btn-secondary'); // Add a grey color class
+
+    const formData = new FormData(this);
+
+    fetch('/admin/events', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errors => {
+                if (errors.message) {
+                    alert(errors.message); // Display a general error message
+                } else {
+                    let errorMessages = Object.values(errors.errors || {}).flat().join('\n');
+                    alert(errorMessages); // Display validation errors
+                }
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            // Refresh the page to close modal and update events
+            location.reload();
+        }
+    })
+    .catch(error => console.error('Error:', error))
+    .finally(() => {
+        // Enable the submit button and remove grey color after the response is handled
+        submitButton.disabled = false;
+        submitButton.classList.remove('btn-secondary');
     });
+});
 </script>
 
 @endsection
