@@ -50,6 +50,15 @@ Route::middleware(['auth:admin'])->group(function () {
     // Admin Chats
     Route::get('/admin/fetch-messages', [ChatsController::class, 'fetchMessages'])->name('admin.fetchMessages');
     Route::post('/admin/send-message', [ChatsController::class, 'sendMessage'])->name('admin.sendMessage');
+
+    Route::get('posts/admin/{post}/edit', [PostController::class, 'adminEdit'])->name('admin.edit');
+    Route::put('posts/admin/{post}', [PostController::class, 'adminUpdate'])->name('admin.update');
+    Route::delete('posts/admin/{post}', [PostController::class, 'adminDestroy'])->name('admin.destroy');
+
+    Route::post('/posts/admin/{post}/comment', [PostController::class, 'adminComment'])->name('admin.comment');
+
+
+    
 });
 
 
