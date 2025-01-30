@@ -20,7 +20,7 @@
                 
                 <h6>Reset your password here</h6>
             </div>
-            <form method="POST" action="{{ route('password.update') }}">
+            <form method="POST" action="{{ route('reset.password') }}">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
                 <input type="hidden" name="email" value="{{ $email }}">

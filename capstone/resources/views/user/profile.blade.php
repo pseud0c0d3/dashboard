@@ -231,9 +231,9 @@
     </div>
 
 <!-- Button to trigger modal -->
-<button class="btn btn-info btn-lg rounded-pill px-4 py-2 shadow-lg" data-bs-toggle="modal" data-bs-target="#childViewModal">
+{{-- <button class="btn btn-info btn-lg rounded-pill px-4 py-2 shadow-lg" data-bs-toggle="modal" data-bs-target="#childViewModal">
     <i class="bi bi-eye me-2"></i>View Child Info
-</button>
+</button> --}}
 
 <!-- Child View Modal -->
 <div class="modal fade" id="childViewModal" tabindex="-1" aria-labelledby="childViewModalLabel" aria-hidden="true">
