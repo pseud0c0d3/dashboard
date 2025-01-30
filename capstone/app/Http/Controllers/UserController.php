@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Admin;
+use App\Models\Child;
 use App\Http\Controllers\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -229,7 +230,7 @@ class UserController extends Controller
             'new_password' => ['required', 'min:8', 'confirmed'],
             'new_password_confirmation' => ['required'],
         ]);
-        
+
 
         // Check if the current password is correct
         if (!Hash::check($request->current_password, $user->password)) {
@@ -242,6 +243,39 @@ class UserController extends Controller
 
         return back()->with('success', 'Password updated successfully!');
 
+    }
+
+    public function profilechild()
+{
+    $children = Child::where('parent_id', auth()->id())->get();
+    return view('user.profile', compact('children'));
+}
+
+public function childupdate(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'child_name' => 'required|string|max:255',
+            'child_age' => 'required|integer|min:0',
+            'child_condition' => 'nullable|string|max:255',
+            'child_height' => 'nullable|numeric|min:0',
+            'child_weight' => 'nullable|numeric|min:0',
+        ]);
+
+        // Find the child record (assuming each user has one child)
+        $child = Child::where('user_id', auth()->id())->firstOrFail();
+
+        // Update the child's information
+        $child->update([
+            'name' => $request->child_name,
+            'age' => $request->child_age,
+            'condition' => $request->child_condition,
+            'height' => $request->child_height,
+            'weight' => $request->child_weight,
+        ]);
+
+        // Redirect with a success message
+        return redirect()->back()->with('success', 'Child information updated successfully!');
     }
 
 public function logout()

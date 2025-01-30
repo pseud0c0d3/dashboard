@@ -45,6 +45,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/posts/admin/{post}', [PostController::class, 'showadmin'])->name('posts.showadmin');
 
 
+    Route::get('/posts', [PostController::class, 'admin'])->name('posts.admin');
     Route::post('/posts/admin', [PostController::class, 'storeadmin'])->name('admin.store');
 
     // Admin Chats
@@ -79,16 +80,20 @@ Route::middleware(['auth'])->group(function () {
 
     Route::put('/comments/{comment}', [PostController::class, 'updateComment'])->name('comments.update');
     Route::delete('/comments/{comment}', [PostController::class, 'destroyComment'])->name('comments.destroy');
-    
+
 
 
     // Change password
     Route::get('/profile/change-password', [UserController::class, 'changePassword'])->name('password.change');
     Route::post('/profile/change-password', [UserController::class, 'updatePassword'])->name('password.update');
-    
+
     // User Chats
     Route::get('/fetch-messages', [ChatsController::class, 'fetchMessagesFromUserToAdmin'])->name('fetch.messagesFromSellerToAdmin');
     Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmin'])->name('send.Messageofsellertoadmin');
+
+    Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
+
+
 });
 
 Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
