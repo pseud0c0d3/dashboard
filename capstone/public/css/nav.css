@@ -256,6 +256,7 @@ form .btn {
         margin-top: -15px;
         padding-left: 70px;
         margin-left: -250px; /* Remove offset for small screens */
+        z-index: 1600;
         
         
     }

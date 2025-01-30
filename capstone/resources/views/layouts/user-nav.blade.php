@@ -41,6 +41,8 @@
 
     </head>
     <style>
+        /* Close Button for Mobile Sidebar */
+
 /* Default Sidebar - Visible on larger screens */
 .sidebar {
     width: 250px;
@@ -50,20 +52,50 @@
     left: 0;
     top: 0;
     transition: transform 0.3s ease-in-out;
+    z-index: 999; /* Ensure the sidebar stays on top */
 }
 
 /* Hide sidebar on smaller screens */
 @media (max-width: 768px) {
+    .close-sidebar-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 10001; /* Ensure the button stays on top */
+}
+.close-sidebar-btn:hover {
+    background-color: transparent;
+}
     .sidebar {
         transform: translateX(-100%);
         position: fixed;
         width: 250px;
         height: 100vh;
+        z-index: 9999; /* Higher z-index to ensure it's on top of the navbar */
+
+    }
+    /* Ensure navbar is below sidebar when opened on mobile */
+    .navbar {
         z-index: 1000;
     }
 
     .sidebar.open {
         transform: translateX(0);
+    }
+    /* Adjust sidebar toggle button */
+    .toggle-sidebar-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 10000;
+        background-color: #23486A; /* Make button visible */
+        color: white;
     }
 }
 
@@ -147,32 +179,36 @@
     </button>
     <div class="container">
             <!-- Sidebar -->
-    <div class="sidebar" style="background-image: url(/img/bak.jpg); ">
-        <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
-        <ul class="menu">
-            <li><a href="{{ route('user.profile') }}" id="prof"><i class="bi bi-person"></i> Profile</a></li>
-            <li><a href="{{ route('user.forum') }}" id="form"><i class="fas fa-home"></i> Forum</a></li>
-            <li>
-                <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
+    <!-- Sidebar -->
+<div class="sidebar" style="background-image: url(/img/bak.jpg); ">
+    <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
+    <button class="close-sidebar-btn d-md-none" onclick="closeSidebar()">✖</button> <!-- Close button -->
+
+    <ul class="menu">
+        <li><a href="{{ route('user.profile') }}" id="prof"><i class="bi bi-person"></i> Profile</a></li>
+        <li><a href="{{ route('user.forum') }}" id="form"><i class="fas fa-home"></i> Forum</a></li>
+        <li>
+            <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                 <i class="fas fa-tasks" id="act"></i> Activities <span class="dropdown-arrow">▼</span>
-                </a>
-                <ul class="dropdown-list" id="activitiesDropdown" style="background-color: #23486A;">
-                    <li>
-                        <a href="{{ route('workspace.colormatch') }}" id="act" onclick="showLoading('workspace.colormatch')">
-                            <img src="/img/colorgame.png" alt="Colormatch Icon"  id="color"class="list-icon"> Colormatch Game
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('workspace.game') }}" id="sound" onclick="showLoading('workspace.game')">
-                            <img src="/img/sound.png" alt="Sound Game Icon" class="list-icon"> Sound Game
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="{{ route('user.fullcalendar') }}" id="full"><i class="fas fa-calendar-alt"></i>FullCalendar</a></li>
-            <li><a href="{{ route('user.chats') }}" id="chat"><i class="bi bi-chat-dots"></i> Chats</a></li>
-        </ul>
-    </div>
+            </a>
+            <ul class="dropdown-list" id="activitiesDropdown" style="background-color: #23486A;">
+                <li>
+                    <a href="{{ route('workspace.colormatch') }}" id="act" onclick="showLoading('workspace.colormatch')">
+                        <img src="/img/colorgame.png" alt="Colormatch Icon" id="color" class="list-icon"> Colormatch Game
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('workspace.game') }}" id="sound" onclick="showLoading('workspace.game')">
+                        <img src="/img/sound.png" alt="Sound Game Icon" class="list-icon"> Sound Game
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li><a href="{{ route('user.fullcalendar') }}" id="full"><i class="fas fa-calendar-alt"></i>FullCalendar</a></li>
+        <li><a href="{{ route('user.chats') }}" id="chat"><i class="bi bi-chat-dots"></i> Chats</a></li>
+    </ul>
+</div>
+
 
     <!-- Main Content -->
     <main class="py-4">
@@ -305,6 +341,14 @@
     }).catch(error => {
         console.error("Error marking notification as read:", error);
     });
+}
+
+// Function to close the sidebar
+function closeSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.remove('open'); // Close the sidebar
+    const mainContent = document.querySelector('.main-content');
+    mainContent.classList.remove('expanded'); // Adjust main content
 }
 
         </script>
