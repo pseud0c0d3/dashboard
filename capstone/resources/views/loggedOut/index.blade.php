@@ -138,7 +138,7 @@
     </div>
 </nav>
 
-<header class="jumbotron text-center relative" id="home" style="background-image: url('img/bck.png'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Poppins', sans-serif;">
+<header class="jumbotron text-center relative" id="home" style="background-image: url('img/bck.png'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Poppins', sans-serif; box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.23);">
   <div class="absolute inset-0 bg-black opacity-50"></div>
   <div class="container relative z-10 text-center py-24 px-6">
     <h1 class="display-4 text-white font-bold mb-4 opacity-0 transform -translate-y-20 scale-75 intro-effect" style="font-size: 3rem; letter-spacing: 1px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
@@ -223,7 +223,7 @@
     </p>
     <div class="text-center">
         <a href="{{ route('seemore') }}" class="btn btn-primary text-black hover:from-blue-600 hover:to-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-full px-6 transition duration-300" id="learnButton" style="background: linear-gradient(135deg, #3a63d5, #1b3248);">
-            Learn More
+            See More
         </a>
     </div>
 </div>

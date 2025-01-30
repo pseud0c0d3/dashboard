@@ -129,7 +129,7 @@ p {
   object-fit: cover; /* Make the image cover the container without distortion */
   width: 100%; /* Make the image take the full width of the container */
   height: 100%; /* Make the image take the full height of the container */
-  filter: blur(3px); /* Apply a blur effect to the image */
+  /*filter: blur(3px); /* Apply a blur effect to the image */
   opacity: 2; /* Optional: Adjust the opacity for a slightly faded effect */
   background-color: #000; /* Optional: Add a background color */
 }
