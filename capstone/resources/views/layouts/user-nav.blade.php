@@ -72,6 +72,9 @@
 
 </style>
 <body>
+    <!-- Include Preloader -->
+ @include('components.preloader')
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
         <!-- Dynamic Title -->
@@ -150,27 +153,27 @@
 <div class="sidebar" style="background-image: url(/img/bak.jpg); ">
     <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
     <ul class="menu">
-        <li><a href="{{ route('user.profile') }}"><i class="bi bi-person"></i> Profile</a></li>
-        <li><a href="{{ route('user.forum') }}"><i class="fas fa-home"></i> Forum</a></li>
+        <li><a href="{{ route('user.profile') }}" id="prof"><i class="bi bi-person"></i> Profile</a></li>
+        <li><a href="{{ route('user.forum') }}" id="form"><i class="fas fa-home"></i> Forum</a></li>
         <li>
             <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
-            <i class="fas fa-tasks"></i> Activities <span class="dropdown-arrow">▼</span>
+            <i class="fas fa-tasks" id="act"></i> Activities <span class="dropdown-arrow">▼</span>
             </a>
             <ul class="dropdown-list" id="activitiesDropdown" style="background-color: #23486A;">
                 <li>
-                    <a href="{{ route('workspace.colormatch') }}" onclick="showLoading('workspace.colormatch')">
-                        <img src="/img/colorgame.png" alt="Colormatch Icon" class="list-icon"> Colormatch Game
+                    <a href="{{ route('workspace.colormatch') }}" id="act" onclick="showLoading('workspace.colormatch')">
+                        <img src="/img/colorgame.png" alt="Colormatch Icon"  id="color"class="list-icon"> Colormatch Game
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('workspace.game') }}" onclick="showLoading('workspace.game')">
+                    <a href="{{ route('workspace.game') }}" id="sound" onclick="showLoading('workspace.game')">
                         <img src="/img/sound.png" alt="Sound Game Icon" class="list-icon"> Sound Game
                     </a>
                 </li>
             </ul>
         </li>
-        <li><a href="{{ route('user.fullcalendar') }}"><i class="fas fa-calendar-alt"></i>FullCalendar</a></li>
-        <li><a href="{{ route('user.chats') }}"><i class="bi bi-chat-dots"></i> Chats</a></li>
+        <li><a href="{{ route('user.fullcalendar') }}" id="full"><i class="fas fa-calendar-alt"></i>FullCalendar</a></li>
+        <li><a href="{{ route('user.chats') }}" id="chat"><i class="bi bi-chat-dots"></i> Chats</a></li>
     </ul>
 </div>
 
@@ -211,8 +214,6 @@ function toggleSidebar() {
 
     sidebar.classList.toggle('open');
     mainContent.classList.toggle('expanded');
-    
-    
 }
 
 
@@ -232,6 +233,30 @@ function toggleSidebar() {
         mainContent.classList.remove('expanded'); // Adjust main content
     }
 
+// Function to show preloader and then navigate to the href
+function showPreloaderAndRedirect(event) {
+  event.preventDefault();  // Prevent the default behavior of the link
+  
+  // Show the preloader
+  document.getElementById('preloader').style.display = 'flex';
+  
+  // Get the href from the clicked link
+  const href = event.target.getAttribute('href');
+  
+  // Redirect after a short delay (1.5 seconds in this case)
+  setTimeout(function() {
+    window.location.href = href;
+  }, 1500);  // Adjust the delay as needed
+}
+
+// Attach event listener to the 'Get Started' button
+document.getElementById('prof').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('form').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('act').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('color').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('sound').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('full').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('chat').addEventListener('click', showPreloaderAndRedirect);
 
     </script>
 </body>

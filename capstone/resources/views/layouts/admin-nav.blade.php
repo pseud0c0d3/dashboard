@@ -64,6 +64,8 @@
     </style>
 </head>
 <body>
+       <!-- Include Preloader -->
+ @include('components.preloader')
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
         <!-- Dynamic Title -->
@@ -84,12 +86,12 @@
 <div class="sidebar" style="background-image: url(/img/bak.jpg); ">
 <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
 <ul class="menu">
-<li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-chart-pie"></i> Report</a></li>
-<li><a href="{{ route('admin.forum') }}"><i class="fas fa-comments"></i> Forum</a></li>
-<li><a href="{{ route('admin.fullcalendar') }}"><i class="fas fa-calendar-alt"></i> FullCalendar</a></li>
-<li><a href="{{ route('appointments.index') }}"><i class="fas fa-calendar-check"></i> Appointments</a></li> <!-- Added icon for Appointments -->
-<li><a href="{{ route('admin.clients') }}"><i class="fas fa-users"></i> Clients</a></li> <!-- Added icon for Clients -->
-<li><a href="{{ route('admin.chats') }}"><i class="bi bi-chat-dots"></i> Chats</a></li>
+<li><a href="{{ route('admin.dashboard') }}" id="report"><i class="fas fa-chart-pie"></i> Report</a></li>
+<li><a href="{{ route('admin.forum') }}" id="forum"><i class="fas fa-comments"></i> Forum</a></li>
+<li><a href="{{ route('admin.fullcalendar') }}" id="full"><i class="fas fa-calendar-alt"></i> FullCalendar</a></li>
+<li><a href="{{ route('appointments.index') }}" id="appoint"><i class="fas fa-calendar-check"></i> Appointments</a></li> <!-- Added icon for Appointments -->
+<li><a href="{{ route('admin.clients') }}" id="client"><i class="fas fa-users"></i> Clients</a></li> <!-- Added icon for Clients -->
+<li><a href="{{ route('admin.chats') }}" id="chat"><i class="bi bi-chat-dots"></i> Chats</a></li>
 </ul>
 
 <ul class="menu">
@@ -135,6 +137,29 @@ function toggleSidebar() {
         const mainContent = document.querySelector('.main-content');
         mainContent.classList.remove('expanded'); // Adjust main content
     }
+// Function to show preloader and then navigate to the href
+function showPreloaderAndRedirect(event) {
+  event.preventDefault();  // Prevent the default behavior of the link
+  
+  // Show the preloader
+  document.getElementById('preloader').style.display = 'flex';
+  
+  // Get the href from the clicked link
+  const href = event.target.getAttribute('href');
+  
+  // Redirect after a short delay (1.5 seconds in this case)
+  setTimeout(function() {
+    window.location.href = href;
+  }, 1500);  // Adjust the delay as needed
+}
+
+// Attach event listener to the 'Get Started' button
+document.getElementById('report').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('form').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('full').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('appoint').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('client').addEventListener('click', showPreloaderAndRedirect);
+document.getElementById('chat').addEventListener('click', showPreloaderAndRedirect);
 
 
     </script>
