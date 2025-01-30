@@ -93,10 +93,16 @@
 
         <!-- Buttons -->
         <div class="d-flex justify-content-between mt-3">
+            {{-- <!-- Comment Button -->
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                <i class="bi bi-chat-left-text"></i> Comment
+            </button> --}}
+            @if($post->admin_id !== 1)
             <!-- Comment Button -->
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
                 <i class="bi bi-chat-left-text"></i> Comment
             </button>
+             @endif
 
             <!-- Back Button -->
             <a href="{{ route('posts.admin') }}" class="btn btn-primary">Back to Posts</a>
