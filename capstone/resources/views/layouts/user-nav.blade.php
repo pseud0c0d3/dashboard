@@ -41,76 +41,7 @@
 
     </head>
     <style>
-        /* Close Button for Mobile Sidebar */
-
-/* Default Sidebar - Visible on larger screens */
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    background: #23486A;
-    position: fixed;
-    left: 0;
-    top: 0;
-    transition: transform 0.3s ease-in-out;
-    z-index: 999; /* Ensure the sidebar stays on top */
-}
-
-/* Hide sidebar on smaller screens */
-@media (max-width: 768px) {
-    .close-sidebar-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: transparent;
-    color: white;
-    border: none;
-    font-size: 20px;
-    padding: 8px 12px;
-    cursor: pointer;
-    z-index: 10001; /* Ensure the button stays on top */
-}
-.close-sidebar-btn:hover {
-    background-color: transparent;
-}
-    .sidebar {
-        transform: translateX(-100%);
-        position: fixed;
-        width: 250px;
-        height: 100vh;
-        z-index: 9999; /* Higher z-index to ensure it's on top of the navbar */
-
-    }
-    /* Ensure navbar is below sidebar when opened on mobile */
-    .navbar {
-        z-index: 1000;
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
-    /* Adjust sidebar toggle button */
-    .toggle-sidebar-btn {
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        z-index: 10000;
-        background-color: #23486A; /* Make button visible */
-        color: white;
-    }
-}
-
-/* Ensure main content expands when sidebar is hidden */
-.main-content {
-    margin-left: 250px;
-    transition: margin-left 0.3s ease-in-out;
-}
-
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 0;
-        margin-top: 60px;
-    }
-}
+    
 
 </style>
 
