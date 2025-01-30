@@ -1,6 +1,6 @@
 @extends('layouts.admin-nav')
 
-@section('navbar_title', 'MANAGE APPOINTMENTS') 
+@section('navbar_title', 'MANAGE APPOINTMENTS')
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
@@ -49,7 +49,7 @@
         margin-top: 20px;
     }
 
-    
+
 
     .appointment-number {
         font-weight: bold;
@@ -127,35 +127,35 @@
                     <form action="{{ route('appointments.update', $event->id) }}" method="POST">
                         @csrf
                         @method('PUT')
+                        <td>
+                            <input type="text" class="form-control" style="width:auto" name="title" value="{{ $event->title }}" required>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" style="width:auto" name="description" value="{{ $event->description }}">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" style="width:auto" name="email" value="{{ $event->user?->email ?? 'Public Event' }}" readonly>
+                        </td>
+                        <td>
+                            <input type="datetime-local" class="form-control" name="start_time" value="{{ \Carbon\Carbon::parse($event->start_time)->format('Y-m-d\TH:i') }}" required>
+                        </td>
+                        <td>
+                            <input type="datetime-local" class="form-control" name="end_time" value="{{ \Carbon\Carbon::parse($event->end_time)->format('Y-m-d\TH:i') }}" required>
+                        </td>
 
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" id="description" class="form-control" name="description" value="{{ $event->description }}"/>
-                        </div>
+                        <td>
+                            <form action="{{ route('appointments.update', $event->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                            </form>
 
-                        <div class="form-group">
-                            <label for="email">Client</label>
-                            <input type="text" id="email" class="form-control" name="email" value="{{ $event->user?->email ?? 'Public Event' }}" readonly/>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="start_time">Start Time</label>
-                            <input type="datetime-local" id="start_time" class="form-control" name="start_time" value="{{ \Carbon\Carbon::parse($event->start_time)->format('Y-m-d\TH:i') }}" required/>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="end_time">End Time</label>
-                            <input type="datetime-local" id="end_time" class="form-control" name="end_time" value="{{ \Carbon\Carbon::parse($event->end_time)->format('Y-m-d\TH:i') }}" required/>
-                        </div>
-
-                        <div class="btn-container">
-                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                            <form action="{{ route('appointments.destroy', $event->id) }}" method="POST">
+                            <form action="{{ route('appointments.destroy', $event->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?')">Delete</button>
                             </form>
-                        </div>
+                        </td>
                     </form>
                 </div>
             </div>

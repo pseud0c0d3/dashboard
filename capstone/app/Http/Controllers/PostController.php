@@ -114,7 +114,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         // Assuming the user is authenticated
-        $post->user_id = auth()->id();
+        // $post->user_id = auth()->id();
         // $post->save();
         $post->load('user'); // Eager load the 'user' relationship
         return view('posts.show', ['post' => $post]);

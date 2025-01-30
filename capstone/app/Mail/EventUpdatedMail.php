@@ -33,7 +33,7 @@ class EventUpdatedMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Your Event Has Been Cancelled')
+        return $this->subject('Your Event Has Been Updated')
                     ->view('emails.event-updated')
                     ->with([
                         'event' => $this->event,
