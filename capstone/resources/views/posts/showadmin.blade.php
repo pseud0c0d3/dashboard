@@ -4,7 +4,45 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+<style>
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hover effect for the dropdown button */
+    #navbarDropdown:hover {
+        background-color: #f8f9fa; /* Light background on hover */
+        border-color: #007bff; /* Border color when hovered */
+    }
+    
+    
+    /* Hover effect for dropdown items with scale animation */
+    .dropdown-item:hover {
+        background-color: #007bff; /* Blue background on hover */
+        color: #fff; /* White text on hover */
+        transform: scale(1.05); /* Slightly increase size */
+        transition: transform 0.2s ease-in-out; /* Smooth transition */
+    }
+    
+    /* Hover effect for the profile picture button */
+    .dropdown-toggle:hover img {
+        opacity: 0.8; /* Slight opacity change for profile image on hover */
+        transform: scale(1.15); /* Slightly increase size */
+    
+    }
+    
+    /* Adjusting .dropdown-container to ensure it doesn't interfere */
+    .dropdown-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1060; /* Ensure it stays on top of everything */
+    }
+    
+        
+    
+        
+    </style>
+    
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     <div class="card" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;">
     <div class="card-body">
@@ -93,6 +131,53 @@
                         {{ $comment->content }}
                     </p>
                     <small class="text-muted" style="font-family: 'Roboto', sans-serif; font-size: 0.8rem;">{{ $comment->created_at->diffForHumans() }}</small>
+                </div>
+                <!-- Edit/Delete Buttons for Comment Owner -->
+                @if(Auth::id() === $comment->admin_id)
+                <div class="dropdown-container">
+                    <div class="dropdown" >
+                        <!-- Ellipsis Button -->
+                        <button class="btn btn-outline-secondary " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" >
+                            <i class="bi bi-three-dots"></i> <!-- FontAwesome or Bootstrap Icons for ellipsis -->
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editCommentModal{{ $comment->id }}">
+                                    Edit
+                                </button>
+                            </li>
+                            <li>
+                                <form action="{{ route('admin.comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                @endif
+            </div>
+        </div>
+        <!-- Edit Comment Modal -->
+        <div class="modal fade" id="editCommentModal{{ $comment->id }}" tabindex="-1" aria-labelledby="editCommentLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCommentLabel">Edit Comment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('admin.comments.update', $comment->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <textarea name="comment" class="form-control" rows="3" required>{{ $comment->content }}</textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

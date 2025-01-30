@@ -334,11 +334,39 @@ public function updateComment(Request $request, Comment $comment)
 
     return back()->with('success', 'Comment updated successfully!');
 }
+public function adminUpdateComment(Request $request, Comment $comment)
+{
+    // Ensure the authenticated user owns the comment
+    if (Auth::id() !== $comment->admin_id) {
+        abort(403, 'Unauthorized action.');
+    }
 
+    $request->validate([
+        'comment' => 'required|string',
+    ]);
+
+    $comment->update([
+        'content' => $request->comment,
+    ]);
+
+    return back()->with('success', 'Comment updated successfully!');
+}
 public function destroyComment(Comment $comment)
 {
     // Ensure the authenticated user owns the comment
     if (Auth::id() !== $comment->user_id) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    $comment->delete();
+
+    return back()->with('success', 'Comment deleted successfully!');
+}
+
+public function adminDestroyComment(Comment $comment)
+{
+    // Ensure the authenticated user owns the comment
+    if (Auth::id() !== $comment->admin_id) {
         abort(403, 'Unauthorized action.');
     }
 

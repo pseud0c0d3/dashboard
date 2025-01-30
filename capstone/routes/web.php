@@ -57,7 +57,8 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::post('/posts/admin/{post}/comment', [PostController::class, 'adminComment'])->name('admin.comment');
 
-
+    Route::delete('/comments/admin/{comment}', [PostController::class, 'adminDestroyComment'])->name('admin.comments.destroy');
+    Route::put('/comments/admin/{comment}', [PostController::class, 'adminUpdateComment'])->name('admin.comments.update');
     
 });
 
