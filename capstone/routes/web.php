@@ -60,7 +60,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::delete('/comments/admin/{comment}', [PostController::class, 'adminDestroyComment'])->name('admin.comments.destroy');
     Route::put('/comments/admin/{comment}', [PostController::class, 'adminUpdateComment'])->name('admin.comments.update');
-    
+
 });
 
 
@@ -101,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-messages', [ChatsController::class, 'fetchMessagesFromUserToAdmin'])->name('fetch.messagesFromSellerToAdmin');
     Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmin'])->name('send.Messageofsellertoadmin');
 
-    Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
+    // Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
 
 
 });
