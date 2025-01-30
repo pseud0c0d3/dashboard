@@ -81,15 +81,19 @@
 
         </form>
         <div class="filter-buttons d-flex justify-content-between mb-3">
-    <div>
-        <a href="{{ route('posts.index', ['filter' => 'all']) }}" class="btn btn-outline-primary {{ request('filter', 'all') === 'all' ? 'active' : '' }}">
-            All Posts
-        </a>
-        <a href="{{ route('posts.index', ['filter' => 'mine']) }}" class="btn btn-outline-primary {{ request('filter') === 'mine' ? 'active' : '' }}">
-            My Posts
-        </a>
-    </div>
-</div>
+            <div>
+                <a href="{{ route('posts.index', ['filter' => 'all']) }}" class="btn btn-outline-primary {{ request('filter', 'all') === 'all' ? 'active' : '' }}">
+                    All Posts
+                </a>
+                <a href="{{ route('posts.index', ['filter' => 'mine']) }}" class="btn btn-outline-primary {{ request('filter') === 'mine' ? 'active' : '' }}">
+                    My Posts
+                </a>
+                <a href="{{ route('posts.index', ['filter' => 'admin']) }}" class="btn btn-outline-primary {{ request('filter') === 'admin' ? 'active' : '' }}">
+                    Admin Posts
+                </a>
+            </div>
+        </div>
+        
 
 
         @if($posts->isEmpty())

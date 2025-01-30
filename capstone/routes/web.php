@@ -101,7 +101,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-messages', [ChatsController::class, 'fetchMessagesFromUserToAdmin'])->name('fetch.messagesFromSellerToAdmin');
     Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmin'])->name('send.Messageofsellertoadmin');
 
-    Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
+    
+    Route::put('/child/update', [UserController::class, 'childupdate'])->name('child.update');
+
 
 
 });

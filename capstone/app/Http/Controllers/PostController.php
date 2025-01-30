@@ -17,24 +17,29 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $search = $request->input('search');
-    $filter = $request->input('filter', 'all'); // Default to 'all' posts
+    {
+        $search = $request->input('search');
+        $filter = $request->input('filter', 'all'); // Default to 'all' posts
 
-    $posts = Post::recent()
-        ->when($search, function ($query, $search) {
-            return $query->where('title', 'LIKE', "%{$search}%");
-        })
-        ->when($filter === 'mine' && Auth::check(), function ($query) {
-            return $query->where('user_id', Auth::id())
-                 ->orWhereNotNull('admin_id');
-        })
-        ->with(['user', 'admin'])
-        ->latest()
-        ->paginate(10);
+        $posts = Post::recent()
+            ->when($search, function ($query, $search) {
+                return $query->where('title', 'LIKE', "%{$search}%");
+            })
+            ->when($filter === 'mine' && Auth::check(), function ($query) {
+                return $query->where('user_id', Auth::id())
+                    // Ensure posts are filtered by user ID
+                    // ->orWhere('admin_id', 1)
+                    ;
+            })
+            ->when($filter === 'admin', function ($query) {
+                return $query->where('admin_id', 1); 
+            })
+            ->with(['user', 'admin'])
+            ->latest()
+            ->paginate(10);
 
-    return view('posts.index', compact('posts', 'filter'));
-}
+        return view('posts.index', compact('posts', 'filter'));
+    }
 
 
 

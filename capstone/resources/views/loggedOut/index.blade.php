@@ -234,10 +234,11 @@
             <div class="col-md-4 d-flex align-items-center justify-content-center mb-4">
                 <div class="box founder-box text-center p-4" style="background-color: white; border-radius: 10px; width: 90%;">
                     <img src="img/founder.png" alt="Founder" class="img-fluid rounded-circle mb-2" style="width: 150px; height: 150px; ">
-                    <h3>Founder</h3>
+                    <h3>Mrs. Nanette Ambagan-Custodio</h3>
                     <p>Discover the vision and passion of our founder who established this center to support families.</p>
                 </div>
             </div>
+            
             <div class="col-md-8 d-flex flex-column justify-content-center">
                 <div class="row">
                     <!-- Forum Feature -->

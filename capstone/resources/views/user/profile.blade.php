@@ -264,9 +264,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('child.update') }}">
+                <form  action="{{ route('child.update') }}"method="POST">
                     @csrf
-
+                    @method('PUT') 
                     <div class="mb-3">
                         <label for="child_name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="child_name" name="child_name" value="{{ old('child_name', $child->name ?? '') }}">
