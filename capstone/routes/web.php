@@ -76,6 +76,9 @@ Route::middleware(['auth'])->group(function () {
     // Edit profile
     Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
     Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+
+    Route::put('/comments/{comment}', [PostController::class, 'updateComment'])->name('comments.update');
+    Route::delete('/comments/{comment}', [PostController::class, 'destroyComment'])->name('comments.destroy');
     
 
 

@@ -162,32 +162,74 @@
         @if($post->comments->isEmpty())
             <p style="font-family: 'Roboto', sans-serif; font-size: 0.9rem; color: rgb(102, 102, 102);">No comments yet. Be the first to comment!</p>
         @else
-            @foreach($post->comments as $comment)
-            <div class="card mb-2" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
-                <div class="card-body d-flex align-items-center">
-                    <!-- User Avatar (With Fallback Initials) -->
-                    <img src="{{ $comment->user->picture
-                                ? asset('storage/' . $comment->user->picture)
-                                : 'https://ui-avatars.com/api/?name=' . urlencode(substr($comment->user->name, 0, 1)) . '&background=random&color=fff&size=40' }}"
-                         class="rounded-circle me-3"
-                         width="40" height="40"
-                         alt="User">
-
-                    <div>
-                        <strong style="font-family: 'Poppins', sans-serif; font-size: 1rem; color: rgb(34, 34, 34);">
-                            {{ $comment->user->name ?? 'Guest' }}
-                        </strong>
-                        <p class="mb-0" style="font-family: 'Roboto', sans-serif; font-size: 0.9rem; line-height: 1.4; color: rgb(34, 34, 34);">
-                            {{ $comment->content }}
-                        </p>
-                        <small class="text-muted" style="font-family: 'Roboto', sans-serif; font-size: 0.8rem;">
-                            {{ $comment->created_at->diffForHumans() }}
-                        </small>
+        @foreach($post->comments as $comment)
+        <div class="card mb-2" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
+            <div class="card-body d-flex align-items-center">
+                <!-- User Avatar -->
+                <img src="{{ $comment->user->picture ? asset('storage/' . $comment->user->picture) : 'https://ui-avatars.com/api/?name=' . urlencode(substr($comment->user->name, 0, 1)) . '&background=random&color=fff&size=40' }}" 
+                     class="rounded-circle me-3"
+                     width="40" height="40"
+                     alt="User">
+        
+                <div>
+                    <strong>{{ $comment->user->name ?? 'Guest' }}</strong>
+                    <p class="mb-0">{{ $comment->content }}</p>
+                    <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                </div>
+        
+                <!-- Edit/Delete Buttons for Comment Owner -->
+                @if(Auth::id() === $comment->user_id)
+                <div class="dropdown-container">
+                    <div class="dropdown" >
+                        <!-- Ellipsis Button -->
+                        <button class="btn btn-outline-secondary " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" >
+                            <i class="bi bi-three-dots"></i> <!-- FontAwesome or Bootstrap Icons for ellipsis -->
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editCommentModal{{ $comment->id }}">
+                                    Edit
+                                </button>
+                            </li>
+                            <li>
+                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+                @endif
+               
             </div>
-
-            @endforeach
+        </div>
+        
+        <!-- Edit Comment Modal -->
+        <div class="modal fade" id="editCommentModal{{ $comment->id }}" tabindex="-1" aria-labelledby="editCommentLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCommentLabel">Edit Comment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('comments.update', $comment->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <textarea name="comment" class="form-control" rows="3" required>{{ $comment->content }}</textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endforeach
+        
         @endif
     </div>
 </div>
