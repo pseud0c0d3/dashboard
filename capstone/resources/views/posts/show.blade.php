@@ -147,21 +147,30 @@
             <p style="font-family: 'Roboto', sans-serif; font-size: 0.9rem; color: rgb(102, 102, 102);">No comments yet. Be the first to comment!</p>
         @else
             @foreach($post->comments as $comment)
-                <div class="card mb-2" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
-                    <div class="card-body d-flex align-items-center">
-                        <!-- User Avatar (Optional) -->
-                        <img src="{{ asset('storage/default-profile.jpg') }}" class="rounded-circle me-3" width="40" height="40" alt="User">
-                        <div>
-                            <strong style="font-family: 'Poppins', sans-serif; font-size: 1rem; color: rgb(34, 34, 34);">
-                                {{ $comment->user->name ?? 'Guest' }}
-                            </strong>
-                            <p class="mb-0" style="font-family: 'Roboto', sans-serif; font-size: 0.9rem; line-height: 1.4; color: rgb(34, 34, 34);">
-                                {{ $comment->content }}
-                            </p>
-                            <small class="text-muted" style="font-family: 'Roboto', sans-serif; font-size: 0.8rem;">{{ $comment->created_at->diffForHumans() }}</small>
-                        </div>
+            <div class="card mb-2" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
+                <div class="card-body d-flex align-items-center">
+                    <!-- User Avatar (With Fallback Initials) -->
+                    <img src="{{ $comment->user->picture
+                                ? asset('storage/' . $comment->user->picture)
+                                : 'https://ui-avatars.com/api/?name=' . urlencode(substr($comment->user->name, 0, 1)) . '&background=random&color=fff&size=40' }}"
+                         class="rounded-circle me-3"
+                         width="40" height="40"
+                         alt="User">
+
+                    <div>
+                        <strong style="font-family: 'Poppins', sans-serif; font-size: 1rem; color: rgb(34, 34, 34);">
+                            {{ $comment->user->name ?? 'Guest' }}
+                        </strong>
+                        <p class="mb-0" style="font-family: 'Roboto', sans-serif; font-size: 0.9rem; line-height: 1.4; color: rgb(34, 34, 34);">
+                            {{ $comment->content }}
+                        </p>
+                        <small class="text-muted" style="font-family: 'Roboto', sans-serif; font-size: 0.8rem;">
+                            {{ $comment->created_at->diffForHumans() }}
+                        </small>
                     </div>
                 </div>
+            </div>
+
             @endforeach
         @endif
     </div>
@@ -203,7 +212,7 @@
                 <h5 class="modal-title" id="PostModalLabel">Edit Your Post</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data"> 
+            <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
