@@ -13,6 +13,7 @@
     border-color: #007bff; /* Border color when hovered */
 }
 
+
 /* Hover effect for dropdown items with scale animation */
 .dropdown-item:hover {
     background-color: #007bff; /* Blue background on hover */
@@ -27,6 +28,18 @@
     transform: scale(1.15); /* Slightly increase size */
 
 }
+
+/* Adjusting .dropdown-container to ensure it doesn't interfere */
+.dropdown-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1060; /* Ensure it stays on top of everything */
+}
+
+    
+
+    
 </style>
 
 
@@ -66,7 +79,7 @@
         <!-- User Name (Visible except on mobile) -->
         <span class="ms-2 user-name">{{ Auth::user()->name }}</span>
     </button>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+    <ul class="dropdown-menu dropdown-menu-end"  id="nav"aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
         <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
         <li><hr class="dropdown-divider"></li>
@@ -80,31 +93,34 @@
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     <div class="card" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;">
     <div class="card-body">
-        @auth
-            @if(Auth::id() === $post->user_id)
-                <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        Extra Actions
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <!-- Edit button now triggers the modal -->
-                        <li>
-                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editPostModal{{ $post->id }}">
-                                Edit
-                            </button>
-                        </li>
-                        <!-- Delete button remains the same -->
-                        <li>
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            @endif
-        @endauth
+        <!-- Post Actions Dropdown -->
+@auth
+    @if(Auth::id() === $post->user_id)
+        <div class="dropdown-container">
+            <div class="dropdown" >
+                <!-- Ellipsis Button -->
+                <button class="btn btn-outline-secondary " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" >
+                    <i class="bi bi-three-dots"></i> <!-- FontAwesome or Bootstrap Icons for ellipsis -->
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editPostModal{{ $post->id }}">
+                            Edit
+                        </button>
+                    </li>
+                    <li>
+                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    @endif
+@endauth
+
 
 
         <!-- Post Title -->

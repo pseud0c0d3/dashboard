@@ -1,6 +1,3 @@
-
-    /* Toggle Sidebar Button Styles */
-/* Toggle Sidebar Button Styles */
 /* Toggle Sidebar Button Styles */
 .toggle-sidebar-btn {
     position: fixed; /* Fixed position for overlay effect */
@@ -27,67 +24,68 @@
     transform: scale(1.1); /* Slight zoom effect */
     transition: transform 0.2s ease-in-out; /* Smooth transition */
 }
-    ::-webkit-scrollbar {
-        display: none;
-    }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
 /* When the sidebar is open */
 #sidebar.open {
     left: 0; /* Sidebar moves into view */
 }
-    /* Hover effect for the dropdown button */
-    #navbarDropdown:hover {
-        background-color: #f8f9fa; /* Light background on hover */
-        border-color: #007bff; /* Border color when hovered */
-    }
 
-    /* Hover effect for dropdown items with scale animation */
-    .dropdown-item:hover {
-        background-color: #007bff; /* Blue background on hover */
-        color: #fff; /* White text on hover */
-        transform: scale(1.05); /* Slightly increase size */
-        transition: transform 0.2s ease-in-out; /* Smooth transition */
-    }
+/* Hover effect for the dropdown button */
+#navbarDropdown:hover {
+    background-color: #f8f9fa; /* Light background on hover */
+    border-color: #007bff; /* Border color when hovered */
+}
 
-    /* Hover effect for the profile picture button */
-    .dropdown-toggle:hover img {
-        opacity: 0.8; /* Slight opacity change for profile image on hover */
-        transform: scale(1.15); /* Slightly increase size */
-    }
+/* Hover effect for dropdown items with scale animation */
+.dropdown-item:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: #fff; /* White text on hover */
+    transform: scale(1.05); /* Slightly increase size */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
 
-    #add{
-        bottom: 20px; 
-        right: 20px; 
-        z-index: 10; 
-        cursor: pointer; 
-        padding: 15px 25px; 
-        font-size: 18px; 
-        border-radius: 50%; 
-        box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px 0px;
+/* Hover effect for the profile picture button */
+.dropdown-toggle:hover img {
+    opacity: 0.8; /* Slight opacity change for profile image on hover */
+    transform: scale(1.15); /* Slightly increase size */
+}
 
-    }
-       /* Navbar Style */
-       .navbar {
-        background: linear-gradient(#3677b3, #3677b3);
-        background-image: url(/img/bak.jpg); 
-        background-repeat: no-repeat;
-        background-size: auto;
-        
-        height: 80px;
-        width: calc(100% - 250px); /* Adjust to leave space for sidebar */
-        position: fixed;
-        top: 0;
-        left: 250px; /* Space for the sidebar */
-        z-index: 1000;
-        margin-left: 0;
-        
-        font-family: 'Roboto', sans-serif;
-        
-    }
-    .navbar-brand{
-        font-size: 40px;
-    }
-    
-form .btn{
+#add {
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 10; 
+    cursor: pointer; 
+    padding: 15px 25px; 
+    font-size: 18px; 
+    border-radius: 50%; 
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px 0px;
+}
+
+/* Navbar Style */
+.navbar {
+    background: linear-gradient(#3677b3, #3677b3);
+    background-image: url(/img/bak.jpg); 
+    background-repeat: no-repeat;
+    background-size: auto;
+    height: 80px;
+    width: calc(100% - 250px); /* Adjust to leave space for sidebar */
+    position: fixed;
+    top: 0;
+    left: 250px; /* Space for the sidebar */
+    z-index: 1000;
+    margin-left: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar-brand {
+    font-size: 40px;
+}
+
+form .btn {
     width: 70px;
 }
 
@@ -116,6 +114,7 @@ form .btn{
     transform: scale(1.1); /* Slight zoom effect */
     transition: transform 0.2s ease-in-out;
 }
+
 /* Navbar adjustment when sidebar is open */
 .navbar.shifted {
     margin-left: 250px; /* Move the navbar to the right */
@@ -125,13 +124,14 @@ form .btn{
 /* Mobile specific adjustments */
 @media (max-width: 768px) {
     .navbar.shifted {
-            margin-left: 0; /* No margin when sidebar is open */
-        }
+        margin-left: 0; /* No margin when sidebar is open */
+    }
 
-        /* Hide the search bar on mobile */
-        .navbar form {
-            display: none;
-        }
+    /* Hide the search bar on mobile */
+    .navbar form {
+        display: none;
+    }
+
     #add {
         bottom: 15px; /* Closer to the bottom */
         right: 15px; /* Closer to the right */
@@ -142,48 +142,92 @@ form .btn{
     }
 
     .navbar {
-            width: 135%; /* Full width for mobile */
-            margin-top: -15px;
-            padding-left: 70px;
-            margin-left: -325px; /* Remove offset for small screens */
-            position: relative;
-            
+        width: 135%; /* Full width for mobile */
+        margin-top: -15px;
+        padding-left: 70px;
+        margin-left: -325px; /* Remove offset for small screens */
+        position: relative;
     }
-    .navbar-brand{
+
+    .navbar-brand {
         margin-left: 200px;
         margin-right: 0;
-}
+    }
 
-     /* Hide the search bar and show the logo button on mobile */
-     .search-bar {
-            display: none;
-        }
-        #navbarDropdown{
-            margin-left: -220px ;
-            width: 85px;
-            height: 55px;
-        }
+    /* Hide the search bar and show the logo button on mobile */
+    .search-bar {
+        display: none;
+    }
+
+    #navbarDropdown {
+        margin-left: -220px;
+        width: 85px;
+        height: 55px;
+    }
 
     /* Hide the user name on mobile */
     #navbarDropdown .user-name {
         display: none;
     }
-   
-    
 
     /* Adjust the profile image size and style */
     #navbarDropdown img {
-        width: 85px;
-        height: 55px;
+        width: 45px; /* Adjust image size */
+        height: 45px; /* Keep it proportional */
     }
-    
-    
 
     form .btn {
         display: none !important;
     }
-    .scrollable-posts{
+
+    .scrollable-posts {
         margin-top: -100px;
     }
-}
 
+    /* Fix for Navbar Dropdown in Mobile */
+    .dropdown-menu {
+        position: absolute;
+        right: 10px !important; /* Align to the right within the screen */
+        left: auto !important; /* Remove left positioning */
+        width: auto; /* Prevent unnecessary width */
+        min-width: 180px; /* Set a min width */
+        max-width: 90vw; /* Prevent overflowing the screen */
+        background-color: #fff; /* Keep it visible */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for visibility */
+        border-radius: 8px; /* Rounded corners */
+        overflow: hidden; /* Ensure no content spills out */
+    }
+
+    .dropdown-menu a {
+        text-align: center; /* Keep text centered */
+        font-size: 14px; /* Adjust font size */
+        padding: 10px 15px; /* Improve spacing */
+    }
+
+    .dropdown-menu.show {
+        transform: translateX(0) !important; /* Prevent weird positioning */
+        overflow-y: auto; /* Scroll if too many items */
+        max-height: 250px; /* Prevent dropdown from being too long */
+    }
+
+    /* Fix the navbar profile button positioning */
+    #navbarDropdown {
+        position: relative;
+        margin-left: auto; /* Push it to the right */
+        margin-right: 15px; /* Space from right edge */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Ensure dropdown opens downward properly */
+    .dropdown-toggle::after {
+        display: none; /* Remove the arrow for a cleaner look */
+    }
+
+    /* Fix navbar spacing */
+    .navbar {
+        width: 100%; /* Ensure it fits mobile screens */
+        padding: 10px 15px; /* Adjust padding */
+    }
+}

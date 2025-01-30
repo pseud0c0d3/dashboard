@@ -162,7 +162,7 @@ body {
     height: 100%;
     top: 0;
     left: 0;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease-in-out;
     z-index: 1000;
 }
 
@@ -187,6 +187,7 @@ body {
     list-style: none;
     margin-right: 5px;
 }
+
 
 .profile-section {
     margin-bottom: 20px;
@@ -273,6 +274,18 @@ body {
 
 .menu-toggle {
     display: none;
+}
+.toggle-sidebar-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background-color: #23486A;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
 }
 
 .dropdown-list {
