@@ -60,26 +60,24 @@
     @endif
 
     <div class="scrollable-posts" style="max-height: 100vh; padding-right: 15px;">
-        <form action="{{ route('posts.index') }}" method="GET" class="d-flex ms-auto" style="max-width: 500px;">
-            @csrf
-            <div class="input-group w-100">
-                <!-- Input field always visible -->
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="Search by title..."
-                    class="form-control rounded-pill"
-                    value="{{ request('search') }}"
-                    style="display: block;" >
-                <!-- Hide button on mobile -->
-                <button
-                    type="submit"
-                    class="btn btn-light rounded-pill ms-2 d-none d-sm-block">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
+    <form action="{{ route('posts.index') }}" method="GET" class="w-100">
+        @csrf
+        <div class="input-group">
+            <input 
+                type="text" 
+                name="search" 
+                class="form-control rounded-start-pill border-0 shadow-sm px-4" 
+                placeholder="Search by title..."
+                value="{{ request('search') }}"
+                style="height: 45px; font-weight: bold;">
 
-        </form>
+            <button 
+                type="submit" 
+                class="btn btn-primary rounded-end-pill shadow-sm px-4">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </form>
         <div class="filter-buttons d-flex justify-content-between mb-3">
             <div>
                 <a href="{{ route('posts.index', ['filter' => 'all']) }}" class="btn btn-outline-primary {{ request('filter', 'all') === 'all' ? 'active' : '' }}">
