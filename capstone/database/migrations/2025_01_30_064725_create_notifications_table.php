@@ -13,7 +13,7 @@ return new class extends Migration
 {
     Schema::create('notifications', function (Blueprint $table) {
         $table->id();
-        $table->unsignedBigInteger('user_id'); // Foreign key for the user
+        $table->unsignedBigInteger('user_id')->nullable(); // Foreign key for the user
         $table->string('type'); // Type of notification (e.g., comment, like)
         $table->text('message'); // Message content
         $table->timestamps(); // created_at and updated_at
