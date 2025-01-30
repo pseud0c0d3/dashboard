@@ -1,3 +1,156 @@
+  /* Notification Badge Styling */
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: pulse 0.6s infinite alternate;
+}
+
+/* Pulse Animation for Notification Badge */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    right: 10px !important; /* Align to the right within the screen */
+    left: auto !important; /* Remove left positioning */ /* Align to the left side */
+    top: 100%; /* Position directly below the notification icon */
+    min-width: 200px; /* Set a minimum width */
+    max-width: 90vw; /* Prevent dropdown from overflowing the screen */
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 9999; /* Ensure dropdown stays on top */
+    padding: 10px 15px; /* Add padding for better spacing */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Styling for the profile image in the dropdown */
+.dropdown-menu img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Style adjustments for the dropdown item for better visibility */
+.dropdown-item {
+    white-space: nowrap; /* Prevent wrapping of text */
+}
+
+/* Hover Effect for Notification Items */
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+    cursor: pointer;
+}
+
+/* Mark read item styling */
+.dropdown-item.read {
+    color: #777;
+}
+    /* Close Button for Mobile Sidebar */
+
+/* Default Sidebar - Visible on larger screens */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #23486A;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: transform 0.3s ease-in-out;
+    z-index: 999; /* Ensure the sidebar stays on top */
+}
+
+/* Hide sidebar on smaller screens */
+@media (max-width: 768px) {
+    .close-sidebar-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 10001; /* Ensure the button stays on top */
+}
+.close-sidebar-btn:hover {
+    background-color: transparent;
+}
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        width: 250px;
+        height: 100vh;
+        z-index: 9999; /* Higher z-index to ensure it's on top of the navbar */
+
+    }
+    /* Ensure navbar is below sidebar when opened on mobile */
+    .navbar {
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    /* Adjust sidebar toggle button */
+    .toggle-sidebar-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 10000;
+        background-color: #23486A; /* Make button visible */
+        color: white;
+    }
+}
+
+/* Ensure main content expands when sidebar is hidden */
+.main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        margin-top: 60px;
+    }
+}
+
+/* Tooltip Styling for Notification Icon */
+.notification-badge[data-toggle="tooltip"] {
+    cursor: pointer;
+}
+
+/* Dropdown Menu Item Alignment */
+.dropdown-item i {
+    margin-right: 10px;
+}
+
+/* Ensure proper padding and size for icons */
+.dropdown-item i.bi, .dropdown-item i.fas {
+    font-size: 16px;
+}
+
 /* Toggle Sidebar Button Styles */
 .toggle-sidebar-btn {
     position: fixed; /* Fixed position for overlay effect */
@@ -78,7 +231,15 @@
         width: 35px;  /* Smaller size for mobile */
         height: 35px; /* Smaller size for mobile */
     }
+    .navbar-brand {
+        position: relative;
+        
+        left: 45%;
+        transform: translateX(-50%);
+        font-size: 1.2rem; /* Adjust this based on your preference */
+    }
 }
+
 
 /* Navbar Style */
 .navbar {
@@ -136,6 +297,8 @@ form .btn {
     transition: margin-left 0.3s ease; /* Smooth transition */
 }
 
+
+
 /* Mobile specific adjustments */
 @media (max-width: 768px) {
     .navbar.shifted {
@@ -146,6 +309,7 @@ form .btn {
     .navbar form {
         display: none;
     }
+    
 
     #add {
         bottom: 15px; /* Closer to the bottom */
@@ -160,12 +324,14 @@ form .btn {
         width: 135%; /* Full width for mobile */
         margin-top: -15px;
         padding-left: 70px;
-        margin-left: -325px; /* Remove offset for small screens */
-        position: relative;
+        margin-left: -250px; /* Remove offset for small screens */
+        z-index: 1600;
+        
+        
     }
 
     .navbar-brand {
-        margin-left: 200px;
+        margin-left: 0px;
         margin-right: 0;
     }
 

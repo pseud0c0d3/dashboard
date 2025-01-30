@@ -41,43 +41,7 @@
 
     </head>
     <style>
-/* Default Sidebar - Visible on larger screens */
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    background: #23486A;
-    position: fixed;
-    left: 0;
-    top: 0;
-    transition: transform 0.3s ease-in-out;
-}
-
-/* Hide sidebar on smaller screens */
-@media (max-width: 768px) {
-    .sidebar {
-        transform: translateX(-100%);
-        position: fixed;
-        width: 250px;
-        height: 100vh;
-        z-index: 1000;
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
-}
-
-/* Ensure main content expands when sidebar is hidden */
-.main-content {
-    margin-left: 250px;
-    transition: margin-left 0.3s ease-in-out;
-}
-
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 0;
-    }
-}
+    
 
 </style>
 
@@ -93,7 +57,6 @@
         </a>
         
 
-        <!-- Notifications Dropdown (Positioned next to Profile Dropdown) -->
         <div class="d-flex align-items-center">
             <!-- Notifications Dropdown with Badge -->
             <div class="dropdown me-3 position-relative">
@@ -147,32 +110,36 @@
     </button>
     <div class="container">
             <!-- Sidebar -->
-    <div class="sidebar" style="background-image: url(/img/bak.jpg); ">
-        <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
-        <ul class="menu">
-            <li><a href="{{ route('user.profile') }}" id="prof"><i class="bi bi-person"></i> Profile</a></li>
-            <li><a href="{{ route('user.forum') }}" id="form"><i class="fas fa-home"></i> Forum</a></li>
-            <li>
-                <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
+    <!-- Sidebar -->
+<div class="sidebar" style="background-image: url(/img/bak.jpg); ">
+    <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
+    <button class="close-sidebar-btn d-md-none" onclick="closeSidebar()">✖</button> <!-- Close button -->
+
+    <ul class="menu">
+        <li><a href="{{ route('user.profile') }}" id="prof"><i class="bi bi-person"></i> Profile</a></li>
+        <li><a href="{{ route('user.forum') }}" id="form"><i class="fas fa-home"></i> Forum</a></li>
+        <li>
+            <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                 <i class="fas fa-tasks" id="act"></i> Activities <span class="dropdown-arrow">▼</span>
-                </a>
-                <ul class="dropdown-list" id="activitiesDropdown" style="background-color: #23486A;">
-                    <li>
-                        <a href="{{ route('workspace.colormatch') }}" id="act" onclick="showLoading('workspace.colormatch')">
-                            <img src="/img/colorgame.png" alt="Colormatch Icon"  id="color"class="list-icon"> Colormatch Game
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('workspace.game') }}" id="sound" onclick="showLoading('workspace.game')">
-                            <img src="/img/sound.png" alt="Sound Game Icon" class="list-icon"> Sound Game
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="{{ route('user.fullcalendar') }}" id="full"><i class="fas fa-calendar-alt"></i>FullCalendar</a></li>
-            <li><a href="{{ route('user.chats') }}" id="chat"><i class="bi bi-chat-dots"></i> Chats</a></li>
-        </ul>
-    </div>
+            </a>
+            <ul class="dropdown-list" id="activitiesDropdown" style="background-color: #23486A;">
+                <li>
+                    <a href="{{ route('workspace.colormatch') }}" id="act" onclick="showLoading('workspace.colormatch')">
+                        <img src="/img/colorgame.png" alt="Colormatch Icon" id="color" class="list-icon"> Colormatch Game
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('workspace.game') }}" id="sound" onclick="showLoading('workspace.game')">
+                        <img src="/img/sound.png" alt="Sound Game Icon" class="list-icon"> Sound Game
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li><a href="{{ route('user.fullcalendar') }}" id="full"><i class="fas fa-calendar-alt"></i>FullCalendar</a></li>
+        <li><a href="{{ route('user.chats') }}" id="chat"><i class="bi bi-chat-dots"></i> Chats</a></li>
+    </ul>
+</div>
+
 
     <!-- Main Content -->
     <main class="py-4">
@@ -305,6 +272,14 @@
     }).catch(error => {
         console.error("Error marking notification as read:", error);
     });
+}
+
+// Function to close the sidebar
+function closeSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.remove('open'); // Close the sidebar
+    const mainContent = document.querySelector('.main-content');
+    mainContent.classList.remove('expanded'); // Adjust main content
 }
 
         </script>

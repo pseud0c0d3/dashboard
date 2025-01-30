@@ -4,6 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
 <style>
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -43,51 +44,6 @@
 </style>
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('posts.index') }}">MAIN POSTS</a>
-        <!-- Dropdown Button with Image -->
-        <div class="dropdown ms-4">
-    <button
-        class="btn btn-light dropdown-toggle d-flex align-items-center"
-        type="button"
-        id="navbarDropdown"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-    >
-        <!-- Profile Picture or Initials -->
-        @if(Auth::user()->picture)
-            <img
-                src="{{ asset('storage/' . Auth::user()->picture) }}"
-                alt="Profile Picture"
-                class="rounded-circle img-fluid"
-                width="40"
-                height="40"
-                style="object-fit: cover; border: 2px solid #ddd;"
-            >
-        @else
-            <div
-                class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm"
-                style="width: 40px; height: 40px; border: 2px solid #ff5722;"
-            >
-                <span class="h6 text-muted m-0">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                </span>
-            </div>
-        @endif
-
-        <!-- User Name (Visible except on mobile) -->
-        <span class="ms-2 user-name">{{ Auth::user()->name }}</span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end"  id="nav"aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="{{ route('user.faq') }}">Help</a></li>
-        <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log Out</a></li>
-        <li><hr class="dropdown-divider"></li>
-    </ul>
-</div>
-
-    </div>
-</nav>
 
 
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
@@ -142,10 +98,17 @@
 
         <!-- Buttons -->
         <div class="d-flex justify-content-between mt-3">
+            {{-- <!-- Comment Button -->
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                <i class="bi bi-chat-left-text"></i> Comment
+            </button> --}}
+            @if($post->admin_id !== 1)
             <!-- Comment Button -->
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
                 <i class="bi bi-chat-left-text"></i> Comment
             </button>
+             @endif
+
 
             <!-- Back Button -->
             <a href="{{ route('posts.index') }}" class="btn btn-primary">Back to Posts</a>

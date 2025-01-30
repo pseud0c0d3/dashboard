@@ -152,6 +152,16 @@ class PostController extends Controller
 
         return view('posts.edit', ['post' => $post]);
     }
+    public function adminEdit(Post $post)
+{
+    // Check if the logged-in user is an admin
+    if (!auth()->user()->is_admin) {
+        return redirect()->route('posts.index')->with('error', 'You do not have permission to edit this post.');
+    }
+
+    return view('posts.edit', ['post' => $post]); // You can use the same edit view or adjust it for the admin
+}
+
 
 
     /**
@@ -178,9 +188,29 @@ class PostController extends Controller
 
     return redirect()->route('posts.index')->with('success', 'Your post was updated.');
 }
+public function adminUpdate(Request $request, $id)
+{
+    $post = Post::findOrFail($id);
 
+    // Check if the logged-in user is the admin who created the post
+    if ($post->admin_id !== auth()->user()->id) {
+        return redirect()->route('posts.admin')->with('error', 'You are not authorized to update this post.');
+    }
 
+    // Validate the request
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'body' => 'required|string',
+    ]);
 
+    // Update the post
+    $post->update([
+        'title' => $request->title,
+        'body' => $request->body,
+    ]);
+
+    return redirect()->route('posts.admin')->with('success', 'Post updated successfully.');
+}
     /**
      * Remove the specified resource from storage.
      */
@@ -198,8 +228,49 @@ class PostController extends Controller
 
     return redirect()->route('posts.index')->with('success', 'Your post was deleted.');
 }
+public function adminDestroy($id)
+{
+    $post = Post::findOrFail($id);
+
+    // Check if the logged-in user is the admin who created the post
+    if ($post->admin_id !== auth()->user()->id) {
+        return redirect()->route('posts.admin')->with('error', 'You are not authorized to delete this post.');
+    }
+
+    // Delete the post
+    $post->delete();
+
+    return redirect()->route('posts.admin')->with('success', 'Post deleted successfully.');
+}
+
 
 public function storeComment(Request $request, $postId)
+{
+    $request->validate([
+        'comment' => 'required|string',
+    ]);
+
+    // Assuming the post belongs to a user
+    $post = Post::findOrFail($postId);
+    $user = $post->user; // Get the user who owns the post
+
+    // Save the comment (you'll have your own logic for saving comments)
+    $comment = new Comment();
+    $comment->user_id = Auth::id();
+    $comment->post_id = $postId;
+    $comment->content = $request->comment;
+    $comment->save();
+
+    // Create a notification for the post owner, linking to the specific post
+    $user->notifications()->create([
+        'type' => 'comment',
+        'message' => 'You have a new comment on your post!',
+        'post_id' => $postId,  // Link to the post
+    ]);
+
+    return back()->with('success', 'Comment posted and notification sent!');
+}
+public function adminComment(Request $request, $postId) 
 {
     $request->validate([
         'comment' => 'required|string',
@@ -268,7 +339,23 @@ public function updateComment(Request $request, Comment $comment)
 
     return back()->with('success', 'Comment updated successfully!');
 }
+public function adminUpdateComment(Request $request, Comment $comment)
+{
+    // Ensure the authenticated user owns the comment
+    if (Auth::id() !== $comment->admin_id) {
+        abort(403, 'Unauthorized action.');
+    }
 
+    $request->validate([
+        'comment' => 'required|string',
+    ]);
+
+    $comment->update([
+        'content' => $request->comment,
+    ]);
+
+    return back()->with('success', 'Comment updated successfully!');
+}
 public function destroyComment(Comment $comment)
 {
     // Ensure the authenticated user owns the comment
@@ -281,6 +368,19 @@ public function destroyComment(Comment $comment)
     return back()->with('success', 'Comment deleted successfully!');
 }
 
+public function adminDestroyComment(Comment $comment)
+{
+    // Ensure the authenticated user owns the comment
+    if (Auth::id() !== $comment->admin_id) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    $comment->delete();
+
+    return back()->with('success', 'Comment deleted successfully!');
+}
+
+////////////////////
 
 
 

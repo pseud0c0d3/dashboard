@@ -4,6 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
 <style>
+    
     /* Ensure profile picture maintains uniform size */
 .profile-picture {
     width: 150px; /* Set the fixed width */
