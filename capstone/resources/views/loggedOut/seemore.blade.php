@@ -61,25 +61,25 @@
             <!-- Carousel Items -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100 hero-carousel-image" src="/img/aid.jpg" alt="First slide">
-                    <div class="carousel-caption d-block">
+                    <img class="d-block w-100 hero-carousel-image" src="/img/doc1.jpg" alt="First slide">
+                    <!--<div class="carousel-caption d-block">
                         <h5>First Slide Title</h5>
                         <p>Description for the first slide goes here.</p>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100 hero-carousel-image" src="/img/aid2.jpeg" alt="Second slide">
-                    <div class="carousel-caption d-block">
+                    <img class="d-block w-100 hero-carousel-image" src="/img/aid2.jpg" alt="Second slide">
+                    <!--<div class="carousel-caption d-block">
                         <h5>Second Slide Title</h5>
                         <p>Description for the second slide goes here.</p>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100 hero-carousel-image" src="/img/doc1.jpg" alt="Third slide">
-                    <div class="carousel-caption d-none d-block">
+                    <img class="d-block w-100 hero-carousel-image" src="/img/aid.jpg" alt="Third slide">
+                    <!--<div class="carousel-caption d-none d-block">
                         <h5>Third Slide Title</h5>
                         <p>Description for the third slide goes here.</p>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             
@@ -144,25 +144,16 @@
         <h2 class="text-center mb-4">Documentary Pictures</h2>
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4">
-                <img src="/img/doc10.jpg" alt="Documentary Picture 1" class="img-fluid rounded shadow-lg">
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <img src="/img/doc2.jpg" alt="Documentary Picture 2" class="img-fluid rounded shadow-lg">
+                <img src="/img/doc11.jpg" alt="Documentary Picture 2" class="img-fluid rounded shadow-lg">
             </div>
             <div class="col-lg-4 col-md-6 mb-4">
                 <img src="/img/doc3.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <img src="/img/doc4.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
             </div>
             <div class="col-lg-4 col-md-6 mb-4">
                 <img src="/img/doc5.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
             </div>
             <div class="col-lg-4 col-md-6 mb-4">
                 <img src="/img/doc6.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <img src="/img/doc7.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
             </div>
             <div class="col-lg-4 col-md-6 mb-4">
                 <img src="/img/doc8.jpg" alt="Documentary Picture 3" class="img-fluid rounded shadow-lg">
@@ -174,14 +165,32 @@
     </div>
 </section>
 
-<section id="join" class="bg-primary text-white py-5" style=" background: linear-gradient(#102c38,#2b51a8);">
+<section id="join" class="text-white py-5" 
+         style="background-image: url('img/bak.jpg');  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.25);">
     <div class="container text-center">
-        <h2 class="display-4" style="font-family: 'Roboto', sans-serif;">Become a Part of Our Journey</h2>
-        <p class="lead mb-4" style="font-family: 'Roboto', sans-serif; color:white">At Aid of Angels, we are dedicated to providing comprehensive therapy and learning support for children and families facing autism. Your support is essential in helping us create a brighter future for those who need it the most.</p>
-        <p class="mb-4" style="font-family: 'Roboto', sans-serif; color:white">By joining us, you contribute to a community that believes in compassion, understanding, and progress. Together, we can empower children and families to overcome challenges and thrive in a supportive environment.</p>
-        <a href="{{ route('user.register') }}" id="join"class="btn main-btn rounded-pill px-6 py-3 shadow-lg text-white font-semibold opacity-0 transform -translate-y-20 scale-75 intro-effect">Join Now</a>
+        <h2 class="display-4 fw-bold text-uppercase" 
+            style="font-family: 'Poppins', sans-serif; text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);">
+            Become a Part of Our Journey
+        </h2>
+        <p class="lead mb-4 px-md-5" 
+           style="font-family: 'Roboto', sans-serif; color: rgba(255, 255, 255, 0.9); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
+            At <strong>Aid of Angels</strong>, we are dedicated to providing comprehensive therapy and learning support for children and families facing autism. Your support is essential in helping us create a brighter future for those who need it the most.
+        </p>
+        <p class="mb-4 px-md-5" 
+           style="font-family: 'Roboto', sans-serif; color: rgba(255, 255, 255, 0.85); text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);">
+            By joining us, you contribute to a community that believes in compassion, understanding, and progress. Together, we can empower children and families to overcome challenges and thrive in a supportive environment.
+        </p>
+        <a href="{{ route('user.register') }}" 
+           id="join"
+           class="btn main-btn rounded-pill px-5 py-3 shadow-lg text-white fw-semibold"
+           style="background: linear-gradient(135deg,rgb(102, 132, 224), #1e3d58); text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); font-size: 1.2rem; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+           onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0px 10px 20px rgba(0, 0, 0, 0.3)';"
+           onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0px 5px 15px rgba(0, 0, 0, 0.2)';">
+            Join Now
+        </a>
     </div>
 </section>
+
     <!-- Custom JavaScript -->
     <script>
         // Toggle Read More/Read Less functionality

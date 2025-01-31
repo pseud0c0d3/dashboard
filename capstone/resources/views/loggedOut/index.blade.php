@@ -138,7 +138,7 @@
     </div>
 </nav>
 
-<header class="jumbotron text-center relative" id="home" style="background-image: url('img/bck.png'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Poppins', sans-serif;">
+<header class="jumbotron text-center relative" id="home" style="background-image: url('img/bck.png'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Poppins', sans-serif; box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.23);">
   <div class="absolute inset-0 bg-black opacity-50"></div>
   <div class="container relative z-10 text-center py-24 px-6">
     <h1 class="display-4 text-white font-bold mb-4 opacity-0 transform -translate-y-20 scale-75 intro-effect" style="font-size: 3rem; letter-spacing: 1px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
@@ -223,7 +223,7 @@
     </p>
     <div class="text-center">
         <a href="{{ route('seemore') }}" class="btn btn-primary text-black hover:from-blue-600 hover:to-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-full px-6 transition duration-300" id="learnButton" style="background: linear-gradient(135deg, #3a63d5, #1b3248);">
-            Learn More
+            See More
         </a>
     </div>
 </div>
@@ -234,10 +234,11 @@
             <div class="col-md-4 d-flex align-items-center justify-content-center mb-4">
                 <div class="box founder-box text-center p-4" style="background-color: white; border-radius: 10px; width: 90%;">
                     <img src="img/founder.png" alt="Founder" class="img-fluid rounded-circle mb-2" style="width: 150px; height: 150px; ">
-                    <h3>Founder</h3>
+                    <h3>Mrs. Nanette Ambagan-Custodio</h3>
                     <p>Discover the vision and passion of our founder who established this center to support families.</p>
                 </div>
             </div>
+            
             <div class="col-md-8 d-flex flex-column justify-content-center">
                 <div class="row">
                     <!-- Forum Feature -->

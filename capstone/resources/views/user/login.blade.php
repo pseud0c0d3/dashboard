@@ -116,7 +116,9 @@
                 </div>
 
                 <!-- Remember Me and Forgot Password -->
-                <div class="form-check d-flex justify-content-center">
+                <div class="form-check d-flex justify-content-between">
+                    {{-- <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Remember Me</label> --}}
                     <a href="{{ route('forgot.password') }}" class="text-primary">Forgot password?</a>
                 </div>
 

@@ -124,7 +124,7 @@ Route::post('/', [LogInController::class, 'login'])->name('login.user');
 Route::post('/', [LogInController::class, 'logout'])->name('logout');
 Route::post('/send-password-reset', [LogInController::class, 'sendreset'])->name('sendreset');
 Route::get('/password-reset-form', [LogInController::class, 'showResetForm'])->name('password.reset');
-Route::post('/password-reset', [LogInController::class, 'resetPassword'])->name('password.update');
+Route::post('/password-reset', [LogInController::class, 'resetPassword'])->name('reset.password');
 
 
 // Forum Routes
