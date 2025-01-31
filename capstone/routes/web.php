@@ -102,6 +102,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmin'])->name('send.Messageofsellertoadmin');
 
     // Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
+    Route::post('/admin/posts/{post}/archive', [AdminController::class, 'archivePost'])->name('admin.archive');
+
 
 
 });

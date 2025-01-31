@@ -158,7 +158,7 @@ function displayOptions() {
     const categories = [...new Set(animals.map(animal => animal.category))];
     categories.forEach(category => {
         const img = document.createElement('img');
-        img.src = `/img/${category}.jpg`;
+        img.src = `/public/img/${category}.jpg`;
         img.alt = category;
         img.classList.add('category-image');
 
