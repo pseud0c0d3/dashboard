@@ -8,6 +8,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LogInController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ReplyController;
+
 // LoggedOut Routes
 Route::get('/', function () {
     return view('loggedOut.index');
@@ -61,7 +64,12 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/comments/admin/{comment}', [PostController::class, 'adminDestroyComment'])->name('admin.comments.destroy');
     Route::put('/comments/admin/{comment}', [PostController::class, 'adminUpdateComment'])->name('admin.comments.update');
 
+    Route::post('/posts/{post}/comment', [PostController::class, 'addComment'])->name('posts.comment');
+    
+
+
 });
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
 
 
@@ -104,6 +112,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
     Route::post('/admin/posts/{post}/archive', [AdminController::class, 'archivePost'])->name('admin.archive');
 
+    Route::post('/replies', [ReplyController::class, 'store'])->name('replies.store');
 
 
 });

@@ -20,6 +20,7 @@ class PostController extends Controller
     {
         $search = $request->input('search');
         $filter = $request->input('filter', 'all'); // Default to 'all' posts
+        
 
         $posts = Post::recent()
             ->when($search, function ($query, $search) {
@@ -130,6 +131,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        
         // Assuming the user is authenticated
         // $post->user_id = auth()->id();
         // $post->save();

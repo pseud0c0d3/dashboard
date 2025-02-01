@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::table('comments', function (Blueprint $table) {
             $table->unsignedBigInteger('admin_id')->nullable()->after('user_id');
              $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
+             $table->string('image')->nullable(); // Add this line
+             $table->foreignId('parent_id')->nullable()->constrained('comments')->onDelete('cascade');
+             $table->foreignId('parent_comment_id')->nullable()->constrained('comments')->onDelete('cascade');
+
         });
     }
 
@@ -23,7 +27,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-            //
+            $table->dropForeign(['admin_comment_id']);
+        $table->dropColumn('admin_comment_id');
         });
     }
 };
