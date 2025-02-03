@@ -39,4 +39,5 @@ class CommentController extends Controller
         // Redirect back to the post page with a success message
         return redirect()->route('posts.show', $request->post_id)->with('success', 'Comment added successfully.');
     }
+    
 }

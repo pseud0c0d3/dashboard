@@ -338,6 +338,7 @@ public function updateComment(Request $request, Comment $comment)
 
     $request->validate([
         'comment' => 'required|string',
+        
     ]);
 
     $comment->update([

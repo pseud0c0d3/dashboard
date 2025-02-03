@@ -65,11 +65,13 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::put('/comments/admin/{comment}', [PostController::class, 'adminUpdateComment'])->name('admin.comments.update');
 
     Route::post('/posts/{post}/comment', [PostController::class, 'addComment'])->name('posts.comment');
-    
+    Route::put('/comments/{comment}', [PostController::class, 'updateComment'])->name('comments.update');
+
 
 
 });
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+//Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 
 
 
