@@ -15,6 +15,7 @@
  <link rel="stylesheet" href="/css/nav.css">
 
 <style>
+    
     /* Custom styles for mobile responsiveness */
 @media (max-width: 576px) {
     .filter-buttons {
@@ -40,7 +41,32 @@
         width: auto; /* Default width for larger screens */
     }
 }
+/* Custom styles for post images */
+.post-image {
+    max-width: 100%; /* Ensure the image doesn't exceed its container */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 400px; /* Set a maximum height to prevent oversized images */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    margin: 0; /* Center the image horizontally */
+    display: block; /* Ensure the image behaves as a block element */
+}
 
+/* Ensure the image container doesn't overflow */
+.card-body {
+    overflow: hidden; /* Prevent content from overflowing */
+}
+@media (max-width: 768px) {
+    .post-image {
+        max-height: 300px; /* Smaller max-height for mobile devices */
+    }
+}
+
+@media (max-width: 576px) {
+    .post-image {
+        max-height: 250px; /* Even smaller max-height for very small devices */
+    }
+}
 </style>
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     @if(session('success'))
@@ -100,51 +126,61 @@
             </div>
         @else
             @foreach($posts as $post)
-                <div class="card mb-4" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset; font-family: 'Inter', sans-serif;">
-                    <div class="card-body" style="background-color: #ffffff;">
-                        <!-- User Info Section -->
-                        <div class="d-flex align-items-center mb-4">
-                            <img src="{{ $post->user ? ($post->user->picture 
-                            ? asset('storage/' . $post->user->picture) 
-                            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($post->user->name, 0, 1)) . '&background=random&color=fff&size=50') 
-                            : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
-                            class="rounded-circle"
-                            alt="User Profile"
-                            width="50" height="50">
+            <div class="card mb-4" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset; font-family: 'Inter', sans-serif;">
+    <div class="card-body" style="background-color: #ffffff;">
+        <!-- User Info Section -->
+        <div class="d-flex align-items-center mb-4">
+            <img src="{{ $post->user ? ($post->user->picture 
+            ? asset('storage/' . $post->user->picture) 
+            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($post->user->name, 0, 1)) . '&background=random&color=fff&size=50') 
+            : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
+            class="rounded-circle"
+            alt="User Profile"
+            width="50" height="50">
 
-                            <div class="ms-3">
-                                <h6 class="mb-0" style="font-size: 1rem; font-weight: 600; color: #333; font-family: 'Poppins', sans-serif;">
-                                    @if ($post->admin)
-                                        Admin: {{ $post->admin->name }}
-                                    @elseif ($post->user)
-                                        {{ $post->user->name }}
-                                    @else
-                                        Anonymous
-                                    @endif
-                                </h6>
-                                
-                                <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>
-                            </div>
-                        </div>
+            <div class="ms-3">
+                <h6 class="mb-0" style="font-size: 1rem; font-weight: 600; color: #333; font-family: 'Poppins', sans-serif;">
+                    @if ($post->admin)
+                        Admin: {{ $post->admin->name }}
+                    @elseif ($post->user)
+                        {{ $post->user->name }}
+                    @else
+                        Anonymous
+                    @endif
+                </h6>
+                
+                <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>
+            </div>
+        </div>
 
-                        <!-- Post Content Section -->
-                        <h5 class="fw-bold text-dark mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.8rem; text-transform: capitalize; letter-spacing: 0.5px;">
-                            {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
-                        </h5>
+        <!-- Post Content Section -->
+        <h5 class="fw-bold text-dark mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.8rem; text-transform: capitalize; letter-spacing: 0.5px;">
+            {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
+        </h5>
 
-                        <p class="mb-3" style="font-size: 1rem; line-height: 1.6; color: #555; font-family: 'Roboto', sans-serif;">
-                            {{ Str::limit($post->body, 150) }}
-                        </p>
+        <p class="mb-3" style="font-size: 1rem; line-height: 1.6; color: #555; font-family: 'Roboto', sans-serif;">
+            {{ Str::limit($post->body, 150) }}
+        </p>
 
+        <!-- Display the image if it exists -->
+        @if ($post->image)
+    <div class="mb-3 text-center"> <!-- Center the image -->
+        <img 
+            src="{{ asset('storage/' . $post->image) }}" 
+            alt="Post Image" 
+            class="img-fluid rounded post-image" 
+            style="max-width: 100%; height: auto; max-height: 400px;"> <!-- Adjust max-height as needed -->
+    </div>
+@endif
 
-                        <!-- Comment Actions -->
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary" style="font-size: 0.9rem; font-family: 'Roboto', sans-serif;">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Comment Actions -->
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary" style="font-size: 0.9rem; font-family: 'Roboto', sans-serif;">Read More</a>
+            </div>
+        </div>
+    </div>
+</div>
             @endforeach
         @endif
 
@@ -195,22 +231,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <!-- Title Input -->
-                        <input type="text" name="title" class="form-control mb-3" placeholder="Give your post a title!" required>
+    @csrf
+    <div class="modal-body">
+        <!-- Title Input -->
+        <input type="text" name="title" class="form-control mb-3" placeholder="Give your post a title!" required>
 
-                        <!-- Body Input -->
-                        <textarea name="body" class="form-control mb-3" placeholder="What do you want to share today?" rows="4" required></textarea>
+        <!-- Body Input -->
+        <textarea name="body" class="form-control mb-3" placeholder="What do you want to share today?" rows="4" required></textarea>
 
-                        <!-- Image Input (optional) -->
-                        {{-- <input type="file" name="image" class="form-control mb-3" accept="image/webp, image/png, image/jpg"> --}}
-                    </div>
-                    <div class="modal-footer d-flex justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Post</button>
-                    </div>
-                </form>
+        <!-- Image Input (optional) -->
+        <input type="file" name="image" class="form-control mb-3" accept="image/webp, image/png, image/jpg">
+    </div>
+    <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Post</button>
+    </div>
+</form>
             </div>
         </div>
     </div>

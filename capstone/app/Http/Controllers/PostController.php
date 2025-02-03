@@ -76,31 +76,31 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => ['required', 'max:255'],
-            'body' => ['required'],
-            'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
+{
+    // Validate the request
+    $request->validate([
+        'title' => ['required', 'max:255'],
+        'body' => ['required'],
+        'image' => 'nullable|image|mimes:webp,png,jpg,jpeg|max:2048', // Adjust the validation rules as needed
+    ]);
 
-        ]);
-
-        $path = null;
-        if ($request->hasFile('image')) {
-            $path = Storage::disk('public')->put('posts_images', $request->image);
-        }
-
-        Post::create([
-            'title' => $request->title,
-            'body' => $request->body,
-            'user_id' => Auth::id(),
-            // 'image' => $path,
-        ]);
-
-
-
-
-        return back()->with('success', 'Your post was created.');
+    // Handle the image upload if there's a file
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        $imagePath = Storage::disk('public')->put('posts_images', $request->file('image')); // Store the image in 'public/posts_images'
     }
+
+    // Create the post
+    Post::create([
+        'title' => $request->title,
+        'body' => $request->body,
+        'user_id' => Auth::id(), // Assuming the post is associated with the logged-in user
+        'image' => $imagePath, // Save the image path to the database (if any)
+    ]);
+
+    // Redirect with success message
+    return back()->with('success', 'Your post was created.');
+}
 
     public function storeadmin(Request $request)
 {
