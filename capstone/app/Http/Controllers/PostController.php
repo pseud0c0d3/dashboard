@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller; // Ensure this line is present
 use App\Models\Notification;
+use App\Models\Like;
 
 
 class PostController extends Controller
@@ -20,7 +21,9 @@ class PostController extends Controller
     {
         $search = $request->input('search');
         $filter = $request->input('filter', 'all'); // Default to 'all' posts
-        
+        // Fetch posts with related data (user, likes, and comments)
+    $posts = Post::with(['user', 'likes', 'comments'])->latest()->paginate(10);
+
 
         $posts = Post::recent()
             ->when($search, function ($query, $search) {
@@ -328,6 +331,28 @@ public function adminComment(Request $request, $postId)
     return back()->with('success', 'Comment posted and notification sent!');
 }
 
+public function toggleLike(Post $post)
+{
+    $user = Auth::user();
+
+    // Check if the user has already liked the post
+    $like = Like::where('user_id', $user->id)->where('post_id', $post->id)->first();
+
+    if ($like) {
+        // If the user has already liked the post, unlike it
+        $like->delete();
+        $message = 'Post unliked!';
+    } else {
+        // If the user hasn't liked the post, like it
+        $like = new Like();
+        $like->user_id = $user->id;
+        $like->post_id = $post->id;
+        $like->save();
+        $message = 'Post liked!';
+    }
+
+    return back()->with('success', $message);
+}
 
 public function updateComment(Request $request, Comment $comment)
 {

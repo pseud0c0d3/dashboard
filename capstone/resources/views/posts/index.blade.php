@@ -130,13 +130,13 @@
     <div class="card-body" style="background-color: #ffffff;">
         <!-- User Info Section -->
         <div class="d-flex align-items-center mb-4">
-            <img src="{{ $post->user ? ($post->user->picture 
-            ? asset('storage/' . $post->user->picture) 
-            : 'https://ui-avatars.com/api/?name=' . urlencode(substr($post->user->name, 0, 1)) . '&background=random&color=fff&size=50') 
-            : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
-            class="rounded-circle"
-            alt="User Profile"
-            width="50" height="50">
+        <img src="{{ $post->user && $post->user->picture 
+    ? asset('storage/' . $post->user->picture) 
+    : 'https://ui-avatars.com/api/?name=' . urlencode($post->user->name ?? 'User') . '&background=random&color=fff&size=50' }}"
+    class="rounded-circle"
+    alt="{{ $post->user->name ?? 'User' }} Profile"
+    width="50" height="50">
+
 
             <div class="ms-3">
                 <h6 class="mb-0" style="font-size: 1rem; font-weight: 600; color: #333; font-family: 'Poppins', sans-serif;">
@@ -173,12 +173,26 @@
     </div>
 @endif
 
-        <!-- Comment Actions -->
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary" style="font-size: 0.9rem; font-family: 'Roboto', sans-serif;">Read More</a>
-            </div>
-        </div>
+      <!-- Comment & Like Actions (Updated) -->
+<div class="d-flex align-items-center">
+    <!-- Like Button -->
+    <form action="{{ route('posts.like', $post->id) }}" method="POST" class="d-inline me-3">
+        @csrf
+        <button type="submit" class="btn btn-link text-decoration-none p-0">
+            <!-- Heart icon: red if liked, default if not -->
+            <i class="bi bi-heart{{ $post->isLikedBy(auth()->user()) ? '-fill text-danger' : '' }}"></i>
+        </button>
+    </form>
+    <!-- Like Count -->
+    <span class="me-3" style="margin-left: -30px; font-size: 1.2rem; font-family: 'Roboto', sans-serif;">{{ $post->likes->count() }}</span>
+
+    <!-- Chat Button with Comment Count -->
+    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-link text-decoration-none p-0" style="margin-left: 0px; font-size: 1.2rem; font-family: 'Roboto', sans-serif;">
+        <i class="bi bi-chat"></i> <!-- Chat icon from Bootstrap Icons -->
+        <span class="ms-1">{{ $post->comments->count() }}</span> <!-- Display Comment Count -->
+    </a>
+</div>
+
     </div>
 </div>
             @endforeach

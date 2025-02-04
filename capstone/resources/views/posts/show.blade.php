@@ -280,20 +280,21 @@
                 @else
                     @foreach($post->comments as $comment)
                     <div class="comment-card">
-                        <div class="d-flex align-items-start" style="position: relative;">
-                            <img src="{{ $post->user ? ($post->user->picture 
-                                ? asset('storage/' . $post->user->picture) 
-                                : 'https://ui-avatars.com/api/?name=' . urlencode(substr($post->user->name, 0, 1)) . '&background=random&color=fff&size=50') 
-                                : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
-                                class="rounded-circle"
-                                alt="User Profile"
-                                width="50" height="50">
-                            <div class="ms-3 w-100">
-                                <div class="comment-header">
-                                    <strong class="comment-author">{{ $comment->user->name ?? 'Guest' }}</strong>
-                                    <small class="text-muted comment-time">{{ $comment->created_at->diffForHumans() }}</small>
-                                </div>
-                                <p class="comment-content mb-1">{{ $comment->content }}</p>
+    <div class="d-flex align-items-start" style="position: relative;">
+        <img src="{{ $comment->user ? ($comment->user->picture 
+            ? asset('storage/' . $comment->user->picture) 
+            : 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) . '&background=random&color=fff&size=50') 
+            : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
+            class="user-avatar"
+            alt="User Profile"
+            width="50" height="50">
+        <div class="ms-3 w-100">
+            <div class="comment-header">
+                <strong class="comment-author">{{ $comment->user->name ?? 'Guest' }}</strong>
+                <small class="text-muted comment-time">{{ $comment->created_at->diffForHumans() }}</small>
+            </div>
+            <p class="comment-content mb-1">{{ $comment->content }}</p>
+    
                                 @if($comment->image)
                                 <img src="{{ Storage::url($comment->image) }}" alt="Comment Image" class="img-fluid comment-img-preview" 
                                     data-bs-toggle="modal" data-bs-target="#imagePreviewModal" data-img="{{ Storage::url($comment->image) }}">

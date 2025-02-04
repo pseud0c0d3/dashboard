@@ -10,6 +10,7 @@ use App\Http\Controllers\LogInController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\LikeController;
 
 // LoggedOut Routes
 Route::get('/', function () {
@@ -67,7 +68,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('/posts/{post}/comment', [PostController::class, 'addComment'])->name('posts.comment');
     Route::put('/comments/{comment}', [PostController::class, 'updateComment'])->name('comments.update');
 
-
+    Route::post('/posts/{post}/like', [LikeController::class, 'like'])->name('posts.like');
+    Route::delete('/posts/{post}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
 
 });
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
