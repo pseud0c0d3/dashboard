@@ -200,7 +200,11 @@
                 Posted by: <strong>{{ $post->admin->name ?? $post->user->name ?? 'Anonymous' }}</strong>
             </p>
             <p style="font-family: 'Roboto', sans-serif; font-size: 1rem;">{{ $post->body }}</p>
-
+            @if ($post->image)
+    <div class="text-center mt-3">
+        <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded shadow-sm" alt="Post Image" style="max-width: 100%; max-height: 400px;">
+    </div>
+@endif
             <div class="d-flex justify-content-between mt-3">
                 <a href="{{ route('posts.index') }}" class="btn btn-primary">Back to Posts</a>
             </div>
@@ -324,17 +328,18 @@
                                     </div>
                                     @endif
                                 @endauth
-                      <!-- Full-Size Image View Modal -->
-<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> <!-- Centers the image -->
-        <div class="modal-content bg-dark border-0"> <!-- Dark background, no border -->
-            <div class="modal-body p-0 d-flex justify-content-center align-items-center">
-                <img id="modalImagePreview" class="img-fluid" alt="Preview Image" 
-                     style="max-width: 100vw; max-height: 100vh; width: auto; height: auto; object-fit: contain;">
-            </div>
-        </div>
-    </div>
-</div>
+                                
+                                                    <!-- Full-Size Image View Modal -->
+                                <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered"> <!-- Centers the image -->
+                                        <div class="modal-content bg-dark border-0"> <!-- Dark background, no border -->
+                                            <div class="modal-body p-0 d-flex justify-content-center align-items-center">
+                                                <img id="modalImagePreview" class="img-fluid" alt="Preview Image" 
+                                                    style="max-width: 100vw; max-height: 100vh; width: auto; height: auto; object-fit: contain;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -344,9 +349,14 @@
             </div>
         </div>
     </div>
+    
 </div>
 
 <script>
+    function toggleReplyForm(commentId) {
+    let form = document.getElementById("reply-form-" + commentId);
+    form.style.display = form.style.display === "none" ? "block" : "none";
+}
     document.addEventListener('DOMContentLoaded', function() {
         const commentInput = document.getElementById('commentInput');
         const imageUpload = document.getElementById('imageUpload');
