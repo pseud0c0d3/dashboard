@@ -8,9 +8,11 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LogInController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReplyController;
-use App\Http\Controllers\LikeController;
+
+
 
 // LoggedOut Routes
 Route::get('/', function () {
@@ -72,9 +74,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/posts/{post}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
 
 });
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store'); 
 //Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
-
 
 
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
@@ -116,11 +117,14 @@ Route::middleware(['auth'])->group(function () {
     // Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
     Route::post('/admin/posts/{post}/archive', [AdminController::class, 'archivePost'])->name('admin.archive');
 
-    Route::post('/replies', [ReplyController::class, 'store'])->name('replies.store');
 
 
 });
+Route::post('comments/{commentId}/replies', [ReplyController::class, 'store'])->name('replies.store');
+Route::delete('replies/{id}', [ReplyController::class, 'destroy'])->name('replies.destroy');
+Route::get('comments/{commentId}/replies', [ReplyController::class, 'showReplies'])->name('replies.show');
 
+//Route::post('/comments/{comment}/reply', [CommentController::class, 'reply'])->name('comments.reply');
 Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
 Route::post('/user/check', [UserController::class, 'check'])->name('user.check');
 Route::post('/user/save', [UserController::class, 'save'])->name('user.save');

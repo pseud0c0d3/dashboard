@@ -155,11 +155,11 @@
 </header>
 
 
-<!-- Services Section -->
+<!-- Services Section
 <div class="container my-5 services-container" id="services">
     <h2 class="text-center mb-5 font-weight-bold">Our Services</h2>
     <div class="row">
-        <!-- Comprehensive Evaluation -->
+        <!-- Comprehensive Evaluation
         <div class="col-md-4 text-center mb-4">
             <div class="service-box p-5 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl ">
                 <div class="service-icon-container mb-3">
@@ -170,7 +170,7 @@
                 <p>We provide thorough evaluations to identify each child's unique needs, ensuring the right support.</p>
             </div>
         </div>
-        <!-- Personalized Therapy -->
+        <!-- Personalized Therapy 
         <div class="col-md-4 text-center mb-4">
             <div class="service-box p-5 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl ">
                 <div class="service-icon-container mb-3">
@@ -181,7 +181,7 @@
                 <p>Our therapy sessions are tailored to suit the individual requirements of each child, promoting growth and development.</p>
             </div>
         </div>
-        <!-- Supportive Community -->
+        <!-- Supportive Community 
         <div class="col-md-4 text-center mb-4">
             <div class="service-box p-5 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl">
                 <div class="service-icon-container mb-3">
@@ -193,7 +193,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- Empowering Families Section -->
 <div class="empowering-families-container">

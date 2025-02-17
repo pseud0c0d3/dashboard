@@ -15,7 +15,49 @@
  <link rel="stylesheet" href="/css/nav.css">
 
 <style>
-    
+    /* Updated Filter Buttons */
+    .filter-buttons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .filter-buttons .btn {
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .filter-buttons .btn-outline-primary {
+        border-color: #0d6efd;
+        color: #0d6efd;
+    }
+
+    .filter-buttons .btn-outline-primary:hover,
+    .filter-buttons .btn-outline-primary.active {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    /* Mobile Friendly */
+    @media (max-width: 576px) {
+        .filter-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .filter-buttons .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .search-bar {
+            max-width: 100%;
+        }
+    }
     /* Custom styles for mobile responsiveness */
 @media (max-width: 576px) {
     .filter-buttons {
@@ -41,20 +83,58 @@
         width: auto; /* Default width for larger screens */
     }
 }
-/* Custom styles for post images */
-.post-image {
-    max-width: 100%; /* Ensure the image doesn't exceed its container */
-    height: auto; /* Maintain aspect ratio */
-    max-height: 400px; /* Set a maximum height to prevent oversized images */
-    object-fit: cover; /* Ensure the image covers the area without distortion */
-    border-radius: 8px; /* Optional: Add rounded corners */
-    margin: 0; /* Center the image horizontally */
-    display: block; /* Ensure the image behaves as a block element */
-}
+
+    /* Add this CSS for the hover effect */
+    .post-image-container {
+        position: relative;
+        width: 100%;
+        max-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    }
+
+    .post-image-container:hover {
+        transform: scale(1.02); /* Slightly scale up on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+    }
+
+    .post-image-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: inherit;
+        background-size: cover;
+        background-position: center;
+        filter: blur(15px) brightness(0.7);
+        transform: scaleX(1.5);
+        z-index: 1;
+    }
+
+    .post-image {
+        position: relative;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        z-index: 2;
+        transition: transform 0.3s ease; /* Smooth transition for the image */
+    }
+
+    .post-image-container:hover .post-image {
+        transform: scale(1.05); /* Slightly zoom in the image on hover */
+    }
 
 /* Ensure the image container doesn't overflow */
 .card-body {
     overflow: hidden; /* Prevent content from overflowing */
+    background-color:rgba(82, 159, 223, 0.57);
 }
 @media (max-width: 768px) {
     .post-image {
@@ -67,6 +147,73 @@
         max-height: 250px; /* Even smaller max-height for very small devices */
     }
 }
+
+/* Image Wrapper: Keeps Original Aspect Ratio, Side Blur */
+.post-image-container {
+    position: relative;
+    width: 100%;
+    max-height: 400px; /* Prevents overly large images */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Blurred Background - Only on Left & Right */
+.post-image-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: inherit;
+    background-size: cover;
+    background-position: center;
+    filter: blur(15px) brightness(0.7); /* Blur effect */
+    transform: scaleX(1.5); /* Stretches blur only on left & right */
+    z-index: 1;
+}
+
+/* The Actual Image (Centered, Original Aspect Ratio) */
+.post-image {
+    position: relative;
+    max-width: 100%; /* Adjust to fit container */
+    max-height: 100%;
+    object-fit: contain; /* Keeps original aspect ratio */
+    border-radius: 8px;
+    z-index: 2;
+}
+
+/* Blurred Modal Background */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.2) !important; /* Light overlay */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+}
+
+/* Ensure modal-content has no background */
+.modal-content {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+/* Ensure the modal dialog is larger */
+.modal-dialog {
+    max-width: 90vw; /* Make modal take 90% of the viewport width */
+    max-height: 90vh; /* Make modal take 90% of the viewport height */
+}
+
+/* Make the image scale up while keeping it responsive */
+#modalImage {
+    width: auto; /* Keep original width */
+    max-width: 90vw; /* Scale image to fit within viewport width */
+    max-height: 90vh; /* Scale image to fit within viewport height */
+    object-fit: contain; /* Ensure image keeps aspect ratio */
+}
+
+
+
 </style>
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     @if(session('success'))
@@ -127,7 +274,7 @@
         @else
             @foreach($posts as $post)
             <div class="card mb-4" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset; font-family: 'Inter', sans-serif;">
-    <div class="card-body" style="background-color: #ffffff;">
+    <div class="card-body">
         <!-- User Info Section -->
         <div class="d-flex align-items-center mb-4">
         <img src="{{ $post->user && $post->user->picture 
@@ -154,24 +301,27 @@
         </div>
 
         <!-- Post Content Section -->
-        <h5 class="fw-bold text-dark mb-3" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.8rem; text-transform: capitalize; letter-spacing: 0.5px;">
+        <h5 class="fw-bold text-dark mb-3" style="margin-top: -18px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.8rem; text-transform: capitalize; letter-spacing: 0.5px;">
             {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}
         </h5>
 
-        <p class="mb-3" style="font-size: 1rem; line-height: 1.6; color: #555; font-family: 'Roboto', sans-serif;">
+        <p class="mb-3" style="margin-top: -10px; font-size: 1rem; line-height: 1.6; color: #555; font-family: 'Roboto', sans-serif;">
             {{ Str::limit($post->body, 150) }}
         </p>
 
         <!-- Display the image if it exists -->
         @if ($post->image)
-    <div class="mb-3 text-center"> <!-- Center the image -->
-        <img 
-            src="{{ asset('storage/' . $post->image) }}" 
-            alt="Post Image" 
-            class="img-fluid rounded post-image" 
-            style="max-width: 100%; height: auto; max-height: 400px;"> <!-- Adjust max-height as needed -->
+    <div class="post-image-container" style="margin-top: -16px;background-image: url('{{ asset('storage/' . $post->image) }}');">
+        <img src="{{ asset('storage/' . $post->image) }}" 
+             alt="Post Image" 
+             class="post-image" 
+             data-bs-toggle="modal" 
+             data-bs-target="#imageModal" 
+             onclick="viewImage('{{ asset('storage/' . $post->image) }}')">
     </div>
 @endif
+
+
 
       <!-- Comment & Like Actions (Updated) -->
 <div class="d-flex align-items-center">
@@ -235,6 +385,21 @@
          data-bs-target="#PostModal">
         <i class="bi bi-plus-lg"></i> <!-- Icon for adding a post -->
     </div>
+    
+<!-- Image View Modal (Blurred Background) -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-body d-flex justify-content-center align-items-center p-0">
+                <img id="modalImage" src="" class="img-fluid rounded" 
+                     alt="Post Image" style="max-width: 90vw; max-height: 90vh; object-fit: contain;">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
     <!-- Post Modal -->
     <div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
@@ -336,7 +501,28 @@
         document.getElementById('currentDate').textContent = new Date().toLocaleString();
 
 
+        function viewImage(imageUrl) {
+        let modalImage = document.getElementById('modalImage');
+        modalImage.src = imageUrl;
+        modalImage.style.maxWidth = "90vw"; // Prevent overflow
+        modalImage.style.maxHeight = "90vh"; // Ensure proper scaling
 
+        // Adjust width dynamically based on the image size
+        let img = new Image();
+        img.src = imageUrl;
+        img.onload = function () {
+            if (img.width < 500) {
+                modalImage.style.width = "60vw"; // Scale up small images
+            } else {
+                modalImage.style.width = "auto"; // Default size for larger images
+            }
+        };
+
+        // Show modal
+        var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        imageModal.show();
+    
+    }
     </script>
 
 @endsection

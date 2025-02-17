@@ -30,15 +30,15 @@
         margin-top: 20px;
     }
 
-    .comment-card{
+    .comment-card {
         margin-bottom: 20px; /* Adjust this value as needed */
     }
 
     /* Fix image size for comments */
     .comment-card img.img-fluid {
         max-width: 100%;
-        max-height: 200px;  /* Adjust max height as needed */
-        object-fit: cover;  /* Ensures the image covers the container without stretching */
+        max-height: 200px; /* Adjust max height as needed */
+        object-fit: cover; /* Ensures the image covers the container without stretching */
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional, adds some styling */
     }
@@ -136,6 +136,12 @@
         top: 10px;
         right: 10px;
     }
+
+    .reply-card {
+        border-left: 2px solid #ddd;
+        padding-left: 10px;
+        margin-left: 20px;
+    }
 </style>
 
 <div class="container mt-5 pt-5">
@@ -168,32 +174,32 @@
             @endif
             <div>
                 <div>
-                @foreach($post->comments as $comment)
-    <!-- Edit Comment Modal -->
-    <div class="modal fade"  id="editCommentModal{{ $comment->id }}" tabindex="-1" aria-labelledby="editCommentLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editCommentLabel">Edit Comment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    @foreach($post->comments->where('parent_id', null) as $comment) 
+                    <!-- Edit Comment Modal -->
+                    <div class="modal fade"  id="editCommentModal{{ $comment->id }}" tabindex="-1" aria-labelledby="editCommentLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editCommentLabel">Edit Comment</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="{{ route('comments.update', $comment->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-body">
+                                        <textarea name="comment" class="form-control" rows="3" required>{{ $comment->content }}</textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
-                <form action="{{ route('comments.update', $comment->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <textarea name="comment" class="form-control" rows="3" required>{{ $comment->content }}</textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
             </div>
-        </div>
-    </div>
-@endforeach
-
-
             @endauth
             <h1 style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ $post->title }}</h1>
             <p style="font-family: 'Roboto', sans-serif; font-size: 0.9rem;">
@@ -201,10 +207,10 @@
             </p>
             <p style="font-family: 'Roboto', sans-serif; font-size: 1rem;">{{ $post->body }}</p>
             @if ($post->image)
-    <div class="text-center mt-3">
-        <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded shadow-sm" alt="Post Image" style="max-width: 100%; max-height: 400px;">
-    </div>
-@endif
+            <div class="text-center mt-3">
+                <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded shadow-sm" alt="Post Image" style="max-width: 100%; max-height: 400px;">
+            </div>
+            @endif
             <div class="d-flex justify-content-between mt-3">
                 <a href="{{ route('posts.index') }}" class="btn btn-primary">Back to Posts</a>
             </div>
@@ -278,85 +284,126 @@
             </form>
             @endif
 
-            <div class="comments-list mt-4">
-                @if($post->comments->isEmpty())
-                    <p class="text-muted">No comments yet. Be the first to comment!</p>
-                @else
-                    @foreach($post->comments as $comment)
-                    <div class="comment-card">
-    <div class="d-flex align-items-start" style="position: relative;">
-        <img src="{{ $comment->user ? ($comment->user->picture 
-            ? asset('storage/' . $comment->user->picture) 
-            : 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) . '&background=random&color=fff&size=50') 
-            : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
-            class="user-avatar"
-            alt="User Profile"
-            width="50" height="50">
-        <div class="ms-3 w-100">
-            <div class="comment-header">
-                <strong class="comment-author">{{ $comment->user->name ?? 'Guest' }}</strong>
-                <small class="text-muted comment-time">{{ $comment->created_at->diffForHumans() }}</small>
-            </div>
-            <p class="comment-content mb-1">{{ $comment->content }}</p>
-    
-                                @if($comment->image)
-                                <img src="{{ Storage::url($comment->image) }}" alt="Comment Image" class="img-fluid comment-img-preview" 
-                                    data-bs-toggle="modal" data-bs-target="#imagePreviewModal" data-img="{{ Storage::url($comment->image) }}">
-                                @endif
+            <!-- Comment Section -->
+<div class="comments-list mt-4">
+    @if($post->comments->isEmpty())
+    <p class="text-muted">No comments yet. Be the first to comment!</p>
+    @else
+        @foreach($post->comments as $comment)
+        <div class="comment-card">
+            <div class="d-flex align-items-start" style="position: relative;">
+                <img src="{{ $comment->user ? ($comment->user->picture 
+                    ? asset('storage/' . $comment->user->picture) 
+                    : 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) . '&background=random&color=fff&size=50') 
+                    : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
+                    class="user-avatar"
+                    alt="User Profile"
+                    width="50" height="50">
+                <div class="ms-3 w-100">
+                    <div class="comment-header">
+                        <strong class="comment-author">{{ $comment->user->name ?? 'Guest' }}</strong>
+                        <small class="text-muted comment-time">{{ $comment->created_at->diffForHumans() }}</small>
+                    </div>
+                    <p class="comment-content mb-1">{{ $comment->content }}</p>
 
-                                <!-- Dropdown for Edit and Delete -->
-                                @auth
-                                    @if(Auth::id() === $comment->user_id)
-                                    <div class="dropdown-container" style="position: absolute; top: 5px; right: 10px;">
-                                        <div class="dropdown">
-                                            <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <li>
-                                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editCommentModal{{ $comment->id }}">Edit</button>
-                                                </li>
-                                                <li>
-                                                    <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</button>
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    @endif
-                                @endauth
-                                
-                                                    <!-- Full-Size Image View Modal -->
-                                <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered"> <!-- Centers the image -->
-                                        <div class="modal-content bg-dark border-0"> <!-- Dark background, no border -->
-                                            <div class="modal-body p-0 d-flex justify-content-center align-items-center">
-                                                <img id="modalImagePreview" class="img-fluid" alt="Preview Image" 
-                                                    style="max-width: 100vw; max-height: 100vh; width: auto; height: auto; object-fit: contain;">
-                                            </div>
-                                        </div>
+                    @if($comment->image)
+                    <img src="{{ Storage::url($comment->image) }}" alt="Comment Image" class="img-fluid comment-img-preview" 
+                        data-bs-toggle="modal" data-bs-target="#imagePreviewModal" data-img="{{ Storage::url($comment->image) }}">
+                    @endif
+                <!-- Dropdown for Edit and Delete -->
+                @auth
+                            @if(Auth::id() === $comment->user_id)
+                                <div class="dropdown-container position-absolute" style="top: 5px; right: 10px;">
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-three-dots"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li>
+                                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editCommentModal{{ $comment->id }}">Edit</button>
+                                            </li>
+                                            <li>
+                                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</button>
+                                                </form>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
+                            @endif
+                        @endauth
+                    @auth
+                    <!-- Reply Form Button -->
+                    <button class="btn btn-link" onclick="toggleReplyForm({{ $comment->id }}, '{{ $comment->user->name }}')">Reply</button>
+                    <!-- Reply Form -->
+                    <div id="replyForm{{ $comment->id }}" style="display: none; margin-top: 10px;">
+    <form action="{{ route('replies.store', $comment->id) }}" method="POST">
+        @csrf
+        <textarea name="content" class="form-control" placeholder="Write your reply..." required rows="2">
+            @{{ $comment->user->name }}:
+        </textarea>
+        <button type="submit" class="btn btn-primary mt-2">Submit Reply</button>
+    </form>
+</div>
 
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
+                    @endauth
+
+                    <div class="replies-list mt-3">
+    @foreach($comment->replies as $reply)
+    <div class="reply-card">
+        <div class="d-flex align-items-start" style="position: relative;">
+            <img src="{{ $reply->user ? ($reply->user->picture 
+                ? asset('storage/' . $reply->user->picture) 
+                : 'https://ui-avatars.com/api/?name=' . urlencode($reply->user->name) . '&background=random&color=fff&size=50') 
+                : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
+                class="user-avatar"
+                alt="User Profile"
+                width="50" height="50">
+            <div class="ms-3 w-100">
+                <div class="comment-header">
+                    <strong class="comment-author">{{ $reply->user->name ?? 'Guest' }}</strong>
+                    <small class="text-muted comment-time">{{ $reply->created_at->diffForHumans() }}</small>
+                </div>
+                <p class="comment-content mb-1">
+                    <strong>{{ $reply->content }}</strong> <!-- Corrected display of reply content -->
+                </p>
+                @if($reply->image)
+                <img src="{{ Storage::url($reply->image) }}" alt="Comment Image" class="img-fluid comment-img-preview" 
+                    data-bs-toggle="modal" data-bs-target="#imagePreviewModal" data-img="{{ Storage::url($reply->image) }}">
                 @endif
             </div>
         </div>
     </div>
-    
+    @endforeach
+</div>
+
+
+                </div>
+            </div>
+        </div>
+        @endforeach
+    @endif
+</div>
+
+        </div>
+    </div>
 </div>
 
 <script>
-    function toggleReplyForm(commentId) {
-    let form = document.getElementById("reply-form-" + commentId);
-    form.style.display = form.style.display === "none" ? "block" : "none";
+    function toggleReplyForm(commentId, commenterName) {
+    const replyForm = document.getElementById(`replyForm${commentId}`);
+    const textarea = replyForm.querySelector("textarea");
+    
+    if (replyForm.style.display === 'none') {
+        replyForm.style.display = 'block';
+        textarea.value = `@${commenterName}: `;  // Pre-fill the textarea with the mention
+    } else {
+        replyForm.style.display = 'none';
+    }
 }
+
     document.addEventListener('DOMContentLoaded', function() {
         const commentInput = document.getElementById('commentInput');
         const imageUpload = document.getElementById('imageUpload');
@@ -374,12 +421,12 @@
             if (event.target.files.length > 0) {
                 const file = event.target.files[0];
                 const reader = new FileReader();
-                
+
                 reader.onload = function(e) {
                     imagePreview.src = e.target.result;
                     imagePreviewContainer.style.display = 'block';
                 };
-                
+
                 reader.readAsDataURL(file);
             }
         });
@@ -397,12 +444,9 @@
 
         document.querySelectorAll(".comment-card img, .post-image").forEach(img => {
             img.addEventListener("click", function() {
-                modalImagePreview.src = this.src; // Set the clicked image as preview
-                const modal = new bootstrap.Modal(imagePreviewModal);
-                modal.show();
+                modalImagePreview.src = this.src; // Set the clicked image as the modal's image source
             });
         });
     });
 </script>
-
 @endsection

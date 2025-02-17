@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::table('comments', function (Blueprint $table) {
             // Adding parent_comment_id to the comments table
             $table->foreignId('parent_comment_id')->nullable()->constrained('comments')->onDelete('cascade');
+            $table->foreignId('parent_id')->nullable()->constrained('comments')->onDelete('cascade');
+
         });
     }
 

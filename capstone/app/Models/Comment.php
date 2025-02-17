@@ -26,11 +26,10 @@ class Comment extends Model
     return $this->belongsTo(Admin::class);
 }
 
-// A comment can have many replies
 public function replies()
-{
-    return $this->hasMany(Comment::class, 'parent_comment_id');
-}
+    {
+        return $this->hasMany(Reply::class);
+    }
 
 // A comment belongs to a parent comment (if it's a reply)
 public function parentComment()

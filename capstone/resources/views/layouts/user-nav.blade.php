@@ -41,12 +41,50 @@
 
     </head>
 
+<style>
 
+
+
+
+
+
+.navbar .btn {
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+
+
+
+
+
+.sidebar ul li {
+    padding: 15px;
+    text-align: left;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background:rgb(255, 255, 255);
+    color: #000;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+    </style>
     <body>
         <!-- Include Preloader -->
     @include('components.preloader')
 
-    <nav class="navbar navbar-expand-lg navbar-dark  bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color:rgb(9, 9, 121)">
     <div class="container-fluid">
         <!-- Dynamic Title -->
         <a class="navbar-brand">
@@ -112,8 +150,8 @@
     <div class="container">
             <!-- Sidebar -->
     <!-- Sidebar -->
-<div class="sidebar" style="background: rgb(249,255,0);
-background: linear-gradient(0deg, rgba(249,255,0,0.8939950980392157) 0%, rgba(0,125,255,1) 38%);">
+<div class="sidebar" style="background: rgb(2,0,36);
+background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgb(9, 9, 121) 0%, rgba(0,212,255,1) 74%);">
     <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
     <button class="close-sidebar-btn d-md-none" onclick="closeSidebar()">✖</button> <!-- Close button -->
 
@@ -283,6 +321,8 @@ function closeSidebar() {
     const mainContent = document.querySelector('.main-content');
     mainContent.classList.remove('expanded'); // Adjust main content
 }
+
+
 
         </script>
     </body>
