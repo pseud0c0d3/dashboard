@@ -6,6 +6,99 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 <style>
+    /* Reply Button Styling */
+.reply-button {
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.reply-button:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+
+/* Reply Button Icon */
+.reply-button i {
+    font-size: 1rem;
+}
+
+    /* Styling for the reply form and reply list */
+.reply-form-container {
+    margin-top: 15px;
+    background-color: #f7f7f7;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.reply-input-group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+
+.reply-input-area {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    padding: 8px;
+    font-size: 1rem;
+    resize: none;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+.reply-submit-btn {
+    font-size: 1.5rem;
+    color: #007bff;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s ease;
+}
+
+.reply-submit-btn:hover {
+    color: #0056b3;
+}
+
+.replies-list .reply-card {
+    margin-top: 10px;
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    margin-left: 30px;
+}
+
+.replies-list .reply-card .user-avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.replies-list .reply-card .comment-header {
+    font-weight: bold;
+}
+
+.replies-list .reply-card .comment-content {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #555;
+}
+
     /* Scrollbar Styling */
     ::-webkit-scrollbar {
         display: none;
@@ -336,49 +429,53 @@
                         @endauth
                     @auth
                     <!-- Reply Form Button -->
-                    <button class="btn btn-link" onclick="toggleReplyForm({{ $comment->id }}, '{{ $comment->user->name }}')">Reply</button>
-                    <!-- Reply Form -->
-                    <div id="replyForm{{ $comment->id }}" style="display: none; margin-top: 10px;">
+<button class="btn btn-outline-primary btn-sm reply-button" onclick="toggleReplyForm({{ $comment->id }}, '{{ $comment->user->name }}')">
+    <i class="bi bi-reply-fill"></i> Reply
+</button>
+<!-- Reply Form -->
+<div id="replyForm{{ $comment->id }}" class="reply-form-container" style="display: none;">
     <form action="{{ route('replies.store', $comment->id) }}" method="POST">
         @csrf
-        <textarea name="content" class="form-control" placeholder="Write your reply..." required rows="2">
-            @{{ $comment->user->name }}:
-        </textarea>
-        <button type="submit" class="btn btn-primary mt-2">Submit Reply</button>
+        <div class="reply-input-group">
+            <textarea name="content" class="reply-input-area" placeholder="Write your reply..." required rows="2"></textarea>
+            <button type="submit" class="reply-submit-btn">
+                <i class="bi bi-send"></i>
+            </button>
+        </div>
     </form>
 </div>
 
                     @endauth
 
-                    <div class="replies-list mt-3">
+                    <!-- Reply Cards -->
+<div class="replies-list mt-3">
     @foreach($comment->replies as $reply)
     <div class="reply-card">
-        <div class="d-flex align-items-start" style="position: relative;">
-            <img src="{{ $reply->user ? ($reply->user->picture 
-                ? asset('storage/' . $reply->user->picture) 
-                : 'https://ui-avatars.com/api/?name=' . urlencode($reply->user->name) . '&background=random&color=fff&size=50') 
-                : 'https://ui-avatars.com/api/?name=Unknown&background=random&color=fff&size=50' }}"
+        <div class="d-flex align-items-start">
+            <img src="{{ $reply->user ? 
+                        ($reply->user->picture 
+                            ? asset('storage/' . $reply->user->picture) 
+                            : 'https://ui-avatars.com/api/?name=' . urlencode($reply->user->name) . '&background=random&color=fff&size=50') 
+                        : 'https://ui-avatars.com/api/?name=Anonymous&background=random&color=fff&size=50' }}"
                 class="user-avatar"
-                alt="User Profile"
+                alt="{{ $reply->user ? $reply->user->name : 'Anonymous' }} Profile Picture"
                 width="50" height="50">
+            
             <div class="ms-3 w-100">
                 <div class="comment-header">
-                    <strong class="comment-author">{{ $reply->user->name ?? 'Guest' }}</strong>
+                    <strong class="comment-author">{{ $reply->user ? $reply->user->name : 'Anonymous' }}</strong>
                     <small class="text-muted comment-time">{{ $reply->created_at->diffForHumans() }}</small>
                 </div>
-                <p class="comment-content mb-1">
-                    <strong>{{ $reply->content }}</strong> <!-- Corrected display of reply content -->
-                </p>
+                <p class="comment-content mb-1">{{ $reply->content }}</p>
                 @if($reply->image)
-                <img src="{{ Storage::url($reply->image) }}" alt="Comment Image" class="img-fluid comment-img-preview" 
-                    data-bs-toggle="modal" data-bs-target="#imagePreviewModal" data-img="{{ Storage::url($reply->image) }}">
+                    <img src="{{ Storage::url($reply->image) }}" alt="Reply Image" class="img-fluid comment-img-preview" 
+                        data-bs-toggle="modal" data-bs-target="#imagePreviewModal" data-img="{{ Storage::url($reply->image) }}">
                 @endif
             </div>
         </div>
     </div>
     @endforeach
 </div>
-
 
                 </div>
             </div>
