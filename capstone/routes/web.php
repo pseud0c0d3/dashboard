@@ -8,6 +8,12 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LogInController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ReplyController;
+
+
+
 // LoggedOut Routes
 Route::get('/', function () {
     return view('loggedOut.index');
@@ -60,9 +66,16 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::delete('/comments/admin/{comment}', [PostController::class, 'adminDestroyComment'])->name('admin.comments.destroy');
     Route::put('/comments/admin/{comment}', [PostController::class, 'adminUpdateComment'])->name('admin.comments.update');
-    
-});
 
+    Route::post('/posts/{post}/comment', [PostController::class, 'addComment'])->name('posts.comment');
+    Route::put('/comments/{comment}', [PostController::class, 'updateComment'])->name('comments.update');
+
+    Route::post('/posts/{post}/like', [LikeController::class, 'like'])->name('posts.like');
+    Route::delete('/posts/{post}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
+
+});
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store'); 
+//Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 
 
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
@@ -101,13 +114,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-messages', [ChatsController::class, 'fetchMessagesFromUserToAdmin'])->name('fetch.messagesFromSellerToAdmin');
     Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmin'])->name('send.Messageofsellertoadmin');
 
-    
-    Route::put('/child/update', [UserController::class, 'childupdate'])->name('child.update');
+    // Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
+    Route::post('/admin/posts/{post}/archive', [AdminController::class, 'archivePost'])->name('admin.archive');
 
 
 
 });
+Route::post('comments/{commentId}/replies', [ReplyController::class, 'store'])->name('replies.store');
+Route::delete('replies/{id}', [ReplyController::class, 'destroy'])->name('replies.destroy');
+Route::get('comments/{commentId}/replies', [ReplyController::class, 'showReplies'])->name('replies.show');
 
+//Route::post('/comments/{comment}/reply', [CommentController::class, 'reply'])->name('comments.reply');
 Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
 Route::post('/user/check', [UserController::class, 'check'])->name('user.check');
 Route::post('/user/save', [UserController::class, 'save'])->name('user.save');

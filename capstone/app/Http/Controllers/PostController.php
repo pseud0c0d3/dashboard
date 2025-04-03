@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller; // Ensure this line is present
 use App\Models\Notification;
+use App\Models\Like;
 
 
 class PostController extends Controller
@@ -20,6 +21,9 @@ class PostController extends Controller
     {
         $search = $request->input('search');
         $filter = $request->input('filter', 'all'); // Default to 'all' posts
+        // Fetch posts with related data (user, likes, and comments)
+    $posts = Post::with(['user', 'likes', 'comments'])->latest()->paginate(10);
+
 
         $posts = Post::recent()
             ->when($search, function ($query, $search) {
@@ -75,31 +79,31 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => ['required', 'max:255'],
-            'body' => ['required'],
-            'image' => ['nullable', 'file', 'max:3000', 'mimes:webp,png,jpg'],
+{
+    // Validate the request
+    $request->validate([
+        'title' => ['required', 'max:255'],
+        'body' => ['required'],
+        'image' => 'nullable|image|mimes:webp,png,jpg,jpeg|max:2048', // Adjust the validation rules as needed
+    ]);
 
-        ]);
-
-        $path = null;
-        if ($request->hasFile('image')) {
-            $path = Storage::disk('public')->put('posts_images', $request->image);
-        }
-
-        Post::create([
-            'title' => $request->title,
-            'body' => $request->body,
-            'user_id' => Auth::id(),
-            // 'image' => $path,
-        ]);
-
-
-
-
-        return back()->with('success', 'Your post was created.');
+    // Handle the image upload if there's a file
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        $imagePath = Storage::disk('public')->put('posts_images', $request->file('image')); // Store the image in 'public/posts_images'
     }
+
+    // Create the post
+    Post::create([
+        'title' => $request->title,
+        'body' => $request->body,
+        'user_id' => Auth::id(), // Assuming the post is associated with the logged-in user
+        'image' => $imagePath, // Save the image path to the database (if any)
+    ]);
+
+    // Redirect with success message
+    return back()->with('success', 'Your post was created.');
+}
 
     public function storeadmin(Request $request)
 {
@@ -130,6 +134,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        
         // Assuming the user is authenticated
         // $post->user_id = auth()->id();
         // $post->save();
@@ -326,6 +331,28 @@ public function adminComment(Request $request, $postId)
     return back()->with('success', 'Comment posted and notification sent!');
 }
 
+public function toggleLike(Post $post)
+{
+    $user = Auth::user();
+
+    // Check if the user has already liked the post
+    $like = Like::where('user_id', $user->id)->where('post_id', $post->id)->first();
+
+    if ($like) {
+        // If the user has already liked the post, unlike it
+        $like->delete();
+        $message = 'Post unliked!';
+    } else {
+        // If the user hasn't liked the post, like it
+        $like = new Like();
+        $like->user_id = $user->id;
+        $like->post_id = $post->id;
+        $like->save();
+        $message = 'Post liked!';
+    }
+
+    return back()->with('success', $message);
+}
 
 public function updateComment(Request $request, Comment $comment)
 {
@@ -336,6 +363,7 @@ public function updateComment(Request $request, Comment $comment)
 
     $request->validate([
         'comment' => 'required|string',
+        
     ]);
 
     $comment->update([

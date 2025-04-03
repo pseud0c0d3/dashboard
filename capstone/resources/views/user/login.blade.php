@@ -79,7 +79,7 @@
             </div>
 
             <!-- Display Validation Errors -->
-       
+
 
             <form method="POST" action="{{ route('user.check') }}">
                 @csrf
@@ -142,13 +142,13 @@
         // Function to show preloader and then navigate to the href
 function showPreloaderAndRedirect(event) {
   event.preventDefault();  // Prevent the default behavior of the link
-  
+
   // Show the preloader
   document.getElementById('preloader').style.display = 'flex';
-  
+
   // Get the href from the clicked link
   const href = event.target.getAttribute('href');
-  
+
   // Redirect after a short delay (1.5 seconds in this case)
   setTimeout(function() {
     window.location.href = href;

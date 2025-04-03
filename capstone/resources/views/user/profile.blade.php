@@ -4,7 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
 <style>
-    
+
     /* Ensure profile picture maintains uniform size */
 .profile-picture {
     width: 150px; /* Set the fixed width */
@@ -235,7 +235,7 @@
     <i class="bi bi-eye me-2"></i>View Child Info
 </button> --}}
 
-<!-- Child View Modal -->
+{{-- <!-- Child View Modal -->
 <div class="modal fade" id="childViewModal" tabindex="-1" aria-labelledby="childViewModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -297,7 +297,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 

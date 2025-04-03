@@ -41,12 +41,50 @@
 
     </head>
 
+<style>
 
+
+
+
+
+
+.navbar .btn {
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+
+
+
+
+
+.sidebar ul li {
+    padding: 15px;
+    text-align: left;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background:rgb(255, 255, 255);
+    color: #000;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+    </style>
     <body>
         <!-- Include Preloader -->
     @include('components.preloader')
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color:rgb(9, 9, 121)">
     <div class="container-fluid">
         <!-- Dynamic Title -->
         <a class="navbar-brand">
@@ -76,19 +114,23 @@
 </div>
 
             <!-- Profile Dropdown -->
-            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- Profile Picture or Initials -->
-                @if(Auth::user()->picture)
-                    <img src="{{ asset('storage/' . Auth::user()->picture) }}" alt="Profile Picture" class="rounded-circle img-fluid" width="40" height="40" style="object-fit: cover; border: 2px solid #ddd;">
-                @else
-                    <div class="bg-light rounded-circle d-flex justify-content-center align-items-center shadow-sm" style="width: 40px; height: 40px; border: 2px solid #ff5722;">
-                        <span class="h6 text-muted m-0">
-                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                        </span>
-                    </div>
-                @endif
-                <span class="ms-2 user-name d-none d-lg-inline">{{ Auth::user()->name }}</span>
-            </button>
+<button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    <!-- Profile Picture or Initials -->
+    @if(Auth::check() && Auth::user()->picture)
+        <img src="{{ asset('storage/' . Auth::user()->picture) }}" 
+             alt="Profile Picture" 
+             class="rounded-circle img-fluid" 
+             width="40" height="40" 
+             style="object-fit: cover; border: 2px solid #ddd;">
+    @else
+        <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'User') }}&background=random&color=fff&size=50" 
+             alt="Default Avatar" 
+             class="rounded-circle img-fluid" 
+             width="40" height="40" 
+             style="border: 2px solid#000000;">
+    @endif
+    <span class="ms-2 user-name d-none d-lg-inline">{{ Auth::user()->name ?? 'Guest' }}</span>
+</button>
 
             <!-- Dropdown Menu (Updated with proper positioning) -->
             <ul class="dropdown-menu dropdown-menu-end mt-2 shadow-sm custom-dropdown" aria-labelledby="navbarDropdown">
@@ -108,18 +150,19 @@
     <div class="container">
             <!-- Sidebar -->
     <!-- Sidebar -->
-<div class="sidebar" style="background-image: url(/img/bak.jpg); ">
+<div class="sidebar" style="background: rgb(2,0,36);
+background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgb(9, 9, 121) 0%, rgba(0,212,255,1) 74%);">
     <img src="/img/logo.png" alt="Angel Logo" class="angel-logo">
     <button class="close-sidebar-btn d-md-none" onclick="closeSidebar()">✖</button> <!-- Close button -->
 
-    <ul class="menu">
+    <ul class="menu" style="">
         <li><a href="{{ route('user.profile') }}" id="prof"><i class="bi bi-person"></i> Profile</a></li>
         <li><a href="{{ route('user.forum') }}" id="form"><i class="fas fa-home"></i> Forum</a></li>
         <li>
             <a href="#" onclick="toggleDropdown(event, 'activitiesDropdown')">
                 <i class="fas fa-tasks" id="act"></i> Activities <span class="dropdown-arrow">▼</span>
             </a>
-            <ul class="dropdown-list" id="activitiesDropdown" style="background-color: #23486A;">
+            <ul class="dropdown-list" id="activitiesDropdown" style="background-color:rgb(0, 116, 224);">
                 <li>
                     <a href="{{ route('workspace.colormatch') }}" id="act" onclick="showLoading('workspace.colormatch')">
                         <img src="/img/colorgame.png" alt="Colormatch Icon" id="color" class="list-icon"> Colormatch Game
@@ -278,6 +321,8 @@ function closeSidebar() {
     const mainContent = document.querySelector('.main-content');
     mainContent.classList.remove('expanded'); // Adjust main content
 }
+
+
 
         </script>
     </body>

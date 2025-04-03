@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,6 +16,7 @@ class Post extends Model
         'title',
         'body',
         'user_id',
+        'image',
         'admin_id', // Add this
     ];
 
@@ -34,9 +36,14 @@ class Post extends Model
     }
 
     public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
+{
+    return $this->hasMany(Like::class);
+}
+
+public function isLikedBy(User $user)
+{
+    return $this->likes()->where('user_id', $user->id)->exists();
+}
 
     public function scopeRecent($query)
     {

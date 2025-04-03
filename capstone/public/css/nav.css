@@ -243,10 +243,10 @@
 
 /* Navbar Style */
 .navbar {
-    background: linear-gradient(#3677b3, #3677b3);
-    background-image: url(/img/bak.jpg); 
-    background-repeat: no-repeat;
-    background-size: auto;
+    
+    border: #000000 2px solid;
+    border-left: none;
+    background-color: #007dff;
     height: 80px;
     width: calc(100% - 250px); /* Adjust to leave space for sidebar */
     position: fixed;
@@ -255,10 +255,12 @@
     z-index: 1000;
     margin-left: 0;
     font-family: 'Roboto', sans-serif;
+    
 }
 
 .navbar-brand {
     font-size: 40px;
+   
 }
 
 form .btn {

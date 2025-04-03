@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Http\Request;
+use App\Models\PostTrait;
 use Illuminate\View\View;
 use App\Models\Admin;
 use App\Models\Chat;
@@ -19,6 +20,7 @@ use App\Mail\EventUpdatedMail;
 use App\Mail\EventDeletedMail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Jobs\SendPublicEventEmails;
+use App\Models\ArchivedPost;
 
 class AdminController extends Controller
 {
@@ -375,11 +377,28 @@ class AdminController extends Controller
         Auth::guard('admin')->logout(); // Use Auth guard to log out the admin
         return redirect()->route('admin.login');
     }
-    public function deleteUser($id)
-{
-    $user = User::findOrFail($id);
-    $user->delete();
 
-    return redirect()->route('admin.clients')->with('success', 'User deleted successfully.');
+    use App\Models\Post;
+use App\Models\ArchivedPost;
+
+public function archivePost($postId)
+{
+    // Find the post to archive
+    $post = Post::findOrFail($postId);
+
+    // Create an archived post entry
+    ArchivedPost::create([
+        'title' => $post->title,
+        'body' => $post->body,
+        'user_id' => $post->user_id,
+        'admin_id' => $post->admin_id,
+    ]);
+
+    // Delete the original post
+    $post->delete();
+
+    // Redirect with a success message
+    return redirect()->route('admin.posts.index')->with('success', 'Post archived successfully!');
 }
+
 }

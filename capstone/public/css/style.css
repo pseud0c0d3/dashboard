@@ -154,9 +154,8 @@ body {
 
 /* Sidebar */
 .sidebar {
+    border: #000000 2px solid;
     width: 250px;
-    background: linear-gradient(to right, #150f6b, #3677b3);
-    color: #ecf0f1;
     padding: 20px;
     position: fixed;
     height: 100%;
@@ -178,7 +177,7 @@ body {
 .sidebar .dropdown-list {
     display: none;
     position: absolute;
-    background-color: #ffffff;
+    background-color: #000000;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     padding: 5px;
     border-radius: 8px;
@@ -260,11 +259,13 @@ body {
     padding: 10px;
     border-radius: 8px;
     transition: all 0.3s ease;
+    
 }
 
 .menu a:hover {
-    background-color: #012b52;
-    color: #fff;
+    background-color: #f0f0f0;
+    color: #020202;
+    text-decoration: none;
     box-shadow: rgb(35, 209, 240) 0px 50px 100px -20px, rgb(59, 83, 189) 0px 30px 60px -30px, rgba(72, 135, 199, 0.719) 0px -2px 6px 0px inset;
 }
 
@@ -343,6 +344,7 @@ body {
 .main-content {
     margin-left: 0;
     transition: all 0.3s ease;
+   
 }
 
 .sidebar-open .main-content {
