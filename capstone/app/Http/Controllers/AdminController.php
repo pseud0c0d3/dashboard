@@ -21,6 +21,7 @@ use App\Mail\EventDeletedMail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Jobs\SendPublicEventEmails;
 use App\Models\ArchivedPost;
+    
 
 class AdminController extends Controller
 {
@@ -378,8 +379,7 @@ class AdminController extends Controller
         return redirect()->route('admin.login');
     }
 
-    use App\Models\Post;
-use App\Models\ArchivedPost;
+    
 
 public function archivePost($postId)
 {
