@@ -236,16 +236,16 @@
     <form action="{{ route('posts.index') }}" method="GET" class="w-100">
         @csrf
         <div class="input-group">
-            <input 
-                type="text" 
-                name="search" 
-                class="form-control rounded-start-pill border-0 shadow-sm px-4" 
+            <input
+                type="text"
+                name="search"
+                class="form-control rounded-start-pill border-0 shadow-sm px-4"
                 placeholder="Search by title..."
                 value="{{ request('search') }}"
                 style="height: 45px; font-weight: bold;">
 
-            <button 
-                type="submit" 
+            <button
+                type="submit"
                 class="btn btn-primary rounded-end-pill shadow-sm px-4">
                 <i class="bi bi-search"></i>
             </button>
@@ -264,7 +264,7 @@
                 </a>
             </div>
         </div>
-        
+
 
 
         @if($posts->isEmpty())
@@ -277,8 +277,8 @@
     <div class="card-body">
         <!-- User Info Section -->
         <div class="d-flex align-items-center mb-4">
-        <img src="{{ $post->user && $post->user->picture 
-    ? asset('storage/' . $post->user->picture) 
+        <img src="{{ $post->user && $post->user->picture
+    ? asset('storage/' . $post->user->picture)
     : 'https://ui-avatars.com/api/?name=' . urlencode($post->user->name ?? 'User') . '&background=random&color=fff&size=50' }}"
     class="rounded-circle"
     alt="{{ $post->user->name ?? 'User' }} Profile"
@@ -295,7 +295,7 @@
                         Anonymous
                     @endif
                 </h6>
-                
+
                 <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>
             </div>
         </div>
@@ -311,14 +311,14 @@
 
         <!-- Display the image if it exists -->
         @if ($post->image)
-    <div class="post-image-container" style="margin-top: -16px;background-image: url('{{ asset('storage/' . $post->image) }}');">
-        <img src="{{ asset('storage/' . $post->image) }}" 
-             alt="Post Image" 
-             class="post-image" 
-             data-bs-toggle="modal" 
-             data-bs-target="#imageModal" 
-             onclick="viewImage('{{ asset('storage/' . $post->image) }}')">
-    </div>
+        <div class="post-image-container" style="margin-top: -16px; background-image: url('{{ asset('storage/' . $post->image) }}');">
+            <img src="{{ asset('storage/' . $post->image) }}"
+                 alt="Post Image"
+                 class="post-image"
+                 data-bs-toggle="modal"
+                 data-bs-target="#imageModal"
+                 onclick="viewImage('{{ asset('storage/' . $post->image) }}')">
+        </div>
 @endif
 
 
@@ -385,13 +385,13 @@
          data-bs-target="#PostModal">
         <i class="bi bi-plus-lg"></i> <!-- Icon for adding a post -->
     </div>
-    
+
 <!-- Image View Modal (Blurred Background) -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-transparent border-0">
             <div class="modal-body d-flex justify-content-center align-items-center p-0">
-                <img id="modalImage" src="" class="img-fluid rounded" 
+                <img id="modalImage" src="" class="img-fluid rounded"
                      alt="Post Image" style="max-width: 90vw; max-height: 90vh; object-fit: contain;">
             </div>
         </div>
@@ -521,7 +521,7 @@
         // Show modal
         var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
         imageModal.show();
-    
+
     }
     </script>
 
