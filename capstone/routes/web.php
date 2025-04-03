@@ -74,7 +74,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/posts/{post}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
 
 });
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store'); 
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 //Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 
 
@@ -113,12 +113,8 @@ Route::middleware(['auth'])->group(function () {
     // User Chats
     Route::get('/fetch-messages', [ChatsController::class, 'fetchMessagesFromUserToAdmin'])->name('fetch.messagesFromSellerToAdmin');
     Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmin'])->name('send.Messageofsellertoadmin');
-
+    Route::put('/admin/posts/{post}/archive', [PostController::class, 'archivePost'])->name('admin.archive');
     // Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
-    Route::post('/admin/posts/{post}/archive', [AdminController::class, 'archivePost'])->name('admin.archive');
-
-
-
 });
 Route::post('comments/{commentId}/replies', [ReplyController::class, 'store'])->name('replies.store');
 Route::delete('replies/{id}', [ReplyController::class, 'destroy'])->name('replies.destroy');

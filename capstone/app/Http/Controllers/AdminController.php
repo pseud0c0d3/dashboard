@@ -390,24 +390,25 @@ public function createEvent(Request $request)
 
 
 
-public function archivePost($postId)
-{
-    // Find the post to archive
-    $post = Post::findOrFail($postId);
+    public function archivePost($postId)
+    {
+        // Find the post to archive, or return a 404 error if not found
+        $post = Post::findOrFail($postId);
 
-    // Create an archived post entry
-    ArchivedPost::create([
-        'title' => $post->title,
-        'body' => $post->body,
-        'user_id' => $post->user_id,
-        'admin_id' => $post->admin_id,
-    ]);
+        // Create an archived post entry
+        ArchivedPost::create([
+            'title' => $post->title,
+            'body' => $post->body,
+            'user_id' => $post->user_id,
+            'admin_id' => $post->admin_id,
+            'image' => $post->image,
+        ]);
 
-    // Delete the original post
-    $post->delete();
+        // Delete the original post
+        $post->delete();
 
-    // Redirect with a success message
-    return redirect()->route('admin.posts.index')->with('success', 'Post archived successfully!');
-}
+        // Redirect with a success message
+        return redirect()->route('admin.posts.index')->with('success', 'Post archived successfully!');
+    }
 
 }

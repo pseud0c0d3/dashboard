@@ -72,13 +72,25 @@
                     </div>
                 @endif
             @endauth
-            <li>
-                <form action="{{ route('admin.archive', $post->id) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('POST')
-                    <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to archive this post?')">Archive</button>
-                </form>
-            </li>
+            <div class="dropdown-container">
+                <div class="dropdown">
+                    <!-- Ellipsis Button -->
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots"></i> <!-- FontAwesome or Bootstrap Icons for ellipsis -->
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li>
+                            <form action="{{ route('admin.archive', $post->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="dropdown-item text-dark fw-bold" onclick="return confirm('Are you sure you want to archive this post?')">
+                                    <i class="bi bi-archive text-dark"></i> Archive
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
 
             <!-- Post Title -->
@@ -107,9 +119,9 @@
                 </button> --}}
                 @if($post->admin_id !== 1)
                 <!-- Comment Button -->
-                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
+                {{-- <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#commentModal{{ $post->id }}">
                     <i class="bi bi-chat-left-text"></i> Comment
-                </button>
+                </button> --}}
                 @endif
 
                 <!-- Back Button -->
@@ -267,3 +279,4 @@
 
 
     @endsection
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
