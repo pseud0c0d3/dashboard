@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->unsignedBigInteger('admin_id')->nullable()->after('user_id');
-             $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
-             $table->string('image')->nullable(); // Add this line
-             $table->foreignId('parent_id')->nullable()->constrained('comments')->onDelete('cascade');
-             $table->foreignId('parent_comment_id')->nullable()->constrained('comments')->onDelete('cascade');
+            $table->unsignedBigInteger('admin_id')->nullable()->after('user_id'); // Correct column name
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
 
+            $table->string('image')->nullable(); // Adding image column
+
+            $table->foreignId('parent_id')->nullable()->constrained('comments')->onDelete('cascade');
+            // Remove 'parent_comment_id' if not needed
         });
     }
 
@@ -27,8 +28,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->dropForeign(['admin_comment_id']);
-        $table->dropColumn('admin_comment_id');
+            $table->dropForeign(['admin_id']);
+            $table->dropColumn('admin_id');
+
+            $table->dropForeign(['parent_id']);
+            $table->dropColumn('parent_id');
+
+            $table->dropColumn('image'); // Drop image column as well
         });
     }
 };
