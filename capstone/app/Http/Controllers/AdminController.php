@@ -375,4 +375,11 @@ class AdminController extends Controller
         Auth::guard('admin')->logout(); // Use Auth guard to log out the admin
         return redirect()->route('admin.login');
     }
+    public function deleteUser($id)
+{
+    $user = User::findOrFail($id);
+    $user->delete();
+
+    return redirect()->route('admin.clients')->with('success', 'User deleted successfully.');
+}
 }
