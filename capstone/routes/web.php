@@ -6,11 +6,31 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\LogInController;
+use App\Http\Controllers\Auth\LogInController; // Importing the controller from the Auth namespace
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReplyController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\Auth\VerificationController;
+
+Auth::routes(['verify' => true]);
+
+// Email verification routes
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->middleware(['signed'])->name('verification.verify'); // Remove 'auth'
+
+
+Route::post('/email/resend', [VerificationController::class, 'resend'])
+    ->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+
+Route::middleware(['auth', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+});
 
 
 
@@ -122,7 +142,7 @@ Route::get('comments/{commentId}/replies', [ReplyController::class, 'showReplies
 
 //Route::post('/comments/{comment}/reply', [CommentController::class, 'reply'])->name('comments.reply');
 Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
-Route::post('/user/check', [UserController::class, 'check'])->name('user.check');
+Route::post('/user/check', [LogInController::class, 'check'])->name('user.check');
 Route::post('/user/save', [UserController::class, 'save'])->name('user.save');
 Route::get('/user/register', [UserController::class, 'register'])->name('user.register');
 Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
@@ -133,11 +153,12 @@ Route::get('/employee/EmployeeCalendar', [EmployeeController::class, 'EmployeeCa
 Route::get('/employee/EmployeeForum', [EmployeeController::class, 'EmployeeForum'])->name('employee.EmployeeForum');
 
 // Log in and Log out routes
-Route::post('/', [LogInController::class, 'login'])->name('login.user');
-Route::post('/', [LogInController::class, 'logout'])->name('logout');
+
+
 Route::post('/send-password-reset', [LogInController::class, 'sendreset'])->name('sendreset');
 Route::get('/password-reset-form', [LogInController::class, 'showResetForm'])->name('password.reset');
 Route::post('/password-reset', [LogInController::class, 'resetPassword'])->name('reset.password');
+
 
 
 // Forum Routes

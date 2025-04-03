@@ -9,6 +9,7 @@
         "barryvdh/laravel-dompdf": "^3.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "laravel/ui": "^4.6",
         "nesbot/carbon": "^3.8",
         "pusher/pusher-php-server": "^7.2"
     },

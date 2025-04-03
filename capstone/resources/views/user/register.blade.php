@@ -79,12 +79,13 @@
         <i class="fas fa-arrow-left"></i> Back
     </a>
 </nav>
-
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; background-color: rgba(255, 255, 255, 0.9);">
             <div class="text-center">
                 <img src="/img/icon.png" alt="Logo" class="logo-img" style="max-width: 80%; margin-bottom: 20px;">
                 <h4>REGISTER</h4>
+                
+
             </div>
 
             <form action="{{ route('user.save') }}" method="POST" id="registrationForm">
