@@ -92,7 +92,7 @@
 
                 <!-- Username Input -->
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username">Fullname</label>
                     <input
                         type="text"
                         class="form-control @error('username') is-invalid @enderror"

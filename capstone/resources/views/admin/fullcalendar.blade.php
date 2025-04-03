@@ -294,6 +294,27 @@ document.getElementById('eventForm').addEventListener('submit', function(event) 
         submitButton.classList.remove('btn-secondary');
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+        const isPublicCheckbox = document.getElementById("isPublic");
+        const userEmailInput = document.getElementById("userEmail");
+
+        function toggleUserEmail() {
+            if (isPublicCheckbox.checked) {
+                userEmailInput.disabled = true;
+                userEmailInput.value = ""; // Clear the field when disabled
+            } else {
+                userEmailInput.disabled = false;
+            }
+        }
+
+        // Run function on page load (if checkbox is pre-checked)
+        toggleUserEmail();
+
+        // Listen for checkbox change
+        isPublicCheckbox.addEventListener("change", toggleUserEmail);
+    });
+    
 </script>
 
 @endsection

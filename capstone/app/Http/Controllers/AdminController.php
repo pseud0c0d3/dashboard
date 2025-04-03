@@ -21,7 +21,7 @@ use App\Mail\EventDeletedMail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Jobs\SendPublicEventEmails;
 use App\Models\ArchivedPost;
-    
+
 
 class AdminController extends Controller
 {
@@ -86,31 +86,33 @@ class AdminController extends Controller
 }
 
 
-    public function createEvent(Request $request)
-    {
-        $request->merge([
-            'is_public' => $request->has('is_public') && $request->input('is_public') === 'on',
-        ]);
+public function createEvent(Request $request)
+{
+    $request->merge([
+        'is_public' => $request->has('is_public') && $request->input('is_public') === 'on',
+    ]);
 
-        $now = now();
+    $now = now();
 
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_time' => [
-                'required',
-                'date',
-                function ($attribute, $value, $fail) use ($now) {
-                    if (Carbon::parse($value)->lt($now)) {
-                        $fail('The start time must be in the future.');
-                    }
-                },
-            ],
-            'end_time' => 'required|date|after:start_time',
-            'is_public' => 'required|boolean',
-            'user_email' => 'nullable|email|exists:users,email',
-        ]);
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'start_time' => [
+            'required',
+            'date',
+            function ($attribute, $value, $fail) use ($now) {
+                if (Carbon::parse($value)->lt($now)) {
+                    $fail('The start time must be in the future.');
+                }
+            },
+        ],
+        'end_time' => 'required|date|after:start_time',
+        'is_public' => 'required|boolean',
+        'user_email' => 'nullable|email|exists:users,email',
+    ]);
 
+    // Check for overlapping events only if the new event is PRIVATE
+    if (!$validated['is_public']) {
         $overlappingEvent = Event::where(function ($query) use ($validated) {
             $query->whereBetween('start_time', [$validated['start_time'], $validated['end_time']])
                 ->orWhereBetween('end_time', [$validated['start_time'], $validated['end_time']])
@@ -118,32 +120,39 @@ class AdminController extends Controller
                     $query->where('start_time', '<=', $validated['start_time'])
                         ->where('end_time', '>=', $validated['end_time']);
                 });
-        })->first();
+        })
+        ->where('is_public', false) // Only block overlap for private events
+        ->first();
 
         if ($overlappingEvent) {
-            return response()->json(['message' => 'Cannot create an event. The selected time overlaps with another event.'], 422);
+            return response()->json(['message' => 'Cannot create a private event. The selected time overlaps with another private event.'], 422);
         }
-
-        $user = $validated['is_public'] ? null : User::where('email', $validated['user_email'])->first();
-
-        $event = Event::create([
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-            'start_time' => $validated['start_time'],
-            'end_time' => $validated['end_time'],
-            'is_public' => $validated['is_public'],
-            'user_id' => $user?->id,
-        ]);
-
-        if ($user) {
-            Mail::to($user->email)->send(new EventCreated($event));
-        } else {
-            // Dispatch the job to send emails to all users for public events
-            SendPublicEventEmails::dispatch($event,'created');
-        }
-
-        return response()->json(['message' => 'Event created successfully.']);
     }
+
+    // Determine user (only required for private events)
+    $user = $validated['is_public'] ? null : User::where('email', $validated['user_email'])->first();
+
+    // Create the event
+    $event = Event::create([
+        'title' => $validated['title'],
+        'description' => $validated['description'],
+        'start_time' => $validated['start_time'],
+        'end_time' => $validated['end_time'],
+        'is_public' => $validated['is_public'],
+        'user_id' => $user?->id,
+    ]);
+
+    // Send notification emails
+    if ($user) {
+        Mail::to($user->email)->send(new EventCreated($event));
+    } else {
+        // Dispatch the job to send emails to all users for public events
+        SendPublicEventEmails::dispatch($event, 'created');
+    }
+
+    return response()->json(['message' => 'Event created successfully.']);
+}
+
 
 
 
@@ -379,7 +388,7 @@ class AdminController extends Controller
         return redirect()->route('admin.login');
     }
 
-    
+
 
 public function archivePost($postId)
 {
