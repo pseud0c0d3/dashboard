@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller; // Import the base controller class
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Notifications\CustomVerifyEmail;
 
 class UserController extends Controller
 {
+
+    
     public function fullcalendar()
     {
         return view('user.fullcalendar');
@@ -94,28 +99,30 @@ class UserController extends Controller
 
     // Register for new user
     public function save(Request $request)
-    {
-        // Validate the incoming request
-        $validated = Validator::make($request->all(), [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'], // Include username validation
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+{
+    // Validate the incoming request
+    $validated = Validator::make($request->all(), [
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'username' => ['required', 'string', 'max:255', 'unique:users'], // Include username validation
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+    ]);
 
-        if ($validated->fails()) {
-            return redirect()->back()->withErrors($validated)->withInput();
-        }
-
-        // Create the user
-        $user = User::create([
-            'email' => $request->email,
-            'name' => $request->username, // Include username field
-            'password' => Hash::make($request->password),
-        ]);
-
-        return redirect()->route('user.login')->with('success', 'Registration successful!');
+    if ($validated->fails()) {
+        return redirect()->back()->withErrors($validated)->withInput();
     }
 
+    // Create the user
+    $user = User::create([
+        'email' => $request->email,
+        'name' => $request->username, // Include username field
+        'password' => Hash::make($request->password),
+    ]);
+
+    // Automatically send the verification email
+    $user->notify(new CustomVerifyEmail());
+
+    return redirect()->route('user.login')->with('success', 'Registration successful! Please verify your email.');
+}
     public function chats()
     {
         // Use Auth facade to get the authenticated user
@@ -134,32 +141,38 @@ class UserController extends Controller
         ]);
     }
 
-    public function check(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|min:5|max:12',
-    ]);
 
-    $userInfo = User::where('email', $request->email)->first();
+// public function check(Request $request)
+// {
+//     $request->validate([
+//         'email' => 'required|email',
+//         'password' => 'required|min:5|max:12',
+//     ]);
 
-    if (!$userInfo) {
-        return back()->withInput()->withErrors(['email' => 'Email not found']);
-    }
+//     $userInfo = User::where('email', $request->email)->first();
 
+//     if (!$userInfo) {
+//         return back()->withInput()->withErrors(['email' => 'Email not found']);
+//     }
 
-    if (!Hash::check($request->password, $userInfo->password)) {
-        return back()->withInput()->withErrors(['password' => 'Incorrect password']);
-    }
+//     // Check if email is verified
+//     if (!$userInfo->hasVerifiedEmail()) {
+//         return back()->withInput()->withErrors(['email' => 'Please verify your email address']);
+//     }
 
-    // Update status to active (1) on successful login
-    $userInfo->update(['status' => 1]);
+//     if (!Hash::check($request->password, $userInfo->password)) {
+//         return back()->withInput()->withErrors(['password' => 'Incorrect password']);
+//     }
 
-    // Use built-in authentication for proper session handling
-    Auth::login($userInfo);
+//     // Update status to active (1) on successful login
+//     $userInfo->update(['status' => 1]);
 
-    return redirect()->route('user.forum');
-}
+//     // Use built-in authentication for proper session handling
+//     Auth::login($userInfo);
+
+//     return redirect()->route('user.forum');
+// }
+
 
 
     public function viewProfile()
@@ -240,6 +253,9 @@ class UserController extends Controller
         // Update the password
         $user->password = Hash::make($request->new_password);
         $user->save();
+
+       
+
 
         return back()->with('success', 'Password updated successfully!');
 
