@@ -368,13 +368,13 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
-            <!-- Modal Body - Landscape Layout -->
+            <!-- Modal Body -->
             <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body p-0">
-                    <div class="row g-0">
+                    <div class="row g-0 flex-wrap">
                         <!-- Left Side - Form Fields -->
-                        <div class="col-md-7 p-3">
+                        <div class="col-12 col-md-7 p-3">
                             <!-- Title Input -->
                             <div class="mb-2">
                                 <label for="postTitle" class="form-label mb-1" style="font-weight: 500; color: #495057; font-size: 0.85rem;">POST TITLE</label>
@@ -401,10 +401,12 @@
                         </div>
                         
                         <!-- Right Side - Image Upload -->
-                        <div class="col-md-5 bg-light p-3 d-flex flex-column" style="border-left: 1px solid #f0f0f0; min-height: 100%;">
+                        <div class="col-12 col-md-5 bg-light p-3 d-flex flex-column" style="border-left: 1px solid #f0f0f0;">
                             <div class="flex-grow-1 d-flex flex-column">
                                 <label class="form-label mb-1" style="font-weight: 500; color: #495057; font-size: 0.85rem;">UPLOAD IMAGE (OPTIONAL)</label>
-                                <div class="border-dashed rounded-2 bg-white d-flex flex-column align-items-center justify-content-center text-center p-3 flex-grow-1" 
+
+                                <!-- Desktop Upload -->
+                                <div class="d-none d-md-flex border-dashed rounded-2 bg-white flex-column align-items-center justify-content-center text-center p-3 flex-grow-1" 
                                      style="border: 2px dashed #d1d5db; cursor: pointer; min-height: 180px; position: relative;"
                                      id="imageUploadArea">
                                     <i class="bi bi-image text-muted mb-1" style="font-size: 1.8rem;"></i>
@@ -418,15 +420,23 @@
                                            id="postImage" 
                                            class="d-none" 
                                            accept="image/webp, image/png, image/jpg">
-                                    
-                                    <!-- Image Preview - Now properly contained within the upload area -->
-                                    <div class="w-100 h-100 d-none position-absolute top-0 start-0 p-2" 
-                                         id="imagePreviewContainer">
+
+                                    <!-- Image Preview -->
+                                    <div class="w-100 h-100 d-none position-absolute top-0 start-0 p-2" id="imagePreviewContainer">
                                         <img id="imagePreview" class="w-100 h-100 rounded" style="object-fit: contain;">
                                         <button type="button" class="btn-close position-absolute top-0 end-0 m-1" id="removeImageBtn"></button>
                                     </div>
                                 </div>
-                                <div class="form-text mt-1 text-center" style="font-size: 0.75rem;">Supports: JPG, PNG, WEBP (Max 5MB)</div>
+
+                                <!-- Mobile Upload -->
+                                <div class="d-flex d-md-none flex-column">
+                                    <input type="file" 
+                                           name="image" 
+                                           id="mobileImageInput" 
+                                           accept="image/webp, image/png, image/jpg" 
+                                           class="form-control mt-1">
+                                    <div class="form-text mt-1 text-center" style="font-size: 0.75rem;">Supported: JPG, PNG, WEBP (Max 5MB)</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -459,74 +469,74 @@
         const previewContainer = document.getElementById('imagePreviewContainer');
         const previewImage = document.getElementById('imagePreview');
         const removeImageBtn = document.getElementById('removeImageBtn');
-        
-        // Fix for select image button
-        selectImageBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            postImage.click();
-        });
-        
-        // Image upload preview functionality
-        postImage.addEventListener('change', function(e) {
-            if (this.files && this.files[0]) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    previewImage.src = e.target.result;
-                    previewContainer.classList.remove('d-none');
-                    // Hide the upload instructions when image is shown
-                    uploadArea.querySelector('i.bi-image').style.display = 'none';
-                    uploadArea.querySelector('div.text-muted').style.display = 'none';
-                    uploadArea.querySelector('div.text-muted:nth-child(3)').style.display = 'none';
-                    selectImageBtn.style.display = 'none';
-                }
-                
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-        
-        // Remove image functionality
-        removeImageBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            postImage.value = '';
-            previewContainer.classList.add('d-none');
-            // Show the upload instructions again
-            uploadArea.querySelector('i.bi-image').style.display = 'block';
-            uploadArea.querySelector('div.text-muted').style.display = 'block';
-            uploadArea.querySelector('div.text-muted:nth-child(3)').style.display = 'block';
-            selectImageBtn.style.display = 'block';
-        });
-        
-        // Click anywhere in upload area to select file
-        uploadArea.addEventListener('click', function() {
-            postImage.click();
-        });
 
-        // Drag and drop functionality
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = '#3a7bd5';
-            uploadArea.style.backgroundColor = 'rgba(58, 123, 213, 0.05)';
-        });
-        
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.borderColor = '#d1d5db';
-            uploadArea.style.backgroundColor = '#fff';
-        });
-        
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = '#d1d5db';
-            uploadArea.style.backgroundColor = '#fff';
-            
-            if (e.dataTransfer.files.length) {
-                postImage.files = e.dataTransfer.files;
-                const event = new Event('change');
-                postImage.dispatchEvent(event);
-            }
-        });
+        if (selectImageBtn) {
+            selectImageBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                postImage.click();
+            });
+        }
+
+        if (postImage) {
+            postImage.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewContainer.classList.remove('d-none');
+                        uploadArea.querySelector('i.bi-image').style.display = 'none';
+                        uploadArea.querySelector('div.text-muted').style.display = 'none';
+                        uploadArea.querySelector('div.text-muted:nth-child(3)').style.display = 'none';
+                        selectImageBtn.style.display = 'none';
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+
+        if (removeImageBtn) {
+            removeImageBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                postImage.value = '';
+                previewContainer.classList.add('d-none');
+                uploadArea.querySelector('i.bi-image').style.display = 'block';
+                uploadArea.querySelector('div.text-muted').style.display = 'block';
+                uploadArea.querySelector('div.text-muted:nth-child(3)').style.display = 'block';
+                selectImageBtn.style.display = 'block';
+            });
+        }
+
+        if (uploadArea) {
+            uploadArea.addEventListener('click', function() {
+                postImage.click();
+            });
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#3a7bd5';
+                uploadArea.style.backgroundColor = 'rgba(58, 123, 213, 0.05)';
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = '#d1d5db';
+                uploadArea.style.backgroundColor = '#fff';
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#d1d5db';
+                uploadArea.style.backgroundColor = '#fff';
+
+                if (e.dataTransfer.files.length) {
+                    postImage.files = e.dataTransfer.files;
+                    const event = new Event('change');
+                    postImage.dispatchEvent(event);
+                }
+            });
+        }
     });
 </script>
+
     <!-- Toggle Sidebar Button -->
     <button class="btn toggle-sidebar-btn d-md-none" onclick="toggleSidebar()">
         ☰
