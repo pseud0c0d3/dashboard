@@ -18,7 +18,7 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->sentence(), // Generates a random title
             'body' => $this->faker->paragraphs(3, true), // Generates a random body
-            'image' => $this->faker->imageUrl(640, 480, 'posts', true), // Generates a random image URL
+            
         ];
     }
 }

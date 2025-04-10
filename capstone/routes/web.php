@@ -1,97 +1,197 @@
 <?php
 
-use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CreateNewUser;
-use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\faqController;
 use App\Http\Controllers\AdminController;
-use App\Http\Middleware\Adminmiddleware;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\CalendarController;
-use App\Http\Controllers\LogInController;
+use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\PostController;
-use Spatie\GoogleCalendar\Event;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\Auth\LogInController; // Importing the controller from the Auth namespace
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ReplyController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Models\Visit;
+
+Auth::routes(['verify' => true]);
+
+// Email verification routes
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->middleware(['signed'])->name('verification.verify'); // Remove 'auth'
+
+
+Route::post('/email/resend', [VerificationController::class, 'resend'])
+    ->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+
+Route::middleware(['auth', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+});
 
 
 
-//test
+// LoggedOut Routes
 Route::get('/', function () {
-    return view('admin.calendar_admin');
- })->name('index');
-// ->middleware(Adminmiddleware::class);
- 
-Route::post('/admin/calendar', [CalendarController::class, 'store'])->name('calendar.store');
+    $ip = request()->ip();
+    $today = now()->toDateString();
 
+    $alreadyVisited = Visit::where('ip_address', $ip)
+        ->whereDate('created_at', $today)
+        ->exists();
 
-Route::post('register', [CreateNewUser::class, 'store'])->name('registration.post');
+    if (! $alreadyVisited) {
+        Visit::create([
+            'ip_address' => $ip,
+            'user_agent' => request()->userAgent(),
+        ]);
+    }
+    return view('loggedOut.index');
+})->name('index');
 
-
-Route::get('/loggedOut/seemore', function () {
-    return view('seemore');
+Route::get('/seemore', function () {
+    return view('loggedOut.seemore');
 })->name('seemore');
 
-Route::get('/loggedOut/seemore', function () {
-    return view('loggedOut/seemore');
-})->name('seemore');
+Route::get('/loggedOut/forgotpassword', [LogInController::class, 'forgotpass'])->name('forgot.password');
 
 
-// Log in
-Route::post('/loggedIn/user', [LogInController::class, 'login'])->name('login');
+// Admin Routes
+Route::middleware(['auth:admin'])->group(function () {
+    Route::patch('/admin/posts/{id}/archive', [PostController::class, 'archive'])->name('admin.posts.archive');
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/forum', [AdminController::class, 'forum'])->name('admin.forum');
+    Route::get('/admin/chats', [AdminController::class, 'chats'])->name('admin.chats');
+    Route::get('/admin/fullcalendar', [AdminController::class, 'fullcalendar'])->name('admin.fullcalendar');
+    Route::get('/admin/events', [AdminController::class, 'getEvents'])->name('admin.events');
+    Route::post('/admin/events', [AdminController::class, 'createEvent'])->name('admin.events.create');
+    Route::get('/appointments', [AdminController::class, 'viewAppointments'])->name('appointments.index');
+    Route::get('/appointments/{event}/edit', [AdminController::class, 'editAppointment'])->name('appointments.edit');
+    Route::put('/appointments/{event}', [AdminController::class, 'updateAppointment'])->name('appointments.update');
+    Route::delete('/appointments/{event}', [AdminController::class, 'deleteAppointment'])->name('appointments.destroy');
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard/download-pdf', [AdminController::class, 'downloadDashboard'])->name('admin.dashboard.pdf');
+    Route::get('/admin/clients', [AdminController::class, 'clients'])->name('admin.clients');
 
-// Log out
-Route::post('/', [LogInController::class, 'logout'])->name('logout');
+    Route::get('/admin/clients', [AdminController::class, 'clients'])->name('admin.clients');
 
+    Route::get('admin/users', [AdminController::class, 'viewUsers'])->name('admin.users');
+    Route::delete('admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
 
-//user routes
-Route::get('/loggedIn/user', [HomeController::class,'user'])->name('loggedIn.user');
-Route::get('/admin/adminforum', [HomeController::class,'adminforum'])->name('admin.adminforum');
-
-
-// Route::get('/loggedIn/user', [HomeController::class, 'user'])->middleware('auth')->name('loggedIn.user');
-
-
-//activities route
-Route::get('/workspace/colormatch', [ActivityController::class, 'colormatch'])->name('workspace.colormatch');
-Route::get('/workspace/game', [ActivityController::class, 'game'])->name('workspace.game');
-// Route::post('/loggedIn/user', [LogInController::class, 'logoutgame'])->name('logoutgame');
-
-
-//userprofile routes
-Route::get('/loggedIn/userprofile', [UserController::class, 'userprofile'])->name('loggedIn.userprofile');
-
-//userprofile routes
-Route::get('/loggedIn/faq', [faqController::class, 'faq'])->name('loggedIn.faq');
-
-//chat routes
-Route::get('/loggedIn/chat', [MessageController::class, 'chat'])->name('loggedIn.chat');
-Route::get('/loggedIn/adminchat', [MessageController::class, 'adminchat'])->name('loggedIn.adminchat');
+    Route::get('/posts/admin', [PostController::class, 'admin'])->name('posts.admin');
+    Route::get('/posts/admin/{post}', [PostController::class, 'showadmin'])->name('posts.showadmin');
 
 
-//calendar routes
-Route::get('/admin/calendar_admin', [CalendarController::class, 'calendar'])->name('admin.calendar_admin');
-Route::get('/loggedIn/calendar_user', [CalendarController::class, 'calendar_user'])->name('loggedIn.calendar_user');
+    Route::get('/posts', [PostController::class, 'admin'])->name('posts.admin');
+    Route::post('/posts/admin', [PostController::class, 'storeadmin'])->name('admin.store');
+
+    // Admin Chats
+    Route::get('/admin/fetch-messages', [ChatsController::class, 'fetchMessages'])->name('admin.fetchMessages');
+    Route::post('/admin/send-message', [ChatsController::class, 'sendMessage'])->name('admin.sendMessage');
+
+    Route::get('posts/admin/{post}/edit', [PostController::class, 'adminEdit'])->name('admin.edit');
+    Route::put('posts/admin/{post}', [PostController::class, 'adminUpdate'])->name('admin.update');
+    Route::delete('posts/admin/{post}', [PostController::class, 'adminDestroy'])->name('admin.destroy');
+
+    Route::post('/posts/admin/{post}/comment', [PostController::class, 'adminComment'])->name('admin.comment');
+
+    Route::delete('/comments/admin/{comment}', [PostController::class, 'adminDestroyComment'])->name('admin.comments.destroy');
+    Route::put('/comments/admin/{comment}', [PostController::class, 'adminUpdateComment'])->name('admin.comments.update');
+
+    Route::post('/posts/{post}/comment', [PostController::class, 'addComment'])->name('posts.comment');
+    Route::put('/comments/{comment}', [PostController::class, 'updateComment'])->name('comments.update');
+
+    Route::post('/posts/{post}/like', [LikeController::class, 'like'])->name('posts.like');
+    Route::delete('/posts/{post}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
+
+});
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+//Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 
 
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::post('/admin/check', [AdminController::class, 'check'])->name('admin.check');
+Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-// Avoid reusing 'posts/{post}' for the index route
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+// User Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/forum', [UserController::class, 'forum'])->name('user.forum');
+    // Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('/user/faq', [UserController::class, 'faq'])->name('user.faq');
+    Route::get('/workspace/colormatch', [UserController::class, 'colormatch'])->name('workspace.colormatch');
+    Route::get('/workspace/game', [UserController::class, 'game'])->name('workspace.game');
 
-// Use resource routes for remaining CRUD actions, excluding index and show
-Route::resource('/posts', PostController::class)->except(['index', 'show']);
+    Route::get('/user/chats', [UserController::class, 'chats'])->name('user.support');
+    Route::get('/user/events', [UserController::class, 'getEvents'])->name('user.events');
+    Route::get('/user/fullcalendar', [UserController::class, 'fullcalendar'])->name('user.fullcalendar');
 
-// Route::get('/forum', [PostController::class, 'index'])->name('posts.index');
+    // View profile
+    Route::get('user/profile', [UserController::class, 'viewProfile'])->name('user.profile');
 
-// para mag reflect sa fullcalendar yung ginawa sa gcalendar
-Route::get('/admin/get-google-calendar-events', [CalendarController::class, 'getGoogleCalendarEvents']);
+    // Edit profile
+    Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
 
-//chat
-    
-Route::get('chat', [MessageController::class, 'chat']);
-Route::post('messages', [MessageController::class, 'message']);
+    Route::put('/comments/{comment}', [PostController::class, 'updateComment'])->name('comments.update');
+    Route::delete('/comments/{comment}', [PostController::class, 'destroyComment'])->name('comments.destroy');
 
 
+
+    // Change password
+    Route::get('/profile/change-password', [UserController::class, 'changePassword'])->name('password.change');
+    Route::post('/profile/change-password', [UserController::class, 'updatePassword'])->name('password.update');
+
+    // User Chats
+    Route::get('/fetch-messages', [ChatsController::class, 'fetchMessagesFromUserToAdmin'])->name('fetch.messagesFromSellerToAdmin');
+    Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmin'])->name('send.Messageofsellertoadmin');
+    Route::put('/admin/posts/{post}/archive', [PostController::class, 'archivePost'])->name('admin.archive');
+    // Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
+
+
+});
+Route::post('comments/{commentId}/replies', [ReplyController::class, 'store'])->name('replies.store');
+Route::delete('replies/{id}', [ReplyController::class, 'destroy'])->name('replies.destroy');
+Route::get('comments/{commentId}/replies', [ReplyController::class, 'showReplies'])->name('replies.show');
+
+//Route::post('/comments/{comment}/reply', [CommentController::class, 'reply'])->name('comments.reply');
+Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
+Route::post('/user/check', [LogInController::class, 'check'])->name('user.check');
+Route::post('/user/save', [UserController::class, 'save'])->name('user.save');
+Route::get('/user/register', [UserController::class, 'register'])->name('user.register');
+Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
+
+// Employee Routes (add middleware if employees need specific authentication)
+Route::get('/employee/EmployeeChat', [EmployeeController::class, 'EmployeeChat'])->name('employee.EmployeeChat');
+Route::get('/employee/EmployeeCalendar', [EmployeeController::class, 'EmployeeCalendar'])->name('employee.EmployeeCalendar');
+Route::get('/employee/EmployeeForum', [EmployeeController::class, 'EmployeeForum'])->name('employee.EmployeeForum');
+
+// Log in and Log out routes
+
+
+Route::post('/send-password-reset', [LogInController::class, 'sendreset'])->name('sendreset');
+Route::get('/password-reset-form', [LogInController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password-reset', [LogInController::class, 'resetPassword'])->name('reset.password');
+
+
+
+// Forum Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+    Route::resource('/posts', PostController::class)->except(['index', 'show'])->middleware('check.badwords');
+    Route::post('/posts/{post}/comment', [PostController::class, 'storeComment'])->name('posts.comment');
+Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->name('posts.like');
+
+});
+
+// Route to show the notifications dropdown
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+// Route to mark a notification as read
+Route::get('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+
+Route::get('/notifications/{notification}', [NotificationController::class, 'showPost'])->name('notifications.showPost');

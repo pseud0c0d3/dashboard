@@ -59,7 +59,7 @@ function startTimer(duration) {
       clearInterval(timer); // Stop the timer
       isGameOver = true; // Mark the game as over
       showCustomPopup('Time is up! Game over.', () => {
-        showResults(currentLevel, totalTimePlayed, matchedTiles); // Show results after 
+        showResults(currentLevel, totalTimePlayed, matchedTiles); // Show results after
       });
     }
   }, 1000);
@@ -188,7 +188,7 @@ function showCustomPopup(message, onClose) {
   popupContent.appendChild(popupMessage);
 
   const button = document.createElement('button');
-  button.textContent = 'Close';
+  button.textContent = 'Next';
   button.addEventListener('click', () => {
     document.body.removeChild(popup); // Close the popup when clicked
     if (onClose) onClose(); // Trigger the onClose callback (like showing results)
@@ -283,7 +283,7 @@ window.addEventListener("load", function () {
 // Function to show the results
 function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
   const popup = document.createElement('div');
-  popup.classList.add('custom-popup'); 
+  popup.classList.add('custom-popup');
 
   const popupContent = document.createElement('div');
   popupContent.classList.add('custom-popup-content');
@@ -312,13 +312,13 @@ function showResults(levelReached, totalTimePlayed, matchedTilesCount) {
   popupContent.appendChild(restartButton);
 
   popup.appendChild(popupContent);
-  document.body.appendChild(popup); 
+  document.body.appendChild(popup);
 
   restartButton.addEventListener('click', () => {
     document.body.removeChild(popup);
-    currentLevel = 1; 
-    createBoard(); 
-    stopAndResetTimer(); 
+    currentLevel = 1;
+    createBoard();
+    stopAndResetTimer();
     timerStarted = false;
   });
 }

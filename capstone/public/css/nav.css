@@ -1,0 +1,412 @@
+  /* Notification Badge Styling */
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: pulse 0.6s infinite alternate;
+}
+
+/* Pulse Animation for Notification Badge */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    right: 10px !important; /* Align to the right within the screen */
+    left: auto !important; /* Remove left positioning */ /* Align to the left side */
+    top: 100%; /* Position directly below the notification icon */
+    min-width: 200px; /* Set a minimum width */
+    max-width: 90vw; /* Prevent dropdown from overflowing the screen */
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 9999; /* Ensure dropdown stays on top */
+    padding: 10px 15px; /* Add padding for better spacing */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Styling for the profile image in the dropdown */
+.dropdown-menu img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Style adjustments for the dropdown item for better visibility */
+.dropdown-item {
+    white-space: nowrap; /* Prevent wrapping of text */
+}
+
+/* Hover Effect for Notification Items */
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+    cursor: pointer;
+}
+
+/* Mark read item styling */
+.dropdown-item.read {
+    color: #777;
+}
+    /* Close Button for Mobile Sidebar */
+
+/* Default Sidebar - Visible on larger screens */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #23486A;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: transform 0.3s ease-in-out;
+    z-index: 999; /* Ensure the sidebar stays on top */
+}
+
+/* Hide sidebar on smaller screens */
+@media (max-width: 768px) {
+    .close-sidebar-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 10001; /* Ensure the button stays on top */
+}
+.close-sidebar-btn:hover {
+    background-color: transparent;
+}
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        width: 250px;
+        height: 100vh;
+        z-index: 9999; /* Higher z-index to ensure it's on top of the navbar */
+
+    }
+    /* Ensure navbar is below sidebar when opened on mobile */
+    .navbar {
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    /* Adjust sidebar toggle button */
+    .toggle-sidebar-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 10000;
+        background-color: #23486A; /* Make button visible */
+        color: white;
+    }
+}
+
+/* Ensure main content expands when sidebar is hidden */
+.main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        margin-top: 60px;
+    }
+}
+
+/* Tooltip Styling for Notification Icon */
+.notification-badge[data-toggle="tooltip"] {
+    cursor: pointer;
+}
+
+/* Dropdown Menu Item Alignment */
+.dropdown-item i {
+    margin-right: 10px;
+}
+
+/* Ensure proper padding and size for icons */
+.dropdown-item i.bi, .dropdown-item i.fas {
+    font-size: 16px;
+}
+
+/* Toggle Sidebar Button Styles */
+.toggle-sidebar-btn {
+    position: fixed; /* Fixed position for overlay effect */
+    top: 15px; /* Adjust distance from the top */
+    left: 15px; /* Adjust distance from the left */
+    z-index: 2000; /* Ensure it appears above all other elements */
+    background-color: #007bff; /* Blue background */
+    color: white; /* White icon color */
+    border: none; /* Remove border */
+    border-radius: 50%; /* Circular button */
+    width: 50px; /* Fixed width for consistent size */
+    height: 50px; /* Fixed height for consistent size */
+    font-size: 1.5rem; /* Icon size for better visibility */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Center icon */
+    justify-content: center; /* Center icon horizontally */
+    align-items: center; /* Center icon vertically */
+}
+
+/* Hover Effect */
+.toggle-sidebar-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* When the sidebar is open */
+#sidebar.open {
+    left: 0; /* Sidebar moves into view */
+}
+
+/* Hover effect for the dropdown button */
+#navbarDropdown:hover {
+    background-color: #f8f9fa; /* Light background on hover */
+    border-color: #007bff; /* Border color when hovered */
+}
+
+/* Hover effect for dropdown items with scale animation */
+.dropdown-item:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: #fff; /* White text on hover */
+    transform: scale(1.05); /* Slightly increase size */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+
+/* Hover effect for the profile picture button */
+.dropdown-toggle:hover img {
+    opacity: 0.8; /* Slight opacity change for profile image on hover */
+    transform: scale(1.15); /* Slightly increase size */
+}
+
+#add {
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 10; 
+    cursor: pointer; 
+    padding: 15px 25px; 
+    font-size: 18px; 
+    border-radius: 50%; 
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px 0px;
+}
+/* Profile Image inside Navbar Dropdown */
+#navbarDropdown img {
+    width: 45px;  /* Fixed width */
+    height: 45px; /* Fixed height */
+    border-radius: 50%; /* Circle shape */
+    object-fit: cover; /* Ensures image fits within the size without stretching */
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+    #navbarDropdown img {
+        width: 35px;  /* Smaller size for mobile */
+        height: 35px; /* Smaller size for mobile */
+    }
+    .navbar-brand {
+        position: relative;
+        
+        left: 45%;
+        transform: translateX(-50%);
+        font-size: 1.2rem; /* Adjust this based on your preference */
+    }
+}
+
+
+/* Navbar Style */
+.navbar {
+    
+    border: #000000 2px solid;
+    border-left: none;
+    background-color: #007dff;
+    height: 80px;
+    width: calc(100% - 250px); /* Adjust to leave space for sidebar */
+    position: fixed;
+    top: 0;
+    left: 250px; /* Space for the sidebar */
+    z-index: 1000;
+    margin-left: 0;
+    font-family: 'Roboto', sans-serif;
+    
+}
+
+.navbar-brand {
+    font-size: 40px;
+   
+}
+
+form .btn {
+    width: 70px;
+}
+
+#add {
+    bottom: 20px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
+    z-index: 10; /* Ensure it stays above other elements */
+    cursor: pointer; 
+    padding: 15px; /* Consistent padding */
+    font-size: 18px; /* Font size for desktop */
+    border-radius: 50%; /* Circular button */
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px 0px; /* Subtle shadow */
+    position: fixed; /* Fixed position */
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+    width: 60px; /* Explicit size for desktop */
+    height: 60px; /* Explicit size for desktop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#add:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Navbar adjustment when sidebar is open */
+.navbar.shifted {
+    margin-left: 250px; /* Move the navbar to the right */
+    transition: margin-left 0.3s ease; /* Smooth transition */
+}
+
+
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+    .navbar.shifted {
+        margin-left: 0; /* No margin when sidebar is open */
+    }
+
+    /* Hide the search bar on mobile */
+    .navbar form {
+        display: none;
+    }
+    
+
+    #add {
+        bottom: 15px; /* Closer to the bottom */
+        right: 15px; /* Closer to the right */
+        padding: 10px; /* Reduced padding */
+        font-size: 14px; /* Smaller font size */
+        width: 50px; /* Smaller button width */
+        height: 50px; /* Smaller button height */
+    }
+
+    .navbar {
+        width: 135%; /* Full width for mobile */
+        margin-top: -15px;
+        padding-left: 70px;
+        margin-left: -250px; /* Remove offset for small screens */
+        z-index: 1600;
+        
+        
+    }
+
+    .navbar-brand {
+        margin-left: 0px;
+        margin-right: 0;
+    }
+
+    /* Hide the search bar and show the logo button on mobile */
+    .search-bar {
+        display: none;
+    }
+
+    #navbarDropdown {
+        margin-left: -220px;
+        width: 85px;
+        height: 55px;
+    }
+
+    /* Hide the user name on mobile */
+    #navbarDropdown .user-name {
+        display: none;
+    }
+
+
+
+    form .btn {
+        display: none !important;
+    }
+
+    .scrollable-posts {
+        margin-top: -100px;
+    }
+
+    /* Fix for Navbar Dropdown in Mobile */
+    .dropdown-menu {
+        position: absolute;
+        right: 10px !important; /* Align to the right within the screen */
+        left: auto !important; /* Remove left positioning */
+        width: auto; /* Prevent unnecessary width */
+        min-width: 180px; /* Set a min width */
+        max-width: 90vw; /* Prevent overflowing the screen */
+        background-color: #fff; /* Keep it visible */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for visibility */
+        border-radius: 8px; /* Rounded corners */
+        overflow: hidden; /* Ensure no content spills out */
+    }
+
+    .dropdown-menu a {
+        text-align: center; /* Keep text centered */
+        font-size: 14px; /* Adjust font size */
+        padding: 10px 15px; /* Improve spacing */
+    }
+
+    .dropdown-menu.show {
+        transform: translateX(0) !important; /* Prevent weird positioning */
+        overflow-y: auto; /* Scroll if too many items */
+        max-height: 250px; /* Prevent dropdown from being too long */
+    }
+
+    /* Fix the navbar profile button positioning */
+    #navbarDropdown {
+        position: relative;
+        margin-left: auto; /* Push it to the right */
+        margin-right: 15px; /* Space from right edge */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Ensure dropdown opens downward properly */
+    .dropdown-toggle::after {
+        display: none; /* Remove the arrow for a cleaner look */
+    }
+
+    /* Fix navbar spacing */
+    .navbar {
+        width: 100%; /* Ensure it fits mobile screens */
+        padding: 10px 15px; /* Adjust padding */
+    }
+}

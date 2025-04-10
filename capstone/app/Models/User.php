@@ -1,29 +1,24 @@
 <?php
-
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    protected $table = "users";
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
-        'username',
+        'name', // Keep username field
         'password',
-        'roles',
     ];
 
     /**
@@ -37,7 +32,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
      * @return array<string, string>
      */
@@ -45,12 +40,33 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
         ];
     }
-    public function posts()
+    public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
+public function posts()
 {
     return $this->hasMany(Post::class);
+}
+public function getProfilePictureAttribute($value)
+{
+    return $value ? asset('storage/' . $value) : asset('storage/default-profile.jpg');
+}
+// In the User model (app/Models/User.php):
+
+public function notifications()
+{
+    return $this->hasMany(Notification::class);
+}
+public function likes()
+{
+    return $this->hasMany(Like::class);
+}
+public function getEmailForVerification()
+{
+    return $this->email;
 }
 
 }

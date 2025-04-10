@@ -14,7 +14,7 @@ class CreatePostsTable extends Migration
         Schema::table('posts', function (Blueprint $table) {
             $table->string('title'); // Adds a title column
             $table->text('body'); // Adds a body column
-            $table->string('image')->nullable(); // Adds an optional image column
+            // $table->string('image')->nullable(); // Adds an optional image column
         });
     }
 
@@ -24,7 +24,7 @@ class CreatePostsTable extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn(['title', 'body', 'image']);
+            $table->dropColumn(['title', 'body']);
         });
     }
 }
