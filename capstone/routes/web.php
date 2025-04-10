@@ -135,6 +135,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/send-message', [ChatsController::class, 'sendMessageFromUserToAdmin'])->name('send.Messageofsellertoadmin');
     Route::put('/admin/posts/{post}/archive', [PostController::class, 'archivePost'])->name('admin.archive');
     // Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
+
+    
 });
 Route::post('comments/{commentId}/replies', [ReplyController::class, 'store'])->name('replies.store');
 Route::delete('replies/{id}', [ReplyController::class, 'destroy'])->name('replies.destroy');

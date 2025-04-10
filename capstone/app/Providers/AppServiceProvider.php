@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,9 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
+    
     {
+        DB::statement("SET SESSION sql_mode=''");
         Route::aliasMiddleware('check.badwords', \App\Http\Middleware\CheckBadWords::class);
 
         parent::boot();
