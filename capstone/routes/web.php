@@ -110,7 +110,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/workspace/colormatch', [UserController::class, 'colormatch'])->name('workspace.colormatch');
     Route::get('/workspace/game', [UserController::class, 'game'])->name('workspace.game');
 
-    Route::get('/user/chats', [UserController::class, 'chats'])->name('user.chats');
+    Route::get('/user/chats', [UserController::class, 'chats'])->name('user.support');
     Route::get('/user/events', [UserController::class, 'getEvents'])->name('user.events');
     Route::get('/user/fullcalendar', [UserController::class, 'fullcalendar'])->name('user.fullcalendar');
 

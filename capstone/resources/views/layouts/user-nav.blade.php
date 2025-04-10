@@ -635,7 +635,7 @@
         </ul>
         </li>
         <li><a href="{{ route('user.fullcalendar') }}" id="full"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-        <li><a href="{{ route('user.chats') }}" id="chat"><i class="bi bi-chat-dots"></i> Chats</a></li>
+        <li><a href="{{ route('user.support') }}" id="chat"><i class="bi bi-chat-dots"></i> Support</a></li>
     </ul>
     </div>
             <!-- Main Content -->
