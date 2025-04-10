@@ -48,30 +48,43 @@
         <div class="card-body">
             @auth
             @if(Auth::id() === $post->admin_id)
-                    <div class="dropdown-container">
-                        <div class="dropdown">
-                            <!-- Ellipsis Button -->
-                            <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots"></i> <!-- FontAwesome or Bootstrap Icons for ellipsis -->
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li>
-                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editPostModal{{ $post->id }}">
-                                        Edit
+                <div class="dropdown-container">
+                    <div class="dropdown">
+                        <!-- Ellipsis Button -->
+                        <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots"></i>
+                        </button>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editPostModal{{ $post->id }}">
+                                    Edit
+                                </button>
+                            </li>
+                            <li>
+                                <form action="{{ route('admin.destroy', $post->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this post?')">
+                                        Delete
                                     </button>
-                                </li>
-                                <li>
-                                    <form action="{{ route('admin.destroy', $post->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="{{ route('admin.posts.archive', $post->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to archive this post?')">
+                                        Archive
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
-                @endif
-            @endauth
+                </div>
+            @endif
+        @endauth
+
             <div class="dropdown-container">
                 <div class="dropdown">
                     <!-- Ellipsis Button -->

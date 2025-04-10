@@ -13,6 +13,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReplyController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Models\Visit;
 
 Auth::routes(['verify' => true]);
 
@@ -36,6 +37,19 @@ Route::middleware(['auth', 'verified'])->get('/dashboard', function () {
 
 // LoggedOut Routes
 Route::get('/', function () {
+    $ip = request()->ip();
+    $today = now()->toDateString();
+
+    $alreadyVisited = Visit::where('ip_address', $ip)
+        ->whereDate('created_at', $today)
+        ->exists();
+
+    if (! $alreadyVisited) {
+        Visit::create([
+            'ip_address' => $ip,
+            'user_agent' => request()->userAgent(),
+        ]);
+    }
     return view('loggedOut.index');
 })->name('index');
 
@@ -48,6 +62,7 @@ Route::get('/loggedOut/forgotpassword', [LogInController::class, 'forgotpass'])-
 
 // Admin Routes
 Route::middleware(['auth:admin'])->group(function () {
+    Route::patch('/admin/posts/{id}/archive', [PostController::class, 'archive'])->name('admin.posts.archive');
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/forum', [AdminController::class, 'forum'])->name('admin.forum');
     Route::get('/admin/chats', [AdminController::class, 'chats'])->name('admin.chats');
@@ -136,7 +151,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/posts/{post}/archive', [PostController::class, 'archivePost'])->name('admin.archive');
     // Route::post('/child/update', [UserController::class, 'childupdate'])->name('child.update');
 
-    
+
 });
 Route::post('comments/{commentId}/replies', [ReplyController::class, 'store'])->name('replies.store');
 Route::delete('replies/{id}', [ReplyController::class, 'destroy'])->name('replies.destroy');

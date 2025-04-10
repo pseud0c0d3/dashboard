@@ -42,10 +42,7 @@
         background-color: #f9f9f9;
     }
 
-    .card-new-posts {
-        background-color: #f4e1d2;
-        border-left: 5px solid #ff6f61;
-    }
+    
 
     .card-new-users {
         background-color: #d3eaf9;
@@ -57,7 +54,7 @@
         border-left: 5px solid #76d7c4;
     }
 
-    .card-total-posts {
+    .card-posts {
         background-color: #fff3e6;
         border-left: 5px solid #ffb84d;
     }
@@ -70,6 +67,10 @@
     .card-events-appointments {
         background-color: #f0f9f1;
         border-left: 5px solid #2baf4e;
+    }
+    .card-visits {
+        background-color: #f0f9f1;
+        border-left: 5px solid #af2ba4;
     }
 
     .form-label {
@@ -136,9 +137,20 @@
     </form>
 
     <!-- Reports Section -->
+    
+    
     <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card card-new-posts">
+        <div class="col-md-3">
+            <div class="card card-visits">
+                <div class="card-body">
+                    <h5 class="card-title">Visits(Unique)</h5>
+                    <p class="card-text">{{ $visitsCount }}</p>
+                    <canvas id="visitsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-posts">
                 <div class="card-body">
                     <h5 class="card-title">New Posts in Forum</h5>
                     <p class="card-text">{{ $newPostsCount }}</p>
@@ -146,7 +158,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card card-new-users">
                 <div class="card-body">
                     <h5 class="card-title">New Users Registered</h5>
@@ -155,7 +167,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card card-upcoming-events">
                 <div class="card-body">
                     <h6 class="card-title">Upcoming Events and Appointments</h6>
@@ -164,16 +176,25 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="card card-visits">
+                <div class="card-body">
+                    <h6 class="card-title">Total Visits</h6>
+                    <p class="card-text">{{$totalvisitsCount}}</p>
+                </div>
+            </div>
+        </div>
 
-        <div class="col-md-4">
-            <div class="card card-total-posts">
+
+        <div class="col-md-3">
+            <div class="card card-posts">
                 <div class="card-body">
                     <h5 class="card-title">Total Posts</h5>
                     <p class="card-text">{{ $totalPostsCount }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card card-total-users">
                 <div class="card-body">
                     <h5 class="card-title">Total Registered Users</h5>
@@ -181,7 +202,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card card-events-appointments">
                 <div class="card-body">
                     <h6 class="card-title">Events and Appointments Made</h6>
@@ -189,7 +210,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 </div>
@@ -252,6 +272,22 @@
             }]
         }
     });
+    const visitsData = @json(array_values($monthlyVisitsData->toArray()));
+
+new Chart(document.getElementById('visitsChart'), {
+    ...chartOptions,
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Website Visitors',
+            data: visitsData,
+            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+            borderColor: 'rgba(255, 206, 86, 1)',
+            borderWidth: 1
+        }]
+    }
+});
+
 </script>
 
 @endsection

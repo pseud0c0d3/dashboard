@@ -264,22 +264,28 @@ public function createEvent(Request $request)
         Auth::guard('admin')->login($adminInfo);
 
         // Redirect to the admin dashboard
-        return redirect()->route('admin.forum');
+        return redirect()->route('admin.dashboard');
     }
 
-
-
-    public function dashboard(Request $request)
+    public function archive($id)
 {
-    // Get the start and end dates from the request, default to today
+    $post = Post::findOrFail($id);
+    $post->archived = true;
+    $post->save();
+
+    return redirect()->back()->with('success', 'Post archived.');
+}
+
+
+
+public function dashboard(Request $request)
+{
     $startDate = $request->input('start_date', Carbon::today()->toDateString());
     $endDate = $request->input('end_date', Carbon::today()->toDateString());
 
-    // Format the dates for query purposes
     $startDateTime = Carbon::parse($startDate)->startOfDay();
     $endDateTime = Carbon::parse($endDate)->endOfDay();
 
-    // Fetch the counts from the database
     $newPostsCount = \DB::table('posts')
         ->whereBetween('created_at', [$startDateTime, $endDateTime])
         ->count();
@@ -292,37 +298,35 @@ public function createEvent(Request $request)
         ->whereBetween('created_at', [$startDateTime, $endDateTime])
         ->count();
 
-    // Count all registered users
     $totalUsersCount = \DB::table('users')->count();
-
-    // Count total number of posts
     $totalPostsCount = \DB::table('posts')->count();
 
-    // Count upcoming events
     $upcomingEventsCount = \DB::table('events')
         ->where('start_time', '>=', Carbon::now())
         ->count();
 
-    // Monthly data for the graphs
+    // Website visits in the selected range
+    $visitsCount = \DB::table('visits')
+        ->whereBetween('created_at', [$startDateTime, $endDateTime])
+        ->count();
+    $totalVisitsCount = \DB::table('visits')->count();
+    // Monthly data for charts
     $newPostsData = \DB::table('posts')
         ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
-        ->groupBy('month')
-        ->orderBy('month')
-        ->pluck('count', 'month');
+        ->groupBy('month')->orderBy('month')->pluck('count', 'month');
 
     $newUsersData = \DB::table('users')
         ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
-        ->groupBy('month')
-        ->orderBy('month')
-        ->pluck('count', 'month');
+        ->groupBy('month')->orderBy('month')->pluck('count', 'month');
 
     $upcomingEventsData = \DB::table('events')
         ->selectRaw('MONTH(start_time) as month, COUNT(*) as count')
-        ->groupBy('month')
-        ->orderBy('month')
-        ->pluck('count', 'month');
+        ->groupBy('month')->orderBy('month')->pluck('count', 'month');
 
-    // Return the data to the view
+    $monthlyVisitsData = \DB::table('visits')
+        ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        ->groupBy('month')->orderBy('month')->pluck('count', 'month');
+
     return view('admin.dashboard', [
         'newPostsCount' => $newPostsCount,
         'newUsersCount' => $newUsersCount,
@@ -333,10 +337,14 @@ public function createEvent(Request $request)
         'newPostsData' => $newPostsData,
         'newUsersData' => $newUsersData,
         'upcomingEventsData' => $upcomingEventsData,
+        'visitsCount' => $visitsCount,
+        'totalvisitsCount' =>  $totalVisitsCount,
+        'monthlyVisitsData' => $monthlyVisitsData,
         'startDate' => $startDate,
         'endDate' => $endDate,
     ]);
 }
+
     public function downloadDashboard(Request $request)
 {
     // Fetch the same data as the dashboard
