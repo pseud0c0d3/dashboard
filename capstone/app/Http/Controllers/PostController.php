@@ -132,25 +132,20 @@ class PostController extends Controller
      * Display the specified resource.
      */
 
-    public function show(Post $post)
-    {
-        
-        // Assuming the user is authenticated
-        // $post->user_id = auth()->id();
-        // $post->save();
-        $post->load('user'); // Eager load the 'user' relationship
-        return view('posts.show', ['post' => $post]);
-    }
-
-    public function showadmin(Post $post)
-    {
-        // Assuming the user is authenticated
-        // $post->user_id = auth()->id();
-        // $post->save();
-        $post->load('admin'); // Eager load the 'admin' relationship
-        return view('posts.showadmin', ['post' => $post]);
-    }
-
+     public function show(Post $post)
+     {
+         $post->load(['user', 'comments.user', 'comments.admin']); // eager load related models
+     
+         return view('posts.show', ['post' => $post]);
+     }
+     
+     public function showadmin(Post $post)
+     {
+         $post->load(['admin', 'comments.user', 'comments.admin']); // eager load related models
+     
+         return view('posts.showadmin', ['post' => $post]);
+     }
+     
     /**
      * Show the form for editing the specified resource.
      */

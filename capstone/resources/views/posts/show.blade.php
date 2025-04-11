@@ -377,10 +377,10 @@
             </form>
             @endif
 
-            <!-- Comment Section -->
+           <!-- Comment Section -->
 <div class="comments-list mt-4">
     @if($post->comments->isEmpty())
-    <p class="text-muted">No comments yet. Be the first to comment!</p>
+        <p class="text-muted">No comments yet. Be the first to comment!</p>
     @else
         @foreach($post->comments as $comment)
         <div class="comment-card">
@@ -394,59 +394,63 @@
                     width="50" height="50">
                 <div class="ms-3 w-100">
                     <div class="comment-header">
-                        <strong class="comment-author">{{ $comment->user->name ?? 'Guest' }}</strong>
+                    <strong class="comment-author">
+    {{ $comment->user->name ?? ($comment->admin->name ?? 'Guest') }}
+</strong>
                         <small class="text-muted comment-time">{{ $comment->created_at->diffForHumans() }}</small>
                     </div>
                     <p class="comment-content mb-1">{{ $comment->content }}</p>
 
                     @if($comment->image)
-                    <img src="{{ Storage::url($comment->image) }}" alt="Comment Image" class="img-fluid comment-img-preview" 
-                        data-bs-toggle="modal" data-bs-target="#imagePreviewModal" data-img="{{ Storage::url($comment->image) }}">
+                        <img src="{{ Storage::url($comment->image) }}" alt="Comment Image" class="img-fluid comment-img-preview" 
+                            data-bs-toggle="modal" data-bs-target="#imagePreviewModal" data-img="{{ Storage::url($comment->image) }}">
                     @endif
-                <!-- Dropdown for Edit and Delete -->
-                @auth
-                            @if(Auth::id() === $comment->user_id)
-                                <div class="dropdown-container position-absolute" style="top: 5px; right: 10px;">
-                                    <div class="dropdown">
-                                        <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="bi bi-three-dots"></i>
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li>
-                                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editCommentModal{{ $comment->id }}">Edit</button>
-                                            </li>
-                                            <li>
-                                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</button>
-                                                </form>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            @endif
-                        @endauth
-                    @auth
-                    <!-- Reply Form Button -->
-<button class="btn btn-outline-primary btn-sm reply-button" onclick="toggleReplyForm({{ $comment->id }}, '{{ $comment->user->name }}')">
-    <i class="bi bi-reply-fill"></i> Reply
-</button>
-<!-- Reply Form -->
-<div id="replyForm{{ $comment->id }}" class="reply-form-container" style="display: none;">
-    <form action="{{ route('replies.store', $comment->id) }}" method="POST">
-        @csrf
-        <div class="reply-input-group">
-            <textarea name="content" class="reply-input-area" placeholder="Write your reply..." required rows="2"></textarea>
-            <button type="submit" class="reply-submit-btn">
-                <i class="bi bi-send"></i>
-            </button>
-        </div>
-    </form>
-</div>
 
+                    <!-- Dropdown for Edit and Delete -->
+                    @auth
+                        @if(Auth::id() === $comment->user_id)
+                            <div class="dropdown-container position-absolute" style="top: 5px; right: 10px;">
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li>
+                                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editCommentModal{{ $comment->id }}">Edit</button>
+                                        </li>
+                                        <li>
+                                            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
                     @endauth
 
+                    <!-- Reply Button and Form -->
+                    @auth
+                        <button class="btn btn-outline-primary btn-sm reply-button"
+                            onclick="toggleReplyForm({{ $comment->id }}, '{{ $comment->user->name ?? ($comment->admin->name ?? 'Unknown') }}')">
+                            <i class="bi bi-reply-fill"></i> Reply
+                        </button>
+
+                        <div id="replyForm{{ $comment->id }}" class="reply-form-container mt-2 d-none">
+                            <form action="{{ route('replies.store', $comment->id) }}" method="POST">
+                                @csrf
+                                <div class="reply-input-group d-flex">
+                                    <textarea name="content" class="form-control me-2" placeholder="Write your reply..." required rows="2"></textarea>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-send"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    @endauth
+          
                     <!-- Reply Cards -->
 <div class="replies-list mt-3">
     @foreach($comment->replies as $reply)
@@ -545,5 +549,11 @@
             });
         });
     });
+    function toggleReplyForm(commentId, name) {
+        const replyForm = document.getElementById('replyForm' + commentId);
+        if (replyForm) {
+            replyForm.classList.toggle('d-none');
+        }
+    }
 </script>
 @endsection
