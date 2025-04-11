@@ -30,9 +30,16 @@ class NotificationController extends Controller
         if ($notification->user_id !== auth()->id()) {
             abort(403, 'Unauthorized access');
         }
-
-        // Redirect to the post associated with this notification
-        return redirect()->route('posts.show', $notification->post_id);
-    }
+        
+        // Redirect to the associated post if it exists
+        if ($notification->post_id) {
+            return redirect()->route('posts.show', $notification->post_id);
+        } 
+        
+        // Otherwise, redirect to the support/chat route
+        return redirect()->route('user.support');
     
+}
+
+
 }
