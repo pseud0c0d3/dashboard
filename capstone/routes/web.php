@@ -109,10 +109,17 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/posts/{post}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
 
 });
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-//Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+// Regular user comments
+Route::post('/comments', [CommentController::class, 'store'])
+    ->name('comments.store')
+    ->middleware('auth');
 
+// Admin comments (different route)
+Route::post('/admin/posts/{post}/comments', [CommentController::class, 'store'])
+    ->name('admin.comment')
+    ->middleware('auth:admin');
 
+    
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 Route::post('/admin/check', [AdminController::class, 'check'])->name('admin.check');
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
