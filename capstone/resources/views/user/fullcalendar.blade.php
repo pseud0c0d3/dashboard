@@ -4,7 +4,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
 <style>
-
+    .modal-backdrop {
+        z-index: 1040 !important;
+    }
+    .modal {
+        z-index: 1050 !important;
+    }
+    .fc-event {
+        z-index: 1 !important;
+    }
     /* General Calendar Styles */
     #calendar {
         height: 85vh;

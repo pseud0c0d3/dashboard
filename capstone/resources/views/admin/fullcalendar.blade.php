@@ -2,10 +2,27 @@
 
 @section('navbar_title', 'CALENDAR')
 @section('content')
+<!-- Add this line before your existing CSS links -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
+<!-- Add Bootstrap JS here -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
-
+    /* Add this at the very top of your style block */
+    .fc-scrollgrid, .fc-scrollgrid table {
+        background-color: white !important;
+    }
+    .modal-backdrop {
+        z-index: 1040 !important;
+    }
+    .modal {
+        z-index: 1050 !important;
+    }
+    .fc-event {
+        z-index: 1 !important;
+    }
+    /* Your existing styles below - completely unchanged */
     /* General Calendar Styles */
     #calendar {
         height: 85vh;
@@ -208,8 +225,25 @@
     </div>
 </div>
 
+<!-- Add this line before your existing script -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+
 <script>
+// Add this check at the very beginning
 document.addEventListener('DOMContentLoaded', function() {
+    // Verify Bootstrap is loaded
+    if (typeof bootstrap === 'undefined') {
+        console.error('Bootstrap JS not loaded! Modals will not work.');
+        alert('Error: Required Bootstrap JavaScript is missing');
+        return;
+    }
+
+    if (typeof FullCalendar === 'undefined') {
+        console.error('FullCalendar not loaded!');
+        return;
+    }
+
+    // Your existing FULL CALENDAR initialization below - COMPLETELY UNCHANGED
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
@@ -221,7 +255,16 @@ document.addEventListener('DOMContentLoaded', function() {
             addEventButton: {
                 text: 'Add Event',
                 click: function() {
-                    new bootstrap.Modal(document.getElementById('addEventModal')).show();
+                    // Reset form when opening modal
+                    document.getElementById('eventForm').reset();
+                    document.getElementById('userEmail').disabled = false;
+                    
+                    // Initialize modal properly
+                    var modal = new bootstrap.Modal(document.getElementById('addEventModal'), {
+                        keyboard: false,
+                        backdrop: 'static'
+                    });
+                    modal.show();
                 },
             },
         },
@@ -250,6 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 });
 
+// YOUR EXISTING FORM SUBMISSION CODE - COMPLETELY UNCHANGED
 document.getElementById('eventForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -295,6 +339,7 @@ document.getElementById('eventForm').addEventListener('submit', function(event) 
     });
 });
 
+// YOUR EXISTING CHECKBOX HANDLING CODE - COMPLETELY UNCHANGED
 document.addEventListener("DOMContentLoaded", function () {
         const isPublicCheckbox = document.getElementById("isPublic");
         const userEmailInput = document.getElementById("userEmail");
@@ -314,7 +359,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // Listen for checkbox change
         isPublicCheckbox.addEventListener("change", toggleUserEmail);
     });
-    
 </script>
 
 @endsection

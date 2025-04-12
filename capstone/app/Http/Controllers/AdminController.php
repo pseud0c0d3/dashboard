@@ -111,6 +111,9 @@ public function createEvent(Request $request)
         'user_email' => 'nullable|email|exists:users,email',
     ]);
 
+    // Get the user for private events
+    $user = !$validated['is_public'] ? User::where('email', $validated['user_email'])->first() : null;
+
     // Check for overlapping events only if the new event is PRIVATE
     if (!$validated['is_public']) {
         $overlappingEvent = Event::where(function ($query) use ($validated) {
@@ -121,16 +124,17 @@ public function createEvent(Request $request)
                         ->where('end_time', '>=', $validated['end_time']);
                 });
         })
-        ->where('is_public', false) // Only block overlap for private events
+        ->where('is_public', false)
+        ->where('user_id', $user->id) // Only check for this specific user's events
         ->first();
 
         if ($overlappingEvent) {
-            return response()->json(['message' => 'Cannot create a private event. The selected time overlaps with another private event.'], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot create a private event. The selected time overlaps with another private event for this user.'
+            ], 422);
         }
     }
-
-    // Determine user (only required for private events)
-    $user = $validated['is_public'] ? null : User::where('email', $validated['user_email'])->first();
 
     // Create the event
     $event = Event::create([
@@ -150,7 +154,11 @@ public function createEvent(Request $request)
         SendPublicEventEmails::dispatch($event, 'created');
     }
 
-    return response()->json(['message' => 'Event created successfully.']);
+    return response()->json([
+        'success' => true,
+        'message' => 'Event created successfully.',
+        'event' => $event
+    ]);
 }
 
 
