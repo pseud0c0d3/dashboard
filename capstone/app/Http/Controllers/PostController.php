@@ -17,33 +17,36 @@ class PostController extends Controller
 {   /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        $search = $request->input('search');
-        $filter = $request->input('filter', 'all'); // Default to 'all' posts
-        // Fetch posts with related data (user, likes, and comments)
-    $posts = Post::with(['user', 'likes', 'comments'])->latest()->paginate(10);
+    public function index(Request $request) 
+{
+    $search = $request->input('search');
+    $filter = $request->input('filter', 'all'); // Default to 'all' posts
 
+    $posts = Post::query()
+        ->when($search, function ($query, $search) {
+            return $query->where('title', 'LIKE', "%{$search}%");
+        })
+        ->when($filter === 'mine' && Auth::check(), function ($query) {
+            return $query->where('user_id', Auth::id());
+        })
+        ->when($filter === 'admin', function ($query) {
+            return $query->where('admin_id', 1); 
+        })
+        ->where(function ($query) {
+            // Hide archived posts unless the user is admin or the author
+            $query->where('archived', false)
+                ->orWhere(function ($q) {
+                    $q->where('user_id', Auth::id());
+                });
 
-        $posts = Post::recent()
-            ->when($search, function ($query, $search) {
-                return $query->where('title', 'LIKE', "%{$search}%");
-            })
-            ->when($filter === 'mine' && Auth::check(), function ($query) {
-                return $query->where('user_id', Auth::id())
-                    // Ensure posts are filtered by user ID
-                    // ->orWhere('admin_id', 1)
-                    ;
-            })
-            ->when($filter === 'admin', function ($query) {
-                return $query->where('admin_id', 1); 
-            })
-            ->with(['user', 'admin'])
-            ->latest()
-            ->paginate(10);
+            
+        })
+        ->with(['user', 'admin', 'likes', 'comments'])
+        ->latest()
+        ->paginate(10);
 
-        return view('posts.index', compact('posts', 'filter'));
-    }
+    return view('posts.index', compact('posts', 'filter'));
+}
 
 
     public function archive($id)
