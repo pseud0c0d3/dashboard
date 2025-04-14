@@ -298,6 +298,9 @@
             <p style="font-family: 'Roboto', sans-serif; font-size: 0.9rem;">
                 Posted by: <strong>{{ $post->admin->name ?? $post->user->name ?? 'Anonymous' }}</strong>
             </p>
+            @if($post->archived)
+                <span class="badge bg-warning text-dark">Archived</span>
+            @endif
             <p style="font-family: 'Roboto', sans-serif; font-size: 1rem;">{{ $post->body }}</p>
             @if ($post->image)
             <div class="text-center mt-3">

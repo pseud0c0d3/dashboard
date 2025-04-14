@@ -162,10 +162,15 @@
                 <a href="{{ route('posts.admin', ['filter' => 'mine']) }}" class="btn btn-outline-primary {{ request('filter') === 'mine' ? 'active' : '' }}">
                     My Posts
                 </a>
+                
+            <a href="{{ route('posts.admin', ['filter' => 'archived']) }}" class="btn btn-outline-primary {{ request('filter') === 'archived' ? 'active' : '' }}">
+                Archived Posts
+            </a>
+        
             </div>
         </div>
 
-        @if($posts->isEmpty()))
+        @if($posts->isEmpty())
             <div class="alert alert-warning text-center">
                 No posts found. Please try a different search term.
             </div>
@@ -189,12 +194,18 @@
                                 @else
                                     Anonymous
                                 @endif
+                                @if($post->archived)
+                                    <span class="badge bg-warning text-dark">Archived</span>
+                                 @endif
                             </h6>
+                            
 
                             <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>
+                            
                         </div>
+                        
                     </div>
-
+                        
                     <!-- Post Content Section -->
                     <h5 class="fw-bold text-dark mb-3" style="margin-top: -18px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.8rem; text-transform: capitalize; letter-spacing: 0.5px;">
                         {!! isset($search) ? str_ireplace($search, "<mark>{$search}</mark>", $post->title) : $post->title !!}

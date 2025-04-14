@@ -258,6 +258,9 @@
                                 @else
                                     Anonymous
                                 @endif
+                                @if($post->archived)
+                                    <span class="badge bg-warning text-dark">Archived</span>
+                                 @endif
                             </h6>
 
                             <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>

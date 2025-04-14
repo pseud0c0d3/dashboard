@@ -5,6 +5,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/nav.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Bootstrap JS (v5) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <style>
     /* Reply Button Styling */
@@ -261,33 +264,41 @@
                                 <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
                             </form>
                         </li>
-                        <li>
-                            <form action="{{ route('admin.posts.archive', $post->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to archive this post?')">
-                                    Archive
-                                </button>
-                            </form>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
             @endif
             @endauth
             <h1 style="font-family: 'Poppins', sans-serif; font-weight: 600;">{{ $post->title }}</h1>
+            
+
             <p style="font-family: 'Roboto', sans-serif; font-size: 0.9rem;">
                 Posted by: <strong>{{ $post->admin->name ?? $post->user->name ?? 'Anonymous' }}</strong>
             </p>
+            @if($post->archived)
+                <span class="badge bg-warning text-dark">Archived</span>
+            @endif
+            
             <p style="font-family: 'Roboto', sans-serif; font-size: 1rem;">{{ $post->body }}</p>
             @if ($post->image)
             <div class="text-center mt-3">
                 <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded shadow-sm" alt="Post Image" style="max-width: 100%; max-height: 400px;">
             </div>
             @endif
-            <div class="d-flex justify-content-between mt-3">
+            <div class="d-flex justify-content-between align-items-center mt-3">
                 <a href="{{ route('posts.admin') }}" class="btn btn-primary">Back to Posts</a>
+            
+                <form action="{{ route('posts.toggleArchive', $post->id) }}" method="POST" class="d-inline mb-0">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn btn-warning btn-sm d-flex"
+                        onclick="return confirm('Are you sure you want to {{ $post->archived ? 'unarchive' : 'archive' }} this post?')">
+                        {{ $post->archived ? 'Unarchive' : 'Archive' }}
+                    </button>
+                </form>
             </div>
+            
         </div>
     </div>
 

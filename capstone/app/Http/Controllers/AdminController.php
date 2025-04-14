@@ -275,17 +275,6 @@ public function createEvent(Request $request)
         return redirect()->route('admin.dashboard');
     }
 
-    public function archive($id)
-{
-    $post = Post::findOrFail($id);
-    $post->archived = true;
-    $post->save();
-
-    return redirect()->back()->with('success', 'Post archived.');
-}
-
-
-
 public function dashboard(Request $request)
 {
     $startDate = $request->input('start_date', Carbon::today()->toDateString());

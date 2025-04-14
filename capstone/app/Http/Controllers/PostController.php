@@ -46,27 +46,69 @@ class PostController extends Controller
     }
 
 
-
-
-    public function admin(Request $request)
+    public function archive($id)
     {
-        $search = $request->input('search');
-        $filter = $request->input('filter', 'all'); // Default to 'all' posts
-
-        $posts = Post::recent()
-            ->when($search, function ($query, $search) {
-                return $query->where('title', 'LIKE', "%{$search}%");
-            })
-            ->when($filter === 'mine' && Auth::check(), function ($query) {
-                return $query->where('user_id', Auth::id())
-                     ->orWhereNotNull('admin_id');
-            })
-            ->with(['user', 'admin'])
-            ->latest()
-            ->paginate(10);
-
-        return view('posts.admin', compact('posts', 'filter'));;
+        $post = Post::findOrFail($id);
+        if (!Auth::guard('admin')->check()) {
+            return back()->with('error', 'Unauthorized');
+        }
+    
+        $post->archived = true;
+        $post->save();
+    
+        return back()->with('success', 'Post archived.');
     }
+    
+    public function unarchive($id)
+    {
+        $post = Post::findOrFail($id);
+        if (!Auth::guard('admin')->check()) {
+            return back()->with('error', 'Unauthorized');
+        }
+    
+        $post->archived = false;
+        $post->save();
+    
+        return back()->with('success', 'Post unarchived.');
+    }
+    public function toggleArchive(Post $post)
+{
+    $post->archived = !$post->archived;
+    $post->save();
+
+    return redirect()->back()->with('status', 'Post ' . ($post->archived ? 'archived' : 'unarchived') . ' successfully.');
+}
+
+    
+
+public function admin(Request $request)
+{
+    $search = $request->input('search');
+    $filter = $request->input('filter', 'all'); // Default to 'all' posts
+
+    $posts = Post::recent()
+        ->when($filter !== 'archived', function ($query) {
+            return $query->where('archived', false);
+        })
+        ->when($filter === 'archived', function ($query) {
+            return $query->where('archived', true);
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where('title', 'LIKE', "%{$search}%");
+        })
+        ->when($filter === 'mine' && Auth::check(), function ($query) {
+            return $query->where(function ($q) {
+                $q->where('user_id', Auth::id())
+                  ->orWhereNotNull('admin_id');
+            });
+        })
+        ->with(['user', 'admin'])
+        ->latest()
+        ->paginate(10);
+
+    return view('posts.admin', compact('posts', 'filter'));
+}
+
     /**
      * Show the form for creating a new resource.
      */

@@ -62,7 +62,12 @@ Route::get('/loggedOut/forgotpassword', [LogInController::class, 'forgotpass'])-
 
 // Admin Routes
 Route::middleware(['auth:admin'])->group(function () {
-    Route::patch('/admin/posts/{id}/archive', [PostController::class, 'archive'])->name('admin.posts.archive');
+
+    Route::patch('/admin/posts/{post}/toggle-archive', [PostController::class, 'toggleArchive'])->name('posts.toggleArchive');
+
+    Route::post('/admin/posts/{id}/archive', [PostController::class, 'archive'])->name('posts.archive');
+    Route::post('/admin/posts/{id}/unarchive', [PostController::class, 'unarchive'])->name('posts.unarchive');
+
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/forum', [AdminController::class, 'forum'])->name('admin.forum');
     Route::get('/admin/chats', [AdminController::class, 'chats'])->name('admin.chats');
