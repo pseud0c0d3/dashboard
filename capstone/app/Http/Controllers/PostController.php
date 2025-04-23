@@ -150,11 +150,12 @@ public function admin(Request $request)
     return back()->with('success', 'Your post was created.');
 }
 
-    public function storeadmin(Request $request)
+public function storeadmin(Request $request)
 {
     $request->validate([
         'title' => ['required', 'max:255'],
         'body' => ['required'],
+        'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'], // 5MB max
     ]);
 
     // Check if the admin is authenticated
@@ -163,10 +164,22 @@ public function admin(Request $request)
         return back()->withErrors(['error' => 'Unauthorized. Please log in as an admin.']);
     }
 
+    // Handle image upload
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        // Store in storage/app/public/posts_images
+        $imagePath = $request->file('image')->store('posts_images', 'public');
+        
+        // Alternative if you want to customize the filename:
+        // $imageName = time().'_'.$request->file('image')->getClientOriginalName();
+        // $imagePath = $request->file('image')->storeAs('posts_images', $imageName, 'public');
+    }
+
     Post::create([
         'title' => $request->title,
         'body' => $request->body,
-        'admin_id' => $admin->id, // Ensure this is set
+        'admin_id' => $admin->id,
+        'image' => $imagePath, // This will be null if no image was uploaded
     ]);
 
     return back()->with('success', 'Your post was created.');

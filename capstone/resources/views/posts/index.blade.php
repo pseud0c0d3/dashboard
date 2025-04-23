@@ -84,17 +84,20 @@
         }
     }
 
-    /* Post image container */
+    /* Post image container - Optimized */
     .post-image-container {
         position: relative;
         width: 100%;
         max-height: 400px;
+        min-height: 200px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 8px;
         overflow: hidden;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: #f5f7fa;
+        margin: 10px 0;
     }
 
     .post-image-container:hover {
@@ -102,11 +105,13 @@
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
+    /* Post image - Optimized */
     .post-image {
-        position: relative;
-        max-width: 100%;
+        width: 100%;
+        height: auto;
         max-height: 100%;
         object-fit: contain;
+        object-position: center;
         border-radius: 8px;
         transition: transform 0.3s ease;
     }
@@ -118,40 +123,25 @@
     /* Ensure the image container doesn't overflow */
     .card-body {
         overflow: hidden;
-        background-color:rgba(82, 159, 223, 0.57);
+        background-color: rgba(82, 159, 223, 0.57);
     }
     
     @media (max-width: 768px) {
+        .post-image-container {
+            max-height: 300px;
+        }
         .post-image {
             max-height: 300px;
         }
     }
 
     @media (max-width: 576px) {
+        .post-image-container {
+            max-height: 250px;
+        }
         .post-image {
             max-height: 250px;
         }
-    }
-
-    /* Image Wrapper */
-    .post-image-container {
-        position: relative;
-        width: 100%;
-        max-height: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    /* The Actual Image */
-    .post-image {
-        position: relative;
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        border-radius: 8px;
     }
 
     /* Modal styles */
@@ -165,6 +155,7 @@
         max-width: 90vw;
         max-height: 90vh;
         object-fit: contain;
+        background-color: #f5f7fa;
     }
 
     /* Fixed post button */
@@ -178,9 +169,22 @@
         align-items: center;
         justify-content: center;
         font-size: 1.5rem;
+        transition: all 0.3s ease;
+        z-index: 1000;
+    }
+
+    /* Loading animation */
+    .post-image.loading {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
     }
 </style>
-
 <div class="container mt-5 pt-5" style="auto; max-height: 100vh;">
     @if(session('success'))
         <div class="alert alert-success">
@@ -278,15 +282,15 @@
 
                     <!-- Display the image if it exists -->
                     @if ($post->image)
-                    <div class="post-image-container" style="margin-top: -16px;">
-                        <img src="{{ asset('storage/' . $post->image) }}"
-                             alt="Post Image"
-                             class="post-image"
-                             data-bs-toggle="modal"
-                             data-bs-target="#imageModal"
-                             onclick="viewImage('{{ asset('storage/' . $post->image) }}')">
-                    </div>
-                    @endif
+<div class="post-image-container">
+    <img src="{{ asset('storage/' . $post->image) }}"
+         alt="Post Image"
+         class="post-image img-fluid"
+         data-bs-toggle="modal"
+         data-bs-target="#imageModal"
+         onclick="viewImage('{{ asset('storage/' . $post->image) }}')">
+</div>
+@endif
 
                     <!-- Comment & Like Actions -->
                     <div class="d-flex align-items-center">
@@ -409,7 +413,7 @@
                                 <label class="form-label mb-1" style="font-weight: 500; color: #495057; font-size: 0.85rem;">UPLOAD IMAGE (OPTIONAL)</label>
 
                                 <!-- Desktop Upload -->
-                                <div class="d-none d-md-flex border-dashed rounded-2 bg-white flex-column align-items-center justify-content-center text-center p-3 flex-grow-1" 
+                                <div class="border-dashed rounded-2 bg-white flex-column align-items-center justify-content-center text-center p-3 flex-grow-1" 
                                      style="border: 2px dashed #d1d5db; cursor: pointer; min-height: 180px; position: relative;"
                                      id="imageUploadArea">
                                     <i class="bi bi-image text-muted mb-1" style="font-size: 1.8rem;"></i>
@@ -429,16 +433,6 @@
                                         <img id="imagePreview" class="w-100 h-100 rounded" style="object-fit: contain;">
                                         <button type="button" class="btn-close position-absolute top-0 end-0 m-1" id="removeImageBtn"></button>
                                     </div>
-                                </div>
-
-                                <!-- Mobile Upload -->
-                                <div class="d-flex d-md-none flex-column">
-                                    <input type="file" 
-                                           name="image" 
-                                           id="mobileImageInput" 
-                                           accept="image/webp, image/png, image/jpg" 
-                                           class="form-control mt-1">
-                                    <div class="form-text mt-1 text-center" style="font-size: 0.75rem;">Supported: JPG, PNG, WEBP (Max 5MB)</div>
                                 </div>
                             </div>
                         </div>

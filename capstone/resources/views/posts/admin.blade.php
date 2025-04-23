@@ -54,17 +54,20 @@
         }
     }
     
-    /* Post image container */
+    /* Post image container - Enhanced */
     .post-image-container {
         position: relative;
         width: 100%;
         max-height: 400px;
+        min-height: 200px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 8px;
         overflow: hidden;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: #f5f7fa;
+        margin: 10px 0;
     }
 
     .post-image-container:hover {
@@ -72,11 +75,13 @@
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
+    /* Post image - Enhanced */
     .post-image {
-        position: relative;
-        max-width: 100%;
+        width: 100%;
+        height: auto;
         max-height: 100%;
         object-fit: contain;
+        object-position: center;
         border-radius: 8px;
         transition: transform 0.3s ease;
     }
@@ -92,15 +97,35 @@
     }
     
     @media (max-width: 768px) {
+        .post-image-container {
+            max-height: 300px;
+        }
         .post-image {
             max-height: 300px;
         }
     }
 
     @media (max-width: 576px) {
+        .post-image-container {
+            max-height: 250px;
+        }
         .post-image {
             max-height: 250px;
         }
+    }
+
+    /* Modal styles */
+    .modal-dialog {
+        max-width: 90vw;
+        max-height: 90vh;
+    }
+
+    #modalImage {
+        width: auto;
+        max-width: 90vw;
+        max-height: 90vh;
+        object-fit: contain;
+        background-color: #f5f7fa;
     }
 
     /* Fixed post button */
@@ -114,6 +139,20 @@
         align-items: center;
         justify-content: center;
         font-size: 1.5rem;
+        transition: all 0.3s ease;
+        z-index: 1000;
+    }
+
+    /* Loading animation */
+    .post-image.loading {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
     }
 </style>
 
@@ -162,15 +201,13 @@
                 <a href="{{ route('posts.admin', ['filter' => 'mine']) }}" class="btn btn-outline-primary {{ request('filter') === 'mine' ? 'active' : '' }}">
                     My Posts
                 </a>
-                
-            <a href="{{ route('posts.admin', ['filter' => 'archived']) }}" class="btn btn-outline-primary {{ request('filter') === 'archived' ? 'active' : '' }}">
-                Archived Posts
-            </a>
-        
+                <a href="{{ route('posts.admin', ['filter' => 'archived']) }}" class="btn btn-outline-primary {{ request('filter') === 'archived' ? 'active' : '' }}">
+                    Archived Posts
+                </a>
             </div>
         </div>
 
-        @if($posts->isEmpty())
+        @if($posts->isEmpty()))
             <div class="alert alert-warning text-center">
                 No posts found. Please try a different search term.
             </div>
@@ -198,12 +235,9 @@
                                     <span class="badge bg-warning text-dark">Archived</span>
                                  @endif
                             </h6>
-                            
 
                             <small class="text-muted" style="font-size: 0.85rem; font-family: 'Poppins', sans-serif;">{{ $post->created_at->diffForHumans() }}</small>
-                            
                         </div>
-                        
                     </div>
                         
                     <!-- Post Content Section -->
@@ -227,7 +261,7 @@
                     </div>
                     @endif
 
-                    <!-- Admin Actions (Replaced Like/Comment with View) -->
+                    <!-- Admin Actions -->
                     <div class="d-flex justify-content-end mt-3">
                         <a href="{{ route('posts.showadmin', $post->id) }}" class="btn btn-primary">
                             <i class="bi bi-eye-fill me-1"></i> View Post
@@ -285,117 +319,105 @@
         </div>
     </div>
 
-    <!-- Compact Landscape Post Modal (Admin Version) -->
-<div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 12px; overflow: hidden; max-width: 800px;">
-            
-            <!-- Modal Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%); border-bottom: none; padding: 0.8rem 1rem;">
-                <h5 class="modal-title text-white mb-0" style="font-weight: 600; font-family: 'Poppins', sans-serif; font-size: 1.1rem;">
-                    <i class="bi bi-pencil-square me-1"></i>Create New Post
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            
-            <!-- Modal Body -->
-            <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body p-0">
-                    <div class="row g-0 flex-wrap">
-                        <!-- Left Side - Form Fields -->
-                        <div class="col-12 col-md-7 p-3">
-                            <!-- Title Input -->
-                            <div class="mb-2">
-                                <label for="postTitle" class="form-label mb-1" style="font-weight: 500; color: #495057; font-size: 0.85rem;">POST TITLE</label>
-                                <input type="text" 
-                                       name="title" 
-                                       id="postTitle" 
-                                       class="form-control" 
-                                       placeholder="Give your post a title..." 
-                                       required
-                                       style="padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid #e0e0e0; font-size: 0.9rem;">
+    <!-- Compact Landscape Post Modal (Admin Version with Desktop-only Upload) -->
+    <div class="modal fade" id="PostModal" tabindex="-1" aria-labelledby="PostModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 12px; overflow: hidden; max-width: 800px;">
+                
+                <!-- Modal Header -->
+                <div class="modal-header" style="background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%); border-bottom: none; padding: 0.8rem 1rem;">
+                    <h5 class="modal-title text-white mb-0" style="font-weight: 600; font-family: 'Poppins', sans-serif; font-size: 1.1rem;">
+                        <i class="bi bi-pencil-square me-1"></i>Create New Post
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <!-- Modal Body -->
+                <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body p-0">
+                        <div class="row g-0 flex-wrap">
+                            <!-- Left Side - Form Fields -->
+                            <div class="col-12 col-md-7 p-3">
+                                <!-- Title Input -->
+                                <div class="mb-2">
+                                    <label for="postTitle" class="form-label mb-1" style="font-weight: 500; color: #495057; font-size: 0.85rem;">POST TITLE</label>
+                                    <input type="text" 
+                                           name="title" 
+                                           id="postTitle" 
+                                           class="form-control" 
+                                           placeholder="Give your post a title..." 
+                                           required
+                                           style="padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid #e0e0e0; font-size: 0.9rem;">
+                                </div>
+                                
+                                <!-- Body Input -->
+                                <div class="mb-2">
+                                    <label for="postBody" class="form-label mb-1" style="font-weight: 500; color: #495057; font-size: 0.85rem;">CONTENT</label>
+                                    <textarea name="body" 
+                                              id="postBody" 
+                                              class="form-control" 
+                                              rows="6" 
+                                              placeholder="Share your thoughts with the community..." 
+                                              required
+                                              style="padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid #e0e0e0; font-size: 0.9rem; resize: none;"></textarea>
+                                </div>
                             </div>
                             
-                            <!-- Body Input -->
-                            <div class="mb-2">
-                                <label for="postBody" class="form-label mb-1" style="font-weight: 500; color: #495057; font-size: 0.85rem;">CONTENT</label>
-                                <textarea name="body" 
-                                          id="postBody" 
-                                          class="form-control" 
-                                          rows="6" 
-                                          placeholder="Share your thoughts with the community..." 
-                                          required
-                                          style="padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid #e0e0e0; font-size: 0.9rem; resize: none;"></textarea>
-                            </div>
-                        </div>
-                        
-                        <!-- Right Side - Image Upload -->
-                        <div class="col-12 col-md-5 bg-light p-3 d-flex flex-column" style="border-left: 1px solid #f0f0f0;">
-                            <div class="flex-grow-1 d-flex flex-column">
-                                <label class="form-label mb-1" style="font-weight: 500; color: #495057; font-size: 0.85rem;">UPLOAD IMAGE (OPTIONAL)</label>
+                            <!-- Right Side - Image Upload (Desktop Only) -->
+                            <div class="col-12 col-md-5 bg-light p-3 d-flex flex-column" style="border-left: 1px solid #f0f0f0;">
+                                <div class="flex-grow-1 d-flex flex-column">
+                                    <label class="form-label mb-1" style="font-weight: 500; color: #495057; font-size: 0.85rem;">UPLOAD IMAGE (OPTIONAL)</label>
 
-                                <!-- Desktop Upload -->
-                                <div class="d-none d-md-flex border-dashed rounded-2 bg-white flex-column align-items-center justify-content-center text-center p-3 flex-grow-1" 
-                                     style="border: 2px dashed #d1d5db; cursor: pointer; min-height: 180px; position: relative;"
-                                     id="imageUploadArea">
-                                    <i class="bi bi-image text-muted mb-1" style="font-size: 1.8rem;"></i>
-                                    <div class="text-muted mb-1" style="font-size: 0.75rem;">Drag & drop image here</div>
-                                    <div class="text-muted mb-2" style="font-size: 0.7rem;">or click to browse</div>
-                                    <button type="button" class="btn btn-sm btn-outline-primary py-1 px-2" id="selectImageBtn">
-                                        Select Image
-                                    </button>
-                                    <input type="file" 
-                                           name="image" 
-                                           id="postImage" 
-                                           class="d-none" 
-                                           accept="image/webp, image/png, image/jpg">
+                                    <!-- Desktop Upload Only -->
+                                    <div class="border-dashed rounded-2 bg-white flex-column align-items-center justify-content-center text-center p-3 flex-grow-1" 
+                                         style="border: 2px dashed #d1d5db; cursor: pointer; min-height: 180px; position: relative;"
+                                         id="imageUploadArea">
+                                        <i class="bi bi-image text-muted mb-1" style="font-size: 1.8rem;"></i>
+                                        <div class="text-muted mb-1" style="font-size: 0.75rem;">Drag & drop image here</div>
+                                        <div class="text-muted mb-2" style="font-size: 0.7rem;">or click to browse</div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary py-1 px-2" id="selectImageBtn">
+                                            Select Image
+                                        </button>
+                                        <input type="file" 
+                                               name="image" 
+                                               id="postImage" 
+                                               class="d-none" 
+                                               accept="image/webp, image/png, image/jpg">
 
-                                    <!-- Image Preview -->
-                                    <div class="w-100 h-100 d-none position-absolute top-0 start-0 p-2" id="imagePreviewContainer">
-                                        <img id="imagePreview" class="w-100 h-100 rounded" style="object-fit: contain;">
-                                        <button type="button" class="btn-close position-absolute top-0 end-0 m-1" id="removeImageBtn"></button>
+                                        <!-- Image Preview -->
+                                        <div class="w-100 h-100 d-none position-absolute top-0 start-0 p-2" id="imagePreviewContainer">
+                                            <img id="imagePreview" class="w-100 h-100 rounded" style="object-fit: contain;">
+                                            <button type="button" class="btn-close position-absolute top-0 end-0 m-1" id="removeImageBtn"></button>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <!-- Mobile Upload -->
-                                <div class="d-flex d-md-none flex-column">
-                                    <input type="file" 
-                                           name="image" 
-                                           id="mobileImageInput" 
-                                           accept="image/webp, image/png, image/jpg" 
-                                           class="form-control mt-1">
-                                    <div class="form-text mt-1 text-center" style="font-size: 0.75rem;">Supported: JPG, PNG, WEBP (Max 5MB)</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Modal Footer -->
-                <div class="modal-footer" style="border-top: 1px solid #f0f0f0; padding: 0.8rem 1rem;">
-                    <button type="button" 
-                            class="btn btn-outline-secondary px-3 py-1" 
-                            data-bs-dismiss="modal"
-                            style="border-radius: 6px; font-weight: 500; font-size: 0.85rem;">
-                        Cancel
-                    </button>
-                    <button type="submit" 
-                            class="btn btn-primary px-3 py-1"
-                            style="border-radius: 6px; font-weight: 500; font-size: 0.85rem; background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%); border: none;">
-                        <i class="bi bi-send-fill me-1"></i> Post
-                    </button>
-                </div>
-            </form>
+                    
+                    <!-- Modal Footer -->
+                    <div class="modal-footer" style="border-top: 1px solid #f0f0f0; padding: 0.8rem 1rem;">
+                        <button type="button" 
+                                class="btn btn-outline-secondary px-3 py-1" 
+                                data-bs-dismiss="modal"
+                                style="border-radius: 6px; font-weight: 500; font-size: 0.85rem;">
+                            Cancel
+                        </button>
+                        <button type="submit" 
+                                class="btn btn-primary px-3 py-1"
+                                style="border-radius: 6px; font-weight: 500; font-size: 0.85rem; background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%); border: none;">
+                            <i class="bi bi-send-fill me-1"></i> Post
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-
-</div>
-
 <script>
-// Image modal functionality (identical to index.php)
+// Image modal functionality
 function viewImage(src) {
     document.getElementById('modalImage').src = src;
 }
@@ -407,31 +429,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewContainer = document.getElementById('imagePreviewContainer');
     const previewImage = document.getElementById('imagePreview');
     const removeImageBtn = document.getElementById('removeImageBtn');
-
-    // Helper function to show preview
-    function showPreview(file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            previewImage.src = e.target.result;
-            previewContainer.classList.remove('d-none');
-            
-            // Hide all children elements except the preview
-            Array.from(uploadArea.children).forEach(child => {
-                if (child.id !== 'imagePreviewContainer') {
-                    child.style.display = 'none';
-                }
-            });
-        };
-        reader.readAsDataURL(file);
-    }
-
-    // Helper function to reset upload area
-    function resetUploadArea() {
-        previewContainer.classList.add('d-none');
-        Array.from(uploadArea.children).forEach(child => {
-            child.style.display = '';
-        });
-    }
 
     // Click to select file
     if (selectImageBtn) {
@@ -464,27 +461,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Upload area click handler
     if (uploadArea) {
-        uploadArea.addEventListener('click', function(e) {
-            // Only trigger if clicking directly on the upload area
-            if (e.target === uploadArea) {
-                postImage.click();
-            }
+        uploadArea.addEventListener('click', function() {
+            postImage.click();
         });
 
         // Drag and drop handlers
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            uploadArea.addEventListener(eventName, preventDefaults, false);
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#3a7bd5';
+            uploadArea.style.backgroundColor = 'rgba(58, 123, 213, 0.1)';
         });
 
-        ['dragenter', 'dragover'].forEach(eventName => {
-            uploadArea.addEventListener(eventName, highlight, false);
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#d1d5db';
+            uploadArea.style.backgroundColor = '#fff';
         });
 
-        ['dragleave', 'drop'].forEach(eventName => {
-            uploadArea.addEventListener(eventName, unhighlight, false);
-        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#d1d5db';
+            uploadArea.style.backgroundColor = '#fff';
 
-        uploadArea.addEventListener('drop', handleDrop, false);
+            if (e.dataTransfer.files.length) {
+                const file = e.dataTransfer.files[0];
+                if (validateImage(file)) {
+                    postImage.files = e.dataTransfer.files;
+                    showPreview(file);
+                }
+            }
+        });
+    }
+
+    // Helper function to show preview
+    function showPreview(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewContainer.classList.remove('d-none');
+            uploadArea.querySelector('i.bi-image').style.display = 'none';
+            uploadArea.querySelector('div.text-muted').style.display = 'none';
+            uploadArea.querySelector('div.text-muted:nth-child(3)').style.display = 'none';
+            selectImageBtn.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // Helper function to reset upload area
+    function resetUploadArea() {
+        previewContainer.classList.add('d-none');
+        uploadArea.querySelector('i.bi-image').style.display = 'block';
+        uploadArea.querySelector('div.text-muted').style.display = 'block';
+        uploadArea.querySelector('div.text-muted:nth-child(3)').style.display = 'block';
+        selectImageBtn.style.display = 'block';
     }
 
     // Validate image file
@@ -504,99 +532,19 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return true;
     }
-
-    // Prevent default drag behaviors
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-
-    // Highlight drop zone
-    function highlight() {
-        uploadArea.style.borderColor = '#3a7bd5';
-        uploadArea.style.backgroundColor = 'rgba(58, 123, 213, 0.1)';
-    }
-
-    // Remove highlight
-    function unhighlight() {
-        uploadArea.style.borderColor = '#d1d5db';
-        uploadArea.style.backgroundColor = '#fff';
-    }
-
-    // Handle dropped files
-    function handleDrop(e) {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        
-        if (files.length) {
-            const file = files[0];
-            if (validateImage(file)) {
-                postImage.files = files;
-                showPreview(file);
-            }
-        }
-    }
 });
 
-
-    // ADMIN-SPECIFIC FUNCTIONALITY (preserved from original admin.php)
-    let postIdCounter = 0;
-
-    // Close dropdowns if clicked outside
-    window.onclick = function(event) {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        dropdowns.forEach(dropdown => {
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            }
-        });
-
-        // Close settings dropdown
-        const settingsDropdown = document.getElementById('settingsDropdown');
-        if (settingsDropdown.style.display === "block") {
-            settingsDropdown.style.display = "none";
-        }
-
-        // Close notifications dropdown
-        const notificationsDropdown = document.getElementById('notificationsDropdown');
-        if (notificationsDropdown.style.display === "block") {
-            notificationsDropdown.style.display = "none";
-        }
-    };
-
-    function copyPostLink(postId) {
-        const postLink = `${window.location.origin}/post/${postId}`;
-        navigator.clipboard.writeText(postLink).then(() => {
-            alert("Post link copied to clipboard!");
-        }).catch(err => {
-            console.error("Failed to copy: ", err);
-        });
-    }
-
-    // Current date display
-    document.getElementById('currentDate').textContent = new Date().toLocaleString();
-
-    // Card hover effects (same as index.php)
-    document.querySelectorAll('.post-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-5px)';
-            card.style.boxShadow = '0 0.5rem 1.5rem rgba(0, 0, 0, 0.2)';
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-            card.style.boxShadow = '0 0.5rem 1rem rgba(0, 0, 0, 0.15)';
-        });
+// ADMIN-SPECIFIC FUNCTIONALITY
+function copyPostLink(postId) {
+    const postLink = `${window.location.origin}/post/${postId}`;
+    navigator.clipboard.writeText(postLink).then(() => {
+        alert("Post link copied to clipboard!");
+    }).catch(err => {
+        console.error("Failed to copy: ", err);
     });
+}
 
-    // Floating button animation (same as index.php)
-    const fab = document.querySelector('.floating-btn');
-    if (fab) {
-        fab.addEventListener('mouseenter', () => {
-            fab.style.transform = 'scale(1.1)';
-        });
-        fab.addEventListener('mouseleave', () => {
-            fab.style.transform = '';
-        });
-    }
+// Current date display
+document.getElementById('currentDate').textContent = new Date().toLocaleString();
 </script>
 @endsection
