@@ -308,7 +308,7 @@
             </div>
             @endif
             <div class="d-flex justify-content-between mt-3">
-                <a href="{{ route('posts.index') }}" class="btn btn-primary">Back to Posts</a>
+                <a href="{{ route('user.forum') }}" class="btn btn-primary">Back to Posts</a>
             </div>
         </div>
     </div>
@@ -496,6 +496,41 @@
 </div>
 
 <script>
+
+
+document.addEventListener("DOMContentLoaded", function () {
+        const notificationItems = document.querySelectorAll('.notification-item');
+
+        notificationItems.forEach(item => {
+            item.addEventListener('click', function (e) {
+                const notificationId = this.dataset.id;
+
+                fetch(`/notifications/mark-as-read/${notificationId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json'
+                    },
+                }).then(res => res.json())
+                  .then(data => {
+                      if (data.success) {
+                          // Update badge
+                          const badge = document.getElementById('notificationBadge');
+                          let count = parseInt(badge.textContent);
+
+                          if (!isNaN(count)) {
+                              count -= 1;
+                              if (count > 0) {
+                                  badge.textContent = count;
+                              } else {
+                                  badge.remove(); // or badge.style.display = 'none';
+                              }
+                          }
+                      }
+                  });
+            });
+        });
+    });
     function toggleReplyForm(commentId, commenterName) {
     const replyForm = document.getElementById(`replyForm${commentId}`);
     const textarea = replyForm.querySelector("textarea");
